@@ -1,194 +1,359 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>OJOBOSCO</title>
+
   <meta
     name="description"
     content="OJOBOSCO — entre perfumaria e materialidade."
-  />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="style.css" />
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 </head>
+
+
 <body>
-  <div class="site-shell">
-    <header class="topbar">
-      <button class="menu-button" id="menuButton" aria-label="Abrir menu">
-        MENU
+
+  <!-- TOPO -->
+
+  <header class="topbar">
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="Abrir menu"
+    >
+      MENU
+    </button>
+
+
+    <a
+      href="#inicio"
+      class="brand-top"
+    >
+      OJOBOSCO
+    </a>
+
+
+    <div class="top-actions">
+
+      <a
+        href="#colecao"
+        class="colecao-link"
+      >
+        CONHECER A COLEÇÃO
+      </a>
+
+      <button
+        class="cart-link"
+        type="button"
+      >
+        CARRINHO 0
       </button>
 
-      <a href="#inicio" class="brand">OJOBOSCO</a>
-
-      <div class="topbar-right">
-        <a href="#colecao" class="top-link desktop-only">CONHECER A COLEÇÃO</a>
-        <a href="#" class="cart-link">CARRINHO <span>0</span></a>
-      </div>
-    </header>
-
-    <div class="menu-panel" id="menuPanel">
-      <div class="menu-panel-inner">
-        <a href="#inicio">INÍCIO</a>
-        <a href="#colecao">OBJETOS</a>
-        <a href="#manifesto">MANIFESTO</a>
-        <a href="#editorial">EDITORIAL</a>
-        <a href="#materialidade">MATERIALIDADE</a>
-        <a href="#rodape">INFORMAÇÕES</a>
-      </div>
     </div>
 
-    <main>
-      <section class="hero" id="inicio">
-        <div class="hero-copy">
-          <p class="section-kicker">OJOBOSCO</p>
+  </header>
 
-          <h1 class="hero-title">
-            ENTRE<br />
-            PERFUMARIA<br />
-            E<br />
-            MATERIALIDADE.
+
+  <!-- MENU -->
+
+  <nav
+    class="side-menu"
+    id="sideMenu"
+  >
+
+    <div class="side-menu-inner">
+
+      <button
+        class="close-menu"
+        id="closeMenu"
+      >
+        FECHAR
+      </button>
+
+      <a href="#inicio">
+        INÍCIO
+      </a>
+
+      <a href="#colecao">
+        OBJETOS
+      </a>
+
+      <a href="#manifesto">
+        MANIFESTO
+      </a>
+
+      <a href="#contato">
+        CONTATO
+      </a>
+
+    </div>
+
+  </nav>
+
+
+
+  <main>
+
+
+    <!-- HERO -->
+
+    <section
+      class="hero"
+      id="inicio"
+    >
+
+      <div class="hero-image-wrap">
+
+        <img
+          src="hero.jpg"
+          alt="OJOBOSCO"
+          class="hero-image"
+        >
+
+
+        <div class="hero-overlay">
+
+          <h1>
+            ENTRE
+            <br>
+            PERFUMARIA
+            <br>
+            E MATERIALIDADE.
           </h1>
 
-          <p class="hero-subtitle">
-            Fragrância, matéria e gesto em presença.
-          </p>
         </div>
 
-        <div class="hero-media">
-          <img src="hero.jpg" alt="OJOBOSCO" />
-        </div>
-      </section>
+      </div>
 
-      <section class="intro-strip">
-        <div class="intro-line"></div>
-        <p>
-          Objetos, fragrâncias e atmosferas para habitar o espaço de forma sensível.
+    </section>
+
+
+
+    <!-- PRODUTOS -->
+
+    <section
+      class="collection"
+      id="colecao"
+    >
+
+      <div class="products-grid">
+
+
+        <article class="product-card">
+
+          <a href="#">
+
+            <div class="product-image">
+
+              <img
+                src="difusor.jpg"
+                alt="Difusor OJOBOSCO"
+              >
+
+            </div>
+
+
+            <div class="product-info">
+
+              <h2>
+                DIFUSOR
+              </h2>
+
+            </div>
+
+          </a>
+
+        </article>
+
+
+
+        <article class="product-card">
+
+          <a href="#">
+
+            <div class="product-image">
+
+              <img
+                src="homespray.jpg"
+                alt="Home Spray OJOBOSCO"
+              >
+
+            </div>
+
+
+            <div class="product-info">
+
+              <h2>
+                HOME SPRAY
+              </h2>
+
+            </div>
+
+          </a>
+
+        </article>
+
+
+
+        <article class="product-card">
+
+          <a href="#">
+
+            <div class="product-image">
+
+              <img
+                src="vela.jpg"
+                alt="Vela OJOBOSCO"
+              >
+
+            </div>
+
+
+            <div class="product-info">
+
+              <h2>
+                VELA
+              </h2>
+
+            </div>
+
+          </a>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- MANIFESTO -->
+
+    <section
+      class="manifesto"
+      id="manifesto"
+    >
+
+      <h2>
+        OBJETOS
+        <br>
+        QUE HABITAM
+        <br>
+        O AR.
+      </h2>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- RODAPÉ -->
+
+  <footer
+    class="footer"
+    id="contato"
+  >
+
+    <div class="footer-columns">
+
+
+      <div>
+
+        <p class="footer-title">
+          NAVEGAÇÃO
         </p>
-      </section>
 
-      <section class="collection" id="colecao">
-        <div class="section-head">
-          <p class="section-kicker">COLEÇÃO</p>
-          <h2>OBJETOS PARA HABITAR O AR.</h2>
-        </div>
+        <a href="#inicio">
+          INÍCIO
+        </a>
 
-        <div class="product-grid">
-          <article class="product-card">
-            <div class="product-image">
-              <img src="difusor.jpg" alt="Difusor Ojobosco" />
-            </div>
-            <div class="product-info">
-              <h3>DIFUSOR</h3>
-              <p>Presença contínua e silenciosa.</p>
-            </div>
-          </article>
+        <a href="#colecao">
+          OBJETOS
+        </a>
 
-          <article class="product-card">
-            <div class="product-image">
-              <img src="homespray.jpg" alt="Home Spray Ojobosco" />
-            </div>
-            <div class="product-info">
-              <h3>HOME SPRAY</h3>
-              <p>Ritual imediato para o ambiente.</p>
-            </div>
-          </article>
+        <a href="#manifesto">
+          MANIFESTO
+        </a>
 
-          <article class="product-card">
-            <div class="product-image">
-              <img src="vela.jpg" alt="Vela Ojobosco" />
-            </div>
-            <div class="product-info">
-              <h3>VELA</h3>
-              <p>Luz, matéria e fragrância.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="manifesto" id="manifesto">
-        <div class="section-head">
-          <p class="section-kicker">MANIFESTO</p>
-        </div>
-
-        <div class="manifesto-grid">
-          <h2 class="manifesto-title">
-            O INVISÍVEL<br />
-            POSSUI FORMA.
-          </h2>
-
-          <p class="manifesto-text">
-            Ojobosco nasce no encontro entre perfume, objeto e atmosfera.
-            Cada criação procura dar corpo ao sensível — ao que não se vê,
-            mas transforma a experiência de estar.
-          </p>
-        </div>
-      </section>
-
-      <section class="split-section" id="editorial">
-        <div class="split-copy">
-          <p class="section-kicker">EDITORIAL</p>
-          <h2>IMAGENS QUE AMPLIAM A ATMOSFERA.</h2>
-          <p>
-            Um espaço para a construção de linguagem, presença e imaginação da marca.
-          </p>
-        </div>
-
-        <div class="split-placeholder">
-          <div class="placeholder-card">
-            <span>EDITORIAL</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="split-section reverse" id="materialidade">
-        <div class="split-copy">
-          <p class="section-kicker">MATERIALIDADE</p>
-          <h2>TEXTURA, SUPERFÍCIE E GESTO.</h2>
-          <p>
-            A matéria não é apenas suporte — ela participa da memória,
-            da sensação e do tempo de cada objeto.
-          </p>
-        </div>
-
-        <div class="split-placeholder">
-          <div class="placeholder-card soft">
-            <span>MATERIALIDADE</span>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer" id="rodape">
-      <div class="footer-grid">
-        <div>
-          <p class="footer-title">NAVEGAÇÃO</p>
-          <a href="#inicio">INÍCIO</a>
-          <a href="#colecao">OBJETOS</a>
-          <a href="#manifesto">MANIFESTO</a>
-        </div>
-
-        <div>
-          <p class="footer-title">CONTATO</p>
-          <a href="#">INSTAGRAM</a>
-          <a href="#">ATENDIMENTO</a>
-        </div>
-
-        <div>
-          <p class="footer-title">INFORMAÇÕES</p>
-          <a href="#">ENVIOS</a>
-          <a href="#">TROCAS</a>
-          <a href="#">PRIVACIDADE</a>
-        </div>
       </div>
 
-      <div class="footer-bottom">
-        <p>© 2026 OJOBOSCO</p>
-        <p>PERFUMARIA & MATERIALIDADE</p>
+
+
+      <div>
+
+        <p class="footer-title">
+          CONTATO
+        </p>
+
+        <a href="#">
+          INSTAGRAM
+        </a>
+
+        <a href="#">
+          ATENDIMENTO
+        </a>
+
       </div>
-    </footer>
-  </div>
+
+
+
+      <div>
+
+        <p class="footer-title">
+          INFORMAÇÕES
+        </p>
+
+        <a href="#">
+          ENVIOS
+        </a>
+
+        <a href="#">
+          TROCAS
+        </a>
+
+        <a href="#">
+          PRIVACIDADE
+        </a>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 OJOBOSCO
+      </span>
+
+      <span>
+        BRASIL
+      </span>
+
+    </div>
+
+  </footer>
+
 
   <script src="script.js"></script>
+
 </body>
+
 </html>
