@@ -1,212 +1,404 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
 
-  <title>OJOBOSCO</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>OJOBOSCO — Perfumaria e Materialidade</title>
 
   <meta
     name="description"
-    content="OJOBOSCO — perfumaria e materialidade."
-  />
+    content="OJOBOSCO — perfumaria, objetos, matéria e atmosfera."
+  >
 
-  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 </head>
 
 <body>
 
+  <!-- ========================================
+       MENU LATERAL
+  ========================================= -->
+
+  <div
+    class="menu-overlay"
+    id="menuOverlay"
+  >
+
+    <div class="menu-overlay-topo">
+
+      <span class="menu-overlay-logo">
+        OJOBOSCO
+      </span>
+
+      <button
+        class="fechar-menu"
+        id="fecharMenu"
+        aria-label="Fechar menu"
+      >
+        FECHAR
+      </button>
+
+    </div>
+
+
+    <nav class="menu-overlay-links">
+
+      <a href="#inicio">
+        <span>01</span>
+        INÍCIO
+      </a>
+
+      <a href="#objetos">
+        <span>02</span>
+        OBJETOS
+      </a>
+
+      <a href="#manifesto">
+        <span>03</span>
+        MANIFESTO
+      </a>
+
+      <a href="#materialidade">
+        <span>04</span>
+        MATERIALIDADE
+      </a>
+
+      <a href="#contato">
+        <span>05</span>
+        CONTATO
+      </a>
+
+    </nav>
+
+
+    <div class="menu-overlay-rodape">
+
+      <span>
+        PERFUMARIA & MATERIALIDADE
+      </span>
+
+      <span>
+        BRASIL
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================
+       TOPO
+  ========================================= -->
+
   <header class="topo">
-    <div class="topo-esquerda">
-      <button class="menu-botao" aria-label="Abrir menu">
+
+    <div class="topo-lado">
+
+      <button
+        class="botao-texto"
+        id="abrirMenu"
+      >
         MENU
       </button>
+
     </div>
 
-    <div class="logo">
+
+    <a
+      href="#inicio"
+      class="logo-principal"
+    >
       OJOBOSCO
+    </a>
+
+
+    <div class="topo-lado topo-lado-direito">
+
+      <button
+        class="botao-texto carrinho-botao"
+        id="abrirCarrinho"
+      >
+        CARRINHO
+        <span id="contadorCarrinho">
+          0
+        </span>
+      </button>
+
     </div>
 
-    <div class="topo-direita">
-      <button class="carrinho-botao">
-        CARRINHO
-        <span id="contador-carrinho">0</span>
-      </button>
-    </div>
   </header>
+
 
   <main>
 
-    <section class="hero">
+    <!-- ========================================
+         HERO
+    ========================================= -->
 
-      <div class="hero-fundo"></div>
+    <section
+      class="hero"
+      id="inicio"
+    >
 
-      <div class="hero-conteudo">
-        <p class="hero-etiqueta">
+      <div class="hero-arte">
+
+        <div class="hero-forma hero-forma-1"></div>
+
+        <div class="hero-forma hero-forma-2"></div>
+
+        <div class="hero-forma hero-forma-3"></div>
+
+        <div class="hero-luz"></div>
+
+      </div>
+
+
+      <div class="hero-superior">
+
+        <span>
+          OJOBOSCO
+        </span>
+
+        <span>
+          BRASIL — 2026
+        </span>
+
+      </div>
+
+
+      <div class="hero-centro">
+
+        <p class="microtexto">
           PERFUMARIA & MATERIALIDADE
         </p>
 
         <h1>
-          O objeto também guarda memória.
+          OBJETOS
+          <br>
+          PARA
+          <br>
+          HABITAR
+          <br>
+          O AR.
         </h1>
 
-        <p class="hero-texto">
-          Fragrâncias, matéria e gesto
-          em composições para o espaço.
-        </p>
-
-        <a href="#colecao" class="botao-principal">
-          DESCOBRIR A COLEÇÃO
-        </a>
       </div>
 
-      <div class="hero-indicador">
-        ROLE PARA DESCOBRIR
-      </div>
 
-    </section>
-
-
-    <section class="manifesto">
-
-      <div class="manifesto-numero">
-        01
-      </div>
-
-      <div class="manifesto-conteudo">
-        <p class="secao-etiqueta">
-          OJOBOSCO
-        </p>
-
-        <h2>
-          Entre perfumaria,
-          forma e matéria.
-        </h2>
+      <div class="hero-inferior">
 
         <p>
-          Criamos objetos perfumados para
-          transformar a presença de um espaço.
-          Textura, aroma e composição convivem
-          como partes de uma mesma experiência.
+          Fragrância, matéria e gesto
+          transformados em presença.
         </p>
+
+        <a
+          href="#objetos"
+          class="link-seta"
+        >
+          DESCOBRIR
+          <span>↓</span>
+        </a>
+
       </div>
 
     </section>
 
 
+    <!-- ========================================
+         FRASE
+    ========================================= -->
+
+    <section class="frase-grande reveal">
+
+      <p class="numero-secao">
+        01
+      </p>
+
+      <h2>
+        ENTRE O PERFUME
+        <br>
+        E A MATÉRIA,
+        <br>
+        EXISTE PRESENÇA.
+      </h2>
+
+    </section>
+
+
+    <!-- ========================================
+         OBJETOS
+    ========================================= -->
+
     <section
-      class="colecao"
-      id="colecao"
+      class="objetos"
+      id="objetos"
     >
 
-      <div class="secao-cabecalho">
+      <div class="cabecalho-secao reveal">
 
         <div>
-          <p class="secao-etiqueta">
-            SELEÇÃO
+          <p class="microtexto">
+            SELEÇÃO OJOBOSCO
           </p>
 
           <h2>
-            Objetos perfumados.
+            OBJETOS PERFUMADOS
           </h2>
         </div>
 
-        <div class="secao-numero">
+        <span>
           02
+        </span>
+
+      </div>
+
+
+      <div class="produto-destaque reveal">
+
+        <div class="produto-visual produto-visual-1">
+
+          <span class="produto-numero">
+            01
+          </span>
+
+          <div class="objeto-abstrato objeto-difusor">
+
+            <div class="frasco"></div>
+
+            <div class="vareta vareta-1"></div>
+            <div class="vareta vareta-2"></div>
+            <div class="vareta vareta-3"></div>
+            <div class="vareta vareta-4"></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="produto-conteudo">
+
+          <p class="microtexto">
+            DIFUSOR
+          </p>
+
+          <h3>
+            UMA PRESENÇA
+            <br>
+            CONTÍNUA.
+          </h3>
+
+          <p class="produto-descricao">
+            O perfume habita o espaço
+            lentamente. Um gesto silencioso,
+            permanente e matérico.
+          </p>
+
+          <div class="produto-final">
+
+            <span class="produto-preco">
+              R$ 189
+            </span>
+
+            <button
+              class="adicionar-carrinho"
+              data-produto="Difusor OJOBOSCO"
+            >
+              ADICIONAR
+            </button>
+
+          </div>
+
         </div>
 
       </div>
 
 
-      <div class="produtos-grid">
+      <div class="grade-produtos">
 
-        <article class="produto">
+        <article class="produto-card reveal">
 
-          <div class="produto-imagem produto-imagem-1">
+          <div class="produto-visual produto-visual-2">
 
-            <span class="produto-indice">
-              01
-            </span>
-
-          </div>
-
-          <div class="produto-info">
-
-            <div>
-              <h3>
-                Difusor
-              </h3>
-
-              <p>
-                Aroma como presença contínua.
-              </p>
-            </div>
-
-            <div class="produto-preco">
-              R$ 189
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="produto produto-deslocado">
-
-          <div class="produto-imagem produto-imagem-2">
-
-            <span class="produto-indice">
+            <span class="produto-numero">
               02
             </span>
 
+            <div class="objeto-abstrato objeto-spray">
+              <div class="spray-corpo"></div>
+              <div class="spray-tampa"></div>
+            </div>
+
           </div>
 
-          <div class="produto-info">
+          <div class="produto-card-info">
 
             <div>
-              <h3>
-                Home Spray
-              </h3>
-
-              <p>
-                Atmosfera em gesto imediato.
+              <p class="microtexto">
+                HOME SPRAY
               </p>
+
+              <h3>
+                ATMOSFERA
+              </h3>
             </div>
 
-            <div class="produto-preco">
-              OJOBOSCO
-            </div>
+            <button
+              class="adicionar-carrinho"
+              data-produto="Home Spray OJOBOSCO"
+            >
+              +
+            </button>
 
           </div>
 
         </article>
 
 
-        <article class="produto">
+        <article class="produto-card produto-card-baixo reveal">
 
-          <div class="produto-imagem produto-imagem-3">
+          <div class="produto-visual produto-visual-3">
 
-            <span class="produto-indice">
+            <span class="produto-numero">
               03
             </span>
 
+            <div class="objeto-abstrato objeto-vela">
+
+              <div class="vela-corpo"></div>
+
+              <div class="chama"></div>
+
+            </div>
+
           </div>
 
-          <div class="produto-info">
+          <div class="produto-card-info">
 
             <div>
-              <h3>
-                Vela
-              </h3>
-
-              <p>
-                Luz, matéria e fragrância.
+              <p class="microtexto">
+                VELA
               </p>
+
+              <h3>
+                LUZ & MATÉRIA
+              </h3>
             </div>
 
-            <div class="produto-preco">
-              OJOBOSCO
-            </div>
+            <button
+              class="adicionar-carrinho"
+              data-produto="Vela OJOBOSCO"
+            >
+              +
+            </button>
 
           </div>
 
@@ -217,25 +409,93 @@
     </section>
 
 
-    <section class="imagem-editorial">
+    <!-- ========================================
+         EDITORIAL
+    ========================================= -->
 
-      <div class="editorial-fundo">
+    <section class="editorial reveal">
 
-        <div class="editorial-texto">
+      <div class="editorial-imagem">
 
-          <span>
-            03
-          </span>
+        <div class="editorial-luz"></div>
+
+        <div class="editorial-objeto"></div>
+
+      </div>
+
+
+      <div class="editorial-texto">
+
+        <span class="numero-secao">
+          03
+        </span>
+
+        <p class="microtexto">
+          O PERFUME COMO OBJETO
+        </p>
+
+        <h2>
+          O INVISÍVEL
+          <br>
+          TAMBÉM TEM
+          <br>
+          FORMA.
+        </h2>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         MANIFESTO
+    ========================================= -->
+
+    <section
+      class="manifesto"
+      id="manifesto"
+    >
+
+      <div class="manifesto-esquerda reveal">
+
+        <p class="numero-secao">
+          04
+        </p>
+
+        <p class="microtexto">
+          MANIFESTO
+        </p>
+
+      </div>
+
+
+      <div class="manifesto-direita reveal">
+
+        <h2>
+          PERFUMARIA
+          <br>
+          NÃO É APENAS
+          <br>
+          AROMA.
+        </h2>
+
+        <div class="manifesto-textos">
 
           <p>
-            A fragrância não ocupa apenas o ar.
+            É memória.
+            É matéria.
+            É superfície.
+            É a transformação
+            silenciosa de um espaço.
           </p>
 
-          <h2>
-            Ela altera
-            a percepção
-            da matéria.
-          </h2>
+          <p>
+            A OJOBOSCO nasce no encontro
+            entre o sensorial e o objeto:
+            entre aquilo que podemos tocar
+            e aquilo que apenas permanece
+            no ar.
+          </p>
 
         </div>
 
@@ -244,42 +504,56 @@
     </section>
 
 
-    <section class="experiencia">
+    <!-- ========================================
+         MATERIALIDADE
+    ========================================= -->
 
-      <div class="experiencia-esquerda">
+    <section
+      class="materialidade"
+      id="materialidade"
+    >
 
-        <p class="secao-etiqueta">
-          A EXPERIÊNCIA
+      <div class="materialidade-texto reveal">
+
+        <p class="microtexto">
+          MATERIALIDADE
         </p>
 
         <h2>
-          O perfume
-          como linguagem
-          do espaço.
+          PERFUME.
+          <br>
+          TEXTURA.
+          <br>
+          SOMBRA.
+          <br>
+          OBJETO.
         </h2>
 
       </div>
 
-      <div class="experiencia-direita">
 
-        <p>
-          Cada criação OJOBOSCO parte da relação
-          entre perfume, textura, sombra,
-          superfície e memória.
-        </p>
+      <div class="materialidade-composicao reveal">
 
-        <p>
-          Não pensamos apenas em fragrâncias,
-          mas na forma como elas habitam
-          o ambiente.
-        </p>
+        <div class="material-bloco material-bloco-1"></div>
+
+        <div class="material-bloco material-bloco-2"></div>
+
+        <div class="material-circulo"></div>
+
+        <span>
+          05
+        </span>
 
       </div>
 
     </section>
 
 
-    <section class="assinatura">
+    <!-- ========================================
+         FRASE FINAL
+    ========================================= -->
+
+    <section class="assinatura reveal">
 
       <div class="assinatura-linha"></div>
 
@@ -288,11 +562,17 @@
       </p>
 
       <h2>
-        Perfumaria e materialidade.
+        PERFUMARIA
+        <br>
+        & MATERIALIDADE
       </h2>
 
-      <a href="#colecao">
-        VER COLEÇÃO
+      <a
+        href="#objetos"
+        class="link-seta"
+      >
+        CONHECER A COLEÇÃO
+        <span>→</span>
       </a>
 
     </section>
@@ -300,51 +580,90 @@
   </main>
 
 
-  <footer class="rodape">
+  <!-- ========================================
+       RODAPÉ
+  ========================================= -->
 
-    <div class="rodape-logo">
-      OJOBOSCO
-    </div>
+  <footer
+    class="rodape"
+    id="contato"
+  >
 
-    <div class="rodape-coluna">
+    <div class="rodape-marca">
 
-      <p>
-        NAVEGAÇÃO
-      </p>
-
-      <a href="#">
-        Início
-      </a>
-
-      <a href="#colecao">
-        Coleção
-      </a>
-
-      <a href="#">
-        Sobre
-      </a>
+      <span>
+        OJOBOSCO
+      </span>
 
     </div>
 
-    <div class="rodape-coluna">
 
-      <p>
-        CONTATO
-      </p>
+    <div class="rodape-links">
 
-      <a href="#">
-        Instagram
-      </a>
+      <div>
 
-      <a href="#">
-        Atendimento
-      </a>
+        <p>
+          NAVEGAÇÃO
+        </p>
 
-      <a href="#">
-        Atacado
-      </a>
+        <a href="#inicio">
+          INÍCIO
+        </a>
+
+        <a href="#objetos">
+          OBJETOS
+        </a>
+
+        <a href="#manifesto">
+          MANIFESTO
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <p>
+          CONTATO
+        </p>
+
+        <a href="#">
+          INSTAGRAM
+        </a>
+
+        <a href="#">
+          ATENDIMENTO
+        </a>
+
+        <a href="#">
+          ATACADO
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <p>
+          INFORMAÇÕES
+        </p>
+
+        <a href="#">
+          ENVIOS
+        </a>
+
+        <a href="#">
+          TROCAS
+        </a>
+
+        <a href="#">
+          PRIVACIDADE
+        </a>
+
+      </div>
 
     </div>
+
 
     <div class="rodape-final">
 
@@ -359,6 +678,54 @@
     </div>
 
   </footer>
+
+
+  <!-- ========================================
+       CARRINHO TEMPORÁRIO
+  ========================================= -->
+
+  <aside
+    class="carrinho"
+    id="carrinho"
+  >
+
+    <div class="carrinho-topo">
+
+      <span>
+        CARRINHO
+      </span>
+
+      <button
+        id="fecharCarrinho"
+        class="botao-texto"
+      >
+        FECHAR
+      </button>
+
+    </div>
+
+
+    <div
+      class="carrinho-conteudo"
+      id="carrinhoConteudo"
+    >
+
+      <p class="carrinho-vazio">
+        SEU CARRINHO ESTÁ VAZIO.
+      </p>
+
+    </div>
+
+
+    <div class="carrinho-final">
+
+      <p>
+        CHECKOUT EM DESENVOLVIMENTO
+      </p>
+
+    </div>
+
+  </aside>
 
 
   <script src="script.js"></script>
