@@ -1,15 +1,74 @@
-const menuButton = document.getElementById("menuButton");
-const menuPanel = document.getElementById("menuPanel");
+const menuToggle =
+  document.getElementById(
+    "menuToggle"
+  );
 
-if (menuButton && menuPanel) {
-  menuButton.addEventListener("click", () => {
-    menuPanel.classList.toggle("open");
-  });
+const closeMenu =
+  document.getElementById(
+    "closeMenu"
+  );
 
-  const menuLinks = menuPanel.querySelectorAll("a");
-  menuLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      menuPanel.classList.remove("open");
-    });
-  });
+const sideMenu =
+  document.getElementById(
+    "sideMenu"
+  );
+
+
+if (
+  menuToggle &&
+  sideMenu
+) {
+
+  menuToggle.addEventListener(
+    "click",
+    () => {
+
+      sideMenu.classList.add(
+        "open"
+      );
+
+    }
+  );
+
 }
+
+
+if (
+  closeMenu &&
+  sideMenu
+) {
+
+  closeMenu.addEventListener(
+    "click",
+    () => {
+
+      sideMenu.classList.remove(
+        "open"
+      );
+
+    }
+  );
+
+}
+
+
+document
+  .querySelectorAll(
+    ".side-menu a"
+  )
+  .forEach(
+    (link) => {
+
+      link.addEventListener(
+        "click",
+        () => {
+
+          sideMenu.classList.remove(
+            "open"
+          );
+
+        }
+      );
+
+    }
+  );
