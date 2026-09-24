@@ -13,7 +13,6 @@ const sideMenu =
     "sideMenu"
   );
 
-
 if (
   menuToggle &&
   sideMenu
@@ -32,7 +31,6 @@ if (
 
 }
 
-
 if (
   closeMenu &&
   sideMenu
@@ -50,7 +48,6 @@ if (
   );
 
 }
-
 
 document
   .querySelectorAll(
