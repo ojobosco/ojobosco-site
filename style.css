@@ -44,20 +44,33 @@ button {
 
 .announcement-bar {
   position: fixed;
+
   top: 0;
   left: 0;
+
   width: 100%;
-  height: 26px;
+  height: 34px;
+
   background: var(--branco);
   color: #000;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
-  padding: 0 14px;
+
+  padding:
+    0
+    14px;
+
   z-index: 1200;
-  font-size: 8px;
+
+  font-size: 9px;
+
   letter-spacing: 0.18em;
+
   text-transform: uppercase;
+
   text-align: center;
 }
 
@@ -65,49 +78,81 @@ button {
 
 .topbar {
   position: fixed;
-  top: 26px;
+
+  top: 34px;
   left: 0;
+
   width: 100%;
   height: 72px;
-  padding: 0 22px;
+
+  padding:
+    0
+    22px;
+
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
   align-items: center;
+
   z-index: 1100;
-  background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(8px);
+
+  background:
+    rgba(0, 0, 0, 0.9);
+
+  backdrop-filter:
+    blur(8px);
 }
 
 .menu-toggle {
   justify-self: start;
+
   border: 0;
+
   background: transparent;
+
   color: var(--off-white);
+
   cursor: pointer;
+
   font-size: 9px;
+
   letter-spacing: 0.3em;
 }
 
 .brand-top {
   justify-self: center;
+
   font-size: 12px;
+
   letter-spacing: 0.32em;
 }
 
 .top-actions {
   justify-self: end;
+
   display: flex;
+
   align-items: center;
+
   gap: 22px;
 }
 
 .nav-link,
 .cart-link {
   border: 0;
+
   background: transparent;
+
   color: var(--off-white);
+
   font-size: 9px;
+
   letter-spacing: 0.25em;
+
   cursor: pointer;
 }
 
@@ -115,46 +160,89 @@ button {
 
 .side-menu {
   position: fixed;
+
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100vh;
+
   background: #000;
+
   z-index: 1500;
-  transform: translateY(-105%);
-  transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1);
+
+  transform:
+    translateY(-105%);
+
+  transition:
+    transform
+    0.55s
+    cubic-bezier(
+      0.77,
+      0,
+      0.18,
+      1
+    );
 }
 
 .side-menu.open {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 }
 
 .side-menu-inner {
   min-height: 100vh;
-  padding: 35px 6vw;
+
+  padding:
+    35px
+    6vw;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: center;
+
   gap: 8px;
 }
 
 .close-menu {
   position: absolute;
+
   top: 30px;
   right: 35px;
+
   border: 0;
+
   background: transparent;
+
   color: var(--off-white);
+
   cursor: pointer;
+
   font-size: 9px;
+
   letter-spacing: 0.25em;
 }
 
 .side-menu a {
-  border-bottom: 1px solid var(--linha);
-  padding: 17px 0;
-  font-size: clamp(38px, 6vw, 90px);
+  border-bottom:
+    1px solid
+    var(--linha);
+
+  padding:
+    17px
+    0;
+
+  font-size:
+    clamp(
+      38px,
+      6vw,
+      90px
+    );
+
   line-height: 1;
+
   letter-spacing: -0.035em;
 }
 
@@ -162,56 +250,109 @@ button {
 
 .hero {
   width: 100%;
-  padding-top: 98px;
+
+  padding-top: 106px;
 }
 
 .hero-image-wrap {
   position: relative;
+
   width: 100%;
-  height: calc(100vh - 98px);
+
+  height:
+    calc(
+      100vh - 106px
+    );
+
   min-height: 620px;
+
   overflow: hidden;
 }
 
 .hero-image {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
-  object-position: center center;
+
+  object-position: center;
+
   display: block;
-  filter: brightness(0.82);
+
+  border-radius: 0;
+
+  filter:
+    brightness(0.82);
 }
 
 .hero-overlay {
   position: absolute;
+
   inset: 0;
+
   display: flex;
+
   align-items: center;
+
   justify-content: flex-start;
-  padding: 0 4vw;
+
+  padding:
+    0
+    4vw;
+
   pointer-events: none;
 }
 
 .hero-overlay h1 {
-  max-width: 46%;
-  font-size: clamp(42px, 6.2vw, 92px);
-  line-height: 0.94;
-  letter-spacing: -0.04em;
+  max-width: 760px;
+
+  font-family:
+    "Copperplate",
+    "Copperplate Gothic Light",
+    "Copperplate Gothic",
+    serif;
+
+  font-size:
+    clamp(
+      38px,
+      5.2vw,
+      76px
+    );
+
+  line-height: 0.96;
+
+  letter-spacing: -0.025em;
+
   font-weight: 400;
+
   text-transform: uppercase;
+
   color: var(--off-white);
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+
+  text-shadow:
+    0
+    4px
+    24px
+    rgba(0, 0, 0, 0.3);
 }
 
 /* PRODUTOS */
 
 .collection {
-  padding: 10vh 2vw;
+  padding:
+    10vh
+    2vw;
 }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
   gap: 2vw;
 }
 
@@ -221,37 +362,59 @@ button {
 
 .product-image {
   width: 100%;
-  aspect-ratio: 4 / 5;
+
+  aspect-ratio:
+    4 / 5;
+
   overflow: hidden;
+
   background: #080808;
 }
 
 .product-image img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
+
   display: block;
-  transition: transform 0.7s ease;
+
+  border-radius: 0;
+
+  transition:
+    transform
+    0.7s
+    ease;
 }
 
-.product-card:hover .product-image img {
-  transform: scale(1.015);
+.product-card:hover
+.product-image img {
+  transform:
+    scale(1.015);
 }
 
 .product-info {
-  padding: 14px 2px 0;
+  padding:
+    14px
+    2px
+    0;
 }
 
 .product-info h2 {
   font-size: 10px;
+
   font-weight: 400;
+
   letter-spacing: 0.24em;
+
   margin-bottom: 8px;
 }
 
 .product-price {
   font-size: 10px;
+
   letter-spacing: 0.18em;
+
   color: var(--cinza);
 }
 
@@ -259,98 +422,166 @@ button {
 
 .manifesto {
   min-height: 80vh;
-  padding: 12vh 5vw;
+
+  padding:
+    12vh
+    5vw;
+
   display: flex;
+
   align-items: center;
-  border-top: 1px solid var(--linha);
+
+  border-top:
+    1px solid
+    var(--linha);
 }
 
 .manifesto h2 {
-  font-size: clamp(58px, 10vw, 165px);
+  font-size:
+    clamp(
+      58px,
+      10vw,
+      165px
+    );
+
   line-height: 0.82;
+
   letter-spacing: -0.055em;
+
   font-weight: 400;
+
   text-transform: uppercase;
 }
 
 /* RODAPÉ */
 
 .footer {
-  padding: 8vh 5vw 30px;
-  border-top: 1px solid var(--linha);
+  padding:
+    8vh
+    5vw
+    30px;
+
+  border-top:
+    1px solid
+    var(--linha);
 }
 
 .footer-columns {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
   gap: 6vw;
 }
 
 .footer-columns > div {
   display: flex;
+
   flex-direction: column;
+
   align-items: flex-start;
+
   gap: 12px;
 }
 
 .footer-title {
   margin-bottom: 10px;
+
   color: var(--cinza);
+
   font-size: 8px;
+
   letter-spacing: 0.24em;
 }
 
 .footer-columns a {
   font-size: 9px;
+
   letter-spacing: 0.18em;
 }
 
 .footer-bottom {
   margin-top: 9vh;
+
   padding-top: 18px;
-  border-top: 1px solid var(--linha);
+
+  border-top:
+    1px solid
+    var(--linha);
+
   display: flex;
+
   justify-content: space-between;
+
   color: var(--cinza);
+
   font-size: 8px;
+
   letter-spacing: 0.18em;
 }
 
 /* TABLET */
 
-@media (max-width: 900px) {
+@media
+(max-width: 900px) {
+
   .nav-link {
     display: none;
   }
 
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
   .footer-columns {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      1fr
+      1fr;
   }
 
   .hero-overlay h1 {
-    max-width: 52%;
-    font-size: clamp(40px, 7vw, 72px);
+    max-width: 58%;
+
+    font-size:
+      clamp(
+        36px,
+        6.5vw,
+        64px
+      );
   }
+
 }
 
 /* CELULAR */
 
-@media (max-width: 600px) {
+@media
+(max-width: 600px) {
+
   .announcement-bar {
-    height: 24px;
-    font-size: 7px;
+    height: 30px;
+
+    font-size: 8px;
+
     letter-spacing: 0.12em;
-    padding: 0 10px;
+
+    padding:
+      0
+      10px;
   }
 
   .topbar {
-    top: 24px;
+    top: 30px;
+
     height: 62px;
-    padding: 0 14px;
+
+    padding:
+      0
+      14px;
   }
 
   .brand-top {
@@ -363,27 +594,44 @@ button {
   }
 
   .hero {
-    padding-top: 86px;
+    padding-top: 92px;
   }
 
   .hero-image-wrap {
-    height: calc(100svh - 86px);
+    height:
+      calc(
+        100svh - 92px
+      );
+
     min-height: 520px;
   }
 
   .hero-overlay {
     align-items: flex-start;
-    padding: 24px 16px 0;
+
+    padding:
+      28px
+      16px
+      0;
   }
 
   .hero-overlay h1 {
-    max-width: 62%;
-    font-size: clamp(32px, 10.5vw, 52px);
-    line-height: 0.96;
+    max-width: 70%;
+
+    font-size:
+      clamp(
+        30px,
+        9.2vw,
+        46px
+      );
+
+    line-height: 0.98;
   }
 
   .collection {
-    padding: 70px 15px;
+    padding:
+      70px
+      15px;
   }
 
   .products-grid {
@@ -392,33 +640,46 @@ button {
 
   .manifesto {
     min-height: 65vh;
-    padding: 80px 18px;
+
+    padding:
+      80px
+      18px;
   }
 
   .manifesto h2 {
     font-size: 14vw;
+
     line-height: 0.88;
   }
 
   .footer {
-    padding: 60px 18px 25px;
+    padding:
+      60px
+      18px
+      25px;
   }
 
   .footer-columns {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
+
     gap: 45px;
   }
 
   .footer-bottom {
     flex-direction: column;
+
     gap: 10px;
   }
 
   .side-menu-inner {
-    padding: 30px 18px;
+    padding:
+      30px
+      18px;
   }
 
   .side-menu a {
     font-size: 11vw;
   }
+
 }
