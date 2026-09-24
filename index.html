@@ -1,359 +1,152 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OJOBOSCO</title>
-
-  <meta
-    name="description"
-    content="OJOBOSCO — entre perfumaria e materialidade."
-  >
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
+  <meta name="description" content="OJOBOSCO — entre perfumaria e materialidade." />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
-
 <body>
 
+  <!-- FAIXA SUPERIOR -->
+  <div class="announcement-bar">
+    GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
+  </div>
+
   <!-- TOPO -->
-
   <header class="topbar">
-
-    <button
-      class="menu-toggle"
-      id="menuToggle"
-      aria-label="Abrir menu"
-    >
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
       MENU
     </button>
 
-
-    <a
-      href="#inicio"
-      class="brand-top"
-    >
+    <a href="#inicio" class="brand-top">
       OJOBOSCO
     </a>
 
-
     <div class="top-actions">
-
-      <a
-        href="#colecao"
-        class="colecao-link"
-      >
-        CONHECER A COLEÇÃO
-      </a>
-
-      <button
-        class="cart-link"
-        type="button"
-      >
-        CARRINHO 0
-      </button>
-
+      <a href="#inicio" class="nav-link">UNIVERSO</a>
+      <a href="#colecao" class="nav-link">LOJA</a>
+      <a href="#manifesto" class="nav-link">SOBRE</a>
+      <button class="cart-link" type="button">CARRINHO 0</button>
     </div>
-
   </header>
 
-
   <!-- MENU -->
-
-  <nav
-    class="side-menu"
-    id="sideMenu"
-  >
-
+  <nav class="side-menu" id="sideMenu">
     <div class="side-menu-inner">
+      <button class="close-menu" id="closeMenu">FECHAR</button>
 
-      <button
-        class="close-menu"
-        id="closeMenu"
-      >
-        FECHAR
-      </button>
-
-      <a href="#inicio">
-        INÍCIO
-      </a>
-
-      <a href="#colecao">
-        OBJETOS
-      </a>
-
-      <a href="#manifesto">
-        MANIFESTO
-      </a>
-
-      <a href="#contato">
-        CONTATO
-      </a>
-
+      <a href="#inicio">UNIVERSO</a>
+      <a href="#colecao">LOJA</a>
+      <a href="#manifesto">SOBRE</a>
+      <a href="#contato">CONTATO</a>
     </div>
-
   </nav>
-
-
 
   <main>
 
-
     <!-- HERO -->
-
-    <section
-      class="hero"
-      id="inicio"
-    >
-
+    <section class="hero" id="inicio">
       <div class="hero-image-wrap">
-
-        <img
-          src="hero.jpg"
-          alt="OJOBOSCO"
-          class="hero-image"
-        >
-
+        <img src="hero.jpg" alt="OJOBOSCO" class="hero-image" />
 
         <div class="hero-overlay">
-
           <h1>
-            ENTRE
-            <br>
-            PERFUMARIA
-            <br>
+            ENTRE<br />
+            PERFUMARIA<br />
             E MATERIALIDADE.
           </h1>
-
         </div>
-
       </div>
-
     </section>
-
-
 
     <!-- PRODUTOS -->
-
-    <section
-      class="collection"
-      id="colecao"
-    >
-
+    <section class="collection" id="colecao">
       <div class="products-grid">
 
-
         <article class="product-card">
-
           <a href="#">
-
             <div class="product-image">
-
-              <img
-                src="difusor.jpg"
-                alt="Difusor OJOBOSCO"
-              >
-
+              <img src="homespray.jpg" alt="Home Spray OJOBOSCO" />
             </div>
-
-
             <div class="product-info">
-
-              <h2>
-                DIFUSOR
-              </h2>
-
+              <h2>HOME SPRAY</h2>
+              <p class="product-price">A PARTIR DE R$179</p>
             </div>
-
           </a>
-
         </article>
 
-
-
         <article class="product-card">
-
           <a href="#">
-
             <div class="product-image">
-
-              <img
-                src="homespray.jpg"
-                alt="Home Spray OJOBOSCO"
-              >
-
+              <img src="difusor.jpg" alt="Difusor OJOBOSCO" />
             </div>
-
-
             <div class="product-info">
-
-              <h2>
-                HOME SPRAY
-              </h2>
-
+              <h2>DIFUSOR</h2>
+              <p class="product-price">A PARTIR DE R$189</p>
             </div>
-
           </a>
-
         </article>
 
-
-
         <article class="product-card">
-
           <a href="#">
-
             <div class="product-image">
-
-              <img
-                src="vela.jpg"
-                alt="Vela OJOBOSCO"
-              >
-
+              <img src="vela.jpg" alt="Vela OJOBOSCO" />
             </div>
-
-
             <div class="product-info">
-
-              <h2>
-                VELA
-              </h2>
-
+              <h2>VELA</h2>
+              <p class="product-price">R$299</p>
             </div>
-
           </a>
-
         </article>
-
 
       </div>
-
     </section>
-
-
 
     <!-- MANIFESTO -->
-
-    <section
-      class="manifesto"
-      id="manifesto"
-    >
-
+    <section class="manifesto" id="manifesto">
       <h2>
-        OBJETOS
-        <br>
-        QUE HABITAM
-        <br>
+        OBJETOS<br />
+        QUE HABITAM<br />
         O AR.
       </h2>
-
     </section>
-
 
   </main>
 
-
-
   <!-- RODAPÉ -->
-
-  <footer
-    class="footer"
-    id="contato"
-  >
-
+  <footer class="footer" id="contato">
     <div class="footer-columns">
 
-
       <div>
-
-        <p class="footer-title">
-          NAVEGAÇÃO
-        </p>
-
-        <a href="#inicio">
-          INÍCIO
-        </a>
-
-        <a href="#colecao">
-          OBJETOS
-        </a>
-
-        <a href="#manifesto">
-          MANIFESTO
-        </a>
-
+        <p class="footer-title">UNIVERSO</p>
+        <a href="#inicio">INÍCIO</a>
+        <a href="#manifesto">MANIFESTO</a>
       </div>
 
-
-
       <div>
-
-        <p class="footer-title">
-          CONTATO
-        </p>
-
-        <a href="#">
-          INSTAGRAM
-        </a>
-
-        <a href="#">
-          ATENDIMENTO
-        </a>
-
+        <p class="footer-title">LOJA</p>
+        <a href="#colecao">HOME SPRAY</a>
+        <a href="#colecao">DIFUSOR</a>
+        <a href="#colecao">VELA</a>
       </div>
 
-
-
       <div>
-
-        <p class="footer-title">
-          INFORMAÇÕES
-        </p>
-
-        <a href="#">
-          ENVIOS
-        </a>
-
-        <a href="#">
-          TROCAS
-        </a>
-
-        <a href="#">
-          PRIVACIDADE
-        </a>
-
+        <p class="footer-title">SOBRE</p>
+        <a href="#contato">CONTATO</a>
+        <a href="#">INSTAGRAM</a>
+        <a href="#">PRIVACIDADE</a>
       </div>
-
 
     </div>
-
 
     <div class="footer-bottom">
-
-      <span>
-        © 2026 OJOBOSCO
-      </span>
-
-      <span>
-        BRASIL
-      </span>
-
+      <span>© 2026 OJOBOSCO</span>
+      <span>BRASIL</span>
     </div>
-
   </footer>
 
-
   <script src="script.js"></script>
-
 </body>
-
 </html>
