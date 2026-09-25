@@ -1,27 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>OJOBOSCO</title>
 
   <meta
     name="description"
     content="OJOBOSCO — entre perfumaria e materialidade."
-  />
+  >
 
-  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
 </head>
+
 
 <body>
 
-  <!-- FAIXA DE FRETE -->
+
+  <!-- ========================================
+       FAIXA DE FRETE
+  ========================================= -->
+
   <div class="announcement-bar">
+
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
+
   </div>
 
-  <!-- TOPO -->
+
+
+  <!-- ========================================
+       TOPO
+  ========================================= -->
+
   <header class="topbar">
 
     <button
@@ -32,73 +54,129 @@
       MENU
     </button>
 
-    <a href="#inicio" class="brand-top">
+
+    <a
+      href="#inicio"
+      class="brand-top"
+    >
       OJOBOSCO
     </a>
 
+
     <div class="top-actions">
 
-      <a href="#inicio" class="nav-link">
+      <a
+        href="#inicio"
+        class="nav-link"
+      >
         UNIVERSO
       </a>
 
-      <a href="#colecao" class="nav-link">
+      <a
+        href="#colecao"
+        class="nav-link"
+      >
         LOJA
       </a>
 
-      <a href="#manifesto" class="nav-link">
+      <a
+        href="#manifesto"
+        class="nav-link"
+      >
         SOBRE
       </a>
 
-      <button class="cart-link" type="button">
-        CARRINHO 0
+      <button
+        class="cart-link"
+        id="cartButton"
+        type="button"
+      >
+        CARRINHO
+        <span id="cartCount">
+          0
+        </span>
       </button>
 
     </div>
 
   </header>
 
-  <!-- MENU -->
-  <nav class="side-menu" id="sideMenu">
+
+
+  <!-- ========================================
+       MENU
+  ========================================= -->
+
+  <nav
+    class="side-menu"
+    id="sideMenu"
+  >
 
     <div class="side-menu-inner">
 
       <button
         class="close-menu"
         id="closeMenu"
+        aria-label="Fechar menu"
       >
         FECHAR
       </button>
 
-      <a href="#inicio">UNIVERSO</a>
-      <a href="#colecao">LOJA</a>
-      <a href="#manifesto">SOBRE</a>
-      <a href="#contato">CONTATO</a>
+
+      <a href="#inicio">
+        UNIVERSO
+      </a>
+
+      <a href="#colecao">
+        LOJA
+      </a>
+
+      <a href="#manifesto">
+        SOBRE
+      </a>
+
+      <a href="#newsletter">
+        NEWSLETTER
+      </a>
+
+      <a href="#contato">
+        CONTATO
+      </a>
 
     </div>
 
   </nav>
 
+
+
   <main>
 
-    <!-- HERO -->
-    <section class="hero" id="inicio">
+
+    <!-- ========================================
+         HERO
+    ========================================= -->
+
+    <section
+      class="hero"
+      id="inicio"
+    >
 
       <div class="hero-image-wrap">
 
         <img
           src="hero.jpg"
-          alt="OJOBOSCO"
+          alt="OJOBOSCO — entre perfumaria e materialidade"
           class="hero-image"
-        />
+        >
+
 
         <div class="hero-overlay">
 
           <h1>
             ENTRE
-            <br />
+            <br>
             PERFUMARIA
-            <br />
+            <br>
             E MATERIALIDADE.
           </h1>
 
@@ -108,25 +186,41 @@
 
     </section>
 
-    <!-- PRODUTOS -->
-    <section class="collection" id="colecao">
+
+
+    <!-- ========================================
+         PRODUTOS
+    ========================================= -->
+
+    <section
+      class="collection"
+      id="colecao"
+    >
 
       <div class="products-grid">
+
+
+        <!-- HOME SPRAY -->
 
         <article class="product-card">
 
           <a href="#">
 
             <div class="product-image">
+
               <img
                 src="homespray.jpg"
                 alt="Home Spray OJOBOSCO"
-              />
+              >
+
             </div>
+
 
             <div class="product-info">
 
-              <h2>HOME SPRAY</h2>
+              <h2>
+                HOME SPRAY
+              </h2>
 
               <p class="product-price">
                 A PARTIR DE R$179
@@ -138,20 +232,29 @@
 
         </article>
 
+
+
+        <!-- DIFUSOR -->
+
         <article class="product-card">
 
           <a href="#">
 
             <div class="product-image">
+
               <img
                 src="difusor.jpg"
                 alt="Difusor OJOBOSCO"
-              />
+              >
+
             </div>
+
 
             <div class="product-info">
 
-              <h2>DIFUSOR</h2>
+              <h2>
+                DIFUSOR
+              </h2>
 
               <p class="product-price">
                 A PARTIR DE R$189
@@ -163,23 +266,32 @@
 
         </article>
 
+
+
+        <!-- BIBLIOTECA OLFATIVA -->
+
         <article class="product-card">
 
           <a href="#">
 
             <div class="product-image">
+
               <img
-                src="vela.jpg"
-                alt="Vela OJOBOSCO"
-              />
+                src="biblioteca.jpg"
+                alt="Biblioteca Olfativa OJOBOSCO"
+              >
+
             </div>
+
 
             <div class="product-info">
 
-              <h2>VELA</h2>
+              <h2>
+                BIBLIOTECA OLFATIVA
+              </h2>
 
               <p class="product-price">
-                R$299
+                R$239
               </p>
 
             </div>
@@ -188,29 +300,236 @@
 
         </article>
 
+
+
+        <!-- VELA -->
+
+        <article class="product-card product-card-wide">
+
+          <a href="#">
+
+            <div class="product-image">
+
+              <img
+                src="vela.jpg"
+                alt="Vela OJOBOSCO"
+              >
+
+            </div>
+
+
+            <div class="product-info">
+
+              <h2>
+                VELA
+              </h2>
+
+              <p class="product-price">
+                R$289
+              </p>
+
+            </div>
+
+          </a>
+
+        </article>
+
+
+
+        <!-- PERFUME -->
+
+        <article class="product-card product-card-wide">
+
+          <a href="#">
+
+            <div class="product-image">
+
+              <img
+                src="perfume.jpg"
+                alt="Perfume OJOBOSCO"
+              >
+
+            </div>
+
+
+            <div class="product-info">
+
+              <h2>
+                PERFUME
+              </h2>
+
+              <p class="product-price">
+                R$429
+              </p>
+
+            </div>
+
+          </a>
+
+        </article>
+
+
       </div>
 
     </section>
 
-    <!-- MANIFESTO -->
-    <section class="manifesto" id="manifesto">
 
-      <h2>
-        OBJETOS
-        <br />
-        QUE HABITAM
-        <br />
-        O AR.
-      </h2>
+
+    <!-- ========================================
+         MANIFESTO
+    ========================================= -->
+
+    <section
+      class="manifesto"
+      id="manifesto"
+    >
+
+      <div class="manifesto-image-wrap">
+
+        <img
+          src="manifesto.jpg"
+          alt="Universo OJOBOSCO"
+          class="manifesto-image"
+        >
+
+
+        <div class="manifesto-overlay">
+
+          <h2>
+            OBJETOS
+            <br>
+            QUE HABITAM
+            <br>
+            O AR.
+          </h2>
+
+        </div>
+
+      </div>
 
     </section>
 
+
+
+    <!-- ========================================
+         NEWSLETTER
+    ========================================= -->
+
+    <section
+      class="newsletter"
+      id="newsletter"
+    >
+
+      <div class="newsletter-inner">
+
+
+        <div class="newsletter-heading">
+
+          <p>
+            NEWSLETTER
+          </p>
+
+          <h2>
+            ENTRE NO
+            <br>
+            UNIVERSO
+            <br>
+            OJOBOSCO.
+          </h2>
+
+        </div>
+
+
+        <div class="newsletter-form-area">
+
+          <p class="newsletter-description">
+
+            Cadastre-se e receba
+            <strong>
+              10% na primeira compra.
+            </strong>
+
+          </p>
+
+
+          <form
+            class="newsletter-form"
+            id="newsletterForm"
+          >
+
+            <label
+              for="newsletterEmail"
+              class="sr-only"
+            >
+              Seu e-mail
+            </label>
+
+
+            <div class="newsletter-field">
+
+              <input
+                type="email"
+                id="newsletterEmail"
+                name="email"
+                placeholder="SEU E-MAIL"
+                autocomplete="email"
+                required
+              >
+
+
+              <button
+                type="submit"
+              >
+                CADASTRAR
+              </button>
+
+            </div>
+
+          </form>
+
+
+          <div
+            class="newsletter-success"
+            id="newsletterSuccess"
+            aria-live="polite"
+          >
+
+            <p>
+              BEM-VINDA AO UNIVERSO OJOBOSCO
+            </p>
+
+            <span>
+              SEU CÓDIGO:
+              <strong>
+                BEMVINDO
+              </strong>
+            </span>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
   </main>
 
-  <!-- RODAPÉ -->
-  <footer class="footer" id="contato">
+
+
+  <!-- ========================================
+       RODAPÉ
+  ========================================= -->
+
+  <footer
+    class="footer"
+    id="contato"
+  >
 
     <div class="footer-columns">
+
 
       <div>
 
@@ -228,6 +547,8 @@
 
       </div>
 
+
+
       <div>
 
         <p class="footer-title">
@@ -243,10 +564,20 @@
         </a>
 
         <a href="#colecao">
+          BIBLIOTECA OLFATIVA
+        </a>
+
+        <a href="#colecao">
           VELA
         </a>
 
+        <a href="#colecao">
+          PERFUME
+        </a>
+
       </div>
+
+
 
       <div>
 
@@ -263,12 +594,22 @@
         </a>
 
         <a href="#">
+          ENVIOS
+        </a>
+
+        <a href="#">
+          TROCAS
+        </a>
+
+        <a href="#">
           PRIVACIDADE
         </a>
 
       </div>
 
+
     </div>
+
 
     <div class="footer-bottom">
 
@@ -284,7 +625,13 @@
 
   </footer>
 
-  <script src="script.js"></script>
+
+
+  <script
+    src="script.js"
+  ></script>
+
 
 </body>
+
 </html>
