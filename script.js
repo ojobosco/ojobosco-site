@@ -29,9 +29,7 @@ const newsletterSuccess =
   );
 
 
-/* =========================================
-   MENU
-========================================= */
+/* MENU */
 
 if (
   menuToggle &&
@@ -44,15 +42,12 @@ if (
 
       sideMenu
         .classList
-        .add(
-          "open"
-        );
+        .add("open");
 
       document
         .body
         .style
-        .overflow =
-        "hidden";
+        .overflow = "hidden";
 
     }
   );
@@ -71,15 +66,12 @@ if (
 
       sideMenu
         .classList
-        .remove(
-          "open"
-        );
+        .remove("open");
 
       document
         .body
         .style
-        .overflow =
-        "";
+        .overflow = "";
 
     }
   );
@@ -92,9 +84,7 @@ document
     ".side-menu a"
   )
   .forEach(
-    (
-      link
-    ) => {
+    (link) => {
 
       link.addEventListener(
         "click",
@@ -102,15 +92,12 @@ document
 
           sideMenu
             .classList
-            .remove(
-              "open"
-            );
+            .remove("open");
 
           document
             .body
             .style
-            .overflow =
-            "";
+            .overflow = "";
 
         }
       );
@@ -119,9 +106,7 @@ document
   );
 
 
-/* =========================================
-   NEWSLETTER
-========================================= */
+/* NEWSLETTER - SOMENTE HOME */
 
 if (
   newsletterForm &&
@@ -131,12 +116,9 @@ if (
 
   newsletterForm.addEventListener(
     "submit",
-    (
-      event
-    ) => {
+    (event) => {
 
       event.preventDefault();
-
 
       const email =
         newsletterEmail
@@ -144,35 +126,22 @@ if (
           .trim()
           .toLowerCase();
 
-
       if (!email) {
         return;
       }
-
-
-      /*
-       * TEMPORÁRIO:
-       *
-       * Salva apenas no navegador.
-       * Depois conectaremos a newsletter
-       * a um serviço real de e-mail.
-       */
 
       localStorage.setItem(
         "ojobosco-newsletter-email",
         email
       );
 
-
-      newsletterForm.style.display =
-        "none";
-
+      newsletterForm
+        .style
+        .display = "none";
 
       newsletterSuccess
         .classList
-        .add(
-          "visible"
-        );
+        .add("visible");
 
     }
   );
