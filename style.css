@@ -34,7 +34,6 @@ html {
 
 body {
   background: var(--preto);
-
   color: var(--off-white);
 
   font-family: var(--fonte);
@@ -45,7 +44,6 @@ body {
 
 a {
   color: inherit;
-
   text-decoration: none;
 }
 
@@ -97,8 +95,7 @@ img {
   height: 34px;
 
   background: var(--branco);
-
-  color: #000000;
+  color: #000;
 
   display: flex;
 
@@ -215,7 +212,7 @@ img {
   width: 100%;
   height: 100vh;
 
-  background: #000000;
+  background: #000;
 
   z-index: 1500;
 
@@ -297,7 +294,7 @@ img {
 }
 
 
-/* HERO */
+/* HOME HERO */
 
 .hero {
   width: 100%;
@@ -310,12 +307,6 @@ img {
   display: block;
 
   width: 100%;
-
-  color: inherit;
-
-  text-decoration: none;
-
-  cursor: pointer;
 }
 
 
@@ -332,8 +323,6 @@ img {
   min-height: 620px;
 
   overflow: hidden;
-
-  background: #000000;
 }
 
 
@@ -359,8 +348,6 @@ img {
 
   align-items: center;
 
-  justify-content: flex-start;
-
   padding:
     0
     4vw;
@@ -384,12 +371,10 @@ img {
   letter-spacing: -0.025em;
 
   font-weight: 400;
-
-  text-transform: uppercase;
 }
 
 
-/* PRODUTOS */
+/* HOME PRODUTOS */
 
 .collection {
   padding:
@@ -410,11 +395,6 @@ img {
 }
 
 
-.product-card {
-  min-width: 0;
-}
-
-
 .product-image {
   width: 100%;
 
@@ -422,8 +402,6 @@ img {
     4 / 5;
 
   overflow: hidden;
-
-  background: #080808;
 }
 
 
@@ -434,18 +412,6 @@ img {
   object-fit: cover;
 
   object-position: center;
-
-  transition:
-    transform
-    0.7s
-    ease;
-}
-
-
-.product-card:hover
-.product-image img {
-  transform:
-    scale(1.015);
 }
 
 
@@ -479,11 +445,6 @@ img {
 
 /* MANIFESTO */
 
-.manifesto {
-  width: 100%;
-}
-
-
 .manifesto-image-wrap {
   position: relative;
 
@@ -497,8 +458,6 @@ img {
   min-height: 620px;
 
   overflow: hidden;
-
-  background: #000000;
 }
 
 
@@ -507,8 +466,6 @@ img {
   height: 100%;
 
   object-fit: cover;
-
-  object-position: center;
 
   filter:
     brightness(0.76);
@@ -541,8 +498,6 @@ img {
     );
 
   line-height: 0.96;
-
-  letter-spacing: -0.025em;
 
   font-weight: 400;
 }
@@ -605,19 +560,12 @@ img {
 }
 
 
-.newsletter-description strong {
-  color: var(--off-white);
-
-  font-weight: 400;
-}
-
-
 .newsletter-field {
   display: flex;
 
-  align-items: center;
-
   gap: 25px;
+
+  align-items: center;
 
   padding-bottom: 12px;
 
@@ -630,8 +578,6 @@ img {
 .newsletter-field input {
   flex: 1;
 
-  min-width: 0;
-
   border: 0;
 
   outline: none;
@@ -641,8 +587,6 @@ img {
   color: var(--off-white);
 
   font-size: 10px;
-
-  letter-spacing: 0.18em;
 }
 
 
@@ -651,11 +595,9 @@ img {
 
   background: transparent;
 
-  cursor: pointer;
-
   font-size: 9px;
 
-  letter-spacing: 0.22em;
+  cursor: pointer;
 }
 
 
@@ -678,8 +620,6 @@ img {
 }
 
 
-/* INTRO */
-
 .historia-intro {
   max-width: 900px;
 
@@ -696,7 +636,9 @@ img {
 }
 
 
-.historia-texto-padronizado {
+.historia-texto-padronizado,
+.historia-texto-unico > p,
+.historia-final p {
   font-size:
     clamp(
       14px,
@@ -709,8 +651,6 @@ img {
   letter-spacing: 0.08em;
 
   text-transform: uppercase;
-
-  font-weight: 400;
 }
 
 
@@ -719,11 +659,7 @@ img {
 }
 
 
-/* FOTO */
-
 .historia-retrato {
-  width: 100%;
-
   display: flex;
 
   flex-direction: column;
@@ -748,8 +684,6 @@ img {
     3 / 4;
 
   overflow: hidden;
-
-  background: #080808;
 }
 
 
@@ -758,8 +692,6 @@ img {
   height: 100%;
 
   object-fit: cover;
-
-  object-position: center;
 }
 
 
@@ -775,12 +707,8 @@ img {
   line-height: 1.8;
 
   letter-spacing: 0.20em;
-
-  text-transform: uppercase;
 }
 
-
-/* TEXTO */
 
 .historia-texto-unico {
   max-width: 850px;
@@ -800,59 +728,248 @@ img {
 
 .historia-texto-unico > p {
   margin-bottom: 42px;
-
-  font-size:
-    clamp(
-      14px,
-      1.2vw,
-      18px
-    );
-
-  line-height: 2;
-
-  letter-spacing: 0.08em;
-
-  text-transform: uppercase;
-
-  font-weight: 400;
 }
 
-
-/* FECHAMENTO */
 
 .historia-final {
   margin-top: 52px;
 }
 
 
-.historia-final p {
-  margin: 0;
+.historia-fecho-final {
+  margin-top: 12px !important;
+}
+
+
+/* =========================================
+   LOJA
+========================================= */
+
+.loja-page {
+  padding-top: 106px;
+}
+
+
+/* FAMÍLIAS */
+
+.familias-section {
+  padding:
+    90px
+    0
+    120px;
+}
+
+
+.familias-section h1 {
+  padding:
+    0
+    4vw;
+
+  margin-bottom: 45px;
 
   font-size:
     clamp(
-      14px,
-      1.2vw,
-      18px
+      34px,
+      4.5vw,
+      68px
     );
 
-  line-height: 2;
-
-  letter-spacing: 0.08em;
-
-  text-transform: uppercase;
+  line-height: 0.94;
 
   font-weight: 400;
 }
 
 
-.historia-fecho-final {
-  margin-top: 12px !important;
+.familias-rail {
+  display: flex;
 
-  color: var(--off-white);
+  gap: 18px;
+
+  overflow-x: auto;
+
+  scroll-snap-type:
+    x mandatory;
+
+  padding:
+    0
+    4vw
+    15px;
+
+  scrollbar-width: none;
 }
 
 
-/* RODAPÉ */
+.familias-rail::-webkit-scrollbar {
+  display: none;
+}
+
+
+.familia-card {
+  flex:
+    0
+    0
+    clamp(
+      220px,
+      23vw,
+      355px
+    );
+
+  scroll-snap-align: start;
+}
+
+
+.familia-image {
+  width: 100%;
+
+  aspect-ratio:
+    4 / 5;
+
+  overflow: hidden;
+
+  background: #080808;
+}
+
+
+.familia-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.familia-card p {
+  padding-top: 13px;
+
+  font-size: 9px;
+
+  letter-spacing: 0.20em;
+}
+
+
+.familia-card.active
+.familia-image {
+  outline:
+    1px solid
+    var(--off-white);
+}
+
+
+/* OBJETOS */
+
+.objetos-section {
+  padding:
+    40px
+    0
+    130px;
+}
+
+
+.objetos-section h2 {
+  padding:
+    0
+    4vw;
+
+  margin-bottom: 48px;
+
+  font-size:
+    clamp(
+      34px,
+      4.5vw,
+      68px
+    );
+
+  line-height: 0.94;
+
+  font-weight: 400;
+}
+
+
+.objetos-rail {
+  display: flex;
+
+  gap: 20px;
+
+  overflow-x: auto;
+
+  scroll-snap-type:
+    x mandatory;
+
+  padding:
+    0
+    4vw
+    22px;
+
+  scrollbar-width: none;
+}
+
+
+.objetos-rail::-webkit-scrollbar {
+  display: none;
+}
+
+
+.objeto-card {
+  flex:
+    0
+    0
+    clamp(
+      260px,
+      28vw,
+      430px
+    );
+
+  scroll-snap-align: start;
+}
+
+
+.objeto-image {
+  width: 100%;
+
+  aspect-ratio:
+    4 / 5;
+
+  overflow: hidden;
+
+  background: #080808;
+}
+
+
+.objeto-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+}
+
+
+.objeto-card h3 {
+  margin-top: 14px;
+
+  margin-bottom: 7px;
+
+  font-size: 10px;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  letter-spacing: 0.18em;
+}
+
+
+.objeto-card p {
+  color: var(--cinza);
+
+  font-size: 9px;
+
+  letter-spacing: 0.16em;
+}
+
+
+/* FOOTER */
 
 .footer {
   padding:
@@ -880,8 +997,6 @@ img {
   display: flex;
 
   flex-direction: column;
-
-  align-items: flex-start;
 
   gap: 12px;
 }
@@ -944,8 +1059,6 @@ img {
   .newsletter-inner {
     grid-template-columns:
       1fr;
-
-    gap: 70px;
   }
 
 
@@ -965,10 +1078,6 @@ img {
 
   .announcement-bar {
     height: 30px;
-
-    padding:
-      0
-      10px;
 
     font-size: 8px;
   }
@@ -1003,7 +1112,8 @@ img {
   }
 
 
-  .hero-image-wrap {
+  .hero-image-wrap,
+  .manifesto-image-wrap {
     height: auto;
 
     min-height: 0;
@@ -1013,12 +1123,14 @@ img {
   }
 
 
-  .hero-image {
+  .hero-image,
+  .manifesto-image {
     object-fit: contain;
   }
 
 
-  .hero-overlay {
+  .hero-overlay,
+  .manifesto-overlay {
     align-items: flex-start;
 
     padding:
@@ -1027,7 +1139,8 @@ img {
   }
 
 
-  .hero-overlay h1 {
+  .hero-overlay h1,
+  .manifesto-overlay h2 {
     max-width: 74%;
 
     font-size:
@@ -1038,8 +1151,6 @@ img {
       );
   }
 
-
-  /* PRODUTOS */
 
   .collection {
     padding:
@@ -1068,60 +1179,7 @@ img {
 
 
   .product-info {
-    padding:
-      10px
-      2px
-      0;
-
     text-align: center;
-  }
-
-
-  .product-info h2 {
-    font-size: 8px;
-  }
-
-
-  .product-price {
-    font-size: 7.5px;
-  }
-
-
-  /* MANIFESTO */
-
-  .manifesto-image-wrap {
-    height: auto;
-
-    min-height: 0;
-
-    aspect-ratio:
-      4 / 3;
-  }
-
-
-  .manifesto-image {
-    object-fit: contain;
-  }
-
-
-  .manifesto-overlay {
-    align-items: flex-start;
-
-    padding:
-      22px
-      16px;
-  }
-
-
-  .manifesto-overlay h2 {
-    max-width: 74%;
-
-    font-size:
-      clamp(
-        24px,
-        7.2vw,
-        36px
-      );
   }
 
 
@@ -1138,30 +1196,6 @@ img {
     grid-template-columns:
       1fr;
 
-    gap: 42px;
-
-    text-align: center;
-  }
-
-
-  .newsletter-heading h2 {
-    font-size:
-      clamp(
-        27px,
-        8vw,
-        38px
-      );
-
-    text-align: center;
-  }
-
-
-  .newsletter-description {
-    text-align: center;
-  }
-
-
-  .newsletter-field input {
     text-align: center;
   }
 
@@ -1181,25 +1215,14 @@ img {
   }
 
 
-  .historia-texto-padronizado {
+  .historia-texto-padronizado,
+  .historia-texto-unico > p,
+  .historia-final p {
     font-size: 12px;
 
     line-height: 1.9;
 
     letter-spacing: 0.07em;
-  }
-
-
-  .ultima-linha {
-    white-space: nowrap;
-  }
-
-
-  .historia-retrato {
-    padding:
-      10px
-      20px
-      65px;
   }
 
 
@@ -1212,13 +1235,6 @@ img {
   }
 
 
-  .historia-legenda {
-    margin-top: 20px;
-
-    font-size: 7px;
-  }
-
-
   .historia-texto-unico {
     padding:
       20px
@@ -1227,33 +1243,110 @@ img {
   }
 
 
-  .historia-texto-unico > p {
-    margin-bottom: 34px;
+  /* LOJA */
 
-    font-size: 12px;
-
-    line-height: 1.9;
-
-    letter-spacing: 0.07em;
+  .loja-page {
+    padding-top: 92px;
   }
 
 
-  .historia-final {
-    margin-top: 42px;
+  .familias-section {
+    padding:
+      65px
+      0
+      90px;
   }
 
 
-  .historia-final p {
-    font-size: 12px;
+  .familias-section h1,
+  .objetos-section h2 {
+    padding:
+      0
+      16px;
 
-    line-height: 1.9;
+    font-size:
+      clamp(
+        27px,
+        8vw,
+        38px
+      );
 
-    letter-spacing: 0.07em;
+    line-height: 0.98;
   }
 
 
-  .historia-fecho-final {
-    margin-top: 8px !important;
+  .familias-section h1 {
+    margin-bottom: 30px;
+  }
+
+
+  .familias-rail {
+    gap: 10px;
+
+    padding:
+      0
+      16px
+      12px;
+  }
+
+
+  .familia-card {
+    flex:
+      0
+      0
+      44vw;
+  }
+
+
+  .familia-card p {
+    font-size: 7px;
+
+    letter-spacing: 0.14em;
+  }
+
+
+  .objetos-section {
+    padding:
+      20px
+      0
+      90px;
+  }
+
+
+  .objetos-section h2 {
+    margin-bottom: 32px;
+  }
+
+
+  .objetos-rail {
+    gap: 12px;
+
+    padding:
+      0
+      16px
+      18px;
+  }
+
+
+  .objeto-card {
+    flex:
+      0
+      0
+      72vw;
+  }
+
+
+  .objeto-card h3 {
+    margin-top: 11px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.14em;
+  }
+
+
+  .objeto-card p {
+    font-size: 7.5px;
   }
 
 
