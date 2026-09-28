@@ -28,8 +28,15 @@ const newsletterSuccess =
     "newsletterSuccess"
   );
 
+const cartCount =
+  document.getElementById(
+    "cartCount"
+  );
 
-/* MENU */
+
+/* =========================
+   MENU
+========================= */
 
 if (
   menuToggle &&
@@ -90,6 +97,10 @@ document
         "click",
         () => {
 
+          if (!sideMenu) {
+            return;
+          }
+
           sideMenu
             .classList
             .remove("open");
@@ -106,7 +117,9 @@ document
   );
 
 
-/* NEWSLETTER */
+/* =========================
+   NEWSLETTER
+========================= */
 
 if (
   newsletterForm &&
@@ -149,7 +162,9 @@ if (
 }
 
 
-/* FAMÍLIAS OLFATIVAS */
+/* =========================
+   FAMÍLIAS OLFATIVAS
+========================= */
 
 const familyCards =
   document.querySelectorAll(
@@ -183,3 +198,191 @@ familyCards.forEach(
 
   }
 );
+
+
+/* =========================
+   VARIAÇÕES
+========================= */
+
+document
+  .querySelectorAll(
+    ".objeto-card"
+  )
+  .forEach(
+    (card) => {
+
+      const variations =
+        card.querySelectorAll(
+          ".variacao"
+        );
+
+
+      variations.forEach(
+        (button) => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              variations.forEach(
+                (item) => {
+
+                  item.classList.remove(
+                    "active"
+                  );
+
+                }
+              );
+
+              button.classList.add(
+                "active"
+              );
+
+            }
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================
+   CARRINHO LOCAL
+========================= */
+
+function getCart() {
+
+  const storedCart =
+    localStorage.getItem(
+      "ojobosco-cart"
+    );
+
+  if (!storedCart) {
+    return [];
+  }
+
+  try {
+
+    return JSON.parse(
+      storedCart
+    );
+
+  } catch {
+
+    return [];
+
+  }
+
+}
+
+
+function saveCart(cart) {
+
+  localStorage.setItem(
+    "ojobosco-cart",
+    JSON.stringify(cart)
+  );
+
+}
+
+
+function updateCartCount() {
+
+  if (!cartCount) {
+    return;
+  }
+
+  const cart =
+    getCart();
+
+  cartCount.textContent =
+    cart.length;
+
+}
+
+
+document
+  .querySelectorAll(
+    ".adicionar-carrinho"
+  )
+  .forEach(
+    (button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const card =
+            button.closest(
+              ".objeto-card"
+            );
+
+          if (!card) {
+            return;
+          }
+
+          const product =
+            card.dataset.product;
+
+          const selectedVariant =
+            card.querySelector(
+              ".variacao.active"
+            );
+
+          const variant =
+            selectedVariant
+              ? selectedVariant.dataset.variant
+              : "";
+
+          const cart =
+            getCart();
+
+          cart.push({
+            product,
+            variant
+          });
+
+          saveCart(
+            cart
+          );
+
+          updateCartCount();
+
+
+          const originalText =
+            button.textContent;
+
+          button.textContent =
+            "ADICIONADO";
+
+          button.classList.add(
+            "added"
+          );
+
+
+          setTimeout(
+            () => {
+
+              button.textContent =
+                originalText;
+
+              button.classList.remove(
+                "added"
+              );
+
+            },
+            1200
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* CONTADOR AO ABRIR A PÁGINA */
+
+updateCartCount();
