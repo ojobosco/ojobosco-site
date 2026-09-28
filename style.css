@@ -294,18 +294,16 @@ img {
 }
 
 
-/* HOME HERO */
+/* HOME */
 
 .hero {
   width: 100%;
-
   padding-top: 106px;
 }
 
 
 .hero-link {
   display: block;
-
   width: 100%;
 }
 
@@ -332,8 +330,6 @@ img {
 
   object-fit: cover;
 
-  object-position: center;
-
   filter:
     brightness(0.82);
 }
@@ -351,14 +347,10 @@ img {
   padding:
     0
     4vw;
-
-  pointer-events: none;
 }
 
 
 .hero-overlay h1 {
-  max-width: 760px;
-
   font-size:
     clamp(
       38px,
@@ -367,8 +359,6 @@ img {
     );
 
   line-height: 0.96;
-
-  letter-spacing: -0.025em;
 
   font-weight: 400;
 }
@@ -410,8 +400,6 @@ img {
   height: 100%;
 
   object-fit: cover;
-
-  object-position: center;
 }
 
 
@@ -448,16 +436,12 @@ img {
 .manifesto-image-wrap {
   position: relative;
 
-  width: 100%;
-
   height:
     calc(
       100vh - 106px
     );
 
   min-height: 620px;
-
-  overflow: hidden;
 }
 
 
@@ -488,8 +472,6 @@ img {
 
 
 .manifesto-overlay h2 {
-  max-width: 760px;
-
   font-size:
     clamp(
       38px,
@@ -563,9 +545,9 @@ img {
 .newsletter-field {
   display: flex;
 
-  gap: 25px;
-
   align-items: center;
+
+  gap: 25px;
 
   padding-bottom: 12px;
 
@@ -585,8 +567,6 @@ img {
   background: transparent;
 
   color: var(--off-white);
-
-  font-size: 10px;
 }
 
 
@@ -594,8 +574,6 @@ img {
   border: 0;
 
   background: transparent;
-
-  font-size: 9px;
 
   cursor: pointer;
 }
@@ -741,9 +719,7 @@ img {
 }
 
 
-/* =========================================
-   LOJA
-========================================= */
+/* LOJA */
 
 .loja-page {
   padding-top: 106px;
@@ -756,7 +732,7 @@ img {
   padding:
     90px
     0
-    120px;
+    110px;
 }
 
 
@@ -765,7 +741,7 @@ img {
     0
     4vw;
 
-  margin-bottom: 45px;
+  margin-bottom: 38px;
 
   font-size:
     clamp(
@@ -783,17 +759,17 @@ img {
 .familias-rail {
   display: flex;
 
-  gap: 18px;
+  gap: 14px;
 
   overflow-x: auto;
-
-  scroll-snap-type:
-    x mandatory;
 
   padding:
     0
     4vw
     15px;
+
+  scroll-snap-type:
+    x mandatory;
 
   scrollbar-width: none;
 }
@@ -809,9 +785,9 @@ img {
     0
     0
     clamp(
-      220px,
-      23vw,
-      355px
+      160px,
+      15vw,
+      220px
     );
 
   scroll-snap-align: start;
@@ -839,19 +815,11 @@ img {
 
 
 .familia-card p {
-  padding-top: 13px;
+  padding-top: 11px;
 
-  font-size: 9px;
+  font-size: 8px;
 
-  letter-spacing: 0.20em;
-}
-
-
-.familia-card.active
-.familia-image {
-  outline:
-    1px solid
-    var(--off-white);
+  letter-spacing: 0.18em;
 }
 
 
@@ -892,13 +860,13 @@ img {
 
   overflow-x: auto;
 
-  scroll-snap-type:
-    x mandatory;
-
   padding:
     0
     4vw
-    22px;
+    25px;
+
+  scroll-snap-type:
+    x mandatory;
 
   scrollbar-width: none;
 }
@@ -946,9 +914,9 @@ img {
 
 
 .objeto-card h3 {
-  margin-top: 14px;
+  margin-top: 15px;
 
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 
   font-size: 10px;
 
@@ -960,12 +928,110 @@ img {
 }
 
 
-.objeto-card p {
+.objeto-preco {
+  min-height: 18px;
+
   color: var(--cinza);
 
   font-size: 9px;
 
-  letter-spacing: 0.16em;
+  line-height: 1.6;
+
+  letter-spacing: 0.15em;
+}
+
+
+/* VARIAÇÕES */
+
+.variacoes {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 17px;
+
+  margin-bottom: 14px;
+}
+
+
+.variacao {
+  min-width: 58px;
+
+  padding:
+    10px
+    13px;
+
+  border:
+    1px solid
+    var(--off-white);
+
+  background: transparent;
+
+  color: var(--off-white);
+
+  cursor: pointer;
+
+  font-size: 8px;
+
+  line-height: 1;
+
+  letter-spacing: 0.10em;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.variacao.active {
+  background: var(--off-white);
+
+  color: #000;
+}
+
+
+/* BOTÃO CARRINHO */
+
+.adicionar-carrinho {
+  width: 100%;
+
+  padding:
+    15px
+    12px;
+
+  border:
+    1px solid
+    var(--off-white);
+
+  background: transparent;
+
+  color: var(--off-white);
+
+  cursor: pointer;
+
+  font-size: 8px;
+
+  letter-spacing: 0.18em;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.adicionar-carrinho:hover {
+  background: var(--off-white);
+
+  color: #000;
+}
+
+
+.adicionar-carrinho.added {
+  background: var(--off-white);
+
+  color: #000;
 }
 
 
@@ -1068,13 +1134,20 @@ img {
       1fr;
   }
 
+
+  .familia-card {
+    flex:
+      0
+      0
+      180px;
+  }
+
 }
 
 
 /* CELULAR */
 
 @media (max-width: 600px) {
-
 
   .announcement-bar {
     height: 30px;
@@ -1141,8 +1214,6 @@ img {
 
   .hero-overlay h1,
   .manifesto-overlay h2 {
-    max-width: 74%;
-
     font-size:
       clamp(
         24px,
@@ -1221,8 +1292,6 @@ img {
     font-size: 12px;
 
     line-height: 1.9;
-
-    letter-spacing: 0.07em;
   }
 
 
@@ -1252,9 +1321,9 @@ img {
 
   .familias-section {
     padding:
-      65px
+      60px
       0
-      90px;
+      75px;
   }
 
 
@@ -1276,12 +1345,12 @@ img {
 
 
   .familias-section h1 {
-    margin-bottom: 30px;
+    margin-bottom: 28px;
   }
 
 
   .familias-rail {
-    gap: 10px;
+    gap: 9px;
 
     padding:
       0
@@ -1294,14 +1363,16 @@ img {
     flex:
       0
       0
-      44vw;
+      36vw;
+
+    max-width: 150px;
   }
 
 
   .familia-card p {
-    font-size: 7px;
+    padding-top: 9px;
 
-    letter-spacing: 0.14em;
+    font-size: 7px;
   }
 
 
@@ -1324,7 +1395,7 @@ img {
     padding:
       0
       16px
-      18px;
+      20px;
   }
 
 
@@ -1345,8 +1416,37 @@ img {
   }
 
 
-  .objeto-card p {
+  .objeto-preco {
     font-size: 7.5px;
+  }
+
+
+  .variacoes {
+    margin-top: 13px;
+
+    margin-bottom: 12px;
+
+    gap: 6px;
+  }
+
+
+  .variacao {
+    min-width: 52px;
+
+    padding:
+      9px
+      10px;
+
+    font-size: 7px;
+  }
+
+
+  .adicionar-carrinho {
+    padding:
+      13px
+      10px;
+
+    font-size: 7px;
   }
 
 
