@@ -106,7 +106,7 @@ document
   );
 
 
-/* NEWSLETTER - SOMENTE HOME */
+/* NEWSLETTER */
 
 if (
   newsletterForm &&
@@ -147,3 +147,39 @@ if (
   );
 
 }
+
+
+/* FAMÍLIAS OLFATIVAS */
+
+const familyCards =
+  document.querySelectorAll(
+    ".familia-card"
+  );
+
+
+familyCards.forEach(
+  (card) => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        familyCards.forEach(
+          (item) => {
+
+            item.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+        card.classList.add(
+          "active"
+        );
+
+      }
+    );
+
+  }
+);
