@@ -29,9 +29,7 @@ const newsletterSuccess =
   );
 
 
-/* =========================================
-   MENU
-========================================= */
+/* MENU */
 
 if (
   menuToggle &&
@@ -112,9 +110,7 @@ document
   );
 
 
-/* =========================================
-   NEWSLETTER
-========================================= */
+/* NEWSLETTER */
 
 if (
   newsletterForm &&
@@ -160,9 +156,7 @@ if (
 }
 
 
-/* =========================================
-   VARIAÇÕES 100 ML / 250 ML
-========================================= */
+/* VARIAÇÕES 100 ML / 250 ML */
 
 document
   .querySelectorAll(
@@ -214,8 +208,7 @@ document
 
 
               const imageAttribute =
-                "image" +
-                size;
+                "image" + size;
 
 
               const newImage =
