@@ -29,7 +29,9 @@ const newsletterSuccess =
   );
 
 
-/* MENU */
+/* =========================================
+   MENU
+========================================= */
 
 if (
   menuToggle &&
@@ -110,7 +112,9 @@ document
   );
 
 
-/* NEWSLETTER */
+/* =========================================
+   NEWSLETTER
+========================================= */
 
 if (
   newsletterForm &&
@@ -156,7 +160,10 @@ if (
 }
 
 
-/* VARIAÇÕES 100 ML / 250 ML */
+/* =========================================
+   VARIAÇÕES DOS PRODUTOS
+   MUDA IMAGEM + PREÇO
+========================================= */
 
 document
   .querySelectorAll(
@@ -170,9 +177,16 @@ document
           ".variacao-btn[data-size]"
         );
 
+
       const image =
         card.querySelector(
           ".produto-loja-image img"
+        );
+
+
+      const price =
+        card.querySelector(
+          ".produto-loja-preco"
         );
 
 
@@ -184,7 +198,10 @@ document
             () => {
 
               const size =
-                button.dataset.size;
+                button.getAttribute(
+                  "data-size"
+                );
+
 
               if (!size) {
                 return;
@@ -207,14 +224,25 @@ document
               );
 
 
-              const imageAttribute =
-                "image" + size;
+              /*
+                IMPORTANTE:
+                usa getAttribute diretamente.
 
+                Exemplo:
+                data-image-250
+                data-price-250
+              */
 
               const newImage =
-                card.dataset[
-                  imageAttribute
-                ];
+                card.getAttribute(
+                  "data-image-" + size
+                );
+
+
+              const newPrice =
+                card.getAttribute(
+                  "data-price-" + size
+                );
 
 
               if (
@@ -224,6 +252,38 @@ document
 
                 image.src =
                   newImage;
+
+
+                /*
+                  Atualiza também
+                  o texto alternativo.
+                */
+
+                const productName =
+                  card.querySelector("h3");
+
+
+                if (productName) {
+
+                  image.alt =
+                    productName.textContent.trim() +
+                    " " +
+                    size +
+                    " ml";
+
+                }
+
+              }
+
+
+              if (
+                price &&
+                newPrice
+              ) {
+
+                price.textContent =
+                  "R$" +
+                  newPrice;
 
               }
 
