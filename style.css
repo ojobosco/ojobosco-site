@@ -13,9 +13,7 @@
 }
 
 
-/* =========================================
-   RESET
-========================================= */
+/* RESET */
 
 * {
   margin: 0;
@@ -80,9 +78,7 @@ img {
 }
 
 
-/* =========================================
-   FAIXA DE FRETE
-========================================= */
+/* FAIXA FRETE */
 
 .announcement-bar {
   position: fixed;
@@ -115,9 +111,7 @@ img {
 }
 
 
-/* =========================================
-   CABEÇALHO
-========================================= */
+/* HEADER */
 
 .topbar {
   position: fixed;
@@ -198,9 +192,7 @@ img {
 }
 
 
-/* =========================================
-   MENU
-========================================= */
+/* MENU */
 
 .side-menu {
   position: fixed;
@@ -291,9 +283,7 @@ img {
 }
 
 
-/* =========================================
-   HOME - HERO
-========================================= */
+/* HOME HERO */
 
 .hero {
   width: 100%;
@@ -349,7 +339,9 @@ img {
 
   align-items: center;
 
-  padding: 0 4vw;
+  padding:
+    0
+    4vw;
 
   pointer-events: none;
 }
@@ -370,14 +362,10 @@ img {
   letter-spacing: -0.025em;
 
   font-weight: 400;
-
-  text-transform: uppercase;
 }
 
 
-/* =========================================
-   HOME - PRODUTOS
-========================================= */
+/* PRODUTOS HOME */
 
 .collection {
   padding:
@@ -453,9 +441,7 @@ img {
 }
 
 
-/* =========================================
-   MANIFESTO
-========================================= */
+/* MANIFESTO */
 
 .manifesto {
   width: 100%;
@@ -526,9 +512,7 @@ img {
 }
 
 
-/* =========================================
-   NEWSLETTER
-========================================= */
+/* NEWSLETTER */
 
 .newsletter {
   padding:
@@ -567,8 +551,6 @@ img {
     );
 
   line-height: 0.94;
-
-  letter-spacing: -0.03em;
 
   font-weight: 400;
 }
@@ -658,9 +640,7 @@ img {
 }
 
 
-/* =========================================
-   UNIVERSO
-========================================= */
+/* UNIVERSO */
 
 .universo-clean {
   padding-top: 106px;
@@ -760,8 +740,6 @@ img {
   line-height: 1.8;
 
   letter-spacing: 0.20em;
-
-  text-transform: uppercase;
 }
 
 
@@ -831,9 +809,7 @@ img {
 }
 
 
-/* =========================================
-   LOJA
-========================================= */
+/* LOJA */
 
 .loja-page {
   padding-top: 106px;
@@ -865,8 +841,6 @@ img {
     );
 
   line-height: 0.94;
-
-  letter-spacing: -0.02em;
 
   font-weight: 400;
 }
@@ -943,7 +917,7 @@ img {
 }
 
 
-/* ABERTURA DOS OBJETOS */
+/* TÍTULO OBJETOS */
 
 .objetos-abertura {
   padding:
@@ -965,8 +939,6 @@ img {
 
   line-height: 0.94;
 
-  letter-spacing: -0.025em;
-
   font-weight: 400;
 }
 
@@ -982,6 +954,8 @@ img {
   border-top:
     1px solid
     var(--linha);
+
+  scroll-margin-top: 106px;
 }
 
 
@@ -1014,8 +988,6 @@ img {
 
   line-height: 1;
 
-  letter-spacing: -0.01em;
-
   font-weight: 400;
 }
 
@@ -1043,7 +1015,7 @@ img {
 }
 
 
-/* DUMP HORIZONTAL */
+/* DUMP PRODUTOS */
 
 .produtos-rail {
   display: flex;
@@ -1178,9 +1150,7 @@ img {
 }
 
 
-/* =========================================
-   FOOTER
-========================================= */
+/* FOOTER */
 
 .footer {
   padding:
@@ -1254,9 +1224,7 @@ img {
 }
 
 
-/* =========================================
-   TABLET
-========================================= */
+/* TABLET */
 
 @media (max-width: 900px) {
 
@@ -1308,9 +1276,7 @@ img {
 }
 
 
-/* =========================================
-   CELULAR
-========================================= */
+/* CELULAR */
 
 @media (max-width: 600px) {
 
@@ -1390,8 +1356,6 @@ img {
       );
   }
 
-
-  /* PRODUTOS HOME */
 
   .collection {
     padding:
@@ -1507,8 +1471,6 @@ img {
         8vw,
         38px
       );
-
-    text-align: center;
   }
 
 
@@ -1541,8 +1503,6 @@ img {
     font-size: 12px;
 
     line-height: 1.9;
-
-    letter-spacing: 0.07em;
   }
 
 
@@ -1564,8 +1524,6 @@ img {
 
 
   .historia-legenda {
-    margin-top: 20px;
-
     font-size: 7px;
   }
 
@@ -1583,18 +1541,6 @@ img {
     font-size: 12px;
 
     line-height: 1.9;
-
-    letter-spacing: 0.07em;
-  }
-
-
-  .historia-final {
-    margin-top: 42px;
-  }
-
-
-  .historia-fecho-final {
-    margin-top: 8px !important;
   }
 
 
@@ -1625,13 +1571,6 @@ img {
         8vw,
         38px
       );
-
-    line-height: 0.98;
-  }
-
-
-  .familias-section h1 {
-    margin-bottom: 27px;
   }
 
 
@@ -1656,11 +1595,7 @@ img {
 
 
   .familia-card p {
-    padding-top: 9px;
-
     font-size: 7px;
-
-    letter-spacing: 0.12em;
   }
 
 
@@ -1677,6 +1612,8 @@ img {
       65px
       0
       80px;
+
+    scroll-margin-top: 92px;
   }
 
 
@@ -1704,17 +1641,10 @@ img {
   }
 
 
-  .categoria-descricao {
-    max-width: 100%;
-  }
-
-
   .categoria-descricao p {
     font-size: 9px;
 
     line-height: 1.8;
-
-    letter-spacing: 0.08em;
   }
 
 
@@ -1740,8 +1670,6 @@ img {
     margin-top: 11px;
 
     font-size: 8px;
-
-    letter-spacing: 0.14em;
   }
 
 
@@ -1752,8 +1680,6 @@ img {
 
   .variacoes {
     margin-top: 12px;
-
-    gap: 6px;
   }
 
 
