@@ -78,7 +78,7 @@ img {
 }
 
 
-/* FAIXA FRETE */
+/* FAIXA */
 
 .announcement-bar {
   position: fixed;
@@ -97,7 +97,9 @@ img {
   align-items: center;
   justify-content: center;
 
-  padding: 0 14px;
+  padding:
+    0
+    14px;
 
   z-index: 1200;
 
@@ -122,7 +124,9 @@ img {
   width: 100%;
   height: 72px;
 
-  padding: 0 22px;
+  padding:
+    0
+    22px;
 
   display: grid;
 
@@ -264,7 +268,9 @@ img {
 
 
 .side-menu a {
-  padding: 17px 0;
+  padding:
+    17px
+    0;
 
   border-bottom:
     1px solid
@@ -283,7 +289,7 @@ img {
 }
 
 
-/* HOME HERO */
+/* HOME */
 
 .hero {
   width: 100%;
@@ -917,7 +923,7 @@ img {
 }
 
 
-/* TÍTULO OBJETOS */
+/* OBJETOS */
 
 .objetos-abertura {
   padding:
@@ -1015,7 +1021,7 @@ img {
 }
 
 
-/* DUMP PRODUTOS */
+/* CARROSSEL */
 
 .produtos-rail {
   display: flex;
@@ -1314,8 +1320,6 @@ img {
   }
 
 
-  /* HOME */
-
   .hero {
     padding-top: 92px;
   }
@@ -1407,8 +1411,6 @@ img {
   }
 
 
-  /* MANIFESTO */
-
   .manifesto-image-wrap {
     height: auto;
 
@@ -1445,8 +1447,6 @@ img {
   }
 
 
-  /* NEWSLETTER */
-
   .newsletter {
     padding:
       75px
@@ -1474,17 +1474,10 @@ img {
   }
 
 
-  .newsletter-description {
-    text-align: center;
-  }
-
-
   .newsletter-field input {
     text-align: center;
   }
 
-
-  /* UNIVERSO */
 
   .universo-clean {
     padding-top: 92px;
@@ -1543,8 +1536,6 @@ img {
     line-height: 1.9;
   }
 
-
-  /* LOJA */
 
   .loja-page {
     padding-top: 92px;
@@ -1693,8 +1684,6 @@ img {
     font-size: 7px;
   }
 
-
-  /* FOOTER */
 
   .footer {
     padding:
