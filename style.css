@@ -1404,6 +1404,31 @@ img {
 }
 
 
+/* BIBLIOTECA */
+
+.produto-lista-fragrancias {
+  margin: 0;
+
+  padding-left: 22px;
+}
+
+
+.produto-lista-fragrancias li {
+  margin-bottom: 16px;
+
+  font-size:
+    clamp(
+      12px,
+      1.2vw,
+      16px
+    );
+
+  line-height: 1.8;
+
+  letter-spacing: 0.05em;
+}
+
+
 /* =========================================
    FRAGRÂNCIAS
 ========================================= */
@@ -2161,6 +2186,11 @@ img {
         9vw,
         40px
       );
+  }
+
+
+  .produto-lista-fragrancias li {
+    font-size: 12px;
   }
 
 
