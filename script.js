@@ -46,10 +46,8 @@ if (
         .classList
         .add("open");
 
-      document
-        .body
-        .style
-        .overflow = "hidden";
+      document.body.style.overflow =
+        "hidden";
 
     }
   );
@@ -70,10 +68,8 @@ if (
         .classList
         .remove("open");
 
-      document
-        .body
-        .style
-        .overflow = "";
+      document.body.style.overflow =
+        "";
 
     }
   );
@@ -100,10 +96,8 @@ document
             .classList
             .remove("open");
 
-          document
-            .body
-            .style
-            .overflow = "";
+          document.body.style.overflow =
+            "";
 
         }
       );
@@ -138,17 +132,13 @@ if (
         return;
       }
 
-
       localStorage.setItem(
         "ojobosco-newsletter-email",
         email
       );
 
-
-      newsletterForm
-        .style
-        .display = "none";
-
+      newsletterForm.style.display =
+        "none";
 
       newsletterSuccess
         .classList
@@ -161,8 +151,8 @@ if (
 
 
 /* =========================================
-   VARIAÇÕES DOS PRODUTOS
-   MUDA IMAGEM + PREÇO
+   VARIAÇÕES NA LOJA
+   IMAGEM + PREÇO
 ========================================= */
 
 document
@@ -177,12 +167,10 @@ document
           ".variacao-btn[data-size]"
         );
 
-
       const image =
         card.querySelector(
           ".produto-loja-image img"
         );
-
 
       const price =
         card.querySelector(
@@ -202,11 +190,9 @@ document
                   "data-size"
                 );
 
-
               if (!size) {
                 return;
               }
-
 
               buttons.forEach(
                 (item) => {
@@ -218,32 +204,21 @@ document
                 }
               );
 
-
               button.classList.add(
                 "active"
               );
 
-
-              /*
-                IMPORTANTE:
-                usa getAttribute diretamente.
-
-                Exemplo:
-                data-image-250
-                data-price-250
-              */
-
               const newImage =
                 card.getAttribute(
-                  "data-image-" + size
+                  "data-image-" +
+                  size
                 );
-
 
               const newPrice =
                 card.getAttribute(
-                  "data-price-" + size
+                  "data-price-" +
+                  size
                 );
-
 
               if (
                 image &&
@@ -253,28 +228,7 @@ document
                 image.src =
                   newImage;
 
-
-                /*
-                  Atualiza também
-                  o texto alternativo.
-                */
-
-                const productName =
-                  card.querySelector("h3");
-
-
-                if (productName) {
-
-                  image.alt =
-                    productName.textContent.trim() +
-                    " " +
-                    size +
-                    " ml";
-
-                }
-
               }
-
 
               if (
                 price &&
@@ -295,3 +249,359 @@ document
 
     }
   );
+
+
+/* =========================================
+   BOTÕES DE FRAGRÂNCIA DA VELA NA LOJA
+========================================= */
+
+document
+  .querySelectorAll(
+    ".fragrancias-loja"
+  )
+  .forEach(
+    (container) => {
+
+      const buttons =
+        container.querySelectorAll(
+          ".fragrancia-loja-btn"
+        );
+
+      buttons.forEach(
+        (button) => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              buttons.forEach(
+                (item) => {
+
+                  item.classList.remove(
+                    "active"
+                  );
+
+                }
+              );
+
+              button.classList.add(
+                "active"
+              );
+
+            }
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================
+   PÁGINAS AROMATIZADOR / DIFUSOR
+========================================= */
+
+const detailPage =
+  document.querySelector(
+    "[data-detail-product]"
+  );
+
+
+if (detailPage) {
+
+  const productType =
+    detailPage.getAttribute(
+      "data-detail-product"
+    );
+
+
+  const fragranceButtons =
+    detailPage.querySelectorAll(
+      ".produto-fragrancia-btn"
+    );
+
+
+  const sizeButtons =
+    detailPage.querySelectorAll(
+      ".produto-tamanho-btn"
+    );
+
+
+  const fragrancePanels =
+    detailPage.querySelectorAll(
+      ".fragrancia-detalhe"
+    );
+
+
+  const detailImage =
+    document.getElementById(
+      "productDetailImage"
+    );
+
+
+  const detailPrice =
+    document.getElementById(
+      "productDetailPrice"
+    );
+
+
+  const fragranceName =
+    document.getElementById(
+      "productFragranceName"
+    );
+
+
+  const allowedFragrances = [
+    "cha-floral",
+    "figo-tirio",
+    "lavanda-rosada",
+    "limoeira",
+    "verde-quente",
+    "orbe-amazonico"
+  ];
+
+
+  let currentFragrance =
+    "cha-floral";
+
+
+  let currentSize =
+    "100";
+
+
+  const urlParams =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const requestedFragrance =
+    urlParams.get(
+      "fragrancia"
+    );
+
+
+  if (
+    requestedFragrance &&
+    allowedFragrances.includes(
+      requestedFragrance
+    )
+  ) {
+
+    currentFragrance =
+      requestedFragrance;
+
+  }
+
+
+  function updateDetailProduct() {
+
+    fragranceButtons.forEach(
+      (button) => {
+
+        const isActive =
+          button.getAttribute(
+            "data-fragrance"
+          ) === currentFragrance;
+
+        button.classList.toggle(
+          "active",
+          isActive
+        );
+
+        if (
+          isActive &&
+          fragranceName
+        ) {
+
+          fragranceName.textContent =
+            button.getAttribute(
+              "data-name"
+            );
+
+        }
+
+      }
+    );
+
+
+    sizeButtons.forEach(
+      (button) => {
+
+        button.classList.toggle(
+          "active",
+          button.getAttribute(
+            "data-size"
+          ) === currentSize
+        );
+
+      }
+    );
+
+
+    fragrancePanels.forEach(
+      (panel) => {
+
+        panel.classList.toggle(
+          "active",
+          panel.getAttribute(
+            "data-fragrance-panel"
+          ) === currentFragrance
+        );
+
+      }
+    );
+
+
+    if (
+      detailImage &&
+      productType
+    ) {
+
+      detailImage.src =
+        productType +
+        "-" +
+        currentFragrance +
+        "-" +
+        currentSize +
+        ".jpg";
+
+    }
+
+
+    if (detailPrice) {
+
+      const price =
+        detailPage.getAttribute(
+          "data-price-" +
+          currentSize
+        );
+
+      if (price) {
+
+        detailPrice.textContent =
+          "R$" +
+          price;
+
+      }
+
+    }
+
+  }
+
+
+  fragranceButtons.forEach(
+    (button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          currentFragrance =
+            button.getAttribute(
+              "data-fragrance"
+            );
+
+          updateDetailProduct();
+
+        }
+      );
+
+    }
+  );
+
+
+  sizeButtons.forEach(
+    (button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          currentSize =
+            button.getAttribute(
+              "data-size"
+            );
+
+          updateDetailProduct();
+
+        }
+      );
+
+    }
+  );
+
+
+  updateDetailProduct();
+
+}
+
+
+/* =========================================
+   PÁGINA VELA
+========================================= */
+
+if (!detailPage) {
+
+  const fragranceButtons =
+    document.querySelectorAll(
+      ".produto-fragrancia-btn"
+    );
+
+
+  const fragrancePanels =
+    document.querySelectorAll(
+      ".fragrancia-detalhe"
+    );
+
+
+  fragranceButtons.forEach(
+    (button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const fragrance =
+            button.getAttribute(
+              "data-fragrance"
+            );
+
+
+          fragranceButtons.forEach(
+            (item) => {
+
+              item.classList.remove(
+                "active"
+              );
+
+            }
+          );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          fragrancePanels.forEach(
+            (panel) => {
+
+              panel.classList.toggle(
+                "active",
+                panel.getAttribute(
+                  "data-fragrance-panel"
+                ) === fragrance
+              );
+
+            }
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
