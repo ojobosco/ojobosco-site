@@ -318,7 +318,7 @@ document
 
 
 /* =========================================
-   AROMATIZADOR E DIFUSOR
+   PÁGINAS AROMATIZADOR / DIFUSOR
 ========================================= */
 
 const detailPage =
