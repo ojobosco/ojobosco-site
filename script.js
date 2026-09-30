@@ -46,8 +46,10 @@ if (
         .classList
         .add("open");
 
-      document.body.style.overflow =
-        "hidden";
+      document
+        .body
+        .style
+        .overflow = "hidden";
 
     }
   );
@@ -68,8 +70,10 @@ if (
         .classList
         .remove("open");
 
-      document.body.style.overflow =
-        "";
+      document
+        .body
+        .style
+        .overflow = "";
 
     }
   );
@@ -96,8 +100,10 @@ document
             .classList
             .remove("open");
 
-          document.body.style.overflow =
-            "";
+          document
+            .body
+            .style
+            .overflow = "";
 
         }
       );
@@ -132,13 +138,17 @@ if (
         return;
       }
 
+
       localStorage.setItem(
         "ojobosco-newsletter-email",
         email
       );
 
-      newsletterForm.style.display =
-        "none";
+
+      newsletterForm
+        .style
+        .display = "none";
+
 
       newsletterSuccess
         .classList
@@ -152,7 +162,7 @@ if (
 
 /* =========================================
    VARIAÇÕES NA LOJA
-   IMAGEM + PREÇO
+   TROCA IMAGEM + PREÇO
 ========================================= */
 
 document
@@ -167,10 +177,12 @@ document
           ".variacao-btn[data-size]"
         );
 
+
       const image =
         card.querySelector(
           ".produto-loja-image img"
         );
+
 
       const price =
         card.querySelector(
@@ -190,9 +202,11 @@ document
                   "data-size"
                 );
 
+
               if (!size) {
                 return;
               }
+
 
               buttons.forEach(
                 (item) => {
@@ -204,21 +218,23 @@ document
                 }
               );
 
+
               button.classList.add(
                 "active"
               );
 
+
               const newImage =
                 card.getAttribute(
-                  "data-image-" +
-                  size
+                  "data-image-" + size
                 );
+
 
               const newPrice =
                 card.getAttribute(
-                  "data-price-" +
-                  size
+                  "data-price-" + size
                 );
+
 
               if (
                 image &&
@@ -229,6 +245,7 @@ document
                   newImage;
 
               }
+
 
               if (
                 price &&
@@ -252,7 +269,7 @@ document
 
 
 /* =========================================
-   BOTÕES DE FRAGRÂNCIA DA VELA NA LOJA
+   FRAGRÂNCIAS DA VELA NA LOJA
 ========================================= */
 
 document
@@ -266,6 +283,7 @@ document
         container.querySelectorAll(
           ".fragrancia-loja-btn"
         );
+
 
       buttons.forEach(
         (button) => {
@@ -284,6 +302,7 @@ document
                 }
               );
 
+
               button.classList.add(
                 "active"
               );
@@ -299,7 +318,7 @@ document
 
 
 /* =========================================
-   PÁGINAS AROMATIZADOR / DIFUSOR
+   AROMATIZADOR E DIFUSOR
 ========================================= */
 
 const detailPage =
@@ -405,10 +424,12 @@ if (detailPage) {
             "data-fragrance"
           ) === currentFragrance;
 
+
         button.classList.toggle(
           "active",
           isActive
         );
+
 
         if (
           isActive &&
@@ -470,13 +491,16 @@ if (detailPage) {
     }
 
 
-    if (detailPrice) {
+    if (
+      detailPrice
+    ) {
 
       const price =
         detailPage.getAttribute(
           "data-price-" +
           currentSize
         );
+
 
       if (price) {
 
@@ -503,6 +527,7 @@ if (detailPage) {
               "data-fragrance"
             );
 
+
           updateDetailProduct();
 
         }
@@ -524,6 +549,7 @@ if (detailPage) {
               "data-size"
             );
 
+
           updateDetailProduct();
 
         }
@@ -539,7 +565,7 @@ if (detailPage) {
 
 
 /* =========================================
-   PÁGINA VELA
+   PÁGINA DA VELA
 ========================================= */
 
 if (!detailPage) {
