@@ -1,56 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
-
   <title>Carrinho | OJOBOSCO</title>
-
   <meta
     name="description"
     content="Carrinho de compras OJOBOSCO."
   >
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
-<body class="cart-page-body">
-
-
-  <!-- =====================================
-       FAIXA SUPERIOR
-  ====================================== -->
+<body>
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
-
-  <!-- =====================================
-       HEADER
-  ====================================== -->
-
-  <header class="topbar cart-page-header">
-
+  <header class="topbar">
     <button
       class="menu-toggle"
       id="menuToggle"
-      type="button"
       aria-label="Abrir menu"
+      type="button"
     >
       MENU
     </button>
-
 
     <a
       href="index.html"
@@ -59,9 +36,7 @@
       OJOBOSCO
     </a>
 
-
     <div class="top-actions">
-
       <a
         href="universo.html"
         class="nav-link"
@@ -87,294 +62,209 @@
         href="carrinho.html"
         class="cart-link"
       >
-        CARRINHO
-        <span id="cartCount">0</span>
+        CARRINHO <span id="cartCount">0</span>
       </a>
-
     </div>
-
   </header>
-
-
-  <!-- =====================================
-       MENU
-  ====================================== -->
 
   <nav
     class="side-menu"
     id="sideMenu"
   >
-
     <div class="side-menu-inner">
-
       <button
         class="close-menu"
         id="closeMenu"
-        type="button"
         aria-label="Fechar menu"
+        type="button"
       >
         FECHAR
       </button>
 
-
-      <a href="universo.html">
-        UNIVERSO
-      </a>
-
-      <a href="loja.html">
-        LOJA
-      </a>
-
-      <a href="universo.html">
-        SOBRE
-      </a>
-
-      <a href="loja.html#aromatizadores">
-        AROMATIZADOR
-      </a>
-
-      <a href="loja.html#difusores">
-        DIFUSOR
-      </a>
-
-      <a href="loja.html#biblioteca">
-        BIBLIOTECA OLFATIVA
-      </a>
-
-      <a href="loja.html#velas">
-        VELA
-      </a>
-
-      <a href="loja.html#perfume">
-        PERFUME
-      </a>
-
+      <a href="index.html">INÍCIO</a>
+      <a href="universo.html">UNIVERSO</a>
+      <a href="loja.html">LOJA</a>
+      <a href="universo.html">SOBRE</a>
+      <a href="carrinho.html">CARRINHO</a>
+      <a href="#contato">CONTATO</a>
     </div>
-
   </nav>
 
-
-  <!-- =====================================
-       CARRINHO
-  ====================================== -->
-
   <main class="cart-page">
+    <div class="cart-page-grid">
 
-    <div class="cart-page-inner">
+      <section class="cart-main">
+        <h1 class="cart-page-title">
+          Carrinho De Compras
+          <span id="cartPageCount">[0]</span>
+        </h1>
 
+        <div
+          class="cart-page-items"
+          id="cartPageItems"
+        ></div>
 
-      <h1 class="cart-page-title">
-        Carrinho
-      </h1>
+        <div
+          class="cart-page-empty"
+          id="cartPageEmpty"
+        >
+          <p>SEU CARRINHO ESTÁ VAZIO.</p>
 
-
-      <section
-        class="cart-page-products"
-        id="cartPageProducts"
-      >
-      </section>
-
-
-      <!-- =================================
-           CUPOM
-      ================================== -->
-
-      <section
-        class="cart-page-coupon"
-        id="cartPageCouponSection"
-      >
-
-        <p class="cart-page-small-title">
-          CUPOM
-        </p>
-
-
-        <div class="cart-page-coupon-line">
-
-          <input
-            type="text"
-            id="cartPageCouponInput"
-            placeholder="DIGITE SEU CUPOM"
-            autocomplete="off"
+          <a
+            href="loja.html"
+            class="cart-page-shop-button"
           >
-
-
-          <button
-            type="button"
-            id="cartPageCouponButton"
-          >
-            APLICAR
-          </button>
-
+            IR PARA A LOJA
+          </a>
         </div>
 
-
-        <p
-          class="cart-page-coupon-message"
-          id="cartPageCouponMessage"
-        >
-        </p>
-
-
         <button
+          class="cart-page-checkout cart-page-checkout-mobile"
+          id="checkoutButtonMobile"
           type="button"
-          class="cart-page-remove-coupon"
-          id="cartPageRemoveCoupon"
         >
-          REMOVER CUPOM
+          <span class="cart-lock">🔒</span>
+          Fechar pedido
         </button>
 
+        <section class="cart-guarantee">
+          <h2>NOSSA GARANTIA</h2>
+
+          <p>
+            Se por algum motivo você não estiver totalmente satisfeito com sua
+            compra, teremos o maior prazer em processar sua troca ou reembolso,
+            de acordo com nossa política vigente.
+          </p>
+        </section>
       </section>
 
-
-      <!-- =================================
-           RESUMO
-      ================================== -->
-
-      <section
-        class="cart-page-summary"
-        id="cartPageSummary"
-      >
-      </section>
-
-
-      <!-- =================================
-           FINALIZAR
-      ================================== -->
-
-      <div class="cart-page-actions">
-
+      <aside class="cart-summary">
         <button
+          class="cart-page-checkout cart-page-checkout-desktop"
+          id="checkoutButtonDesktop"
           type="button"
-          class="cart-page-checkout"
-          id="cartPageCheckout"
         >
-          FINALIZAR COMPRA
+          <span class="cart-lock">🔒</span>
+          Fechar pedido
         </button>
 
+        <section class="cart-summary-block">
+          <div class="cart-summary-heading">
+            <h2>RESUMO DO PEDIDO</h2>
+            <span>—</span>
+          </div>
 
-        <a
-          href="loja.html"
-          class="cart-page-continue"
-        >
-          CONTINUAR COMPRANDO
-        </a>
+          <div class="cart-summary-row">
+            <span>SUBTOTAL</span>
+            <strong id="cartSubtotal">R$0,00</strong>
+          </div>
 
-      </div>
+          <div class="cart-shipping">
+            <div class="cart-shipping-title">
+              <span>CALCULAR FRETE</span>
 
+              <input
+                type="text"
+                id="shippingCep"
+                placeholder="* CEP"
+              >
+            </div>
+
+            <div class="cart-shipping-select">
+              <span>Padrão</span>
+              <span>⌄</span>
+            </div>
+
+            <p
+              class="cart-shipping-message"
+              id="shippingMessage"
+            >
+              Ganhe frete grátis em compras acima de R$500.
+            </p>
+          </div>
+
+          <div class="cart-summary-row cart-summary-total">
+            <span>TOTAL</span>
+            <strong id="cartTotal">R$0,00</strong>
+          </div>
+        </section>
+
+        <section class="cart-summary-block cart-coupon-block">
+          <div class="cart-summary-heading">
+            <h2>CUPOM DE OFERTA</h2>
+            <span>—</span>
+          </div>
+
+          <p class="cart-coupon-description">
+            Se você possui um cupom de oferta, insira aqui.
+          </p>
+
+          <form
+            class="cart-coupon-form"
+            id="cartCouponForm"
+          >
+            <input
+              type="text"
+              id="couponInput"
+              placeholder="Código de Oferta"
+            >
+            <button type="submit">Aplicar</button>
+          </form>
+
+          <p
+            class="cart-coupon-message"
+            id="couponMessage"
+          ></p>
+
+          <button
+            class="cart-coupon-remove"
+            id="removeCouponButton"
+            type="button"
+          >
+            Remover cupom
+          </button>
+        </section>
+      </aside>
 
     </div>
-
   </main>
 
-
-  <!-- =====================================
-       FOOTER
-  ====================================== -->
-
   <footer
-    class="footer cart-page-footer"
+    class="footer"
     id="contato"
   >
-
     <div class="footer-columns">
-
-
       <div>
-
-        <p class="footer-title">
-          UNIVERSO
-        </p>
-
-        <a href="index.html">
-          INÍCIO
-        </a>
-
-        <a href="universo.html">
-          NOSSA HISTÓRIA
-        </a>
-
+        <p class="footer-title">UNIVERSO</p>
+        <a href="index.html">INÍCIO</a>
+        <a href="universo.html">NOSSA HISTÓRIA</a>
       </div>
 
-
       <div>
-
-        <p class="footer-title">
-          LOJA
-        </p>
-
-        <a href="loja.html#aromatizadores">
-          AROMATIZADOR
-        </a>
-
-        <a href="loja.html#difusores">
-          DIFUSOR
-        </a>
-
-        <a href="loja.html#biblioteca">
-          BIBLIOTECA OLFATIVA
-        </a>
-
-        <a href="loja.html#velas">
-          VELA
-        </a>
-
-        <a href="loja.html#perfume">
-          PERFUME
-        </a>
-
+        <p class="footer-title">LOJA</p>
+        <a href="loja.html#aromatizador">AROMATIZADOR</a>
+        <a href="loja.html#difusor">DIFUSOR</a>
+        <a href="loja.html#biblioteca">BIBLIOTECA OLFATIVA</a>
+        <a href="loja.html#vela">VELA</a>
+        <a href="loja.html#perfume">PERFUME</a>
       </div>
 
-
       <div>
-
-        <p class="footer-title">
-          SOBRE
-        </p>
-
-        <a href="#contato">
-          CONTATO
-        </a>
-
-        <a href="#">
-          INSTAGRAM
-        </a>
-
-        <a href="#">
-          ENVIOS
-        </a>
-
-        <a href="#">
-          TROCAS
-        </a>
-
-        <a href="#">
-          PRIVACIDADE
-        </a>
-
+        <p class="footer-title">SOBRE</p>
+        <a href="#contato">CONTATO</a>
+        <a href="#">INSTAGRAM</a>
+        <a href="#">FACEBOOK</a>
+        <a href="#">WHATSAPP</a>
+        <a href="#">E-MAIL</a>
       </div>
-
-
     </div>
-
 
     <div class="footer-bottom">
-
-      <span>
-        © 2026 OJOBOSCO
-      </span>
-
-      <span>
-        BRASIL
-      </span>
-
+      <span>© 2026 OJOBOSCO</span>
+      <span>BRASIL</span>
     </div>
-
   </footer>
 
-
   <script src="script.js"></script>
-
 </body>
-
 </html>
