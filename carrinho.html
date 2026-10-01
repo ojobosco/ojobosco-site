@@ -16,26 +16,16 @@
 
   <title>Carrinho — OJOBOSCO</title>
 
-  <!--
-    Mantemos o CSS normal do site
-    para header, footer etc.
-  -->
   <link rel="stylesheet" href="style.css">
 
 
-  <!-- =====================================================
-       CSS EXCLUSIVO DO CARRINHO
-       Não interfere nas outras páginas.
-  ====================================================== -->
-
   <style>
-
     :root {
-      --ojb-cart-bg: #ffffff;
-      --ojb-cart-text: #111111;
-      --ojb-cart-border: #d6d6d6;
+      --cart-bg: #ffffff;
+      --cart-text: #111111;
+      --cart-border: #d5d5d5;
 
-      --ojb-font:
+      --cart-font:
         "Copperplate",
         "Copperplate Gothic Light",
         "Copperplate Gothic",
@@ -48,26 +38,21 @@
     }
 
 
-    body {
+    body.cart-body {
       margin: 0;
-    }
 
+      background: var(--cart-bg);
+      color: var(--cart-text);
 
-    body.ojb-cart-body {
-      background: var(--ojb-cart-bg);
-      color: var(--ojb-cart-text);
-      font-family: var(--ojb-font);
+      font-family: var(--cart-font);
     }
 
 
     /* =====================================================
-       HEADER DE SEGURANÇA
+       AVISO SUPERIOR
+    ===================================================== */
 
-       Caso o CSS geral do site demore para carregar,
-       estas regras impedem que o header fique quebrado.
-    ====================================================== */
-
-    .ojb-cart-body .announcement {
+    .cart-body .announcement {
       width: 100%;
       min-height: 34px;
 
@@ -80,80 +65,101 @@
       background: #111111;
       color: #ffffff;
 
-      font-family: var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 9px;
+
       letter-spacing: 0.08em;
+
       text-align: center;
       text-transform: uppercase;
     }
 
 
-    .ojb-cart-body .topbar {
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .cart-body .topbar {
       min-height: 72px;
 
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
+
+      grid-template-columns:
+        1fr
+        auto
+        1fr;
+
       align-items: center;
 
-      padding: 0 4vw;
-
-      border-bottom: 1px solid #d9d9d9;
+      padding:
+        0
+        4vw;
 
       background: #ffffff;
-      color: #111111;
+
+      border-bottom:
+        1px solid
+        #dddddd;
     }
 
 
-    .ojb-cart-body .topbar-left,
-    .ojb-cart-body .topbar-right {
+    .cart-body .topbar-left,
+    .cart-body .topbar-right {
       display: flex;
+
       align-items: center;
+
       gap: 22px;
     }
 
 
-    .ojb-cart-body .topbar-right {
+    .cart-body .topbar-right {
       justify-content: flex-end;
     }
 
 
-    .ojb-cart-body .topbar a {
+    .cart-body .topbar a {
       color: #111111;
+
       text-decoration: none;
 
-      font-family: var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 9px;
+
       letter-spacing: 0.08em;
+
       text-transform: uppercase;
     }
 
 
-    .ojb-cart-body .brand {
+    .cart-body .brand {
       font-size: 13px !important;
+
       letter-spacing: 0.08em;
     }
 
 
     /* =====================================================
        PÁGINA
-    ====================================================== */
+    ===================================================== */
 
-    .ojb-cart-page {
+    .cart-page {
       width: 100%;
 
       padding:
         74px
         4vw
-        100px;
+        110px;
 
       background: #ffffff;
     }
 
 
-    .ojb-cart-grid {
+    .cart-page-grid {
       width: 100%;
+
       max-width: 1480px;
 
       margin: 0 auto;
@@ -162,7 +168,7 @@
 
       grid-template-columns:
         minmax(0, 1.55fr)
-        minmax(360px, 0.72fr);
+        minmax(350px, 0.72fr);
 
       gap: 7vw;
 
@@ -171,15 +177,15 @@
 
 
     /* =====================================================
-       COLUNA ESQUERDA
-    ====================================================== */
+       PRODUTOS
+    ===================================================== */
 
-    .ojb-cart-main {
+    .cart-main {
       min-width: 0;
     }
 
 
-    .ojb-cart-heading {
+    .cart-title {
       margin:
         0
         0
@@ -189,16 +195,16 @@
 
       border-bottom:
         1px solid
-        var(--ojb-cart-border);
+        var(--cart-border);
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 14px;
       font-weight: 400;
 
-      letter-spacing: 0.08em;
       line-height: 1.3;
+
+      letter-spacing: 0.08em;
 
       text-transform: uppercase;
     }
@@ -206,9 +212,9 @@
 
     /* =====================================================
        ITEM
-    ====================================================== */
+    ===================================================== */
 
-    .ojb-cart-item {
+    .cart-item {
       display: grid;
 
       grid-template-columns:
@@ -220,20 +226,22 @@
 
       align-items: start;
 
-      padding:
-        0
-        0
-        34px;
-
       margin-bottom: 34px;
+
+      padding-bottom: 34px;
 
       border-bottom:
         1px solid
-        var(--ojb-cart-border);
+        var(--cart-border);
     }
 
 
-    .ojb-cart-item-image {
+    .cart-item-image-wrap {
+      width: 150px;
+    }
+
+
+    .cart-item-image {
       width: 150px;
       height: 185px;
 
@@ -245,52 +253,63 @@
     }
 
 
-    .ojb-cart-item-image-empty {
+    .cart-item-image-empty {
+      width: 150px;
+      height: 185px;
+
       background: #f3f3f1;
     }
 
 
-    .ojb-cart-item-info {
+    .cart-item-info {
       padding-top: 2px;
     }
 
 
-    .ojb-cart-item-name {
-      margin: 0 0 8px;
+    .cart-item-name {
+      margin:
+        0
+        0
+        8px;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 18px;
       font-weight: 400;
 
-      letter-spacing: 0.045em;
       line-height: 1.25;
+
+      letter-spacing: 0.045em;
 
       text-transform: uppercase;
     }
 
 
-    .ojb-cart-item-detail {
-      margin: 0 0 5px;
+    .cart-item-variant {
+      margin:
+        0
+        0
+        5px;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 11px;
 
-      letter-spacing: 0.06em;
       line-height: 1.35;
+
+      letter-spacing: 0.06em;
 
       text-transform: uppercase;
     }
 
 
-    .ojb-cart-item-price {
-      margin: 12px 0 0;
+    .cart-item-unit-price {
+      margin:
+        12px
+        0
+        0;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 12px;
 
@@ -300,28 +319,31 @@
     }
 
 
-    .ojb-cart-item-actions {
+    .cart-item-actions {
       display: flex;
+
       align-items: center;
+
       gap: 15px;
 
       margin-top: 18px;
     }
 
 
-    .ojb-cart-qty {
+    .cart-quantity {
       height: 36px;
 
       display: inline-flex;
+
       align-items: center;
 
       border:
         1px solid
-        #9d9d9d;
+        #999999;
     }
 
 
-    .ojb-cart-qty button {
+    .cart-quantity button {
       width: 34px;
       height: 34px;
 
@@ -332,6 +354,7 @@
 
       font-family:
         Arial,
+        Helvetica,
         sans-serif;
 
       font-size: 16px;
@@ -340,47 +363,45 @@
     }
 
 
-    .ojb-cart-qty span {
+    .cart-quantity span {
       min-width: 30px;
 
       text-align: center;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 10px;
     }
 
 
-    .ojb-cart-remove {
+    .cart-remove {
       border: 0;
+
+      padding: 0;
 
       background: transparent;
       color: #111111;
 
-      padding: 0;
-
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 9px;
 
       letter-spacing: 0.06em;
 
       text-decoration: underline;
+
       text-transform: uppercase;
 
       cursor: pointer;
     }
 
 
-    .ojb-cart-item-total {
+    .cart-item-total {
       padding-top: 2px;
 
       white-space: nowrap;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 12px;
 
@@ -392,9 +413,9 @@
 
     /* =====================================================
        CARRINHO VAZIO
-    ====================================================== */
+    ===================================================== */
 
-    .ojb-cart-empty {
+    .cart-empty {
       padding:
         45px
         0
@@ -404,13 +425,13 @@
     }
 
 
-    .ojb-cart-empty p {
+    .cart-empty p {
       margin:
         0
         0
         22px;
 
-      font-size: 12px;
+      font-size: 11px;
 
       letter-spacing: 0.08em;
 
@@ -418,7 +439,7 @@
     }
 
 
-    .ojb-cart-empty a {
+    .cart-empty-link {
       color: #111111;
 
       font-size: 10px;
@@ -430,57 +451,53 @@
 
 
     /* =====================================================
-       RESUMO
-    ====================================================== */
+       TEXTO DE TROCAS / DEVOLUÇÕES
+    ===================================================== */
 
-    .ojb-cart-summary {
-      width: 100%;
+    .cart-security {
+      margin-top: 54px;
 
-      background: #ffffff;
+      padding-top: 28px;
 
-      font-family:
-        var(--ojb-font);
+      border-top:
+        1px solid
+        var(--cart-border);
     }
 
 
-    .ojb-cart-checkout {
-      width: 100%;
-      min-height: 52px;
+    .cart-security p {
+      max-width: 720px;
 
-      margin:
-        0
-        0
-        42px;
+      margin: 0;
 
-      border:
-        1px solid
-        #111111;
-
-      border-radius: 0;
-
-      background: #111111;
-      color: #ffffff;
-
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 10px;
 
-      letter-spacing: 0.09em;
+      font-weight: 400;
 
-      text-transform: uppercase;
+      line-height: 1.8;
 
-      cursor: pointer;
+      letter-spacing: 0.025em;
+
+      text-transform: none;
     }
 
 
-    .ojb-cart-checkout:hover {
+    /* =====================================================
+       RESUMO
+    ===================================================== */
+
+    .cart-summary {
+      width: 100%;
+
       background: #ffffff;
-      color: #111111;
+
+      font-family: var(--cart-font);
     }
 
 
-    .ojb-cart-summary-heading {
+    .cart-summary-header {
       display: flex;
 
       justify-content: space-between;
@@ -499,7 +516,7 @@
     }
 
 
-    .ojb-cart-summary-heading h2 {
+    .cart-summary-header h2 {
       margin: 0;
 
       font-size: 12px;
@@ -511,12 +528,12 @@
     }
 
 
-    .ojb-cart-summary-heading span {
+    .cart-summary-header span {
       font-size: 17px;
     }
 
 
-    .ojb-cart-summary-row {
+    .cart-summary-row {
       display: flex;
 
       justify-content: space-between;
@@ -534,7 +551,7 @@
     }
 
 
-    .ojb-cart-summary-row strong {
+    .cart-summary-row strong {
       font-weight: 400;
 
       letter-spacing: 0.04em;
@@ -543,9 +560,9 @@
 
     /* =====================================================
        FRETE
-    ====================================================== */
+    ===================================================== */
 
-    .ojb-cart-shipping {
+    .cart-shipping {
       margin:
         13px
         0
@@ -553,7 +570,7 @@
     }
 
 
-    .ojb-cart-shipping-label {
+    .cart-shipping-label {
       display: block;
 
       margin:
@@ -569,7 +586,7 @@
     }
 
 
-    .ojb-cart-cep-line {
+    .cart-shipping-cep-wrap {
       display: grid;
 
       grid-template-columns:
@@ -577,12 +594,10 @@
         92px;
 
       gap: 8px;
-
-      align-items: stretch;
     }
 
 
-    #ojbCartCep {
+    #cartShippingCep {
       width: 100%;
       height: 45px;
 
@@ -601,8 +616,7 @@
 
       outline: none;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 10px;
 
@@ -610,12 +624,12 @@
     }
 
 
-    #ojbCartCep:focus {
+    #cartShippingCep:focus {
       border-color: #111111;
     }
 
 
-    #ojbCartCalculateShipping {
+    #cartShippingButton {
       width: 100%;
       height: 45px;
 
@@ -628,8 +642,7 @@
       background: #ffffff;
       color: #111111;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 8px;
 
@@ -641,20 +654,20 @@
     }
 
 
-    #ojbCartCalculateShipping:hover {
+    #cartShippingButton:hover {
       background: #111111;
       color: #ffffff;
     }
 
 
-    #ojbCartCalculateShipping:disabled {
+    #cartShippingButton:disabled {
       opacity: 0.45;
 
       cursor: wait;
     }
 
 
-    .ojb-cart-shipping-result {
+    .cart-shipping-method {
       width: 100%;
 
       min-height: 46px;
@@ -684,12 +697,12 @@
     }
 
 
-    .ojb-cart-shipping-result strong {
+    .cart-shipping-method-price {
       font-weight: 400;
     }
 
 
-    .ojb-cart-shipping-message {
+    .cart-shipping-message {
       min-height: 14px;
 
       margin:
@@ -707,7 +720,7 @@
     }
 
 
-    .ojb-cart-free-shipping {
+    .cart-free-shipping-message {
       margin:
         15px
         0
@@ -715,28 +728,19 @@
 
       font-size: 8px;
 
-      line-height: 1.45;
+      line-height: 1.5;
 
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
 
       text-transform: uppercase;
     }
 
 
     /* =====================================================
-       DESCONTO
-    ====================================================== */
-
-    .ojb-cart-discount-row {
-      margin-top: 32px;
-    }
-
-
-    /* =====================================================
        TOTAL
-    ====================================================== */
+    ===================================================== */
 
-    .ojb-cart-total-row {
+    .cart-total-row {
       margin-top: 33px;
 
       padding-top: 23px;
@@ -751,14 +755,14 @@
 
     /* =====================================================
        CUPOM
-    ====================================================== */
+    ===================================================== */
 
-    .ojb-cart-coupon {
+    .cart-coupon-area {
       margin-top: 42px;
     }
 
 
-    .ojb-cart-coupon-title {
+    .cart-coupon-title {
       margin:
         0
         0
@@ -772,7 +776,7 @@
     }
 
 
-    .ojb-cart-coupon-line {
+    .cart-coupon-fields {
       display: grid;
 
       grid-template-columns:
@@ -783,7 +787,7 @@
     }
 
 
-    #ojbCouponInput {
+    #couponInput {
       width: 100%;
       height: 45px;
 
@@ -797,8 +801,10 @@
         10px
         12px;
 
-      font-family:
-        var(--ojb-font);
+      background: #ffffff;
+      color: #111111;
+
+      font-family: var(--cart-font);
 
       font-size: 9px;
 
@@ -808,7 +814,12 @@
     }
 
 
-    #ojbCouponApply {
+    #couponInput:focus {
+      border-color: #111111;
+    }
+
+
+    #couponButton {
       height: 45px;
 
       border:
@@ -820,8 +831,7 @@
       background: #ffffff;
       color: #111111;
 
-      font-family:
-        var(--ojb-font);
+      font-family: var(--cart-font);
 
       font-size: 8px;
 
@@ -833,16 +843,19 @@
     }
 
 
-    #ojbCouponApply:hover {
+    #couponButton:hover {
       background: #111111;
       color: #ffffff;
     }
 
 
-    #ojbCouponMessage {
+    .cart-coupon-message {
       min-height: 15px;
 
-      margin-top: 10px;
+      margin:
+        10px
+        0
+        0;
 
       font-size: 8px;
 
@@ -855,63 +868,61 @@
 
 
     /* =====================================================
-       SEGURANÇA
-    ====================================================== */
+       FECHAR PEDIDO
 
-    .ojb-cart-security {
-      margin-top: 58px;
+       FICA NO FINAL DO RESUMO
+    ===================================================== */
 
-      padding-top: 28px;
+    .cart-checkout-button {
+      width: 100%;
 
-      border-top:
+      min-height: 52px;
+
+      margin-top: 40px;
+
+      border:
         1px solid
-        var(--ojb-cart-border);
-    }
+        #111111;
 
+      border-radius: 0;
 
-    .ojb-cart-security-title {
-      margin:
-        0
-        0
-        13px;
+      background: #111111;
+      color: #ffffff;
+
+      font-family: var(--cart-font);
 
       font-size: 10px;
 
       letter-spacing: 0.09em;
 
       text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease;
     }
 
 
-    .ojb-cart-security-text {
-      margin: 0;
-
-      font-size: 9px;
-
-      line-height: 1.55;
-
-      letter-spacing: 0.07em;
-
-      text-transform: uppercase;
-    }
-
-
-    .ojb-cart-checkout-mobile {
-      display: none;
+    .cart-checkout-button:hover {
+      background: #ffffff;
+      color: #111111;
     }
 
 
     /* =====================================================
        MOBILE
-    ====================================================== */
+    ===================================================== */
 
     @media (max-width: 900px) {
 
-      .ojb-cart-body .topbar {
+      .cart-body .topbar {
         min-height: 58px;
 
         grid-template-columns:
-          1fr auto;
+          1fr
+          auto;
 
         padding:
           0
@@ -919,22 +930,22 @@
       }
 
 
-      .ojb-cart-body .topbar-left {
+      .cart-body .topbar-left {
         display: none;
       }
 
 
-      .ojb-cart-body .brand {
+      .cart-body .brand {
         justify-self: start;
       }
 
 
-      .ojb-cart-body .topbar-right {
+      .cart-body .topbar-right {
         justify-self: end;
       }
 
 
-      .ojb-cart-page {
+      .cart-page {
         padding:
           42px
           20px
@@ -942,40 +953,14 @@
       }
 
 
-      .ojb-cart-grid {
-        grid-template-columns:
-          1fr;
+      .cart-page-grid {
+        grid-template-columns: 1fr;
 
         gap: 50px;
       }
 
 
-      .ojb-cart-main {
-        order: 1;
-      }
-
-
-      .ojb-cart-summary {
-        order: 2;
-      }
-
-
-      .ojb-cart-checkout-desktop {
-        display: none;
-      }
-
-
-      .ojb-cart-checkout-mobile {
-        display: block;
-
-        margin:
-          35px
-          0
-          0;
-      }
-
-
-      .ojb-cart-item {
+      .cart-item {
         grid-template-columns:
           104px
           minmax(0, 1fr);
@@ -984,26 +969,44 @@
       }
 
 
-      .ojb-cart-item-image {
+      .cart-item-image-wrap {
+        width: 104px;
+      }
+
+
+      .cart-item-image,
+      .cart-item-image-empty {
         width: 104px;
         height: 132px;
       }
 
 
-      .ojb-cart-item-total {
+      .cart-item-total {
         grid-column: 2;
 
         padding-top: 0;
       }
 
 
-      .ojb-cart-item-name {
+      .cart-item-name {
         font-size: 14px;
       }
 
 
-      .ojb-cart-heading {
+      .cart-title {
         font-size: 12px;
+      }
+
+
+      .cart-security {
+        margin-top: 35px;
+      }
+
+
+      .cart-security p {
+        font-size: 10px;
+
+        line-height: 1.7;
       }
 
     }
@@ -1011,7 +1014,7 @@
 
     @media (max-width: 520px) {
 
-      .ojb-cart-page {
+      .cart-page {
         padding:
           35px
           18px
@@ -1019,7 +1022,7 @@
       }
 
 
-      .ojb-cart-item {
+      .cart-item {
         grid-template-columns:
           90px
           minmax(0, 1fr);
@@ -1028,32 +1031,38 @@
       }
 
 
-      .ojb-cart-item-image {
+      .cart-item-image-wrap {
+        width: 90px;
+      }
+
+
+      .cart-item-image,
+      .cart-item-image-empty {
         width: 90px;
         height: 116px;
       }
 
 
-      .ojb-cart-item-name {
+      .cart-item-name {
         font-size: 12px;
       }
 
 
-      .ojb-cart-item-detail,
-      .ojb-cart-item-price,
-      .ojb-cart-item-total {
+      .cart-item-variant,
+      .cart-item-unit-price,
+      .cart-item-total {
         font-size: 9px;
       }
 
 
-      .ojb-cart-cep-line {
+      .cart-shipping-cep-wrap {
         grid-template-columns:
           minmax(0, 1fr)
           82px;
       }
 
 
-      .ojb-cart-summary-row {
+      .cart-summary-row {
         font-size: 9px;
       }
 
@@ -1064,7 +1073,7 @@
 </head>
 
 
-<body class="ojb-cart-body">
+<body class="cart-body">
 
 
   <!-- =====================================================
@@ -1102,6 +1111,7 @@
     <a
       href="index.html"
       class="brand"
+      aria-label="OJOBOSCO"
     >
       OJOBOSCO
     </a>
@@ -1112,9 +1122,10 @@
       <a
         href="carrinho.html"
         class="cart-link"
+        id="cartButton"
       >
         CARRINHO
-        <span id="ojbHeaderCartCount"></span>
+        <span id="cartCount"></span>
       </a>
 
     </div>
@@ -1126,31 +1137,37 @@
        CARRINHO
   ====================================================== -->
 
-  <main class="ojb-cart-page">
+  <main class="cart-page">
 
-    <div class="ojb-cart-grid">
+    <div class="cart-page-grid">
 
 
       <!-- =================================================
            PRODUTOS
       ================================================== -->
 
-      <section class="ojb-cart-main">
+      <section class="cart-main">
 
-        <h1 class="ojb-cart-heading">
+        <h1 class="cart-title">
+
           CARRINHO DE COMPRAS
-          <span id="ojbCartCount">
+
+          <span id="cartTitleCount">
             [0]
           </span>
+
         </h1>
 
 
-        <div id="ojbCartItems"></div>
+        <div
+          id="cartPageItems"
+          class="cart-items"
+        ></div>
 
 
         <div
-          id="ojbCartEmpty"
-          class="ojb-cart-empty"
+          id="cartEmpty"
+          class="cart-empty"
           hidden
         >
 
@@ -1158,33 +1175,28 @@
             SEU CARRINHO ESTÁ VAZIO.
           </p>
 
-          <a href="loja.html">
+
+          <a
+            href="loja.html"
+            class="cart-empty-link"
+          >
             CONTINUAR COMPRANDO
           </a>
 
         </div>
 
 
-        <button
-          type="button"
-          id="ojbCheckoutMobile"
-          class="
-            ojb-cart-checkout
-            ojb-cart-checkout-mobile
-          "
-        >
-          FECHAR PEDIDO
-        </button>
+        <!-- ===============================================
+             TEXTO APROVADO DE TROCAS E DEVOLUÇÕES
+        ================================================ -->
 
+        <div class="cart-security">
 
-        <div class="ojb-cart-security">
-
-          <p class="ojb-cart-security-title">
-            COMPRA SEGURA
-          </p>
-
-          <p class="ojb-cart-security-text">
-            PAGAMENTO PROCESSADO COM SEGURANÇA.
+          <p>
+            Se por algum motivo você não estiver satisfeito com sua compra,
+            basta devolver os produtos sem uso que teremos o maior prazer em
+            processar sua troca ou reembolso total diante das políticas de
+            troca e devolução.
           </p>
 
         </div>
@@ -1193,31 +1205,19 @@
 
 
       <!-- =================================================
-           RESUMO
+           RESUMO DO PEDIDO
       ================================================== -->
 
-      <aside class="ojb-cart-summary">
+      <aside class="cart-summary">
 
 
-        <button
-          type="button"
-          id="ojbCheckoutDesktop"
-          class="
-            ojb-cart-checkout
-            ojb-cart-checkout-desktop
-          "
-        >
-          FECHAR PEDIDO
-        </button>
-
-
-        <div class="ojb-cart-summary-heading">
+        <div class="cart-summary-header">
 
           <h2>
             RESUMO DO PEDIDO
           </h2>
 
-          <span>
+          <span aria-hidden="true">
             —
           </span>
 
@@ -1226,13 +1226,13 @@
 
         <!-- SUBTOTAL -->
 
-        <div class="ojb-cart-summary-row">
+        <div class="cart-summary-row">
 
           <span>
             SUBTOTAL
           </span>
 
-          <strong id="ojbSubtotal">
+          <strong id="cartSubtotal">
             R$ 0,00
           </strong>
 
@@ -1243,31 +1243,31 @@
              FRETE
         ================================================== -->
 
-        <section class="ojb-cart-shipping">
+        <section class="cart-shipping">
 
           <label
-            for="ojbCartCep"
-            class="ojb-cart-shipping-label"
+            for="cartShippingCep"
+            class="cart-shipping-label"
           >
             CALCULAR FRETE
           </label>
 
 
-          <div class="ojb-cart-cep-line">
+          <div class="cart-shipping-cep-wrap">
 
             <input
               type="text"
-              id="ojbCartCep"
+              id="cartShippingCep"
               inputmode="numeric"
-              autocomplete="postal-code"
               maxlength="9"
+              autocomplete="postal-code"
               placeholder="00000-000"
             >
 
 
             <button
               type="button"
-              id="ojbCartCalculateShipping"
+              id="cartShippingButton"
             >
               CALCULAR
             </button>
@@ -1275,16 +1275,17 @@
           </div>
 
 
-          <div
-            class="ojb-cart-shipping-result"
-            id="ojbShippingResult"
-          >
+          <div class="cart-shipping-method">
 
-            <span id="ojbShippingMethod">
+            <span id="cartShippingMethod">
               PADRÃO
             </span>
 
-            <strong id="ojbShippingPrice">
+
+            <strong
+              id="cartShippingMethodPrice"
+              class="cart-shipping-method-price"
+            >
               —
             </strong>
 
@@ -1292,15 +1293,18 @@
 
 
           <p
-            id="ojbShippingMessage"
-            class="ojb-cart-shipping-message"
+            id="cartShippingMessage"
+            class="cart-shipping-message"
           >
             DIGITE SEU CEP PARA CALCULAR O FRETE.
           </p>
 
 
-          <p class="ojb-cart-free-shipping">
-            FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500.
+          <p
+            id="cartFreeShippingMessage"
+            class="cart-free-shipping-message"
+          >
+            FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500 SEM CUPOM.
           </p>
 
         </section>
@@ -1309,30 +1313,28 @@
         <!-- DESCONTO -->
 
         <div
-          id="ojbDiscountRow"
-          class="
-            ojb-cart-summary-row
-            ojb-cart-discount-row
-          "
+          id="cartDiscountRow"
+          class="cart-summary-row"
           hidden
         >
 
-          <span id="ojbDiscountLabel">
+          <span id="cartDiscountLabel">
             DESCONTO
           </span>
 
-          <strong id="ojbDiscount">
+
+          <strong id="cartDiscount">
             - R$ 0,00
           </strong>
 
         </div>
 
 
-        <!-- FRETE -->
+        <!-- FRETE NO RESUMO -->
 
         <div
-          id="ojbShippingRow"
-          class="ojb-cart-summary-row"
+          id="cartShippingRow"
+          class="cart-summary-row"
           hidden
         >
 
@@ -1340,7 +1342,8 @@
             FRETE
           </span>
 
-          <strong id="ojbShippingTotal">
+
+          <strong id="cartShipping">
             R$ 0,00
           </strong>
 
@@ -1351,8 +1354,8 @@
 
         <div
           class="
-            ojb-cart-summary-row
-            ojb-cart-total-row
+            cart-summary-row
+            cart-total-row
           "
         >
 
@@ -1360,7 +1363,8 @@
             TOTAL
           </span>
 
-          <strong id="ojbTotal">
+
+          <strong id="cartTotal">
             R$ 0,00
           </strong>
 
@@ -1371,20 +1375,20 @@
              CUPOM
         ================================================== -->
 
-        <section class="ojb-cart-coupon">
+        <section class="cart-coupon-area">
 
-          <p class="ojb-cart-coupon-title">
+          <p class="cart-coupon-title">
             CUPOM DE OFERTA
           </p>
 
 
-          <form id="ojbCouponForm">
+          <form id="couponForm">
 
-            <div class="ojb-cart-coupon-line">
+            <div class="cart-coupon-fields">
 
               <input
                 type="text"
-                id="ojbCouponInput"
+                id="couponInput"
                 autocomplete="off"
                 placeholder="DIGITE O CÓDIGO"
               >
@@ -1392,7 +1396,7 @@
 
               <button
                 type="submit"
-                id="ojbCouponApply"
+                id="couponButton"
               >
                 APLICAR
               </button>
@@ -1402,9 +1406,26 @@
           </form>
 
 
-          <p id="ojbCouponMessage"></p>
+          <p
+            id="couponMessage"
+            class="cart-coupon-message"
+          ></p>
 
         </section>
+
+
+        <!-- =================================================
+             FECHAR PEDIDO
+             SEMPRE EMBAIXO DO RESUMO
+        ================================================== -->
+
+        <button
+          type="button"
+          id="checkoutButton"
+          class="cart-checkout-button"
+        >
+          FECHAR PEDIDO
+        </button>
 
       </aside>
 
@@ -1413,1993 +1434,8 @@
   </main>
 
 
-  <!-- =====================================================
-       JAVASCRIPT EXCLUSIVO DO CARRINHO
-  ====================================================== -->
-
-  <script>
-
-    (() => {
-
-      "use strict";
-
-
-      /* ===================================================
-         CONFIGURAÇÃO
-      =================================================== */
-
-      const CART_STORAGE_KEY =
-        "ojobosco-cart";
-
-      const COUPON_STORAGE_KEY =
-        "ojobosco-coupon";
-
-      const SHIPPING_STORAGE_KEY =
-        "ojobosco-shipping";
-
-
-      const FREE_SHIPPING_THRESHOLD =
-        500;
-
-
-      const VALID_COUPONS = {
-        BEMVINDO: 0.10,
-        CAMILAGUS: 0.10
-      };
-
-
-      const SHIPPING_PRICES = {
-
-        RMR: 15,
-
-        NORDESTE: 35,
-
-        CENTRO_OESTE: 45,
-
-        SUDESTE: 55,
-
-        NORTE_SUL: 65
-
-      };
-
-
-      const RMR_CITIES = [
-
-        "ABREU E LIMA",
-
-        "ARACOIABA",
-
-        "CABO DE SANTO AGOSTINHO",
-
-        "CAMARAGIBE",
-
-        "IGARASSU",
-
-        "ILHA DE ITAMARACA",
-
-        "IPOJUCA",
-
-        "ITAPISSUMA",
-
-        "JABOATAO DOS GUARARAPES",
-
-        "MORENO",
-
-        "OLINDA",
-
-        "PAULISTA",
-
-        "RECIFE",
-
-        "SAO LOURENCO DA MATA"
-
-      ];
-
-
-      const NORTHEAST_STATES = [
-        "AL",
-        "BA",
-        "CE",
-        "MA",
-        "PB",
-        "PE",
-        "PI",
-        "RN",
-        "SE"
-      ];
-
-
-      const CENTER_WEST_STATES = [
-        "DF",
-        "GO",
-        "MT",
-        "MS"
-      ];
-
-
-      const SOUTHEAST_STATES = [
-        "ES",
-        "MG",
-        "RJ",
-        "SP"
-      ];
-
-
-      const NORTH_SOUTH_STATES = [
-        "AC",
-        "AP",
-        "AM",
-        "PA",
-        "RO",
-        "RR",
-        "TO",
-        "PR",
-        "RS",
-        "SC"
-      ];
-
-
-      /* ===================================================
-         UTILITÁRIOS
-      =================================================== */
-
-      function onlyNumbers(value) {
-
-        return String(
-          value || ""
-        ).replace(
-          /\D/g,
-          ""
-        );
-
-      }
-
-
-      function normalizeText(value) {
-
-        return String(
-          value || ""
-        )
-          .normalize("NFD")
-          .replace(
-            /[\u0300-\u036f]/g,
-            ""
-          )
-          .trim()
-          .replace(
-            /\s+/g,
-            " "
-          )
-          .toUpperCase();
-
-      }
-
-
-      function formatBRL(value) {
-
-        return Number(
-          value || 0
-        ).toLocaleString(
-          "pt-BR",
-          {
-            style: "currency",
-            currency: "BRL"
-          }
-        );
-
-      }
-
-
-      function formatCEP(value) {
-
-        const numbers =
-          onlyNumbers(value)
-            .slice(
-              0,
-              8
-            );
-
-
-        if (
-          numbers.length <= 5
-        ) {
-
-          return numbers;
-
-        }
-
-
-        return (
-          numbers.slice(
-            0,
-            5
-          ) +
-          "-" +
-          numbers.slice(5)
-        );
-
-      }
-
-
-      function parseMoney(value) {
-
-        if (
-          typeof value === "number" &&
-          Number.isFinite(value)
-        ) {
-
-          return value;
-
-        }
-
-
-        if (!value) {
-          return 0;
-        }
-
-
-        let text =
-          String(value)
-            .replace(
-              /[^\d,.-]/g,
-              ""
-            )
-            .trim();
-
-
-        if (
-          text.includes(",") &&
-          text.includes(".")
-        ) {
-
-          text =
-            text
-              .replace(
-                /\./g,
-                ""
-              )
-              .replace(
-                ",",
-                "."
-              );
-
-        } else if (
-          text.includes(",")
-        ) {
-
-          text =
-            text.replace(
-              ",",
-              "."
-            );
-
-        }
-
-
-        const number =
-          Number(text);
-
-
-        return Number.isFinite(
-          number
-        )
-          ? number
-          : 0;
-
-      }
-
-
-      function escapeHTML(value) {
-
-        return String(
-          value || ""
-        )
-          .replace(
-            /&/g,
-            "&amp;"
-          )
-          .replace(
-            /</g,
-            "&lt;"
-          )
-          .replace(
-            />/g,
-            "&gt;"
-          )
-          .replace(
-            /"/g,
-            "&quot;"
-          )
-          .replace(
-            /'/g,
-            "&#039;"
-          );
-
-      }
-
-
-      /* ===================================================
-         CARRINHO
-      =================================================== */
-
-      function getCart() {
-
-        try {
-
-          const data =
-            JSON.parse(
-              localStorage.getItem(
-                CART_STORAGE_KEY
-              ) || "[]"
-            );
-
-
-          return Array.isArray(
-            data
-          )
-            ? data
-            : [];
-
-        } catch {
-
-          return [];
-
-        }
-
-      }
-
-
-      function saveCart(cart) {
-
-        localStorage.setItem(
-          CART_STORAGE_KEY,
-          JSON.stringify(cart)
-        );
-
-
-        /*
-          Quando o carrinho muda,
-          recalculamos a regra do frete.
-        */
-
-        normalizeSavedShipping();
-
-
-        render();
-
-      }
-
-
-      function itemQuantity(item) {
-
-        const quantity =
-          Number(
-            item.quantity ??
-            item.qty ??
-            item.quantidade ??
-            1
-          );
-
-
-        return (
-          Number.isFinite(quantity) &&
-          quantity > 0
-        )
-          ? quantity
-          : 1;
-
-      }
-
-
-      function itemPrice(item) {
-
-        return parseMoney(
-          item.price ??
-          item.currentPrice ??
-          item.preco ??
-          item.valor ??
-          0
-        );
-
-      }
-
-
-      function itemName(item) {
-
-        return (
-          item.name ||
-          item.product ||
-          item.productName ||
-          item.nome ||
-          "Produto OJOBOSCO"
-        );
-
-      }
-
-
-      function itemFragrance(item) {
-
-        return (
-          item.fragrance ||
-          item.fragrancia ||
-          ""
-        );
-
-      }
-
-
-      function itemSize(item) {
-
-        return (
-          item.size ||
-          item.currentSize ||
-          item.tamanho ||
-          ""
-        );
-
-      }
-
-
-      function itemImage(item) {
-
-        return (
-          item.image ||
-          item.imageUrl ||
-          item.imagem ||
-          ""
-        );
-
-      }
-
-
-      function cartQuantity() {
-
-        return getCart().reduce(
-          (
-            total,
-            item
-          ) => {
-
-            return (
-              total +
-              itemQuantity(item)
-            );
-
-          },
-          0
-        );
-
-      }
-
-
-      function cartSubtotal() {
-
-        return getCart().reduce(
-          (
-            total,
-            item
-          ) => {
-
-            return (
-              total +
-              (
-                itemPrice(item) *
-                itemQuantity(item)
-              )
-            );
-
-          },
-          0
-        );
-
-      }
-
-
-      /* ===================================================
-         CUPOM
-      =================================================== */
-
-      function getCoupon() {
-
-        try {
-
-          const raw =
-            localStorage.getItem(
-              COUPON_STORAGE_KEY
-            );
-
-
-          if (!raw) {
-            return null;
-          }
-
-
-          let value;
-
-
-          try {
-
-            value =
-              JSON.parse(raw);
-
-          } catch {
-
-            value = raw;
-
-          }
-
-
-          let code = "";
-
-
-          if (
-            typeof value ===
-            "string"
-          ) {
-
-            code = value;
-
-          } else if (
-            value &&
-            typeof value ===
-            "object"
-          ) {
-
-            code =
-              value.code ||
-              value.coupon ||
-              value.codigo ||
-              "";
-
-          }
-
-
-          code =
-            normalizeText(code);
-
-
-          if (
-            !VALID_COUPONS[
-              code
-            ]
-          ) {
-
-            return null;
-
-          }
-
-
-          return code;
-
-        } catch {
-
-          return null;
-
-        }
-
-      }
-
-
-      function setCoupon(code) {
-
-        const normalized =
-          normalizeText(code);
-
-
-        if (
-          !VALID_COUPONS[
-            normalized
-          ]
-        ) {
-
-          return false;
-
-        }
-
-
-        localStorage.setItem(
-          COUPON_STORAGE_KEY,
-          JSON.stringify({
-            code:
-              normalized
-          })
-        );
-
-
-        return true;
-
-      }
-
-
-      function couponDiscount() {
-
-        const code =
-          getCoupon();
-
-
-        if (!code) {
-          return 0;
-        }
-
-
-        return (
-          cartSubtotal() *
-          VALID_COUPONS[
-            code
-          ]
-        );
-
-      }
-
-
-      /* ===================================================
-         FRETE
-      =================================================== */
-
-      function getShipping() {
-
-        try {
-
-          const data =
-            JSON.parse(
-              localStorage.getItem(
-                SHIPPING_STORAGE_KEY
-              ) || "null"
-            );
-
-
-          if (
-            !data ||
-            !data.cep
-          ) {
-
-            return null;
-
-          }
-
-
-          return data;
-
-        } catch {
-
-          return null;
-
-        }
-
-      }
-
-
-      function saveShipping(data) {
-
-        localStorage.setItem(
-          SHIPPING_STORAGE_KEY,
-          JSON.stringify(data)
-        );
-
-      }
-
-
-      function clearShipping() {
-
-        localStorage.removeItem(
-          SHIPPING_STORAGE_KEY
-        );
-
-      }
-
-
-      function identifyRegion(
-        city,
-        uf
-      ) {
-
-        const normalizedCity =
-          normalizeText(city);
-
-        const normalizedUF =
-          normalizeText(uf);
-
-
-        if (
-          normalizedUF === "PE" &&
-          RMR_CITIES.includes(
-            normalizedCity
-          )
-        ) {
-
-          return {
-
-            code:
-              "RMR",
-
-            label:
-              "RECIFE / RMR",
-
-            price:
-              SHIPPING_PRICES.RMR
-
-          };
-
-        }
-
-
-        if (
-          NORTHEAST_STATES.includes(
-            normalizedUF
-          )
-        ) {
-
-          return {
-
-            code:
-              "NORDESTE",
-
-            label:
-              "NORDESTE",
-
-            price:
-              SHIPPING_PRICES
-                .NORDESTE
-
-          };
-
-        }
-
-
-        if (
-          CENTER_WEST_STATES.includes(
-            normalizedUF
-          )
-        ) {
-
-          return {
-
-            code:
-              "CENTRO_OESTE",
-
-            label:
-              "CENTRO-OESTE",
-
-            price:
-              SHIPPING_PRICES
-                .CENTRO_OESTE
-
-          };
-
-        }
-
-
-        if (
-          SOUTHEAST_STATES.includes(
-            normalizedUF
-          )
-        ) {
-
-          return {
-
-            code:
-              "SUDESTE",
-
-            label:
-              "SUDESTE",
-
-            price:
-              SHIPPING_PRICES
-                .SUDESTE
-
-          };
-
-        }
-
-
-        if (
-          NORTH_SOUTH_STATES.includes(
-            normalizedUF
-          )
-        ) {
-
-          return {
-
-            code:
-              "NORTE_SUL",
-
-            label:
-              "NORTE / SUL",
-
-            price:
-              SHIPPING_PRICES
-                .NORTE_SUL
-
-          };
-
-        }
-
-
-        return null;
-
-      }
-
-
-      async function queryCEP(
-        cep
-      ) {
-
-        const cleanCEP =
-          onlyNumbers(cep);
-
-
-        if (
-          cleanCEP.length !== 8
-        ) {
-
-          throw new Error(
-            "DIGITE UM CEP VÁLIDO."
-          );
-
-        }
-
-
-        const response =
-          await fetch(
-            "https://viacep.com.br/ws/" +
-            cleanCEP +
-            "/json/"
-          );
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            "NÃO FOI POSSÍVEL CONSULTAR O CEP."
-          );
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        if (
-          !data ||
-          data.erro
-        ) {
-
-          throw new Error(
-            "CEP NÃO ENCONTRADO."
-          );
-
-        }
-
-
-        return data;
-
-      }
-
-
-      async function calculateShipping(
-        cep
-      ) {
-
-        const address =
-          await queryCEP(
-            cep
-          );
-
-
-        const region =
-          identifyRegion(
-            address.localidade,
-            address.uf
-          );
-
-
-        if (!region) {
-
-          throw new Error(
-            "NÃO FOI POSSÍVEL CALCULAR O FRETE PARA ESTE CEP."
-          );
-
-        }
-
-
-        const subtotal =
-          cartSubtotal();
-
-
-        const freeShipping =
-          subtotal >=
-          FREE_SHIPPING_THRESHOLD;
-
-
-        const shipping = {
-
-          cep:
-            onlyNumbers(cep),
-
-          street:
-            address.logradouro ||
-            "",
-
-          district:
-            address.bairro ||
-            "",
-
-          city:
-            address.localidade ||
-            "",
-
-          state:
-            address.uf ||
-            "",
-
-          region:
-            region.code,
-
-          regionLabel:
-            region.label,
-
-          originalPrice:
-            region.price,
-
-          price:
-            freeShipping
-              ? 0
-              : region.price,
-
-          freeShipping:
-            freeShipping
-
-        };
-
-
-        saveShipping(
-          shipping
-        );
-
-
-        return shipping;
-
-      }
-
-
-      /*
-        Se o cliente altera a quantidade
-        depois de calcular o frete,
-        mantemos a mesma região mas
-        recalculamos a gratuidade.
-      */
-
-      function normalizeSavedShipping() {
-
-        const shipping =
-          getShipping();
-
-
-        if (!shipping) {
-          return;
-        }
-
-
-        const subtotal =
-          cartSubtotal();
-
-
-        if (
-          subtotal >=
-          FREE_SHIPPING_THRESHOLD
-        ) {
-
-          shipping.price = 0;
-
-          shipping.freeShipping =
-            true;
-
-        } else {
-
-          shipping.price =
-            Number(
-              shipping.originalPrice ||
-              0
-            );
-
-          shipping.freeShipping =
-            false;
-
-        }
-
-
-        saveShipping(
-          shipping
-        );
-
-      }
-
-
-      /* ===================================================
-         TOTAL
-      =================================================== */
-
-      function orderTotal() {
-
-        const subtotal =
-          cartSubtotal();
-
-        const discount =
-          couponDiscount();
-
-        const shipping =
-          getShipping();
-
-
-        const shippingPrice =
-          shipping
-            ? Number(
-                shipping.price ||
-                0
-              )
-            : 0;
-
-
-        return Math.max(
-          0,
-          subtotal -
-          discount +
-          shippingPrice
-        );
-
-      }
-
-
-      /* ===================================================
-         RENDER DOS PRODUTOS
-      =================================================== */
-
-      function renderItems() {
-
-        const container =
-          document.getElementById(
-            "ojbCartItems"
-          );
-
-        const empty =
-          document.getElementById(
-            "ojbCartEmpty"
-          );
-
-
-        const cart =
-          getCart();
-
-
-        container.innerHTML =
-          "";
-
-
-        if (
-          cart.length === 0
-        ) {
-
-          container.hidden =
-            true;
-
-          empty.hidden =
-            false;
-
-          return;
-
-        }
-
-
-        container.hidden =
-          false;
-
-        empty.hidden =
-          true;
-
-
-        cart.forEach(
-          (
-            item,
-            index
-          ) => {
-
-            const article =
-              document.createElement(
-                "article"
-              );
-
-
-            article.className =
-              "ojb-cart-item";
-
-
-            const name =
-              itemName(item);
-
-            const fragrance =
-              itemFragrance(item);
-
-            const size =
-              itemSize(item);
-
-            const price =
-              itemPrice(item);
-
-            const quantity =
-              itemQuantity(item);
-
-            const image =
-              itemImage(item);
-
-
-            article.innerHTML = `
-
-              <div>
-
-                ${
-                  image
-                    ? `
-                      <img
-                        src="${escapeHTML(image)}"
-                        alt="${escapeHTML(name)}"
-                        class="ojb-cart-item-image"
-                      >
-                    `
-                    : `
-                      <div
-                        class="
-                          ojb-cart-item-image
-                          ojb-cart-item-image-empty
-                        "
-                      ></div>
-                    `
-                }
-
-              </div>
-
-
-              <div class="ojb-cart-item-info">
-
-                <h2 class="ojb-cart-item-name">
-                  ${escapeHTML(name)}
-                </h2>
-
-
-                ${
-                  fragrance
-                    ? `
-                      <p class="ojb-cart-item-detail">
-                        ${escapeHTML(fragrance)}
-                      </p>
-                    `
-                    : ""
-                }
-
-
-                ${
-                  size
-                    ? `
-                      <p class="ojb-cart-item-detail">
-                        ${escapeHTML(size)}
-                      </p>
-                    `
-                    : ""
-                }
-
-
-                <p class="ojb-cart-item-price">
-                  ${formatBRL(price)}
-                </p>
-
-
-                <div class="ojb-cart-item-actions">
-
-                  <div class="ojb-cart-qty">
-
-                    <button
-                      type="button"
-                      data-action="minus"
-                      data-index="${index}"
-                      aria-label="Diminuir quantidade"
-                    >
-                      −
-                    </button>
-
-
-                    <span>
-                      ${quantity}
-                    </span>
-
-
-                    <button
-                      type="button"
-                      data-action="plus"
-                      data-index="${index}"
-                      aria-label="Aumentar quantidade"
-                    >
-                      +
-                    </button>
-
-                  </div>
-
-
-                  <button
-                    type="button"
-                    class="ojb-cart-remove"
-                    data-action="remove"
-                    data-index="${index}"
-                  >
-                    REMOVER
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <div class="ojb-cart-item-total">
-
-                ${formatBRL(
-                  price *
-                  quantity
-                )}
-
-              </div>
-
-            `;
-
-
-            container.appendChild(
-              article
-            );
-
-          }
-        );
-
-
-        bindItemButtons();
-
-      }
-
-
-      /* ===================================================
-         BOTÕES DOS PRODUTOS
-      =================================================== */
-
-      function bindItemButtons() {
-
-        document
-          .querySelectorAll(
-            "[data-action]"
-          )
-          .forEach(
-            button => {
-
-              button.addEventListener(
-                "click",
-                () => {
-
-                  const index =
-                    Number(
-                      button.dataset
-                        .index
-                    );
-
-
-                  const action =
-                    button.dataset
-                      .action;
-
-
-                  const cart =
-                    getCart();
-
-
-                  if (!cart[index]) {
-                    return;
-                  }
-
-
-                  if (
-                    action ===
-                    "remove"
-                  ) {
-
-                    cart.splice(
-                      index,
-                      1
-                    );
-
-                    saveCart(
-                      cart
-                    );
-
-                    return;
-
-                  }
-
-
-                  let quantity =
-                    itemQuantity(
-                      cart[index]
-                    );
-
-
-                  if (
-                    action ===
-                    "plus"
-                  ) {
-
-                    quantity += 1;
-
-                  }
-
-
-                  if (
-                    action ===
-                    "minus"
-                  ) {
-
-                    quantity -= 1;
-
-                  }
-
-
-                  if (
-                    quantity <= 0
-                  ) {
-
-                    cart.splice(
-                      index,
-                      1
-                    );
-
-                  } else {
-
-                    cart[index]
-                      .quantity =
-                      quantity;
-
-                  }
-
-
-                  saveCart(
-                    cart
-                  );
-
-                }
-              );
-
-            }
-          );
-
-      }
-
-
-      /* ===================================================
-         RENDER DO RESUMO
-      =================================================== */
-
-      function renderSummary() {
-
-        const subtotal =
-          cartSubtotal();
-
-        const discount =
-          couponDiscount();
-
-        const shipping =
-          getShipping();
-
-        const total =
-          orderTotal();
-
-
-        document.getElementById(
-          "ojbSubtotal"
-        ).textContent =
-          formatBRL(
-            subtotal
-          );
-
-
-        document.getElementById(
-          "ojbTotal"
-        ).textContent =
-          formatBRL(
-            total
-          );
-
-
-        /* -------------------------------
-           DESCONTO
-        -------------------------------- */
-
-        const coupon =
-          getCoupon();
-
-
-        const discountRow =
-          document.getElementById(
-            "ojbDiscountRow"
-          );
-
-
-        if (
-          coupon &&
-          discount > 0
-        ) {
-
-          discountRow.hidden =
-            false;
-
-
-          document.getElementById(
-            "ojbDiscountLabel"
-          ).textContent =
-            "DESCONTO " +
-            coupon;
-
-
-          document.getElementById(
-            "ojbDiscount"
-          ).textContent =
-            "- " +
-            formatBRL(
-              discount
-            );
-
-        } else {
-
-          discountRow.hidden =
-            true;
-
-        }
-
-
-        /* -------------------------------
-           FRETE
-        -------------------------------- */
-
-        const shippingRow =
-          document.getElementById(
-            "ojbShippingRow"
-          );
-
-
-        const shippingMethod =
-          document.getElementById(
-            "ojbShippingMethod"
-          );
-
-
-        const shippingPrice =
-          document.getElementById(
-            "ojbShippingPrice"
-          );
-
-
-        const shippingTotal =
-          document.getElementById(
-            "ojbShippingTotal"
-          );
-
-
-        const shippingMessage =
-          document.getElementById(
-            "ojbShippingMessage"
-          );
-
-
-        const cepInput =
-          document.getElementById(
-            "ojbCartCep"
-          );
-
-
-        if (
-          shipping &&
-          shipping.cep
-        ) {
-
-          shippingRow.hidden =
-            false;
-
-
-          shippingMethod.textContent =
-            "PADRÃO";
-
-
-          if (
-            Number(
-              shipping.price
-            ) === 0
-          ) {
-
-            shippingPrice.textContent =
-              "GRÁTIS";
-
-            shippingTotal.textContent =
-              "GRÁTIS";
-
-          } else {
-
-            shippingPrice.textContent =
-              formatBRL(
-                shipping.price
-              );
-
-            shippingTotal.textContent =
-              formatBRL(
-                shipping.price
-              );
-
-          }
-
-
-          shippingMessage.textContent =
-            (
-              shipping.city +
-              " / " +
-              shipping.state +
-              " — " +
-              (
-                shipping.freeShipping
-                  ? "FRETE GRÁTIS"
-                  : shipping.regionLabel
-              )
-            );
-
-
-          if (
-            cepInput &&
-            !cepInput.value
-          ) {
-
-            cepInput.value =
-              formatCEP(
-                shipping.cep
-              );
-
-          }
-
-        } else {
-
-          shippingRow.hidden =
-            true;
-
-
-          shippingMethod.textContent =
-            "PADRÃO";
-
-
-          shippingPrice.textContent =
-            "—";
-
-
-          shippingMessage.textContent =
-            "DIGITE SEU CEP PARA CALCULAR O FRETE.";
-
-        }
-
-      }
-
-
-      /* ===================================================
-         CONTADORES
-      =================================================== */
-
-      function renderCount() {
-
-        const quantity =
-          cartQuantity();
-
-
-        document.getElementById(
-          "ojbCartCount"
-        ).textContent =
-          "[" +
-          quantity +
-          "]";
-
-
-        document.getElementById(
-          "ojbHeaderCartCount"
-        ).textContent =
-          quantity > 0
-            ? "[" +
-              quantity +
-              "]"
-            : "";
-
-      }
-
-
-      /* ===================================================
-         CUPOM
-      =================================================== */
-
-      function initCoupon() {
-
-        const form =
-          document.getElementById(
-            "ojbCouponForm"
-          );
-
-
-        const input =
-          document.getElementById(
-            "ojbCouponInput"
-          );
-
-
-        const message =
-          document.getElementById(
-            "ojbCouponMessage"
-          );
-
-
-        const existing =
-          getCoupon();
-
-
-        if (existing) {
-
-          input.value =
-            existing;
-
-
-          message.textContent =
-            existing +
-            " APLICADO — 10% DE DESCONTO";
-
-        }
-
-
-        form.addEventListener(
-          "submit",
-          event => {
-
-            event.preventDefault();
-
-
-            const code =
-              normalizeText(
-                input.value
-              );
-
-
-            if (
-              !VALID_COUPONS[
-                code
-              ]
-            ) {
-
-              message.textContent =
-                "CUPOM INVÁLIDO.";
-
-              return;
-
-            }
-
-
-            setCoupon(
-              code
-            );
-
-
-            input.value =
-              code;
-
-
-            message.textContent =
-              code +
-              " APLICADO — 10% DE DESCONTO";
-
-
-            renderSummary();
-
-          }
-        );
-
-      }
-
-
-      /* ===================================================
-         CALCULADORA DE FRETE
-      =================================================== */
-
-      function initShipping() {
-
-        const input =
-          document.getElementById(
-            "ojbCartCep"
-          );
-
-
-        const button =
-          document.getElementById(
-            "ojbCartCalculateShipping"
-          );
-
-
-        const message =
-          document.getElementById(
-            "ojbShippingMessage"
-          );
-
-
-        const savedShipping =
-          getShipping();
-
-
-        if (
-          savedShipping &&
-          savedShipping.cep
-        ) {
-
-          input.value =
-            formatCEP(
-              savedShipping.cep
-            );
-
-        }
-
-
-        input.addEventListener(
-          "input",
-          () => {
-
-            input.value =
-              formatCEP(
-                input.value
-              );
-
-          }
-        );
-
-
-        input.addEventListener(
-          "keydown",
-          event => {
-
-            if (
-              event.key ===
-              "Enter"
-            ) {
-
-              event.preventDefault();
-
-              button.click();
-
-            }
-
-          }
-        );
-
-
-        button.addEventListener(
-          "click",
-          async () => {
-
-            const cep =
-              onlyNumbers(
-                input.value
-              );
-
-
-            if (
-              cep.length !== 8
-            ) {
-
-              message.textContent =
-                "DIGITE UM CEP VÁLIDO.";
-
-              return;
-
-            }
-
-
-            const originalText =
-              button.textContent;
-
-
-            button.disabled =
-              true;
-
-
-            button.textContent =
-              "..."
-
-
-            message.textContent =
-              "CALCULANDO FRETE...";
-
-
-            try {
-
-              const shipping =
-                await calculateShipping(
-                  cep
-                );
-
-
-              input.value =
-                formatCEP(
-                  shipping.cep
-                );
-
-
-              renderSummary();
-
-            } catch (
-              error
-            ) {
-
-              clearShipping();
-
-
-              renderSummary();
-
-
-              message.textContent =
-                error.message ||
-                "NÃO FOI POSSÍVEL CALCULAR O FRETE.";
-
-            } finally {
-
-              button.disabled =
-                false;
-
-
-              button.textContent =
-                originalText;
-
-            }
-
-          }
-        );
-
-      }
-
-
-      /* ===================================================
-         CHECKOUT
-      =================================================== */
-
-      function goCheckout() {
-
-        if (
-          getCart().length === 0
-        ) {
-
-          return;
-
-        }
-
-
-        const shipping =
-          getShipping();
-
-
-        if (
-          !shipping ||
-          !shipping.cep
-        ) {
-
-          const message =
-            document.getElementById(
-              "ojbShippingMessage"
-            );
-
-
-          message.textContent =
-            "CALCULE O FRETE ANTES DE FECHAR O PEDIDO.";
-
-
-          const input =
-            document.getElementById(
-              "ojbCartCep"
-            );
-
-
-          input.focus();
-
-
-          input.scrollIntoView({
-            behavior:
-              "smooth",
-
-            block:
-              "center"
-          });
-
-
-          return;
-
-        }
-
-
-        window.location.href =
-          "checkout.html";
-
-      }
-
-
-      function initCheckout() {
-
-        document.getElementById(
-          "ojbCheckoutDesktop"
-        ).addEventListener(
-          "click",
-          goCheckout
-        );
-
-
-        document.getElementById(
-          "ojbCheckoutMobile"
-        ).addEventListener(
-          "click",
-          goCheckout
-        );
-
-      }
-
-
-      /* ===================================================
-         RENDER GERAL
-      =================================================== */
-
-      function render() {
-
-        renderItems();
-
-        renderCount();
-
-        renderSummary();
-
-      }
-
-
-      /* ===================================================
-         INICIAR
-      =================================================== */
-
-      function init() {
-
-        normalizeSavedShipping();
-
-        render();
-
-        initShipping();
-
-        initCoupon();
-
-        initCheckout();
-
-      }
-
-
-      if (
-        document.readyState ===
-        "loading"
-      ) {
-
-        document.addEventListener(
-          "DOMContentLoaded",
-          init
-        );
-
-      } else {
-
-        init();
-
-      }
-
-    })();
-
-  </script>
+  <script src="script.js"></script>
 
 </body>
+
 </html>
