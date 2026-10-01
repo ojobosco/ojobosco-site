@@ -32,11 +32,6 @@ const newsletterSuccess =
     "newsletterSuccess"
   );
 
-const cartButton =
-  document.getElementById(
-    "cartButton"
-  );
-
 const cartCount =
   document.getElementById(
     "cartCount"
@@ -114,11 +109,13 @@ document
             return;
           }
 
+
           sideMenu
             .classList
             .remove(
               "open"
             );
+
 
           document
             .body
@@ -252,7 +249,7 @@ function saveCart(
 
 /* =========================================
    CUPOM
-   APENAS UM CUPOM POR VEZ
+   SOMENTE UM CUPOM POR VEZ
 ========================================= */
 
 function getActiveCoupon() {
@@ -300,14 +297,6 @@ function getActiveCoupon() {
 function saveActiveCoupon(
   coupon
 ) {
-
-  /*
-    Existe apenas UMA chave:
-    ojobosco-coupon
-
-    Portanto nunca podem existir dois
-    cupons aplicados simultaneamente.
-  */
 
   if (!coupon) {
 
@@ -387,7 +376,7 @@ function escapeHtml(
 
 
 /* =========================================
-   CHAVE DO ITEM
+   CHAVE DOS ITENS
 ========================================= */
 
 function createCartKey(
@@ -410,7 +399,7 @@ function createCartKey(
 
 
 /* =========================================
-   ADICIONAR ITEM
+   ADICIONAR ITEM AO CARRINHO
 ========================================= */
 
 function addItemToCart(
@@ -489,13 +478,23 @@ function addItemToCart(
 
 
 /* =========================================
-   CONTADOR
+   CONTADOR DO CARRINHO
 ========================================= */
 
 function updateCartCount() {
 
-  if (!cartCount) {
+  const counters =
+    document.querySelectorAll(
+      "#cartCount"
+    );
+
+
+  if (
+    counters.length === 0
+  ) {
+
     return;
+
   }
 
 
@@ -524,10 +523,16 @@ function updateCartCount() {
     );
 
 
-  cartCount.textContent =
-    String(
-      quantity
-    );
+  counters.forEach(
+    (counter) => {
+
+      counter.textContent =
+        String(
+          quantity
+        );
+
+    }
+  );
 
 }
 
@@ -538,14 +543,14 @@ function updateCartCount() {
 
 function createCartDrawer() {
 
-  if (
+  const existingDrawer =
     document.getElementById(
       "ojbCartDrawer"
-    )
-  ) {
+    );
 
+
+  if (existingDrawer) {
     return;
-
   }
 
 
@@ -555,16 +560,24 @@ function createCartDrawer() {
     );
 
 
+  wrapper.id =
+    "ojbCartRoot";
+
+
   wrapper.innerHTML = `
+
     <div
       class="carrinho-overlay"
       id="ojbCartOverlay"
+      aria-hidden="true"
     ></div>
+
 
     <aside
       class="carrinho-drawer"
       id="ojbCartDrawer"
       aria-label="Carrinho de compras"
+      aria-hidden="true"
     >
 
       <div class="carrinho-header">
@@ -573,15 +586,18 @@ function createCartDrawer() {
           CARRINHO
         </h2>
 
+
         <button
           class="carrinho-fechar"
           id="ojbCartClose"
           type="button"
+          aria-label="Fechar carrinho"
         >
           FECHAR
         </button>
 
       </div>
+
 
       <div
         class="carrinho-conteudo"
@@ -592,9 +608,11 @@ function createCartDrawer() {
   `;
 
 
-  document.body.appendChild(
-    wrapper
-  );
+  document
+    .body
+    .appendChild(
+      wrapper
+    );
 
 
   const overlay =
@@ -628,60 +646,126 @@ function createCartDrawer() {
 
   }
 
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (
+        event.key ===
+        "Escape"
+      ) {
+
+        closeCart();
+
+      }
+
+    }
+  );
+
 }
 
 
 /* =========================================
-   ABRIR / FECHAR CARRINHO
+   ABRIR CARRINHO
 ========================================= */
 
 function openCart() {
 
-  const drawer =
+  let drawer =
     document.getElementById(
       "ojbCartDrawer"
     );
 
 
-  const overlay =
+  let overlay =
     document.getElementById(
       "ojbCartOverlay"
     );
 
 
+  /*
+    SEGURANÇA:
+
+    Se por algum motivo o carrinho ainda
+    não tiver sido criado, ele é criado
+    no momento do clique.
+  */
+
   if (
-    drawer &&
-    overlay
+    !drawer ||
+    !overlay
   ) {
 
-    renderCart();
+    createCartDrawer();
 
 
-    drawer
-      .classList
-      .add(
-        "open"
+    drawer =
+      document.getElementById(
+        "ojbCartDrawer"
       );
 
 
-    overlay
-      .classList
-      .add(
-        "open"
-      );
-
-
-    document
-      .body
-      .classList
-      .add(
-        "cart-open"
+    overlay =
+      document.getElementById(
+        "ojbCartOverlay"
       );
 
   }
 
+
+  if (
+    !drawer ||
+    !overlay
+  ) {
+
+    return;
+
+  }
+
+
+  renderCart();
+
+
+  drawer
+    .classList
+    .add(
+      "open"
+    );
+
+
+  overlay
+    .classList
+    .add(
+      "open"
+    );
+
+
+  drawer.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  overlay.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  document
+    .body
+    .classList
+    .add(
+      "cart-open"
+    );
+
 }
 
+
+/* =========================================
+   FECHAR CARRINHO
+========================================= */
 
 function closeCart() {
 
@@ -705,6 +789,12 @@ function closeCart() {
         "open"
       );
 
+
+    drawer.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
   }
 
 
@@ -715,6 +805,12 @@ function closeCart() {
       .remove(
         "open"
       );
+
+
+    overlay.setAttribute(
+      "aria-hidden",
+      "true"
+    );
 
   }
 
@@ -729,11 +825,55 @@ function closeCart() {
 }
 
 
-if (cartButton) {
+/* =========================================
+   CONECTAR BOTÃO CARRINHO
 
-  cartButton.addEventListener(
-    "click",
-    openCart
+   FUNCIONA COM:
+
+   #cartButton
+   .cart-link
+
+========================================= */
+
+function bindCartButtons() {
+
+  const cartButtons =
+    document.querySelectorAll(
+      "#cartButton, .cart-link"
+    );
+
+
+  cartButtons.forEach(
+    (button) => {
+
+      if (
+        button.dataset.cartBound ===
+        "true"
+      ) {
+
+        return;
+
+      }
+
+
+      button.dataset.cartBound =
+        "true";
+
+
+      button.addEventListener(
+        "click",
+        (event) => {
+
+          event.preventDefault();
+
+          event.stopPropagation();
+
+          openCart();
+
+        }
+      );
+
+    }
   );
 
 }
@@ -778,7 +918,7 @@ function calculateSubtotal(
    BEMVINDO = 10%
    CAMILAGUS = 10%
 
-   SOMENTE UM POR VEZ
+   SOMENTE UM CUPOM POR VEZ
 ========================================= */
 
 function calculateDiscount(
@@ -887,11 +1027,13 @@ function renderCart() {
   ) {
 
     content.innerHTML = `
+
       <div class="carrinho-vazio">
 
         <p>
           SEU CARRINHO ESTÁ VAZIO.
         </p>
+
 
         <button
           class="carrinho-continuar"
@@ -947,12 +1089,10 @@ function renderCart() {
 
 
   /*
-    O frete grátis considera o subtotal
-    original dos produtos.
+    FRETE GRÁTIS
 
-    Assim, se o carrinho atingir R$500,
-    continua elegível ao frete grátis
-    mesmo após aplicar um cupom.
+    A regra considera o valor original
+    dos produtos antes do cupom.
   */
 
   const freeShipping =
@@ -974,61 +1114,85 @@ function renderCart() {
           const imageHtml =
             item.image
               ? `
+
                 <div class="carrinho-item-imagem">
 
                   <img
-                    src="${escapeHtml(item.image)}"
-                    alt="${escapeHtml(item.product)}"
+                    src="${escapeHtml(
+                      item.image
+                    )}"
+                    alt="${escapeHtml(
+                      item.product
+                    )}"
                   >
 
                 </div>
+
               `
               : `
+
                 <div
                   class="
                     carrinho-item-imagem
                     carrinho-item-imagem-vazia
                   "
                 ></div>
+
               `;
 
 
           return `
+
             <article class="carrinho-item">
 
               ${imageHtml}
 
+
               <div class="carrinho-item-info">
+
 
                 <div class="carrinho-item-topo">
 
                   <div>
 
                     <h3>
-                      ${escapeHtml(item.product)}
+                      ${escapeHtml(
+                        item.product
+                      )}
                     </h3>
+
 
                     ${
                       item.fragrance
                         ? `
+
                           <p>
-                            ${escapeHtml(item.fragrance)}
+                            ${escapeHtml(
+                              item.fragrance
+                            )}
                           </p>
+
                         `
                         : ""
                     }
 
+
                     ${
                       item.size
                         ? `
+
                           <p>
-                            ${escapeHtml(item.size)}
+                            ${escapeHtml(
+                              item.size
+                            )}
                           </p>
+
                         `
                         : ""
                     }
 
                   </div>
+
 
                   <button
                     type="button"
@@ -1043,6 +1207,7 @@ function renderCart() {
 
                 <div class="carrinho-item-baixo">
 
+
                   <div class="carrinho-quantidade">
 
                     <button
@@ -1053,9 +1218,13 @@ function renderCart() {
                       −
                     </button>
 
+
                     <span>
-                      ${Number(item.quantity)}
+                      ${Number(
+                        item.quantity
+                      )}
                     </span>
+
 
                     <button
                       type="button"
@@ -1104,7 +1273,9 @@ function renderCart() {
     </div>
 
 
-    <!-- CUPOM -->
+    <!-- =====================================
+         CUPOM
+    ====================================== -->
 
     <div class="carrinho-cupom">
 
@@ -1153,6 +1324,7 @@ function renderCart() {
       ${
         coupon
           ? `
+
             <button
               type="button"
               class="carrinho-remover-cupom"
@@ -1160,6 +1332,7 @@ function renderCart() {
             >
               REMOVER CUPOM
             </button>
+
           `
           : ""
       }
@@ -1167,7 +1340,9 @@ function renderCart() {
     </div>
 
 
-    <!-- FRETE -->
+    <!-- =====================================
+         FRETE
+    ====================================== -->
 
     <div class="carrinho-frete">
 
@@ -1193,23 +1368,30 @@ function renderCart() {
       ${
         freeShipping
           ? `
+
             <p class="carrinho-frete-gratis">
               FRETE GRÁTIS APLICADO
             </p>
+
           `
           : `
+
             <p class="carrinho-frete-aviso">
               FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500
             </p>
+
           `
       }
 
     </div>
 
 
-    <!-- RESUMO -->
+    <!-- =====================================
+         RESUMO
+    ====================================== -->
 
     <div class="carrinho-resumo">
+
 
       <div class="carrinho-linha">
 
@@ -1229,6 +1411,7 @@ function renderCart() {
       ${
         discount > 0
           ? `
+
             <div class="carrinho-linha">
 
               <span>
@@ -1248,6 +1431,7 @@ function renderCart() {
               </span>
 
             </div>
+
           `
           : ""
       }
@@ -1276,9 +1460,11 @@ function renderCart() {
       ${
         !freeShipping
           ? `
+
             <p class="carrinho-total-observacao">
               FRETE NÃO INCLUÍDO
             </p>
+
           `
           : ""
       }
@@ -1286,7 +1472,9 @@ function renderCart() {
     </div>
 
 
-    <!-- FINALIZAR -->
+    <!-- =====================================
+         CHECKOUT
+    ====================================== -->
 
     <button
       type="button"
@@ -1319,7 +1507,9 @@ function renderCart() {
 function bindCartEvents() {
 
 
-  /* AUMENTAR QUANTIDADE */
+  /* =====================================
+     AUMENTAR QUANTIDADE
+  ====================================== */
 
   document
     .querySelectorAll(
@@ -1366,7 +1556,9 @@ function bindCartEvents() {
     );
 
 
-  /* DIMINUIR QUANTIDADE */
+  /* =====================================
+     DIMINUIR QUANTIDADE
+  ====================================== */
 
   document
     .querySelectorAll(
@@ -1430,7 +1622,9 @@ function bindCartEvents() {
     );
 
 
-  /* REMOVER PRODUTO */
+  /* =====================================
+     REMOVER ITEM
+  ====================================== */
 
   document
     .querySelectorAll(
@@ -1478,7 +1672,7 @@ function bindCartEvents() {
 
 
   /* =====================================
-     APLICAR CUPOM
+     CUPOM
   ====================================== */
 
   const applyCoupon =
@@ -1497,6 +1691,95 @@ function bindCartEvents() {
     document.getElementById(
       "ojbCouponMessage"
     );
+
+
+  function applyCouponCode() {
+
+    if (!couponInput) {
+      return;
+    }
+
+
+    const code =
+      couponInput
+        .value
+        .trim()
+        .toUpperCase();
+
+
+    /*
+      BEMVINDO = 10%
+    */
+
+    if (
+      code ===
+      "BEMVINDO"
+    ) {
+
+      saveActiveCoupon(
+        {
+          code:
+            "BEMVINDO",
+
+          type:
+            "percentage",
+
+          value:
+            10
+        }
+      );
+
+
+      return;
+
+    }
+
+
+    /*
+      CAMILAGUS = 10%
+    */
+
+    if (
+      code ===
+      "CAMILAGUS"
+    ) {
+
+      saveActiveCoupon(
+        {
+          code:
+            "CAMILAGUS",
+
+          type:
+            "percentage",
+
+          value:
+            10
+        }
+      );
+
+
+      return;
+
+    }
+
+
+    /*
+      CUPOM INVÁLIDO
+    */
+
+    localStorage.removeItem(
+      "ojobosco-coupon"
+    );
+
+
+    if (couponMessage) {
+
+      couponMessage.textContent =
+        "CUPOM INVÁLIDO.";
+
+    }
+
+  }
 
 
   if (
@@ -1531,107 +1814,9 @@ function bindCartEvents() {
   }
 
 
-  function applyCouponCode() {
-
-    if (!couponInput) {
-      return;
-    }
-
-
-    const code =
-      couponInput
-        .value
-        .trim()
-        .toUpperCase();
-
-
-    /*
-      BEMVINDO
-
-      Se já existir outro cupom,
-      ele será substituído.
-    */
-
-    if (
-      code ===
-      "BEMVINDO"
-    ) {
-
-      saveActiveCoupon(
-        {
-          code:
-            "BEMVINDO",
-
-          type:
-            "percentage",
-
-          value:
-            10
-        }
-      );
-
-
-      return;
-
-    }
-
-
-    /*
-      CAMILAGUS
-
-      Também 10%.
-
-      Substitui qualquer cupom
-      anteriormente aplicado.
-    */
-
-    if (
-      code ===
-      "CAMILAGUS"
-    ) {
-
-      saveActiveCoupon(
-        {
-          code:
-            "CAMILAGUS",
-
-          type:
-            "percentage",
-
-          value:
-            10
-        }
-      );
-
-
-      return;
-
-    }
-
-
-    /*
-      CUPOM INVÁLIDO
-
-      Não mantém um código inválido
-      como desconto ativo.
-    */
-
-    saveActiveCoupon(
-      null
-    );
-
-
-    if (couponMessage) {
-
-      couponMessage.textContent =
-        "CUPOM INVÁLIDO.";
-
-    }
-
-  }
-
-
-  /* REMOVER CUPOM */
+  /* =====================================
+     REMOVER CUPOM
+  ====================================== */
 
   const removeCoupon =
     document.getElementById(
@@ -1655,7 +1840,9 @@ function bindCartEvents() {
   }
 
 
-  /* CONTINUAR COMPRANDO */
+  /* =====================================
+     CONTINUAR COMPRANDO
+  ====================================== */
 
   const continueButton =
     document.getElementById(
@@ -1675,7 +1862,9 @@ function bindCartEvents() {
 
   /* =====================================
      FINALIZAR COMPRA
-     MERCADO PAGO SERÁ CONECTADO DEPOIS
+
+     MERCADO PAGO SERÁ CONECTADO
+     NA PRÓXIMA ETAPA
   ====================================== */
 
   const checkoutButton =
@@ -1779,17 +1968,6 @@ document
                   "active"
                 );
 
-
-              /*
-                IMPORTANTE:
-
-                data-image-100
-                data-image-250
-
-                Usamos getAttribute diretamente
-                para evitar o problema anterior
-                com dataset.
-              */
 
               const newImage =
                 card.getAttribute(
@@ -1939,7 +2117,7 @@ document
 
 
 /* =========================================
-   ADICIONAR PRODUTOS DA LOJA
+   ADICIONAR PRODUTO NA LOJA
 ========================================= */
 
 document
@@ -2250,9 +2428,7 @@ if (detailPage) {
     }
 
 
-    if (
-      detailPrice
-    ) {
+    if (detailPrice) {
 
       const selectedPrice =
         detailPage.getAttribute(
@@ -2261,9 +2437,7 @@ if (detailPage) {
         );
 
 
-      if (
-        selectedPrice
-      ) {
+      if (selectedPrice) {
 
         detailPrice.textContent =
           formatCurrency(
@@ -2323,9 +2497,7 @@ if (detailPage) {
   );
 
 
-  if (
-    detailAddButton
-  ) {
+  if (detailAddButton) {
 
     detailAddButton.addEventListener(
       "click",
@@ -2462,6 +2634,25 @@ if (
     "CHÁ FLORAL";
 
 
+  const initialActive =
+    document.querySelector(
+      ".produto-fragrancia-btn.active"
+    );
+
+
+  if (initialActive) {
+
+    selectedFragrance =
+      initialActive.getAttribute(
+        "data-name"
+      ) ||
+      initialActive
+        .textContent
+        .trim();
+
+  }
+
+
   buttons.forEach(
     (button) => {
 
@@ -2525,9 +2716,7 @@ if (
   );
 
 
-  if (
-    addButton
-  ) {
+  if (addButton) {
 
     addButton.addEventListener(
       "click",
@@ -2602,9 +2791,7 @@ if (
     );
 
 
-  if (
-    button
-  ) {
+  if (button) {
 
     button.addEventListener(
       "click",
@@ -2680,9 +2867,7 @@ if (
     );
 
 
-  if (
-    button
-  ) {
+  if (button) {
 
     button.addEventListener(
       "click",
@@ -2736,8 +2921,30 @@ if (
    INICIALIZAÇÃO
 ========================================= */
 
+/*
+  1. CRIA O CARRINHO
+*/
+
 createCartDrawer();
 
+
+/*
+  2. CONECTA TODOS OS BOTÕES
+     "CARRINHO" DO SITE
+*/
+
+bindCartButtons();
+
+
+/*
+  3. ATUALIZA CONTADOR
+*/
+
 updateCartCount();
+
+
+/*
+  4. PREPARA O CONTEÚDO
+*/
 
 renderCart();
