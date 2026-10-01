@@ -1,1659 +1,1293 @@
-/* =========================================
-   OJOBOSCO
-   SCRIPT PRINCIPAL
-========================================= */
+(() => {
+  "use strict";
 
 
-/* =========================================
-   CONFIGURAÇÕES
-========================================= */
+  /* =========================================================
+     CONFIGURAÇÃO
+  ========================================================= */
 
-const CART_STORAGE_KEY =
-  "ojobosco-cart";
+  const CART_STORAGE_KEY = "ojobosco-cart";
+  const COUPON_STORAGE_KEY = "ojobosco-coupon";
+  const SHIPPING_STORAGE_KEY = "ojobosco-shipping";
 
+  const FREE_SHIPPING_THRESHOLD = 500;
 
-const COUPON_STORAGE_KEY =
-  "ojobosco-coupon";
-
-
-const FREE_SHIPPING_THRESHOLD =
-  500;
-
-
-const VALID_COUPONS = {
-  BEMVINDO: 10,
-  CAMILAGUS: 10
-};
+  const VALID_COUPONS = {
+    BEMVINDO: 0.10,
+    CAMILAGUS: 0.10
+  };
 
 
-/* =========================================
-   MENU
-========================================= */
-
-const menuToggle =
-  document.getElementById(
-    "menuToggle"
-  );
-
-
-const closeMenu =
-  document.getElementById(
-    "closeMenu"
-  );
+  const SHIPPING_PRICES = {
+    RMR: 15,
+    NORDESTE: 35,
+    CENTRO_OESTE: 45,
+    SUDESTE: 55,
+    NORTE_SUL: 65
+  };
 
 
-const sideMenu =
-  document.getElementById(
-    "sideMenu"
-  );
+  const RMR_CITIES = [
+    "ABREU E LIMA",
+    "ARACOIABA",
+    "CABO DE SANTO AGOSTINHO",
+    "CAMARAGIBE",
+    "IGARASSU",
+    "ILHA DE ITAMARACA",
+    "IPOJUCA",
+    "ITAPISSUMA",
+    "JABOATAO DOS GUARARAPES",
+    "MORENO",
+    "OLINDA",
+    "PAULISTA",
+    "RECIFE",
+    "SAO LOURENCO DA MATA"
+  ];
 
 
-if (
-  menuToggle &&
-  sideMenu
-) {
-
-  menuToggle.addEventListener(
-    "click",
-    () => {
-
-      sideMenu
-        .classList
-        .add(
-          "open"
-        );
+  const NORTHEAST_STATES = [
+    "AL",
+    "BA",
+    "CE",
+    "MA",
+    "PB",
+    "PE",
+    "PI",
+    "RN",
+    "SE"
+  ];
 
 
-      document
-        .body
-        .style
-        .overflow =
-        "hidden";
+  const CENTER_WEST_STATES = [
+    "DF",
+    "GO",
+    "MT",
+    "MS"
+  ];
 
+
+  const SOUTHEAST_STATES = [
+    "ES",
+    "MG",
+    "RJ",
+    "SP"
+  ];
+
+
+  const NORTH_SOUTH_STATES = [
+    "AC",
+    "AP",
+    "AM",
+    "PA",
+    "RO",
+    "RR",
+    "TO",
+    "PR",
+    "RS",
+    "SC"
+  ];
+
+
+  /* =========================================================
+     UTILITÁRIOS
+  ========================================================= */
+
+  function normalizeText(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim()
+      .replace(/\s+/g, " ")
+      .toUpperCase();
+  }
+
+
+  function onlyNumbers(value) {
+    return String(value || "")
+      .replace(/\D/g, "");
+  }
+
+
+  function formatCEP(value) {
+    const numbers = onlyNumbers(value)
+      .slice(0, 8);
+
+    if (numbers.length <= 5) {
+      return numbers;
     }
-  );
 
-}
-
-
-if (
-  closeMenu &&
-  sideMenu
-) {
-
-  closeMenu.addEventListener(
-    "click",
-    () => {
-
-      sideMenu
-        .classList
-        .remove(
-          "open"
-        );
+    return (
+      numbers.slice(0, 5) +
+      "-" +
+      numbers.slice(5)
+    );
+  }
 
 
-      document
-        .body
-        .style
-        .overflow =
-        "";
+  function formatBRL(value) {
+    const number = Number(value || 0);
 
+    return number.toLocaleString(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL"
+      }
+    );
+  }
+
+
+  function parseMoney(value) {
+    if (
+      typeof value === "number" &&
+      Number.isFinite(value)
+    ) {
+      return value;
     }
-  );
 
-}
+    if (!value) {
+      return 0;
+    }
+
+    let text = String(value)
+      .replace(/[^\d,.-]/g, "")
+      .trim();
+
+    if (
+      text.includes(",") &&
+      text.includes(".")
+    ) {
+      text = text
+        .replace(/\./g, "")
+        .replace(",", ".");
+    } else if (text.includes(",")) {
+      text = text.replace(",", ".");
+    }
+
+    const number = Number(text);
+
+    return Number.isFinite(number)
+      ? number
+      : 0;
+  }
 
 
-document
-  .querySelectorAll(
-    ".side-menu a"
-  )
-  .forEach(
-    (link) => {
-
-      link.addEventListener(
-        "click",
-        () => {
-
-          if (!sideMenu) {
-            return;
-          }
+  function escapeHTML(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
 
-          sideMenu
-            .classList
-            .remove(
-              "open"
-            );
+  /* =========================================================
+     CARRINHO
+  ========================================================= */
 
-
-          document
-            .body
-            .style
-            .overflow =
-            "";
-
-        }
+  function getCart() {
+    try {
+      const data = JSON.parse(
+        localStorage.getItem(
+          CART_STORAGE_KEY
+        ) || "[]"
       );
 
+      return Array.isArray(data)
+        ? data
+        : [];
+    } catch {
+      return [];
     }
-  );
+  }
 
 
-/* =========================================
-   NEWSLETTER
-========================================= */
+  function saveCart(cart) {
+    try {
+      localStorage.setItem(
+        CART_STORAGE_KEY,
+        JSON.stringify(cart)
+      );
+    } catch {}
 
-const newsletterForm =
-  document.getElementById(
-    "newsletterForm"
-  );
+    updateCartCount();
 
-
-const newsletterEmail =
-  document.getElementById(
-    "newsletterEmail"
-  );
-
-
-const newsletterSuccess =
-  document.getElementById(
-    "newsletterSuccess"
-  );
+    if (isCartPage()) {
+      renderCartPage();
+    }
+  }
 
 
-if (
-  newsletterForm &&
-  newsletterEmail &&
-  newsletterSuccess
-) {
+  function getItemQuantity(item) {
+    const value = Number(
+      item.quantity ??
+      item.qty ??
+      item.quantidade ??
+      1
+    );
 
-  newsletterForm.addEventListener(
-    "submit",
-    (event) => {
+    if (
+      !Number.isFinite(value) ||
+      value < 1
+    ) {
+      return 1;
+    }
 
-      event.preventDefault();
-
-
-      const email =
-        newsletterEmail
-          .value
-          .trim()
-          .toLowerCase();
+    return value;
+  }
 
 
-      if (!email) {
+  function getItemPrice(item) {
+    return parseMoney(
+      item.price ??
+      item.currentPrice ??
+      item.preco ??
+      item.valor ??
+      0
+    );
+  }
+
+
+  function getItemName(item) {
+    return (
+      item.name ||
+      item.productName ||
+      item.product ||
+      item.nome ||
+      "Produto OJOBOSCO"
+    );
+  }
+
+
+  function getItemFragrance(item) {
+    return (
+      item.fragrance ||
+      item.fragrancia ||
+      ""
+    );
+  }
+
+
+  function getItemSize(item) {
+    return (
+      item.size ||
+      item.currentSize ||
+      item.tamanho ||
+      ""
+    );
+  }
+
+
+  function getItemImage(item) {
+    return (
+      item.image ||
+      item.imageUrl ||
+      item.imagem ||
+      ""
+    );
+  }
+
+
+  function getItemKey(item) {
+    return [
+      normalizeText(
+        getItemName(item)
+      ),
+      normalizeText(
+        getItemFragrance(item)
+      ),
+      normalizeText(
+        getItemSize(item)
+      )
+    ].join("|");
+  }
+
+
+  function cartQuantity() {
+    return getCart().reduce(
+      (total, item) =>
+        total +
+        getItemQuantity(item),
+      0
+    );
+  }
+
+
+  function cartSubtotal() {
+    return getCart().reduce(
+      (total, item) =>
+        total +
+        (
+          getItemPrice(item) *
+          getItemQuantity(item)
+        ),
+      0
+    );
+  }
+
+
+  function addItemToCart(item) {
+    const cart = getCart();
+
+    const key = getItemKey(item);
+
+    const existingIndex =
+      cart.findIndex(
+        current =>
+          getItemKey(current) === key
+      );
+
+    if (existingIndex >= 0) {
+      const currentQuantity =
+        getItemQuantity(
+          cart[existingIndex]
+        );
+
+      cart[existingIndex].quantity =
+        currentQuantity +
+        getItemQuantity(item);
+    } else {
+      cart.push({
+        ...item,
+        quantity:
+          getItemQuantity(item)
+      });
+    }
+
+    saveCart(cart);
+  }
+
+
+  function updateItemQuantity(
+    index,
+    quantity
+  ) {
+    const cart = getCart();
+
+    if (!cart[index]) {
+      return;
+    }
+
+    if (quantity <= 0) {
+      cart.splice(index, 1);
+    } else {
+      cart[index].quantity =
+        quantity;
+    }
+
+    saveCart(cart);
+  }
+
+
+  function removeItem(index) {
+    const cart = getCart();
+
+    if (!cart[index]) {
+      return;
+    }
+
+    cart.splice(index, 1);
+
+    saveCart(cart);
+  }
+
+
+  function updateCartCount() {
+    const count =
+      cartQuantity();
+
+    const elements = [
+      document.getElementById(
+        "cartCount"
+      ),
+      document.querySelector(
+        ".cart-count"
+      )
+    ];
+
+    elements.forEach(element => {
+      if (!element) {
         return;
       }
 
-
-      localStorage.setItem(
-        "ojobosco-newsletter-email",
-        email
-      );
-
-
-      newsletterForm
-        .style
-        .display =
-        "none";
+      element.textContent =
+        count > 0
+          ? `[${count}]`
+          : "";
+    });
+  }
 
 
-      newsletterSuccess
-        .classList
-        .add(
-          "visible"
+  /* =========================================================
+     CUPOM
+  ========================================================= */
+
+  function getCoupon() {
+    try {
+      const raw =
+        localStorage.getItem(
+          COUPON_STORAGE_KEY
         );
 
-    }
-  );
+      if (!raw) {
+        return null;
+      }
 
-}
+      let value;
 
+      try {
+        value = JSON.parse(raw);
+      } catch {
+        value = raw;
+      }
 
-/* =========================================
-   FORMATAÇÃO
-========================================= */
+      let code = "";
 
-function formatCurrency(
-  value
-) {
+      if (
+        typeof value === "string"
+      ) {
+        code = value;
+      } else if (
+        value &&
+        typeof value === "object"
+      ) {
+        code =
+          value.code ||
+          value.coupon ||
+          value.codigo ||
+          "";
+      }
 
-  return new Intl.NumberFormat(
-    "pt-BR",
-    {
-      style:
-        "currency",
+      code =
+        normalizeText(code);
 
-      currency:
-        "BRL"
-    }
-  ).format(
-    Number(
-      value
-    ) || 0
-  );
+      if (!VALID_COUPONS[code]) {
+        return null;
+      }
 
-}
+      return {
+        code,
+        percentage:
+          VALID_COUPONS[code]
+      };
 
-
-function escapeHtml(
-  value
-) {
-
-  return String(
-    value || ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================================
-   CARRINHO
-========================================= */
-
-function getCart() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(
-        CART_STORAGE_KEY
-      );
-
-
-    if (!saved) {
-      return [];
-    }
-
-
-    const parsed =
-      JSON.parse(
-        saved
-      );
-
-
-    if (
-      !Array.isArray(
-        parsed
-      )
-    ) {
-
-      return [];
-
-    }
-
-
-    return parsed;
-
-  } catch (
-    error
-  ) {
-
-    return [];
-
-  }
-
-}
-
-
-function saveCart(
-  cart
-) {
-
-  localStorage.setItem(
-    CART_STORAGE_KEY,
-    JSON.stringify(
-      cart
-    )
-  );
-
-
-  updateCartCount();
-
-  renderCartPage();
-
-}
-
-
-/* =========================================
-   CUPOM
-========================================= */
-
-function getActiveCoupon() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(
-        COUPON_STORAGE_KEY
-      );
-
-
-    if (!saved) {
+    } catch {
       return null;
     }
-
-
-    const parsed =
-      JSON.parse(
-        saved
-      );
-
-
-    if (
-      !parsed ||
-      !parsed.code
-    ) {
-
-      return null;
-
-    }
-
-
-    return parsed;
-
-  } catch (
-    error
-  ) {
-
-    return null;
-
   }
 
-}
 
+  function saveCoupon(code) {
+    const normalized =
+      normalizeText(code);
 
-function saveActiveCoupon(
-  coupon
-) {
-
-  if (!coupon) {
-
-    localStorage.removeItem(
-      COUPON_STORAGE_KEY
-    );
-
-  } else {
+    if (
+      !VALID_COUPONS[
+        normalized
+      ]
+    ) {
+      return false;
+    }
 
     localStorage.setItem(
       COUPON_STORAGE_KEY,
-      JSON.stringify(
-        coupon
-      )
+      JSON.stringify({
+        code: normalized
+      })
     );
 
+    return true;
   }
 
 
-  renderCartPage();
-
-}
-
-
-/* =========================================
-   CHAVE DO PRODUTO
-========================================= */
-
-function createCartKey(
-  product,
-  fragrance,
-  size
-) {
-
-  return [
-    product || "",
-    fragrance || "",
-    size || ""
-  ]
-    .join(
-      "|"
-    )
-    .toLowerCase();
-
-}
-
-
-/* =========================================
-   ADICIONAR PRODUTO
-========================================= */
-
-function addItemToCart(
-  {
-    product,
-    fragrance = "",
-    size = "",
-    price,
-    image = ""
-  }
-) {
-
-  const cart =
-    getCart();
-
-
-  const key =
-    createCartKey(
-      product,
-      fragrance,
-      size
+  function removeCoupon() {
+    localStorage.removeItem(
+      COUPON_STORAGE_KEY
     );
-
-
-  const existing =
-    cart.find(
-      (item) =>
-        item.key ===
-        key
-    );
-
-
-  if (existing) {
-
-    existing.quantity =
-      Number(
-        existing.quantity
-      ) + 1;
-
-  } else {
-
-    cart.push(
-      {
-        key:
-          key,
-
-        product:
-          product,
-
-        fragrance:
-          fragrance,
-
-        size:
-          size,
-
-        price:
-          Number(
-            price
-          ),
-
-        image:
-          image,
-
-        quantity:
-          1
-      }
-    );
-
   }
 
 
-  saveCart(
-    cart
-  );
+  function calculateDiscount(
+    subtotal
+  ) {
+    const coupon =
+      getCoupon();
 
-}
+    if (!coupon) {
+      return 0;
+    }
+
+    return (
+      subtotal *
+      coupon.percentage
+    );
+  }
 
 
-/* =========================================
-   CONTADOR
-========================================= */
+  /* =========================================================
+     FRETE
+  ========================================================= */
 
-function getCartQuantity() {
-
-  const cart =
-    getCart();
-
-
-  return cart.reduce(
-    (
-      total,
-      item
-    ) => {
-
-      return (
-        total +
-        (
-          Number(
-            item.quantity
-          ) || 0
-        )
+  function getSavedShipping() {
+    try {
+      const data = JSON.parse(
+        localStorage.getItem(
+          SHIPPING_STORAGE_KEY
+        ) || "null"
       );
 
-    },
-    0
-  );
-
-}
-
-
-function updateCartCount() {
-
-  const quantity =
-    getCartQuantity();
-
-
-  document
-    .querySelectorAll(
-      "#cartCount"
-    )
-    .forEach(
-      (counter) => {
-
-        counter.textContent =
-          String(
-            quantity
-          );
-
+      if (
+        !data ||
+        !data.cep
+      ) {
+        return null;
       }
+
+      return data;
+
+    } catch {
+      return null;
+    }
+  }
+
+
+  function saveShipping(data) {
+    try {
+      localStorage.setItem(
+        SHIPPING_STORAGE_KEY,
+        JSON.stringify(data)
+      );
+    } catch {}
+  }
+
+
+  function clearShipping() {
+    localStorage.removeItem(
+      SHIPPING_STORAGE_KEY
+    );
+  }
+
+
+  function shippingRegion(
+    city,
+    state
+  ) {
+    const normalizedCity =
+      normalizeText(city);
+
+    const uf =
+      normalizeText(state);
+
+
+    if (
+      uf === "PE" &&
+      RMR_CITIES.includes(
+        normalizedCity
+      )
+    ) {
+      return {
+        code: "RMR",
+        name:
+          "RECIFE / REGIÃO METROPOLITANA",
+        price:
+          SHIPPING_PRICES.RMR
+      };
+    }
+
+
+    if (
+      NORTHEAST_STATES.includes(
+        uf
+      )
+    ) {
+      return {
+        code: "NORDESTE",
+        name: "NORDESTE",
+        price:
+          SHIPPING_PRICES
+            .NORDESTE
+      };
+    }
+
+
+    if (
+      CENTER_WEST_STATES.includes(
+        uf
+      )
+    ) {
+      return {
+        code: "CENTRO_OESTE",
+        name: "CENTRO-OESTE",
+        price:
+          SHIPPING_PRICES
+            .CENTRO_OESTE
+      };
+    }
+
+
+    if (
+      SOUTHEAST_STATES.includes(
+        uf
+      )
+    ) {
+      return {
+        code: "SUDESTE",
+        name: "SUDESTE",
+        price:
+          SHIPPING_PRICES
+            .SUDESTE
+      };
+    }
+
+
+    if (
+      NORTH_SOUTH_STATES.includes(
+        uf
+      )
+    ) {
+      return {
+        code: "NORTE_SUL",
+        name: "NORTE / SUL",
+        price:
+          SHIPPING_PRICES
+            .NORTE_SUL
+      };
+    }
+
+
+    return null;
+  }
+
+
+  async function fetchCEP(cep) {
+    const cleanCEP =
+      onlyNumbers(cep);
+
+    if (cleanCEP.length !== 8) {
+      throw new Error(
+        "CEP inválido."
+      );
+    }
+
+    const response =
+      await fetch(
+        `https://viacep.com.br/ws/${cleanCEP}/json/`
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Não foi possível consultar o CEP."
+      );
+    }
+
+    const data =
+      await response.json();
+
+    if (
+      !data ||
+      data.erro
+    ) {
+      throw new Error(
+        "CEP não encontrado."
+      );
+    }
+
+    return data;
+  }
+
+
+  async function calculateShippingFromCEP(
+    cep
+  ) {
+    const subtotal =
+      cartSubtotal();
+
+    const address =
+      await fetchCEP(cep);
+
+    const region =
+      shippingRegion(
+        address.localidade,
+        address.uf
+      );
+
+    if (!region) {
+      throw new Error(
+        "Não foi possível calcular o frete para este CEP."
+      );
+    }
+
+
+    const shippingPrice =
+      subtotal >=
+      FREE_SHIPPING_THRESHOLD
+        ? 0
+        : region.price;
+
+
+    const shipping = {
+      cep:
+        onlyNumbers(cep),
+
+      street:
+        address.logradouro || "",
+
+      district:
+        address.bairro || "",
+
+      city:
+        address.localidade || "",
+
+      state:
+        address.uf || "",
+
+      region:
+        region.code,
+
+      regionName:
+        region.name,
+
+      price:
+        shippingPrice,
+
+      originalPrice:
+        region.price,
+
+      freeShipping:
+        subtotal >=
+        FREE_SHIPPING_THRESHOLD
+    };
+
+
+    saveShipping(
+      shipping
     );
 
-}
+    return shipping;
+  }
 
 
-/* =========================================
-   CARRINHO DO HEADER
-========================================= */
+  /* =========================================================
+     PÁGINA CARRINHO
+  ========================================================= */
 
-function bindCartHeaderLinks() {
-
-  document
-    .querySelectorAll(
-      "#cartButton, .cart-link"
-    )
-    .forEach(
-      (button) => {
-
-        if (
-          button.dataset
-            .cartNavigationBound ===
-          "true"
-        ) {
-
-          return;
-
-        }
+  function isCartPage() {
+    return Boolean(
+      document.getElementById(
+        "cartPageItems"
+      )
+    );
+  }
 
 
-        button.dataset
-          .cartNavigationBound =
-          "true";
+  function renderCartPage() {
+    if (!isCartPage()) {
+      return;
+    }
 
 
-        button.addEventListener(
-          "click",
-          (event) => {
+    const cart =
+      getCart();
 
-            if (
-              window
-                .location
-                .pathname
-                .includes(
-                  "carrinho.html"
-                )
-            ) {
+    const itemsElement =
+      document.getElementById(
+        "cartPageItems"
+      );
 
-              return;
+    const emptyElement =
+      document.getElementById(
+        "cartEmpty"
+      );
 
+    const titleCount =
+      document.getElementById(
+        "cartTitleCount"
+      );
+
+
+    if (titleCount) {
+      titleCount.textContent =
+        `[${cartQuantity()}]`;
+    }
+
+
+    itemsElement.innerHTML = "";
+
+
+    if (!cart.length) {
+      emptyElement.hidden =
+        false;
+
+      itemsElement.hidden =
+        true;
+
+      updateCartSummary();
+
+      return;
+    }
+
+
+    emptyElement.hidden =
+      true;
+
+    itemsElement.hidden =
+      false;
+
+
+    cart.forEach(
+      (item, index) => {
+
+        const row =
+          document.createElement(
+            "article"
+          );
+
+        row.className =
+          "cart-item";
+
+
+        const name =
+          getItemName(item);
+
+        const fragrance =
+          getItemFragrance(item);
+
+        const size =
+          getItemSize(item);
+
+        const image =
+          getItemImage(item);
+
+        const quantity =
+          getItemQuantity(item);
+
+        const price =
+          getItemPrice(item);
+
+
+        row.innerHTML = `
+
+          <div class="cart-item-image-wrap">
+
+            ${
+              image
+                ? `
+                  <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(name)}"
+                    class="cart-item-image"
+                  >
+                `
+                : `
+                  <div
+                    class="cart-item-image cart-item-image-empty"
+                  ></div>
+                `
+            }
+
+          </div>
+
+
+          <div class="cart-item-info">
+
+            <h2 class="cart-item-name">
+              ${escapeHTML(name)}
+            </h2>
+
+
+            ${
+              fragrance
+                ? `
+                  <p class="cart-item-variant">
+                    ${escapeHTML(fragrance)}
+                  </p>
+                `
+                : ""
             }
 
 
-            event.preventDefault();
+            ${
+              size
+                ? `
+                  <p class="cart-item-variant">
+                    ${escapeHTML(size)}
+                  </p>
+                `
+                : ""
+            }
 
 
-            window
-              .location
-              .href =
-              "carrinho.html";
+            <p class="cart-item-unit-price">
+              ${formatBRL(price)}
+            </p>
 
-          }
+
+            <div class="cart-item-actions">
+
+              <div class="cart-quantity">
+
+                <button
+                  type="button"
+                  class="cart-quantity-minus"
+                  data-cart-index="${index}"
+                  aria-label="Diminuir quantidade"
+                >
+                  −
+                </button>
+
+
+                <span>
+                  ${quantity}
+                </span>
+
+
+                <button
+                  type="button"
+                  class="cart-quantity-plus"
+                  data-cart-index="${index}"
+                  aria-label="Aumentar quantidade"
+                >
+                  +
+                </button>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="cart-remove"
+                data-cart-index="${index}"
+              >
+                REMOVER
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="cart-item-total">
+            ${formatBRL(
+              price *
+              quantity
+            )}
+          </div>
+
+        `;
+
+
+        itemsElement.appendChild(
+          row
         );
-
       }
     );
 
-}
 
+    bindCartItemEvents();
 
-/* =========================================
-   CÁLCULOS
-========================================= */
-
-function calculateSubtotal(
-  cart
-) {
-
-  return cart.reduce(
-    (
-      total,
-      item
-    ) => {
-
-      return (
-        total +
-        (
-          Number(
-            item.price
-          ) *
-          Number(
-            item.quantity
-          )
-        )
-      );
-
-    },
-    0
-  );
-
-}
-
-
-function calculateDiscount(
-  subtotal
-) {
-
-  const coupon =
-    getActiveCoupon();
-
-
-  if (!coupon) {
-    return 0;
+    updateCartSummary();
   }
 
 
-  const percentage =
-    VALID_COUPONS[
-      coupon.code
-    ];
-
-
-  if (!percentage) {
-    return 0;
-  }
-
-
-  return (
-    subtotal *
-    (
-      percentage /
-      100
-    )
-  );
-
-}
-
-
-/* =========================================
-   RENDERIZAR CARRINHO
-========================================= */
-
-function renderCartPage() {
-
-  const itemsContainer =
-    document.getElementById(
-      "cartPageItems"
-    );
-
-
-  /*
-    SE NÃO ESTAMOS NA PÁGINA
-    carrinho.html, NÃO FAZ NADA.
-  */
-
-  if (!itemsContainer) {
-    return;
-  }
-
-
-  const cart =
-    getCart();
-
-
-  const quantity =
-    getCartQuantity();
-
-
-  const subtotal =
-    calculateSubtotal(
-      cart
-    );
-
-
-  const discount =
-    calculateDiscount(
-      subtotal
-    );
-
-
-  const total =
-    Math.max(
-      0,
-      subtotal -
-      discount
-    );
-
-
-  const coupon =
-    getActiveCoupon();
-
-
-  const freeShipping =
-    subtotal >=
-    FREE_SHIPPING_THRESHOLD;
-
-
-  const countElement =
-    document.getElementById(
-      "cartPageCount"
-    );
-
-
-  const emptyElement =
-    document.getElementById(
-      "cartPageEmpty"
-    );
-
-
-  const subtotalElement =
-    document.getElementById(
-      "cartSubtotal"
-    );
-
-
-  const totalElement =
-    document.getElementById(
-      "cartTotal"
-    );
-
-
-  const discountElement =
-    document.getElementById(
-      "cartDiscount"
-    );
-
-
-  const discountRow =
-    document.getElementById(
-      "cartDiscountRow"
-    );
-
-
-  const discountLabel =
-    document.getElementById(
-      "cartDiscountLabel"
-    );
-
-
-  const shippingMessage =
-    document.getElementById(
-      "shippingMessage"
-    );
-
-
-  const shippingMethod =
-    document.getElementById(
-      "cartShippingMethod"
-    );
-
-
-  const couponInput =
-    document.getElementById(
-      "couponInput"
-    );
-
-
-  const couponMessage =
-    document.getElementById(
-      "couponMessage"
-    );
-
-
-  const removeCouponButton =
-    document.getElementById(
-      "removeCouponButton"
-    );
-
-
-  if (countElement) {
-
-    countElement.textContent =
-      "[" +
-      quantity +
-      "]";
-
-  }
-
-
-  if (
-    cart.length === 0
-  ) {
-
-    itemsContainer
-      .innerHTML =
-      "";
-
-
-    if (emptyElement) {
-
-      emptyElement
-        .classList
-        .add(
-          "visible"
-        );
-
-    }
-
-  } else {
-
-    if (emptyElement) {
-
-      emptyElement
-        .classList
-        .remove(
-          "visible"
-        );
-
-    }
-
-
-    itemsContainer.innerHTML =
-      cart
-        .map(
-          (
-            item,
-            index
-          ) => {
-
-            const image =
-              item.image
-                ? `
-
-                  <img
-                    src="${escapeHtml(
-                      item.image
-                    )}"
-                    alt="${escapeHtml(
-                      item.product
-                    )}"
-                  >
-
-                `
-                : `
-
-                  <div
-                    class="
-                      cart-product-image-empty
-                    "
-                  ></div>
-
-                `;
-
-
-            const title =
-              item.fragrance
-                ? item.fragrance
-                : item.product;
-
-
-            return `
-
-              <article
-                class="cart-product"
-              >
-
-
-                <div
-                  class="
-                    cart-product-image
-                  "
-                >
-
-                  ${image}
-
-                </div>
-
-
-                <div
-                  class="
-                    cart-product-content
-                  "
-                >
-
-
-                  <div
-                    class="
-                      cart-product-top
-                    "
-                  >
-
-
-                    <div>
-
-
-                      <h2
-                        class="
-                          cart-product-title
-                        "
-                      >
-                        ${escapeHtml(
-                          title
-                        )}
-                      </h2>
-
-
-                      ${
-                        item.fragrance
-                          ? `
-
-                            <p
-                              class="
-                                cart-product-type
-                              "
-                            >
-                              ${escapeHtml(
-                                item.product
-                              )}
-                            </p>
-
-                          `
-                          : ""
-                      }
-
-
-                      ${
-                        item.size
-                          ? `
-
-                            <p
-                              class="
-                                cart-product-variant
-                              "
-                            >
-                              TAMANHO:
-                              ${escapeHtml(
-                                item.size
-                              )}
-                            </p>
-
-                          `
-                          : ""
-                      }
-
-
-                    </div>
-
-
-                    <button
-                      type="button"
-                      class="
-                        cart-product-remove
-                      "
-                      data-cart-remove="${index}"
-                      aria-label="Remover produto"
-                    >
-                      ×
-                    </button>
-
-
-                  </div>
-
-
-                  <div
-                    class="
-                      cart-product-bottom
-                    "
-                  >
-
-
-                    <div
-                      class="
-                        cart-product-quantity-area
-                      "
-                    >
-
-
-                      <div
-                        class="
-                          cart-product-quantity
-                        "
-                      >
-
-                        <button
-                          type="button"
-                          data-cart-minus="${index}"
-                          aria-label="Diminuir quantidade"
-                        >
-                          −
-                        </button>
-
-
-                        <span>
-                          ${Number(
-                            item.quantity
-                          )}
-                        </span>
-
-
-                        <button
-                          type="button"
-                          data-cart-plus="${index}"
-                          aria-label="Aumentar quantidade"
-                        >
-                          +
-                        </button>
-
-                      </div>
-
-
-                      <p
-                        class="
-                          cart-product-unit-price
-                        "
-                      >
-                        ${formatCurrency(
-                          Number(
-                            item.price
-                          )
-                        )}
-                      </p>
-
-
-                    </div>
-
-
-                    <strong
-                      class="
-                        cart-product-total-price
-                      "
-                    >
-                      ${formatCurrency(
-                        Number(
-                          item.price
-                        ) *
-                        Number(
-                          item.quantity
-                        )
-                      )}
-                    </strong>
-
-
-                  </div>
-
-
-                </div>
-
-
-              </article>
-
-            `;
+  function bindCartItemEvents() {
+
+    document
+      .querySelectorAll(
+        ".cart-quantity-minus"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const index =
+              Number(
+                button.dataset
+                  .cartIndex
+              );
+
+            const cart =
+              getCart();
+
+            if (!cart[index]) {
+              return;
+            }
+
+            updateItemQuantity(
+              index,
+              getItemQuantity(
+                cart[index]
+              ) - 1
+            );
 
           }
-        )
-        .join(
-          ""
         );
+
+      });
+
+
+    document
+      .querySelectorAll(
+        ".cart-quantity-plus"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const index =
+              Number(
+                button.dataset
+                  .cartIndex
+              );
+
+            const cart =
+              getCart();
+
+            if (!cart[index]) {
+              return;
+            }
+
+            updateItemQuantity(
+              index,
+              getItemQuantity(
+                cart[index]
+              ) + 1
+            );
+
+          }
+        );
+
+      });
+
+
+    document
+      .querySelectorAll(
+        ".cart-remove"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            removeItem(
+              Number(
+                button.dataset
+                  .cartIndex
+              )
+            );
+
+          }
+        );
+
+      });
 
   }
 
 
-  if (subtotalElement) {
+  function updateCartSummary() {
 
-    subtotalElement
-      .textContent =
-      formatCurrency(
+    const subtotal =
+      cartSubtotal();
+
+    const discount =
+      calculateDiscount(
         subtotal
       );
 
-  }
+    let shipping =
+      getSavedShipping();
 
 
-  if (totalElement) {
-
-    totalElement
-      .textContent =
-      formatCurrency(
-        total
-      );
-
-  }
-
-
-  if (
-    discountRow &&
-    discountElement &&
-    discountLabel
-  ) {
+    /*
+     * Se o carrinho atingir R$500,
+     * o frete passa a ser grátis,
+     * independentemente de cupom.
+     */
 
     if (
-      discount >
-      0
+      shipping &&
+      subtotal >=
+        FREE_SHIPPING_THRESHOLD
+    ) {
+      shipping.price = 0;
+      shipping.freeShipping =
+        true;
+
+      saveShipping(
+        shipping
+      );
+    }
+
+
+    /*
+     * Se o carrinho cair novamente
+     * abaixo de R$500, restauramos
+     * o valor normal da região.
+     */
+
+    if (
+      shipping &&
+      subtotal <
+        FREE_SHIPPING_THRESHOLD &&
+      shipping.freeShipping
     ) {
 
-      discountRow
-        .classList
-        .add(
-          "visible"
+      shipping.price =
+        Number(
+          shipping.originalPrice ||
+          0
         );
 
+      shipping.freeShipping =
+        false;
 
-      discountLabel
-        .textContent =
-        coupon
-          ? "DESCONTO " +
-            coupon.code
-          : "DESCONTO";
+      saveShipping(
+        shipping
+      );
+
+    }
 
 
-      discountElement
-        .textContent =
+    const shippingPrice =
+      shipping
+        ? Number(
+            shipping.price || 0
+          )
+        : 0;
+
+
+    const total =
+      Math.max(
+        0,
+        subtotal -
+        discount +
+        shippingPrice
+      );
+
+
+    const subtotalElement =
+      document.getElementById(
+        "cartSubtotal"
+      );
+
+    const discountRow =
+      document.getElementById(
+        "cartDiscountRow"
+      );
+
+    const discountElement =
+      document.getElementById(
+        "cartDiscount"
+      );
+
+    const discountLabel =
+      document.getElementById(
+        "cartDiscountLabel"
+      );
+
+    const shippingRow =
+      document.getElementById(
+        "cartShippingRow"
+      );
+
+    const shippingElement =
+      document.getElementById(
+        "cartShipping"
+      );
+
+    const totalElement =
+      document.getElementById(
+        "cartTotal"
+      );
+
+    const methodElement =
+      document.getElementById(
+        "cartShippingMethod"
+      );
+
+    const methodPriceElement =
+      document.getElementById(
+        "cartShippingMethodPrice"
+      );
+
+    const messageElement =
+      document.getElementById(
+        "cartShippingMessage"
+      );
+
+    const cepInput =
+      document.getElementById(
+        "cartShippingCep"
+      );
+
+
+    if (subtotalElement) {
+      subtotalElement.textContent =
+        formatBRL(subtotal);
+    }
+
+
+    const coupon =
+      getCoupon();
+
+
+    if (
+      discount > 0 &&
+      coupon
+    ) {
+
+      discountRow.hidden =
+        false;
+
+      discountElement.textContent =
         "- " +
-        formatCurrency(
+        formatBRL(
           discount
         );
 
+      discountLabel.textContent =
+        `DESCONTO ${coupon.code}`;
+
     } else {
 
-      discountRow
-        .classList
-        .remove(
-          "visible"
-        );
+      discountRow.hidden =
+        true;
 
     }
 
-  }
-
-
-  if (
-    shippingMessage &&
-    shippingMethod
-  ) {
 
     if (
-      freeShipping
+      shipping &&
+      shipping.cep
     ) {
 
-      shippingMethod
-        .textContent =
-        "Frete grátis";
-
-
-      shippingMessage
-        .textContent =
-        "FRETE GRÁTIS APLICADO AO PEDIDO.";
-
-
-      shippingMessage
-        .classList
-        .add(
-          "free"
-        );
-
-    } else {
-
-      shippingMethod
-        .textContent =
-        "Padrão";
-
-
-      shippingMessage
-        .textContent =
-        "Frete grátis em compras a partir de R$500.";
-
-
-      shippingMessage
-        .classList
-        .remove(
-          "free"
-        );
-
-    }
-
-  }
-
-
-  if (couponInput) {
-
-    couponInput.value =
-      coupon
-        ? coupon.code
-        : "";
-
-  }
-
-
-  if (couponMessage) {
-
-    if (
-      coupon &&
-      VALID_COUPONS[
-        coupon.code
-      ]
-    ) {
-
-      couponMessage
-        .textContent =
-        coupon.code +
-        " · 10% DE DESCONTO APLICADO";
-
-    } else {
-
-      couponMessage
-        .textContent =
-        "";
-
-    }
-
-  }
-
-
-  if (
-    removeCouponButton
-  ) {
-
-    if (
-      coupon &&
-      VALID_COUPONS[
-        coupon.code
-      ]
-    ) {
-
-      removeCouponButton
-        .classList
-        .add(
-          "visible"
-        );
-
-    } else {
-
-      removeCouponButton
-        .classList
-        .remove(
-          "visible"
-        );
-
-    }
-
-  }
-
-
-  bindCartItemEvents();
-
-}
-
-
-/* =========================================
-   CONTROLES DO CARRINHO
-========================================= */
-
-function bindCartItemEvents() {
-
-
-  document
-    .querySelectorAll(
-      "[data-cart-plus]"
-    )
-    .forEach(
-      (button) => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            const index =
-              Number(
-                button.getAttribute(
-                  "data-cart-plus"
-                )
-              );
-
-
-            const cart =
-              getCart();
-
-
-            if (!cart[index]) {
-              return;
-            }
-
-
-            cart[index].quantity =
-              Number(
-                cart[index]
-                  .quantity
-              ) + 1;
-
-
-            saveCart(
-              cart
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-cart-minus]"
-    )
-    .forEach(
-      (button) => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            const index =
-              Number(
-                button.getAttribute(
-                  "data-cart-minus"
-                )
-              );
-
-
-            const cart =
-              getCart();
-
-
-            if (!cart[index]) {
-              return;
-            }
-
-
-            const quantity =
-              Number(
-                cart[index]
-                  .quantity
-              ) - 1;
-
-
-            if (
-              quantity <=
-              0
-            ) {
-
-              cart.splice(
-                index,
-                1
-              );
-
-            } else {
-
-              cart[index]
-                .quantity =
-                quantity;
-
-            }
-
-
-            saveCart(
-              cart
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-cart-remove]"
-    )
-    .forEach(
-      (button) => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            const index =
-              Number(
-                button.getAttribute(
-                  "data-cart-remove"
-                )
-              );
-
-
-            const cart =
-              getCart();
-
-
-            if (!cart[index]) {
-              return;
-            }
-
-
-            cart.splice(
-              index,
-              1
+      shippingRow.hidden =
+        false;
+
+
+      shippingElement.textContent =
+        shippingPrice === 0
+          ? "GRÁTIS"
+          : formatBRL(
+              shippingPrice
             );
 
 
-            saveCart(
-              cart
+      methodElement.textContent =
+        "PADRÃO";
+
+
+      methodPriceElement.textContent =
+        shippingPrice === 0
+          ? "GRÁTIS"
+          : formatBRL(
+              shippingPrice
             );
-
-          }
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================================
-   CUPOM
-========================================= */
-
-const cartCouponForm =
-  document.getElementById(
-    "cartCouponForm"
-  );
-
-
-const couponInput =
-  document.getElementById(
-    "couponInput"
-  );
-
-
-const couponMessage =
-  document.getElementById(
-    "couponMessage"
-  );
-
-
-const removeCouponButton =
-  document.getElementById(
-    "removeCouponButton"
-  );
-
-
-if (
-  cartCouponForm &&
-  couponInput
-) {
-
-  cartCouponForm.addEventListener(
-    "submit",
-    (event) => {
-
-      event.preventDefault();
-
-
-      const code =
-        couponInput
-          .value
-          .trim()
-          .toUpperCase();
-
-
-      if (
-        code ===
-        "BEMVINDO" ||
-        code ===
-        "CAMILAGUS"
-      ) {
-
-        /*
-          UM CUPOM POR VEZ.
-
-          Como existe apenas uma
-          chave no localStorage,
-          o novo cupom substitui
-          automaticamente o anterior.
-        */
-
-        saveActiveCoupon(
-          {
-            code:
-              code,
-
-            type:
-              "percentage",
-
-            value:
-              10
-          }
-        );
-
-
-        return;
-
-      }
-
-
-      if (couponMessage) {
-
-        couponMessage
-          .textContent =
-          "CUPOM INVÁLIDO.";
-
-      }
-
-    }
-  );
-
-}
-
-
-if (
-  removeCouponButton
-) {
-
-  removeCouponButton
-    .addEventListener(
-      "click",
-      () => {
-
-        saveActiveCoupon(
-          null
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================================
-   CEP
-========================================= */
-
-const shippingCep =
-  document.getElementById(
-    "shippingCep"
-  );
-
-
-if (shippingCep) {
-
-  shippingCep.addEventListener(
-    "input",
-    () => {
-
-      let value =
-        shippingCep
-          .value
-          .replace(
-            /\D/g,
-            ""
-          )
-          .slice(
-            0,
-            8
-          );
-
-
-      if (
-        value.length >
-        5
-      ) {
-
-        value =
-          value.slice(
-            0,
-            5
-          ) +
-          "-" +
-          value.slice(
-            5
-          );
-
-      }
-
-
-      shippingCep.value =
-        value;
-
-    }
-  );
-
-
-  shippingCep.addEventListener(
-    "blur",
-    () => {
-
-      const subtotal =
-        calculateSubtotal(
-          getCart()
-        );
-
-
-      const message =
-        document.getElementById(
-          "shippingMessage"
-        );
-
-
-      if (!message) {
-        return;
-      }
 
 
       if (
@@ -1661,745 +1295,200 @@ if (shippingCep) {
         FREE_SHIPPING_THRESHOLD
       ) {
 
-        message
-          .textContent =
-          "FRETE GRÁTIS APLICADO AO PEDIDO.";
+        messageElement.textContent =
+          `${shipping.city} / ${shipping.state} — FRETE GRÁTIS`;
 
+      } else {
 
-        return;
+        messageElement.textContent =
+          `${shipping.city} / ${shipping.state} — ${shipping.regionName}`;
 
       }
 
 
       if (
-        shippingCep
-          .value
-          .length ===
-        9
+        cepInput &&
+        !cepInput.value
       ) {
 
-        message
-          .textContent =
-          "O VALOR DO FRETE SERÁ CALCULADO NA FINALIZAÇÃO DO PEDIDO.";
+        cepInput.value =
+          formatCEP(
+            shipping.cep
+          );
 
       }
 
-    }
-  );
+    } else {
 
-}
+      shippingRow.hidden =
+        true;
 
+      methodElement.textContent =
+        "PADRÃO";
 
-/* =========================================
-   LOJA
-   TAMANHO + IMAGEM + PREÇO
-========================================= */
+      methodPriceElement.textContent =
+        "";
 
-document
-  .querySelectorAll(
-    ".produto-loja-card"
-  )
-  .forEach(
-    (card) => {
-
-      const sizeButtons =
-        card.querySelectorAll(
-          ".variacao-btn[data-size]"
-        );
-
-
-      const image =
-        card.querySelector(
-          ".produto-loja-image img"
-        );
-
-
-      const price =
-        card.querySelector(
-          ".produto-loja-preco"
-        );
-
-
-      sizeButtons.forEach(
-        (button) => {
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              const size =
-                button.getAttribute(
-                  "data-size"
-                );
-
-
-              if (!size) {
-                return;
-              }
-
-
-              sizeButtons
-                .forEach(
-                  (
-                    currentButton
-                  ) => {
-
-                    currentButton
-                      .classList
-                      .remove(
-                        "active"
-                      );
-
-                  }
-                );
-
-
-              button
-                .classList
-                .add(
-                  "active"
-                );
-
-
-              /*
-                IMPORTANTE:
-                data-image-100
-                data-image-250
-
-                NÃO usar dataset aqui.
-              */
-
-              const newImage =
-                card.getAttribute(
-                  "data-image-" +
-                  size
-                );
-
-
-              const newPrice =
-                card.getAttribute(
-                  "data-price-" +
-                  size
-                );
-
-
-              if (
-                image &&
-                newImage
-              ) {
-
-                image.src =
-                  newImage;
-
-              }
-
-
-              if (
-                price &&
-                newPrice
-              ) {
-
-                price
-                  .textContent =
-                  formatCurrency(
-                    Number(
-                      newPrice
-                    )
-                  );
-
-              }
-
-
-              card.setAttribute(
-                "data-current-size",
-                size +
-                " ML"
-              );
-
-
-              if (newPrice) {
-
-                card.setAttribute(
-                  "data-current-price",
-                  newPrice
-                );
-
-              }
-
-            }
-          );
-
-        }
-      );
+      messageElement.textContent =
+        "DIGITE SEU CEP PARA CALCULAR O FRETE.";
 
     }
-  );
 
 
-/* =========================================
-   VELA NA LOJA
-========================================= */
-
-document
-  .querySelectorAll(
-    ".fragrancias-loja"
-  )
-  .forEach(
-    (container) => {
-
-      const buttons =
-        container.querySelectorAll(
-          ".fragrancia-loja-btn"
-        );
-
-
-      const card =
-        container.closest(
-          ".produto-loja-card"
-        );
-
-
-      buttons.forEach(
-        (button) => {
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              buttons
-                .forEach(
-                  (
-                    currentButton
-                  ) => {
-
-                    currentButton
-                      .classList
-                      .remove(
-                        "active"
-                      );
-
-                  }
-                );
-
-
-              button
-                .classList
-                .add(
-                  "active"
-                );
-
-
-              const fragrance =
-                button.getAttribute(
-                  "data-fragrance"
-                ) ||
-                button
-                  .textContent
-                  .trim();
-
-
-              if (
-                card &&
-                fragrance
-              ) {
-
-                card.setAttribute(
-                  "data-fragrance",
-                  fragrance
-                );
-
-              }
-
-            }
-          );
-
-        }
-      );
-
+    if (totalElement) {
+      totalElement.textContent =
+        formatBRL(total);
     }
-  );
-
-
-/* =========================================
-   ADICIONAR PRODUTOS DA LOJA
-========================================= */
-
-document
-  .querySelectorAll(
-    ".adicionar-card-btn"
-  )
-  .forEach(
-    (button) => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const card =
-            button.closest(
-              ".produto-loja-card"
-            );
-
-
-          if (!card) {
-            return;
-          }
-
-
-          const image =
-            card.querySelector(
-              ".produto-loja-image img"
-            );
-
-
-          const product =
-            card.getAttribute(
-              "data-product-type"
-            ) || "";
-
-
-          const fragrance =
-            card.getAttribute(
-              "data-fragrance"
-            ) || "";
-
-
-          const size =
-            card.getAttribute(
-              "data-current-size"
-            ) || "";
-
-
-          const price =
-            Number(
-              card.getAttribute(
-                "data-current-price"
-              )
-            );
-
-
-          if (
-            !product ||
-            !price
-          ) {
-
-            return;
-          }
-
-
-          addItemToCart(
-            {
-              product:
-                product,
-
-              fragrance:
-                fragrance,
-
-              size:
-                size,
-
-              price:
-                price,
-
-              image:
-                image
-                  ? image.src
-                  : ""
-            }
-          );
-
-
-          button.textContent =
-            "ADICIONADO";
-
-
-          button
-            .classList
-            .add(
-              "adicionado"
-            );
-
-
-          window.setTimeout(
-            () => {
-
-              button.textContent =
-                "ADICIONAR AO CARRINHO";
-
-
-              button
-                .classList
-                .remove(
-                  "adicionado"
-                );
-
-            },
-            1000
-          );
-
-        }
-      );
-
-    }
-  );
-
-
-/* =========================================
-   AROMATIZADOR / DIFUSOR
-   PÁGINAS INDIVIDUAIS
-========================================= */
-
-const detailPage =
-  document.querySelector(
-    "[data-detail-product]"
-  );
-
-
-if (detailPage) {
-
-  const productType =
-    detailPage.getAttribute(
-      "data-detail-product"
-    );
-
-
-  const fragranceButtons =
-    detailPage.querySelectorAll(
-      ".produto-fragrancia-btn"
-    );
-
-
-  const sizeButtons =
-    detailPage.querySelectorAll(
-      ".produto-tamanho-btn"
-    );
-
-
-  const fragrancePanels =
-    detailPage.querySelectorAll(
-      ".fragrancia-detalhe"
-    );
-
-
-  const detailImage =
-    document.getElementById(
-      "productDetailImage"
-    );
-
-
-  const detailPrice =
-    document.getElementById(
-      "productDetailPrice"
-    );
-
-
-  const fragranceName =
-    document.getElementById(
-      "productFragranceName"
-    );
-
-
-  const addButton =
-    detailPage.querySelector(
-      ".produto-adicionar"
-    );
-
-
-  const allowedFragrances = [
-    "cha-floral",
-    "figo-tirio",
-    "lavanda-rosada",
-    "limoeira",
-    "verde-quente",
-    "orbe-amazonico"
-  ];
-
-
-  let currentFragrance =
-    "cha-floral";
-
-
-  let currentSize =
-    "100";
-
-
-  const urlParams =
-    new URLSearchParams(
-      window.location.search
-    );
-
-
-  const requestedFragrance =
-    urlParams.get(
-      "fragrancia"
-    );
-
-
-  if (
-    requestedFragrance &&
-    allowedFragrances.includes(
-      requestedFragrance
-    )
-  ) {
-
-    currentFragrance =
-      requestedFragrance;
 
   }
 
 
-  function updateDetailProduct() {
+  /* =========================================================
+     CALCULAR FRETE NO CARRINHO
+  ========================================================= */
 
-    fragranceButtons
-      .forEach(
-        (button) => {
+  function initCartShipping() {
 
-          const active =
-            button.getAttribute(
-              "data-fragrance"
-            ) ===
-            currentFragrance;
-
-
-          button
-            .classList
-            .toggle(
-              "active",
-              active
-            );
-
-
-          if (
-            active &&
-            fragranceName
-          ) {
-
-            fragranceName
-              .textContent =
-              button.getAttribute(
-                "data-name"
-              ) ||
-              button
-                .textContent
-                .trim();
-
-          }
-
-        }
+    const input =
+      document.getElementById(
+        "cartShippingCep"
       );
 
-
-    sizeButtons
-      .forEach(
-        (button) => {
-
-          button
-            .classList
-            .toggle(
-              "active",
-              button.getAttribute(
-                "data-size"
-              ) ===
-              currentSize
-            );
-
-        }
+    const button =
+      document.getElementById(
+        "cartShippingButton"
       );
 
-
-    fragrancePanels
-      .forEach(
-        (panel) => {
-
-          panel
-            .classList
-            .toggle(
-              "active",
-              panel.getAttribute(
-                "data-fragrance-panel"
-              ) ===
-              currentFragrance
-            );
-
-        }
+    const message =
+      document.getElementById(
+        "cartShippingMessage"
       );
 
 
     if (
-      detailImage &&
-      productType
+      !input ||
+      !button
     ) {
-
-      detailImage.src =
-        productType +
-        "-" +
-        currentFragrance +
-        "-" +
-        currentSize +
-        ".jpg";
-
+      return;
     }
 
 
-    if (detailPrice) {
+    const saved =
+      getSavedShipping();
 
-      const selectedPrice =
-        detailPage.getAttribute(
-          "data-price-" +
-          currentSize
+
+    if (
+      saved &&
+      saved.cep
+    ) {
+      input.value =
+        formatCEP(
+          saved.cep
         );
-
-
-      if (
-        selectedPrice
-      ) {
-
-        detailPrice
-          .textContent =
-          formatCurrency(
-            Number(
-              selectedPrice
-            )
-          );
-
-      }
-
     }
 
-  }
 
-
-  fragranceButtons
-    .forEach(
-      (button) => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            currentFragrance =
-              button.getAttribute(
-                "data-fragrance"
-              );
-
-
-            updateDetailProduct();
-
-          }
-        );
-
-      }
-    );
-
-
-  sizeButtons
-    .forEach(
-      (button) => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            currentSize =
-              button.getAttribute(
-                "data-size"
-              );
-
-
-            updateDetailProduct();
-
-          }
-        );
-
-      }
-    );
-
-
-  if (addButton) {
-
-    addButton.addEventListener(
-      "click",
+    input.addEventListener(
+      "input",
       () => {
 
-        const selectedPrice =
-          Number(
-            detailPage.getAttribute(
-              "data-price-" +
-              currentSize
-            )
+        input.value =
+          formatCEP(
+            input.value
+          );
+
+      }
+    );
+
+
+    input.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter"
+        ) {
+          event.preventDefault();
+
+          button.click();
+        }
+
+      }
+    );
+
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        const cep =
+          onlyNumbers(
+            input.value
           );
 
 
-        const selectedButton =
-          Array
-            .from(
-              fragranceButtons
-            )
-            .find(
-              (button) =>
+        if (
+          cep.length !== 8
+        ) {
 
-                button.getAttribute(
-                  "data-fragrance"
-                ) ===
-                currentFragrance
+          message.textContent =
+            "DIGITE UM CEP VÁLIDO.";
 
+          return;
+        }
+
+
+        const previousText =
+          button.textContent;
+
+
+        button.disabled =
+          true;
+
+        button.textContent =
+          "CALCULANDO...";
+
+        message.textContent =
+          "CALCULANDO FRETE...";
+
+
+        try {
+
+          const shipping =
+            await calculateShippingFromCEP(
+              cep
             );
 
 
-        const fragrance =
-          selectedButton
-            ? (
-                selectedButton
-                  .getAttribute(
-                    "data-name"
-                  ) ||
-                selectedButton
-                  .textContent
-                  .trim()
-              )
-            : currentFragrance;
+          input.value =
+            formatCEP(
+              shipping.cep
+            );
 
 
-        addItemToCart(
-          {
-            product:
-              String(
-                productType
-              ).toUpperCase(),
-
-            fragrance:
-              fragrance,
-
-            size:
-              currentSize +
-              " ML",
-
-            price:
-              selectedPrice,
-
-            image:
-              detailImage
-                ? detailImage.src
-                : ""
-          }
-        );
+          updateCartSummary();
 
 
-        addButton
-          .textContent =
-          "ADICIONADO";
+        } catch (error) {
+
+          clearShipping();
+
+          message.textContent =
+            error.message ||
+            "NÃO FOI POSSÍVEL CALCULAR O FRETE.";
 
 
-        window.setTimeout(
-          () => {
+          updateCartSummary();
 
-            addButton
-              .textContent =
-              "ADICIONAR AO CARRINHO";
+        } finally {
 
-          },
-          1000
-        );
+          button.disabled =
+            false;
+
+          button.textContent =
+            previousText;
+
+        }
 
       }
     );
@@ -2407,501 +1496,812 @@ if (detailPage) {
   }
 
 
-  updateDetailProduct();
+  /* =========================================================
+     CUPOM NO CARRINHO
+  ========================================================= */
 
-}
+  function initCouponForm() {
+
+    const form =
+      document.getElementById(
+        "couponForm"
+      );
+
+    const input =
+      document.getElementById(
+        "couponInput"
+      );
+
+    const message =
+      document.getElementById(
+        "couponMessage"
+      );
 
 
-/* =========================================
-   VELA
-   PÁGINA INDIVIDUAL
-========================================= */
+    if (
+      !form ||
+      !input
+    ) {
+      return;
+    }
 
-if (
-  window
-    .location
-    .pathname
-    .includes(
-      "produto-vela"
-    )
-) {
 
-  const buttons =
-    document.querySelectorAll(
-      ".produto-fragrancia-btn"
+    const existingCoupon =
+      getCoupon();
+
+
+    if (existingCoupon) {
+
+      input.value =
+        existingCoupon.code;
+
+      message.textContent =
+        `${existingCoupon.code} APLICADO — 10% DE DESCONTO`;
+
+    }
+
+
+    form.addEventListener(
+      "submit",
+      event => {
+
+        event.preventDefault();
+
+
+        const code =
+          normalizeText(
+            input.value
+          );
+
+
+        if (!code) {
+
+          removeCoupon();
+
+          message.textContent =
+            "";
+
+          renderCartPage();
+
+          return;
+        }
+
+
+        if (
+          !VALID_COUPONS[code]
+        ) {
+
+          message.textContent =
+            "CUPOM INVÁLIDO.";
+
+          return;
+        }
+
+
+        saveCoupon(
+          code
+        );
+
+
+        input.value =
+          code;
+
+
+        message.textContent =
+          `${code} APLICADO — 10% DE DESCONTO`;
+
+
+        renderCartPage();
+
+      }
     );
-
-
-  const panels =
-    document.querySelectorAll(
-      ".fragrancia-detalhe"
-    );
-
-
-  const addButton =
-    document.querySelector(
-      ".produto-adicionar"
-    );
-
-
-  const image =
-    document.querySelector(
-      ".produto-detalhe-foto img"
-    );
-
-
-  let selectedFragrance =
-    "CHÁ FLORAL";
-
-
-  const activeButton =
-    document.querySelector(
-      ".produto-fragrancia-btn.active"
-    );
-
-
-  if (
-    activeButton
-  ) {
-
-    selectedFragrance =
-      activeButton.getAttribute(
-        "data-name"
-      ) ||
-      activeButton
-        .textContent
-        .trim();
 
   }
 
 
-  buttons.forEach(
-    (button) => {
+  /* =========================================================
+     FECHAR PEDIDO
+  ========================================================= */
 
-      button.addEventListener(
-        "click",
-        () => {
+  function goToCheckout() {
 
-          buttons.forEach(
-            (
-              currentButton
-            ) => {
+    const cart =
+      getCart();
 
-              currentButton
-                .classList
-                .remove(
+
+    if (!cart.length) {
+      return;
+    }
+
+
+    const shipping =
+      getSavedShipping();
+
+
+    if (
+      !shipping ||
+      !shipping.cep
+    ) {
+
+      const input =
+        document.getElementById(
+          "cartShippingCep"
+        );
+
+      const message =
+        document.getElementById(
+          "cartShippingMessage"
+        );
+
+
+      if (message) {
+
+        message.textContent =
+          "CALCULE O FRETE INFORMANDO SEU CEP ANTES DE CONTINUAR.";
+
+      }
+
+
+      if (input) {
+
+        input.focus();
+
+        input.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+      }
+
+      return;
+    }
+
+
+    window.location.href =
+      "checkout.html";
+
+  }
+
+
+  function initCheckoutButtons() {
+
+    [
+      document.getElementById(
+        "checkoutButtonDesktop"
+      ),
+
+      document.getElementById(
+        "checkoutButtonMobile"
+      )
+    ]
+      .filter(Boolean)
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          goToCheckout
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     LINKS DO CARRINHO
+  ========================================================= */
+
+  function initCartLinks() {
+
+    document
+      .querySelectorAll(
+        "#cartButton, .cart-link"
+      )
+      .forEach(element => {
+
+        element.addEventListener(
+          "click",
+          event => {
+
+            const href =
+              element.getAttribute(
+                "href"
+              );
+
+            if (
+              href ===
+              "carrinho.html"
+            ) {
+              return;
+            }
+
+            event.preventDefault();
+
+            window.location.href =
+              "carrinho.html";
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     LOJA — TAMANHOS
+  ========================================================= */
+
+  function initStoreSizeButtons() {
+
+    document
+      .querySelectorAll(
+        ".categoria-loja"
+      )
+      .forEach(() => {});
+
+
+    document
+      .querySelectorAll(
+        ".produto-card"
+      )
+      .forEach(card => {
+
+        const buttons =
+          card.querySelectorAll(
+            "[data-size]"
+          );
+
+
+        buttons.forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                const size =
+                  button.getAttribute(
+                    "data-size"
+                  );
+
+
+                if (!size) {
+                  return;
+                }
+
+
+                const image =
+                  card.getAttribute(
+                    "data-image-" +
+                    size
+                  );
+
+
+                const price =
+                  card.getAttribute(
+                    "data-price-" +
+                    size
+                  );
+
+
+                const cardImage =
+                  card.querySelector(
+                    "img"
+                  );
+
+
+                const priceElement =
+                  card.querySelector(
+                    ".produto-preco, .product-price, .preco"
+                  );
+
+
+                if (
+                  image &&
+                  cardImage
+                ) {
+
+                  cardImage.src =
+                    image;
+
+                }
+
+
+                if (
+                  price &&
+                  priceElement
+                ) {
+
+                  const numericPrice =
+                    parseMoney(
+                      price
+                    );
+
+
+                  priceElement.textContent =
+                    numericPrice
+                      ? formatBRL(
+                          numericPrice
+                        )
+                      : price;
+
+                }
+
+
+                card.setAttribute(
+                  "data-current-size",
+                  size
+                );
+
+
+                if (price) {
+
+                  card.setAttribute(
+                    "data-current-price",
+                    String(
+                      parseMoney(
+                        price
+                      )
+                    )
+                  );
+
+                }
+
+
+                buttons.forEach(
+                  other =>
+                    other.classList.remove(
+                      "active"
+                    )
+                );
+
+
+                button.classList.add(
                   "active"
                 );
 
+              }
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     LOJA — ADICIONAR AO CARRINHO
+  ========================================================= */
+
+  function initStoreAddButtons() {
+
+    document
+      .querySelectorAll(
+        ".adicionar-card-btn"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          event => {
+
+            event.preventDefault();
+
+
+            const card =
+              button.closest(
+                ".produto-card"
+              );
+
+
+            if (!card) {
+              return;
             }
+
+
+            const product =
+              card.getAttribute(
+                "data-product-type"
+              ) ||
+              card.getAttribute(
+                "data-product"
+              ) ||
+              card.querySelector(
+                "h3"
+              )?.textContent ||
+              "Produto OJOBOSCO";
+
+
+            const fragrance =
+              card.getAttribute(
+                "data-fragrance"
+              ) ||
+              "";
+
+
+            const size =
+              card.getAttribute(
+                "data-current-size"
+              ) ||
+              card.getAttribute(
+                "data-size"
+              ) ||
+              "";
+
+
+            const price =
+              parseMoney(
+                card.getAttribute(
+                  "data-current-price"
+                ) ||
+                card.getAttribute(
+                  "data-price"
+                ) ||
+                ""
+              );
+
+
+            const image =
+              card.querySelector(
+                "img"
+              )?.getAttribute(
+                "src"
+              ) ||
+              "";
+
+
+            if (!price) {
+              return;
+            }
+
+
+            addItemToCart({
+              name:
+                product,
+
+              fragrance,
+
+              size,
+
+              price,
+
+              image,
+
+              quantity: 1
+            });
+
+
+            const originalText =
+              button.textContent;
+
+
+            button.textContent =
+              "ADICIONADO";
+
+
+            setTimeout(
+              () => {
+
+                button.textContent =
+                  originalText;
+
+              },
+              1000
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     PÁGINAS DE PRODUTO
+  ========================================================= */
+
+  function initProductDetailAddButton() {
+
+    const button =
+      document.querySelector(
+        "#adicionarCarrinho, #addToCart, .produto-adicionar"
+      );
+
+
+    if (!button) {
+      return;
+    }
+
+
+    button.addEventListener(
+      "click",
+      event => {
+
+        event.preventDefault();
+
+
+        const productName =
+          document.querySelector(
+            ".produto-detalhe-nome, h1"
+          )?.textContent
+            ?.trim() ||
+          "Produto OJOBOSCO";
+
+
+        const fragrance =
+          document.querySelector(
+            "[data-selected-fragrance].active"
+          )?.getAttribute(
+            "data-selected-fragrance"
+          ) ||
+          document.querySelector(
+            ".fragrancia-opcao.active"
+          )?.textContent
+            ?.trim() ||
+          "";
+
+
+        const activeSizeButton =
+          document.querySelector(
+            "[data-size].active"
           );
 
 
-          button
-            .classList
-            .add(
+        const size =
+          activeSizeButton
+            ?.getAttribute(
+              "data-size"
+            ) ||
+          "";
+
+
+        let price =
+          parseMoney(
+            activeSizeButton
+              ?.getAttribute(
+                "data-price"
+              )
+          );
+
+
+        if (!price) {
+
+          price =
+            parseMoney(
+              document.querySelector(
+                ".produto-detalhe-preco, .produto-preco, .product-price"
+              )?.textContent
+            );
+
+        }
+
+
+        const image =
+          document.querySelector(
+            ".produto-detalhe-imagem img, main img"
+          )?.getAttribute(
+            "src"
+          ) ||
+          "";
+
+
+        if (!price) {
+          return;
+        }
+
+
+        addItemToCart({
+          name:
+            productName,
+
+          fragrance,
+
+          size,
+
+          price,
+
+          image,
+
+          quantity: 1
+        });
+
+
+        const originalText =
+          button.textContent;
+
+
+        button.textContent =
+          "ADICIONADO AO CARRINHO";
+
+
+        setTimeout(
+          () => {
+
+            button.textContent =
+              originalText;
+
+          },
+          1000
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     MENU
+  ========================================================= */
+
+  function initMenu() {
+
+    const button =
+      document.querySelector(
+        ".menu-button, #menuButton"
+      );
+
+    const menu =
+      document.querySelector(
+        ".menu-overlay, #menuOverlay"
+      );
+
+
+    if (
+      !button ||
+      !menu
+    ) {
+      return;
+    }
+
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        menu.classList.toggle(
+          "active"
+        );
+
+        document.body.classList.toggle(
+          "menu-open"
+        );
+
+      }
+    );
+
+
+    menu
+      .querySelectorAll(
+        "a"
+      )
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          () => {
+
+            menu.classList.remove(
               "active"
             );
 
-
-          selectedFragrance =
-            button.getAttribute(
-              "data-name"
-            ) ||
-            button
-              .textContent
-              .trim();
-
-
-          const slug =
-            button.getAttribute(
-              "data-fragrance"
+            document.body.classList.remove(
+              "menu-open"
             );
 
+          }
+        );
 
-          panels.forEach(
-            (panel) => {
+      });
 
-              panel
-                .classList
-                .toggle(
-                  "active",
-                  panel.getAttribute(
-                    "data-fragrance-panel"
-                  ) ===
-                  slug
-                );
+  }
 
-            }
-          );
 
-        }
+  /* =========================================================
+     NEWSLETTER
+  ========================================================= */
+
+  function initNewsletter() {
+
+    const forms =
+      document.querySelectorAll(
+        ".newsletter-form"
       );
 
+
+    forms.forEach(
+      form => {
+
+        form.addEventListener(
+          "submit",
+          event => {
+
+            if (
+              !form.getAttribute(
+                "action"
+              )
+            ) {
+
+              event.preventDefault();
+
+
+              const message =
+                form.querySelector(
+                  ".newsletter-message"
+                );
+
+
+              if (message) {
+
+                message.textContent =
+                  "OBRIGADA POR ENTRAR NO UNIVERSO OJOBOSCO.";
+
+              }
+
+            }
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     INICIALIZAÇÃO
+  ========================================================= */
+
+  function init() {
+
+    updateCartCount();
+
+    initCartLinks();
+
+    initMenu();
+
+    initNewsletter();
+
+    initStoreSizeButtons();
+
+    initStoreAddButtons();
+
+    initProductDetailAddButton();
+
+
+    if (isCartPage()) {
+
+      renderCartPage();
+
+      initCartShipping();
+
+      initCouponForm();
+
+      initCheckoutButtons();
+
     }
-  );
-
-
-  if (
-    addButton
-  ) {
-
-    addButton.addEventListener(
-      "click",
-      () => {
-
-        addItemToCart(
-          {
-            product:
-              "VELA",
-
-            fragrance:
-              selectedFragrance,
-
-            size:
-              "200 G",
-
-            price:
-              289,
-
-            image:
-              image
-                ? image.src
-                : ""
-          }
-        );
-
-
-        addButton
-          .textContent =
-          "ADICIONADO";
-
-
-        window.setTimeout(
-          () => {
-
-            addButton
-              .textContent =
-              "ADICIONAR AO CARRINHO";
-
-          },
-          1000
-        );
-
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================
-   BIBLIOTECA OLFATIVA
-========================================= */
-
-if (
-  window
-    .location
-    .pathname
-    .includes(
-      "produto-biblioteca"
-    )
-) {
-
-  const button =
-    document.querySelector(
-      ".produto-adicionar"
-    );
-
-
-  const image =
-    document.querySelector(
-      ".produto-detalhe-foto img"
-    );
-
-
-  if (
-    button
-  ) {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        addItemToCart(
-          {
-            product:
-              "BIBLIOTECA OLFATIVA",
-
-            fragrance:
-              "",
-
-            size:
-              "6 × 5 ML",
-
-            price:
-              239,
-
-            image:
-              image
-                ? image.src
-                : ""
-          }
-        );
-
-
-        button
-          .textContent =
-          "ADICIONADO";
-
-
-        window.setTimeout(
-          () => {
-
-            button
-              .textContent =
-              "ADICIONAR AO CARRINHO";
-
-          },
-          1000
-        );
-
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================
-   PERFUME
-   CEDRO SOLAR
-========================================= */
-
-if (
-  window
-    .location
-    .pathname
-    .includes(
-      "produto-perfume"
-    )
-) {
-
-  const button =
-    document.querySelector(
-      ".produto-adicionar"
-    );
-
-
-  const image =
-    document.querySelector(
-      ".produto-detalhe-foto img"
-    );
-
-
-  if (
-    button
-  ) {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        addItemToCart(
-          {
-            product:
-              "PERFUME",
-
-            fragrance:
-              "CEDRO SOLAR",
-
-            size:
-              "100 ML",
-
-            price:
-              429,
-
-            image:
-              image
-                ? image.src
-                : ""
-          }
-        );
-
-
-        button
-          .textContent =
-          "ADICIONADO";
-
-
-        window.setTimeout(
-          () => {
-
-            button
-              .textContent =
-              "ADICIONAR AO CARRINHO";
-
-          },
-          1000
-        );
-
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================
-   FECHAR PEDIDO
-========================================= */
-
-function handleCheckout() {
-
-  const cart =
-    getCart();
-
-
-  if (
-    cart.length ===
-    0
-  ) {
-
-    return;
-
-  }
-
-
-  const desktopButton =
-    document.getElementById(
-      "checkoutButtonDesktop"
-    );
-
-
-  const mobileButton =
-    document.getElementById(
-      "checkoutButtonMobile"
-    );
-
-
-  if (
-    desktopButton
-  ) {
-
-    desktopButton
-      .textContent =
-      "PAGAMENTO EM CONFIGURAÇÃO";
 
   }
 
 
   if (
-    mobileButton
+    document.readyState ===
+    "loading"
   ) {
 
-    mobileButton
-      .textContent =
-      "PAGAMENTO EM CONFIGURAÇÃO";
+    document.addEventListener(
+      "DOMContentLoaded",
+      init
+    );
+
+  } else {
+
+    init();
 
   }
 
-
-  /*
-    NA PRÓXIMA ETAPA
-    ESTE PONTO SERÁ SUBSTITUÍDO
-    PELA CHAMADA SEGURA AO
-    CLOUDFLARE WORKER / MERCADO PAGO.
-  */
-
-
-  window.setTimeout(
-    () => {
-
-      if (
-        desktopButton
-      ) {
-
-        desktopButton
-          .innerHTML =
-          `
-            <span class="cart-lock">
-              ♢
-            </span>
-            Fechar pedido
-          `;
-
-      }
-
-
-      if (
-        mobileButton
-      ) {
-
-        mobileButton
-          .innerHTML =
-          `
-            <span class="cart-lock">
-              ♢
-            </span>
-            Fechar pedido
-          `;
-
-      }
-
-    },
-    1500
-  );
-
-}
-
-
-const checkoutButtonDesktop =
-  document.getElementById(
-    "checkoutButtonDesktop"
-  );
-
-
-const checkoutButtonMobile =
-  document.getElementById(
-    "checkoutButtonMobile"
-  );
-
-
-if (
-  checkoutButtonDesktop
-) {
-
-  checkoutButtonDesktop
-    .addEventListener(
-      "click",
-      handleCheckout
-    );
-
-}
-
-
-if (
-  checkoutButtonMobile
-) {
-
-  checkoutButtonMobile
-    .addEventListener(
-      "click",
-      handleCheckout
-    );
-
-}
-
-
-/* =========================================
-   INICIALIZAÇÃO
-========================================= */
-
-updateCartCount();
-
-bindCartHeaderLinks();
-
-renderCartPage();
+})();
