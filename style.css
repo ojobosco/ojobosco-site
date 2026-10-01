@@ -32,9 +32,7 @@ html {
 body {
   background: var(--preto);
   color: var(--off-white);
-
   font-family: var(--fonte);
-
   overflow-x: hidden;
 }
 
@@ -63,19 +61,13 @@ img {
 
 .sr-only {
   position: absolute;
-
   width: 1px;
   height: 1px;
-
   padding: 0;
   margin: -1px;
-
   overflow: hidden;
-
   clip: rect(0, 0, 0, 0);
-
   white-space: nowrap;
-
   border: 0;
 }
 
@@ -86,7 +78,6 @@ img {
 
 .announcement-bar {
   position: fixed;
-
   top: 0;
   left: 0;
 
@@ -97,22 +88,17 @@ img {
   color: #000;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  padding:
-    0
-    14px;
+  padding: 0 14px;
 
   z-index: 1200;
 
   font-size: 9px;
-
   letter-spacing: 0.18em;
 
   text-transform: uppercase;
-
   text-align: center;
 }
 
@@ -130,9 +116,7 @@ img {
   width: 100%;
   height: 72px;
 
-  padding:
-    0
-    22px;
+  padding: 0 22px;
 
   display: grid;
 
@@ -145,11 +129,9 @@ img {
 
   z-index: 1100;
 
-  background:
-    rgba(0, 0, 0, 0.94);
+  background: rgba(0, 0, 0, 0.94);
 
-  backdrop-filter:
-    blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 
@@ -157,7 +139,6 @@ img {
   justify-self: start;
 
   border: 0;
-
   background: transparent;
 
   cursor: pointer;
@@ -219,24 +200,17 @@ img {
 
   z-index: 1500;
 
-  transform:
-    translateY(-105%);
+  transform: translateY(-105%);
 
   transition:
     transform
     0.55s
-    cubic-bezier(
-      0.77,
-      0,
-      0.18,
-      1
-    );
+    cubic-bezier(0.77, 0, 0.18, 1);
 }
 
 
 .side-menu.open {
-  transform:
-    translateY(0);
+  transform: translateY(0);
 }
 
 
@@ -285,11 +259,7 @@ img {
     var(--linha);
 
   font-size:
-    clamp(
-      38px,
-      6vw,
-      90px
-    );
+    clamp(38px, 6vw, 90px);
 
   line-height: 1;
 
@@ -321,9 +291,7 @@ img {
   width: 100%;
 
   height:
-    calc(
-      100vh - 106px
-    );
+    calc(100vh - 106px);
 
   min-height: 620px;
 
@@ -341,8 +309,7 @@ img {
 
   object-position: center;
 
-  filter:
-    brightness(0.82);
+  filter: brightness(0.82);
 }
 
 
@@ -355,9 +322,7 @@ img {
 
   align-items: center;
 
-  padding:
-    0
-    4vw;
+  padding: 0 4vw;
 
   pointer-events: none;
 }
@@ -367,11 +332,7 @@ img {
   max-width: 760px;
 
   font-size:
-    clamp(
-      38px,
-      5.2vw,
-      76px
-    );
+    clamp(38px, 5.2vw, 76px);
 
   line-height: 0.96;
 
@@ -382,7 +343,7 @@ img {
 
 
 /* =========================================
-   PRODUTOS HOME
+   HOME PRODUTOS
 ========================================= */
 
 .collection {
@@ -474,9 +435,7 @@ img {
   width: 100%;
 
   height:
-    calc(
-      100vh - 106px
-    );
+    calc(100vh - 106px);
 
   min-height: 620px;
 
@@ -494,8 +453,7 @@ img {
 
   object-position: center;
 
-  filter:
-    brightness(0.76);
+  filter: brightness(0.76);
 }
 
 
@@ -508,9 +466,7 @@ img {
 
   align-items: center;
 
-  padding:
-    0
-    4vw;
+  padding: 0 4vw;
 }
 
 
@@ -518,11 +474,7 @@ img {
   max-width: 760px;
 
   font-size:
-    clamp(
-      38px,
-      5.2vw,
-      76px
-    );
+    clamp(38px, 5.2vw, 76px);
 
   line-height: 0.96;
 
@@ -566,11 +518,7 @@ img {
 
 .newsletter-heading h2 {
   font-size:
-    clamp(
-      34px,
-      4.5vw,
-      68px
-    );
+    clamp(34px, 4.5vw, 68px);
 
   line-height: 0.94;
 
@@ -674,9 +622,7 @@ img {
 .historia-intro {
   max-width: 900px;
 
-  margin:
-    0
-    auto;
+  margin: 0 auto;
 
   padding:
     85px
@@ -689,11 +635,7 @@ img {
 
 .historia-texto-padronizado {
   font-size:
-    clamp(
-      14px,
-      1.2vw,
-      18px
-    );
+    clamp(14px, 1.2vw, 18px);
 
   line-height: 2;
 
@@ -728,10 +670,7 @@ img {
 
 .historia-retrato-frame {
   width:
-    min(
-      430px,
-      88vw
-    );
+    min(430px, 88vw);
 
   aspect-ratio:
     3 / 4;
@@ -770,9 +709,7 @@ img {
 .historia-texto-unico {
   max-width: 850px;
 
-  margin:
-    0
-    auto;
+  margin: 0 auto;
 
   padding:
     20px
@@ -787,11 +724,7 @@ img {
   margin-bottom: 42px;
 
   font-size:
-    clamp(
-      14px,
-      1.2vw,
-      18px
-    );
+    clamp(14px, 1.2vw, 18px);
 
   line-height: 2;
 
@@ -812,11 +745,7 @@ img {
   margin: 0;
 
   font-size:
-    clamp(
-      14px,
-      1.2vw,
-      18px
-    );
+    clamp(14px, 1.2vw, 18px);
 
   line-height: 2;
 
@@ -842,8 +771,6 @@ img {
 }
 
 
-/* ABERTURA */
-
 .objetos-abertura {
   padding:
     105px
@@ -857,11 +784,7 @@ img {
   max-width: 900px;
 
   font-size:
-    clamp(
-      34px,
-      4.5vw,
-      68px
-    );
+    clamp(34px, 4.5vw, 68px);
 
   line-height: 0.94;
 
@@ -870,8 +793,6 @@ img {
   font-weight: 400;
 }
 
-
-/* CATEGORIAS */
 
 .categoria-loja {
   padding:
@@ -908,11 +829,7 @@ img {
 
 .categoria-titulo h2 {
   font-size:
-    clamp(
-      26px,
-      3.2vw,
-      48px
-    );
+    clamp(26px, 3.2vw, 48px);
 
   line-height: 1;
 
@@ -929,11 +846,7 @@ img {
   color: var(--cinza);
 
   font-size:
-    clamp(
-      10px,
-      1vw,
-      13px
-    );
+    clamp(10px, 1vw, 13px);
 
   line-height: 1.9;
 
@@ -944,7 +857,7 @@ img {
 
 
 /* =========================================
-   CARROSSEL PRODUTOS
+   PRODUTOS DA LOJA
 ========================================= */
 
 .produtos-rail {
@@ -975,11 +888,7 @@ img {
   flex:
     0
     0
-    clamp(
-      260px,
-      27vw,
-      410px
-    );
+    clamp(260px, 27vw, 410px);
 
   scroll-snap-align: start;
 }
@@ -1045,7 +954,7 @@ img {
 
 
 /* =========================================
-   VARIAÇÕES
+   TAMANHOS
 ========================================= */
 
 .variacoes {
@@ -1089,12 +998,71 @@ img {
 
   color: #000;
 
-  border-color: var(--off-white);
+  border-color:
+    var(--off-white);
 }
 
 
 /* =========================================
-   VELA NA LOJA
+   BOTÃO ADICIONAR NA LOJA
+========================================= */
+
+.adicionar-card-btn {
+  width: 100%;
+
+  margin-top: 18px;
+
+  padding:
+    13px
+    10px;
+
+  border:
+    1px solid
+    rgba(238, 232, 223, 0.55);
+
+  background: transparent;
+
+  color: var(--off-white);
+
+  cursor: pointer;
+
+  font-size: 8px;
+
+  line-height: 1;
+
+  letter-spacing: 0.15em;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.adicionar-card-btn:hover {
+  background:
+    var(--off-white);
+
+  color: #000;
+
+  border-color:
+    var(--off-white);
+}
+
+
+.adicionar-card-btn.adicionado {
+  background:
+    var(--off-white);
+
+  color: #000;
+
+  border-color:
+    var(--off-white);
+}
+
+
+/* =========================================
+   VELA
 ========================================= */
 
 .vela-rail {
@@ -1106,11 +1074,7 @@ img {
   flex:
     0
     0
-    clamp(
-      280px,
-      35vw,
-      480px
-    );
+    clamp(280px, 35vw, 480px);
 }
 
 
@@ -1149,11 +1113,13 @@ img {
 
 
 .fragrancia-loja-btn.active {
-  background: var(--off-white);
+  background:
+    var(--off-white);
 
   color: #000;
 
-  border-color: var(--off-white);
+  border-color:
+    var(--off-white);
 }
 
 
@@ -1168,9 +1134,7 @@ img {
 
 .produto-detalhe-topo {
   min-height:
-    calc(
-      100vh - 106px
-    );
+    calc(100vh - 106px);
 
   display: grid;
 
@@ -1225,11 +1189,7 @@ img {
   margin-bottom: 16px;
 
   font-size:
-    clamp(
-      42px,
-      6vw,
-      82px
-    );
+    clamp(42px, 6vw, 82px);
 
   line-height: 0.95;
 
@@ -1320,11 +1280,13 @@ img {
 
 .produto-fragrancia-btn.active,
 .produto-tamanho-btn.active {
-  background: var(--off-white);
+  background:
+    var(--off-white);
 
   color: #000;
 
-  border-color: var(--off-white);
+  border-color:
+    var(--off-white);
 }
 
 
@@ -1352,7 +1314,7 @@ img {
 
 
 /* =========================================
-   DESCRIÇÃO PRODUTO
+   DESCRIÇÕES
 ========================================= */
 
 .produto-texto-section {
@@ -1375,7 +1337,8 @@ img {
 
 
 .produto-texto-label {
-  color: var(--cinza);
+  color:
+    var(--cinza);
 
   font-size: 8px;
 
@@ -1392,19 +1355,13 @@ img {
   margin-bottom: 28px;
 
   font-size:
-    clamp(
-      12px,
-      1.2vw,
-      16px
-    );
+    clamp(12px, 1.2vw, 16px);
 
   line-height: 2;
 
   letter-spacing: 0.04em;
 }
 
-
-/* BIBLIOTECA */
 
 .produto-lista-fragrancias {
   margin: 0;
@@ -1417,11 +1374,7 @@ img {
   margin-bottom: 16px;
 
   font-size:
-    clamp(
-      12px,
-      1.2vw,
-      16px
-    );
+    clamp(12px, 1.2vw, 16px);
 
   line-height: 1.8;
 
@@ -1455,11 +1408,7 @@ img {
   margin-bottom: 40px;
 
   font-size:
-    clamp(
-      32px,
-      4.2vw,
-      62px
-    );
+    clamp(32px, 4.2vw, 62px);
 
   line-height: 1;
 
@@ -1473,11 +1422,7 @@ img {
   margin-bottom: 65px;
 
   font-size:
-    clamp(
-      12px,
-      1.2vw,
-      16px
-    );
+    clamp(12px, 1.2vw, 16px);
 
   line-height: 2;
 
@@ -1563,11 +1508,7 @@ img {
   margin-bottom: 28px;
 
   font-size:
-    clamp(
-      12px,
-      1.2vw,
-      16px
-    );
+    clamp(12px, 1.2vw, 16px);
 
   line-height: 2;
 
@@ -1615,7 +1556,8 @@ img {
 .footer-title {
   margin-bottom: 10px;
 
-  color: var(--cinza);
+  color:
+    var(--cinza);
 
   font-size: 8px;
 
@@ -1643,7 +1585,8 @@ img {
 
   justify-content: space-between;
 
-  color: var(--cinza);
+  color:
+    var(--cinza);
 
   font-size: 8px;
 
@@ -1733,7 +1676,9 @@ img {
       0
       10px;
 
-    font-size: 8px;
+    font-size: 9px;
+
+    letter-spacing: 0.17em;
   }
 
 
@@ -1749,13 +1694,17 @@ img {
 
 
   .brand-top {
-    font-size: 10px;
+    font-size: 11px;
+
+    letter-spacing: 0.28em;
   }
 
 
   .menu-toggle,
   .cart-link {
-    font-size: 7px;
+    font-size: 8px;
+
+    letter-spacing: 0.22em;
   }
 
 
@@ -1791,14 +1740,10 @@ img {
 
 
   .hero-overlay h1 {
-    max-width: 74%;
+    max-width: 78%;
 
     font-size:
-      clamp(
-        24px,
-        7.2vw,
-        36px
-      );
+      clamp(26px, 7.8vw, 38px);
   }
 
 
@@ -1813,10 +1758,7 @@ img {
     grid-template-columns:
       repeat(
         2,
-        minmax(
-          0,
-          1fr
-        )
+        minmax(0, 1fr)
       );
 
     gap:
@@ -1833,7 +1775,7 @@ img {
 
   .product-info {
     padding:
-      10px
+      11px
       2px
       0;
 
@@ -1842,16 +1784,22 @@ img {
 
 
   .product-info h2 {
-    font-size: 8px;
+    margin-bottom: 7px;
 
-    letter-spacing: 0.14em;
+    font-size: 9px;
+
+    line-height: 1.5;
+
+    letter-spacing: 0.12em;
   }
 
 
   .product-price {
-    font-size: 7.5px;
+    font-size: 8.5px;
 
-    letter-spacing: 0.10em;
+    line-height: 1.5;
+
+    letter-spacing: 0.09em;
   }
 
 
@@ -1882,14 +1830,10 @@ img {
 
 
   .manifesto-overlay h2 {
-    max-width: 74%;
+    max-width: 78%;
 
     font-size:
-      clamp(
-        24px,
-        7.2vw,
-        36px
-      );
+      clamp(26px, 7.8vw, 38px);
   }
 
 
@@ -1914,21 +1858,26 @@ img {
 
   .newsletter-heading h2 {
     font-size:
-      clamp(
-        27px,
-        8vw,
-        38px
-      );
+      clamp(29px, 8.5vw, 40px);
   }
 
 
   .newsletter-description {
+    font-size: 11px;
+
     text-align: center;
   }
 
 
   .newsletter-field input {
+    font-size: 10px;
+
     text-align: center;
+  }
+
+
+  .newsletter-field button {
+    font-size: 9px;
   }
 
 
@@ -1948,7 +1897,7 @@ img {
 
 
   .historia-texto-padronizado {
-    font-size: 12px;
+    font-size: 13px;
 
     line-height: 1.9;
   }
@@ -1972,7 +1921,7 @@ img {
 
 
   .historia-legenda {
-    font-size: 7px;
+    font-size: 8px;
   }
 
 
@@ -1986,7 +1935,7 @@ img {
 
   .historia-texto-unico > p,
   .historia-final p {
-    font-size: 12px;
+    font-size: 13px;
 
     line-height: 1.9;
   }
@@ -2010,11 +1959,9 @@ img {
   .objetos-abertura h1,
   .objetos-abertura h2 {
     font-size:
-      clamp(
-        27px,
-        8vw,
-        38px
-      );
+      clamp(29px, 8.5vw, 40px);
+
+    line-height: 1;
   }
 
 
@@ -2033,29 +1980,27 @@ img {
       0
       16px;
 
-    margin-bottom: 32px;
+    margin-bottom: 34px;
 
     grid-template-columns:
       1fr;
 
-    gap: 18px;
+    gap: 20px;
   }
 
 
   .categoria-titulo h2 {
     font-size:
-      clamp(
-        23px,
-        6.5vw,
-        31px
-      );
+      clamp(25px, 7vw, 34px);
   }
 
 
   .categoria-descricao p {
-    font-size: 9px;
+    font-size: 10.5px;
 
-    line-height: 1.8;
+    line-height: 1.85;
+
+    letter-spacing: 0.08em;
   }
 
 
@@ -2078,30 +2023,58 @@ img {
 
 
   .produto-loja-card h3 {
-    margin-top: 11px;
+    margin-top: 13px;
 
-    font-size: 8px;
+    margin-bottom: 8px;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    letter-spacing: 0.15em;
   }
 
 
-  .produto-loja-preco {
-    font-size: 7.5px;
+  .produto-loja-preco,
+  .produto-medida {
+    font-size: 9px;
+
+    line-height: 1.6;
+
+    letter-spacing: 0.12em;
   }
 
 
   .variacoes {
-    margin-top: 12px;
+    margin-top: 14px;
+
+    gap: 8px;
   }
 
 
   .variacao-btn {
-    min-width: 54px;
+    min-width: 70px;
 
     padding:
-      8px
+      11px
+      13px;
+
+    font-size: 8.5px;
+
+    letter-spacing: 0.09em;
+  }
+
+
+  .adicionar-card-btn {
+    margin-top: 18px;
+
+    padding:
+      14px
       10px;
 
-    font-size: 7px;
+    font-size: 8.5px;
+
+    letter-spacing: 0.13em;
   }
 
 
@@ -2113,7 +2086,25 @@ img {
   }
 
 
-  /* PRODUTO */
+  .fragrancias-loja {
+    gap: 8px;
+
+    margin-top: 17px;
+  }
+
+
+  .fragrancia-loja-btn {
+    padding:
+      10px
+      11px;
+
+    font-size: 8px;
+
+    line-height: 1.2;
+  }
+
+
+  /* PRODUTO DETALHE */
 
   .produto-detalhe-page {
     padding-top: 92px;
@@ -2141,23 +2132,57 @@ img {
   }
 
 
+  .produto-detalhe-tipo {
+    font-size: 9px;
+  }
+
+
   .produto-detalhe-info h1 {
     font-size:
-      clamp(
-        38px,
-        12vw,
-        58px
-      );
+      clamp(40px, 12vw, 60px);
+  }
+
+
+  .produto-fragrancia-nome {
+    font-size: 12px;
+
+    line-height: 1.6;
+  }
+
+
+  .produto-detalhe-preco {
+    font-size: 13px;
+  }
+
+
+  .produto-detalhe-medida {
+    font-size: 10px;
+  }
+
+
+  .produto-detalhe-label {
+    font-size: 9px;
   }
 
 
   .produto-fragrancia-btn,
   .produto-tamanho-btn {
     padding:
-      10px
-      11px;
+      11px
+      12px;
 
-    font-size: 7px;
+    font-size: 8.5px;
+
+    line-height: 1.25;
+  }
+
+
+  .produto-adicionar {
+    padding:
+      17px
+      12px;
+
+    font-size: 9.5px;
   }
 
 
@@ -2179,18 +2204,49 @@ img {
   }
 
 
+  .produto-texto-label,
+  .produto-cuidados h2 {
+    font-size: 9px;
+  }
+
+
+  .produto-texto-corpo p,
+  .produto-cuidados-texto p {
+    font-size: 13px;
+
+    line-height: 1.9;
+  }
+
+
   .fragrancia-detalhe h2 {
     font-size:
-      clamp(
-        28px,
-        9vw,
-        40px
-      );
+      clamp(30px, 9.5vw, 42px);
+  }
+
+
+  .fragrancia-descricao {
+    font-size: 13px;
+
+    line-height: 1.9;
+  }
+
+
+  .piramide h3 {
+    font-size: 10px;
+  }
+
+
+  .piramide p {
+    font-size: 11px;
+
+    line-height: 1.85;
   }
 
 
   .produto-lista-fragrancias li {
-    font-size: 12px;
+    font-size: 13px;
+
+    line-height: 1.9;
   }
 
 
@@ -2219,12 +2275,24 @@ img {
   }
 
 
+  .footer-title {
+    font-size: 9px;
+  }
+
+
+  .footer-columns a {
+    font-size: 10px;
+  }
+
+
   .footer-bottom {
     flex-direction: column;
 
     align-items: center;
 
     gap: 10px;
+
+    font-size: 9px;
   }
 
 
