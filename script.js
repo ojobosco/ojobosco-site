@@ -28,6 +28,11 @@ const newsletterSuccess =
     "newsletterSuccess"
   );
 
+const cartCount =
+  document.getElementById(
+    "cartCount"
+  );
+
 
 /* =========================================
    MENU
@@ -128,11 +133,13 @@ if (
 
       event.preventDefault();
 
+
       const email =
         newsletterEmail
           .value
           .trim()
           .toLowerCase();
+
 
       if (!email) {
         return;
@@ -161,8 +168,201 @@ if (
 
 
 /* =========================================
-   VARIAÇÕES NA LOJA
-   TROCA IMAGEM + PREÇO
+   CARRINHO
+========================================= */
+
+function getCart() {
+
+  try {
+
+    const savedCart =
+      localStorage.getItem(
+        "ojobosco-cart"
+      );
+
+
+    if (!savedCart) {
+      return [];
+    }
+
+
+    const parsedCart =
+      JSON.parse(
+        savedCart
+      );
+
+
+    if (
+      !Array.isArray(
+        parsedCart
+      )
+    ) {
+
+      return [];
+
+    }
+
+
+    return parsedCart;
+
+  } catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+function saveCart(cart) {
+
+  localStorage.setItem(
+    "ojobosco-cart",
+    JSON.stringify(
+      cart
+    )
+  );
+
+
+  updateCartCount();
+
+}
+
+
+function getCartQuantity() {
+
+  const cart =
+    getCart();
+
+
+  return cart.reduce(
+    (total, item) => {
+
+      const quantity =
+        Number(
+          item.quantity
+        ) || 0;
+
+
+      return total +
+        quantity;
+
+    },
+    0
+  );
+
+}
+
+
+function updateCartCount() {
+
+  if (!cartCount) {
+    return;
+  }
+
+
+  cartCount.textContent =
+    String(
+      getCartQuantity()
+    );
+
+}
+
+
+function createCartItemKey(
+  productType,
+  fragrance,
+  size
+) {
+
+  return [
+    productType || "",
+    fragrance || "",
+    size || ""
+  ]
+    .join("|")
+    .toLowerCase();
+
+}
+
+
+function addItemToCart(
+  productType,
+  fragrance,
+  size,
+  price
+) {
+
+  const cart =
+    getCart();
+
+
+  const itemKey =
+    createCartItemKey(
+      productType,
+      fragrance,
+      size
+    );
+
+
+  const existingItem =
+    cart.find(
+      (item) =>
+        item.key ===
+        itemKey
+    );
+
+
+  if (existingItem) {
+
+    existingItem.quantity =
+      Number(
+        existingItem.quantity
+      ) + 1;
+
+  } else {
+
+    cart.push(
+      {
+        key:
+          itemKey,
+
+        product:
+          productType,
+
+        fragrance:
+          fragrance,
+
+        size:
+          size,
+
+        price:
+          Number(
+            price
+          ),
+
+        quantity:
+          1
+      }
+    );
+
+  }
+
+
+  saveCart(
+    cart
+  );
+
+}
+
+
+/* CONTADOR AO ABRIR O SITE */
+
+updateCartCount();
+
+
+/* =========================================
+   VARIAÇÕES DOS PRODUTOS NA LOJA
 ========================================= */
 
 document
@@ -211,28 +411,34 @@ document
               buttons.forEach(
                 (item) => {
 
-                  item.classList.remove(
-                    "active"
-                  );
+                  item
+                    .classList
+                    .remove(
+                      "active"
+                    );
 
                 }
               );
 
 
-              button.classList.add(
-                "active"
-              );
+              button
+                .classList
+                .add(
+                  "active"
+                );
 
 
               const newImage =
                 card.getAttribute(
-                  "data-image-" + size
+                  "data-image-" +
+                  size
                 );
 
 
               const newPrice =
                 card.getAttribute(
-                  "data-price-" + size
+                  "data-price-" +
+                  size
                 );
 
 
@@ -258,6 +464,22 @@ document
 
               }
 
+
+              card.setAttribute(
+                "data-current-size",
+                size + " ML"
+              );
+
+
+              if (newPrice) {
+
+                card.setAttribute(
+                  "data-current-price",
+                  newPrice
+                );
+
+              }
+
             }
           );
 
@@ -269,7 +491,7 @@ document
 
 
 /* =========================================
-   FRAGRÂNCIAS DA VELA NA LOJA
+   FRAGRÂNCIA DA VELA NA LOJA
 ========================================= */
 
 document
@@ -285,6 +507,12 @@ document
         );
 
 
+      const card =
+        container.closest(
+          ".produto-loja-card"
+        );
+
+
       buttons.forEach(
         (button) => {
 
@@ -295,17 +523,40 @@ document
               buttons.forEach(
                 (item) => {
 
-                  item.classList.remove(
-                    "active"
-                  );
+                  item
+                    .classList
+                    .remove(
+                      "active"
+                    );
 
                 }
               );
 
 
-              button.classList.add(
-                "active"
-              );
+              button
+                .classList
+                .add(
+                  "active"
+                );
+
+
+              const fragrance =
+                button.getAttribute(
+                  "data-fragrance"
+                );
+
+
+              if (
+                card &&
+                fragrance
+              ) {
+
+                card.setAttribute(
+                  "data-fragrance",
+                  fragrance
+                );
+
+              }
 
             }
           );
@@ -318,7 +569,115 @@ document
 
 
 /* =========================================
-   PÁGINAS AROMATIZADOR / DIFUSOR
+   ADICIONAR AO CARRINHO NA LOJA
+========================================= */
+
+document
+  .querySelectorAll(
+    ".adicionar-card-btn"
+  )
+  .forEach(
+    (button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const card =
+            button.closest(
+              ".produto-loja-card"
+            );
+
+
+          if (!card) {
+            return;
+          }
+
+
+          const productType =
+            card.getAttribute(
+              "data-product-type"
+            ) || "";
+
+
+          const fragrance =
+            card.getAttribute(
+              "data-fragrance"
+            ) || "";
+
+
+          const size =
+            card.getAttribute(
+              "data-current-size"
+            ) || "";
+
+
+          const price =
+            card.getAttribute(
+              "data-current-price"
+            );
+
+
+          if (
+            !productType ||
+            !price
+          ) {
+
+            return;
+
+          }
+
+
+          addItemToCart(
+            productType,
+            fragrance,
+            size,
+            price
+          );
+
+
+          const originalText =
+            "ADICIONAR AO CARRINHO";
+
+
+          button.textContent =
+            "ADICIONADO";
+
+
+          button
+            .classList
+            .add(
+              "adicionado"
+            );
+
+
+          window.setTimeout(
+            () => {
+
+              button.textContent =
+                originalText;
+
+
+              button
+                .classList
+                .remove(
+                  "adicionado"
+                );
+
+            },
+            1100
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================
+   AROMATIZADOR / DIFUSOR
+   PÁGINAS INDIVIDUAIS
 ========================================= */
 
 const detailPage =
@@ -422,7 +781,8 @@ if (detailPage) {
         const isActive =
           button.getAttribute(
             "data-fragrance"
-          ) === currentFragrance;
+          ) ===
+          currentFragrance;
 
 
         button.classList.toggle(
@@ -454,7 +814,8 @@ if (detailPage) {
           "active",
           button.getAttribute(
             "data-size"
-          ) === currentSize
+          ) ===
+          currentSize
         );
 
       }
@@ -468,7 +829,8 @@ if (detailPage) {
           "active",
           panel.getAttribute(
             "data-fragrance-panel"
-          ) === currentFragrance
+          ) ===
+          currentFragrance
         );
 
       }
@@ -491,22 +853,22 @@ if (detailPage) {
     }
 
 
-    if (
-      detailPrice
-    ) {
+    if (detailPrice) {
 
-      const price =
+      const selectedPrice =
         detailPage.getAttribute(
           "data-price-" +
           currentSize
         );
 
 
-      if (price) {
+      if (
+        selectedPrice
+      ) {
 
         detailPrice.textContent =
           "R$" +
-          price;
+          selectedPrice;
 
       }
 
@@ -598,17 +960,21 @@ if (!detailPage) {
           fragranceButtons.forEach(
             (item) => {
 
-              item.classList.remove(
-                "active"
-              );
+              item
+                .classList
+                .remove(
+                  "active"
+                );
 
             }
           );
 
 
-          button.classList.add(
-            "active"
-          );
+          button
+            .classList
+            .add(
+              "active"
+            );
 
 
           fragrancePanels.forEach(
@@ -618,7 +984,8 @@ if (!detailPage) {
                 "active",
                 panel.getAttribute(
                   "data-fragrance-panel"
-                ) === fragrance
+                ) ===
+                fragrance
               );
 
             }
