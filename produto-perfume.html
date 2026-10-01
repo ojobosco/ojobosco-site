@@ -27,10 +27,18 @@
 <body>
 
 
+  <!-- =====================================
+       FAIXA SUPERIOR
+  ====================================== -->
+
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
+
+  <!-- =====================================
+       HEADER
+  ====================================== -->
 
   <header class="topbar">
 
@@ -89,6 +97,10 @@
   </header>
 
 
+  <!-- =====================================
+       MENU
+  ====================================== -->
+
   <nav
     class="side-menu"
     id="sideMenu"
@@ -126,15 +138,17 @@
   </nav>
 
 
+  <!-- =====================================
+       PRODUTO
+  ====================================== -->
+
   <main class="produto-detalhe-page">
 
 
-    <!-- =====================================
-         PRODUTO
-    ====================================== -->
-
     <section class="produto-detalhe-topo">
 
+
+      <!-- FOTO -->
 
       <div class="produto-detalhe-foto">
 
@@ -146,22 +160,22 @@
       </div>
 
 
+      <!-- INFORMAÇÕES -->
+
       <div class="produto-detalhe-info">
 
         <p class="produto-detalhe-tipo">
-          PERFUME
+          OJOBOSCO
         </p>
 
 
         <h1>
-          CEDRO
-          <br>
-          SOLAR
+          PERFUME
         </h1>
 
 
         <p class="produto-fragrancia-nome">
-          EAU DE PARFUM
+          CEDRO SOLAR
         </p>
 
 
@@ -192,70 +206,71 @@
 
 
     <!-- =====================================
-         DESCRIÇÃO
+         CEDRO SOLAR
+         MESMO FORMATO DAS OUTRAS FRAGRÂNCIAS
     ====================================== -->
 
-    <section class="produto-texto-section">
+    <section
+      class="fragrancia-detalhe active"
+      data-fragrance-panel="cedro-solar"
+    >
 
-      <p class="produto-texto-label">
-        SOBRE A FRAGRÂNCIA
+      <h2>
+        CEDRO SOLAR
+      </h2>
+
+
+      <p class="fragrancia-descricao">
+
+        Uma fragrância amadeirada cítrica, que desperta
+        a sensação de janelas abertas e dias ensolarados.
+        A toranja abre a composição com uma presença
+        vibrante e levemente amarga, enquanto o jasmim
+        revela uma delicadeza floral transparente.
+        O cedro traz estrutura e uma textura seca e
+        envolvente, evocando a madeira aquecida pela luz.
+
       </p>
 
 
-      <div class="produto-texto-corpo">
+      <div class="piramide">
+
+        <h3>
+          PIRÂMIDE OLFATIVA
+        </h3>
+
 
         <p>
-          Uma fragrância amadeirada cítrica, que desperta
-          a sensação de janelas abertas e dias ensolarados.
-          A toranja abre a composição com uma presença
-          vibrante e levemente amarga, enquanto o jasmim
-          revela uma delicadeza floral transparente.
-          O cedro traz estrutura e uma textura seca e
-          envolvente, evocando a madeira aquecida pela luz.
+
+          <strong>
+            NOTAS DE SAÍDA:
+          </strong>
+
+          TORANJA, BERGAMOTA, MADARINA
+
         </p>
 
-      </div>
 
-    </section>
+        <p>
 
+          <strong>
+            NOTAS DE CORPO:
+          </strong>
 
-    <!-- =====================================
-         PIRÂMIDE OLFATIVA
-    ====================================== -->
+          JASMIN, FLOR DE LARANJEIRA, VETIVER
 
-    <section class="produto-texto-section">
-
-      <p class="produto-texto-label">
-        PIRÂMIDE OLFATIVA
-      </p>
+        </p>
 
 
-      <div class="produto-texto-corpo">
+        <p>
 
-        <div class="piramide piramide-perfume">
+          <strong>
+            NOTAS DE FUNDO:
+          </strong>
 
-          <p>
-            <strong>
-              NOTAS DE SAÍDA:
-            </strong>
-            Toranja, Bergamota, Madarina
-          </p>
+          CEDRO, SÂNDALO, ALMÍSCAR
 
-          <p>
-            <strong>
-              NOTAS DE CORPO:
-            </strong>
-            Jasmin, Flor de Laranjeira, Vetiver
-          </p>
-
-          <p>
-            <strong>
-              NOTAS DE FUNDO:
-            </strong>
-            Cedro, Sândalo, Almíscar
-          </p>
-
-        </div>
+        </p>
 
       </div>
 
@@ -265,12 +280,17 @@
   </main>
 
 
+  <!-- =====================================
+       FOOTER
+  ====================================== -->
+
   <footer
     class="footer"
     id="contato"
   >
 
     <div class="footer-columns">
+
 
       <div>
 
@@ -346,6 +366,7 @@
 
       </div>
 
+
     </div>
 
 
@@ -365,6 +386,7 @@
 
 
   <script src="script.js"></script>
+
 
 </body>
 
