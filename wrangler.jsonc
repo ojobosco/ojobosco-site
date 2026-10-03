@@ -1,20 +1,11 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-
   "name": "ojobosco-site",
-
   "main": "src/index.js",
-
   "compatibility_date": "2026-10-02",
 
   "vars": {
     "MERCADO_PAGO_PUBLIC_KEY": "APP_USR-5682aac0-d4c8-4e99-81db-e25314fca870"
-  },
-
-  "secrets": {
-    "required": [
-      "MERCADO_PAGO_ACCESS_TOKEN"
-    ]
   },
 
   "assets": {
