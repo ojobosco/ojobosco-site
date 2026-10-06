@@ -56,6 +56,7 @@
     });
   }
 
+
   /* =========================================================
      CONSTANTES
   ========================================================= */
@@ -78,6 +79,7 @@
     }
   };
 
+
   /* =========================================================
      HELPERS
   ========================================================= */
@@ -91,9 +93,11 @@
       .toUpperCase();
   }
 
+
   function onlyNumbers(value) {
     return String(value || "").replace(/\D/g, "");
   }
+
 
   function formatCEP(value) {
     const numbers = onlyNumbers(value).slice(0, 8);
@@ -104,6 +108,7 @@
 
     return numbers.slice(0, 5) + "-" + numbers.slice(5);
   }
+
 
   function parseMoney(value) {
     if (typeof value === "number") {
@@ -129,12 +134,14 @@
     return Number.isFinite(number) ? number : 0;
   }
 
+
   function formatBRL(value) {
     return Number(value || 0).toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL"
     });
   }
+
 
   function escapeHTML(value) {
     return String(value || "")
@@ -144,6 +151,7 @@
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
   }
+
 
   /* =========================================================
      LOCAL STORAGE
@@ -161,6 +169,7 @@
     }
   }
 
+
   function saveCart(cart) {
     localStorage.setItem(
       CART_STORAGE_KEY,
@@ -169,6 +178,7 @@
 
     updateCartCount();
   }
+
 
   function getCoupon() {
     try {
@@ -211,10 +221,12 @@
             discount: VALID_COUPONS[code].discount
           }
         : null;
+
     } catch {
       return null;
     }
   }
+
 
   function saveCoupon(coupon) {
     if (!coupon) {
@@ -231,6 +243,7 @@
     );
   }
 
+
   function getShipping() {
     try {
       const data = JSON.parse(
@@ -242,10 +255,12 @@
       return data && data.cep
         ? data
         : null;
+
     } catch {
       return null;
     }
   }
+
 
   function saveShipping(shipping) {
     localStorage.setItem(
@@ -253,6 +268,7 @@
       JSON.stringify(shipping)
     );
   }
+
 
   /* =========================================================
      CARRINHO
@@ -267,6 +283,7 @@
     );
   }
 
+
   function getItemFragrance(item) {
     return (
       item.fragrance ||
@@ -274,6 +291,7 @@
       ""
     );
   }
+
 
   function getItemSize(item) {
     return (
@@ -283,6 +301,7 @@
       ""
     );
   }
+
 
   function getItemImage(item) {
     return (
@@ -294,6 +313,7 @@
     );
   }
 
+
   function getItemPrice(item) {
     return parseMoney(
       item.price ??
@@ -301,6 +321,7 @@
       0
     );
   }
+
 
   function getItemQuantity(item) {
     const quantity = Number(
@@ -315,6 +336,7 @@
       : 1;
   }
 
+
   function createCartKey(item) {
     return [
       normalizeText(getItemName(item)),
@@ -322,6 +344,7 @@
       normalizeText(getItemSize(item))
     ].join("|");
   }
+
 
   function addItemToCart(item) {
     const cart = getCart();
@@ -337,6 +360,7 @@
       existing.quantity =
         getItemQuantity(existing) +
         getItemQuantity(item);
+
     } else {
       cart.push({
         name: getItemName(item),
@@ -351,6 +375,7 @@
 
     saveCart(cart);
   }
+
 
   function updateCartCount() {
     const cart = getCart();
@@ -369,6 +394,7 @@
         counter.textContent = String(count);
       });
   }
+
 
   /* =========================================================
      CARRINHO — LINKS
@@ -391,6 +417,161 @@
         );
       });
   }
+
+
+  /* =========================================================
+     MENU LATERAL
+     CORRIGIDO PARA O HTML ORIGINAL DA OJOBOSCO
+  ========================================================= */
+
+  function initMenu() {
+    const menuToggle =
+      document.getElementById(
+        "menuToggle"
+      );
+
+    const sideMenu =
+      document.getElementById(
+        "sideMenu"
+      );
+
+    const closeMenu =
+      document.getElementById(
+        "closeMenu"
+      );
+
+    const menuOverlay =
+      document.getElementById(
+        "menuOverlay"
+      );
+
+
+    if (
+      !menuToggle ||
+      !sideMenu
+    ) {
+      return;
+    }
+
+
+    function openMenu() {
+      sideMenu.classList.add(
+        "active"
+      );
+
+      if (menuOverlay) {
+        menuOverlay.classList.add(
+          "active"
+        );
+      }
+
+      document.body.classList.add(
+        "menu-open"
+      );
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        "true"
+      );
+    }
+
+
+    function closeSideMenu() {
+      sideMenu.classList.remove(
+        "active"
+      );
+
+      if (menuOverlay) {
+        menuOverlay.classList.remove(
+          "active"
+        );
+      }
+
+      document.body.classList.remove(
+        "menu-open"
+      );
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+    }
+
+
+    menuToggle.addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (
+          sideMenu.classList.contains(
+            "active"
+          )
+        ) {
+          closeSideMenu();
+        } else {
+          openMenu();
+        }
+      }
+    );
+
+
+    if (closeMenu) {
+      closeMenu.addEventListener(
+        "click",
+        (event) => {
+          event.preventDefault();
+
+          closeSideMenu();
+        }
+      );
+    }
+
+
+    if (menuOverlay) {
+      menuOverlay.addEventListener(
+        "click",
+        () => {
+          closeSideMenu();
+        }
+      );
+    }
+
+
+    sideMenu
+      .querySelectorAll("a")
+      .forEach((link) => {
+        link.addEventListener(
+          "click",
+          () => {
+            closeSideMenu();
+          }
+        );
+      });
+
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "Escape" &&
+          sideMenu.classList.contains(
+            "active"
+          )
+        ) {
+          closeSideMenu();
+        }
+      }
+    );
+
+
+    menuToggle.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+  }
+
 
   /* =========================================================
      LOJA — VARIAÇÕES
@@ -422,6 +603,11 @@
             if (!size) {
               return;
             }
+
+            /*
+             * IMPORTANTE:
+             * não usar dataset para data-image-250.
+             */
 
             const newImage =
               card.getAttribute(
@@ -463,18 +649,23 @@
               );
             }
 
-            buttons.forEach((current) =>
-              current.classList.remove(
-                "active"
-              )
+            buttons.forEach(
+              (current) => {
+                current.classList.remove(
+                  "active"
+                );
+              }
             );
 
-            button.classList.add("active");
+            button.classList.add(
+              "active"
+            );
           }
         );
       });
     });
   }
+
 
   /* =========================================================
      LOJA — ADICIONAR AO CARRINHO
@@ -548,7 +739,9 @@
               size,
               price: parseMoney(price),
               image: image
-                ? image.getAttribute("src")
+                ? image.getAttribute(
+                    "src"
+                  )
                 : "",
               quantity: 1
             });
@@ -559,17 +752,21 @@
             button.textContent =
               "ADICIONADO";
 
-            setTimeout(() => {
-              button.textContent =
-                originalText;
-            }, 1200);
+            setTimeout(
+              () => {
+                button.textContent =
+                  originalText;
+              },
+              1200
+            );
           }
         );
       });
   }
 
+
   /* =========================================================
-     PÁGINA DO PRODUTO
+     PÁGINA DE PRODUTO
   ========================================================= */
 
   function initProductPage() {
@@ -654,7 +851,9 @@
           size,
           price: parseMoney(price),
           image: image
-            ? image.getAttribute("src")
+            ? image.getAttribute(
+                "src"
+              )
             : "",
           quantity: 1
         });
@@ -665,21 +864,23 @@
         addButton.textContent =
           "ADICIONADO AO CARRINHO";
 
-        setTimeout(() => {
-          addButton.textContent =
-            originalText;
-        }, 1200);
+        setTimeout(
+          () => {
+            addButton.textContent =
+              originalText;
+          },
+          1200
+        );
       }
     );
   }
+
 
   /* =========================================================
      FRETE
   ========================================================= */
 
-  function getShippingRegionByState(
-    state
-  ) {
+  function getShippingRegionByState(state) {
     const uf =
       normalizeText(state);
 
@@ -727,9 +928,8 @@
     return "NORTE_SUL";
   }
 
-  function getShippingPriceByRegion(
-    region
-  ) {
+
+  function getShippingPriceByRegion(region) {
     const prices = {
       RMR: 15,
       NORDESTE: 35,
@@ -740,6 +940,7 @@
 
     return prices[region] ?? 0;
   }
+
 
   async function lookupCEP(cep) {
     const normalizedCEP =
@@ -795,6 +996,7 @@
     };
   }
 
+
   /* =========================================================
      CARRINHO — TOTAL
   ========================================================= */
@@ -834,15 +1036,27 @@
           0
         );
 
+      /*
+       * COM CUPOM:
+       * cobra o frete normalmente.
+       *
+       * SEM CUPOM E ACIMA DE R$500:
+       * frete grátis.
+       */
+
       if (coupon) {
-        shipping = originalShipping;
+        shipping =
+          originalShipping;
+
       } else if (
         subtotal >=
         FREE_SHIPPING_THRESHOLD
       ) {
         shipping = 0;
+
       } else {
-        shipping = originalShipping;
+        shipping =
+          originalShipping;
       }
     }
 
@@ -862,8 +1076,9 @@
     };
   }
 
+
   /* =========================================================
-     PÁGINA DO CARRINHO
+     ELEMENTOS DO CARRINHO
   ========================================================= */
 
   function getCartElements() {
@@ -945,6 +1160,11 @@
     };
   }
 
+
+  /* =========================================================
+     RENDERIZAR CARRINHO
+  ========================================================= */
+
   function renderCartPage() {
     const elements =
       getCartElements();
@@ -989,6 +1209,7 @@
         elements.empty.style.display =
           "block";
       }
+
     } else {
       if (elements.empty) {
         elements.empty.style.display =
@@ -1025,6 +1246,7 @@
 
           row.innerHTML = `
             <div class="cart-item-image-wrap">
+
               ${
                 image
                   ? `
@@ -1036,9 +1258,11 @@
                   `
                   : ""
               }
+
             </div>
 
             <div class="cart-item-info">
+
               <h2 class="cart-item-name">
                 ${escapeHTML(name)}
               </h2>
@@ -1064,6 +1288,7 @@
               }
 
               <div class="cart-item-quantity">
+
                 <button
                   type="button"
                   data-cart-minus="${index}"
@@ -1081,6 +1306,7 @@
                 >
                   +
                 </button>
+
               </div>
 
               <button
@@ -1090,6 +1316,7 @@
               >
                 REMOVER
               </button>
+
             </div>
 
             <div class="cart-item-price">
@@ -1135,11 +1362,13 @@
       if (!shippingData) {
         elements.shipping.textContent =
           "A CALCULAR";
+
       } else if (
         totals.shipping === 0
       ) {
         elements.shipping.textContent =
           "GRÁTIS";
+
       } else {
         elements.shipping.textContent =
           formatBRL(
@@ -1170,15 +1399,18 @@
         if (coupon) {
           elements.shippingMessage.textContent =
             `FRETE PARA ${shippingData.city || ""} / ${shippingData.state || ""}: ${formatBRL(totals.shipping)}. CUPOM NÃO É CUMULATIVO COM FRETE GRÁTIS.`;
+
         } else if (
           totals.shipping === 0
         ) {
           elements.shippingMessage.textContent =
             "FRETE GRÁTIS PARA ESTE PEDIDO.";
+
         } else {
           elements.shippingMessage.textContent =
             `FRETE PARA ${shippingData.city || ""} / ${shippingData.state || ""}: ${formatBRL(totals.shipping)}.`;
         }
+
       } else {
         elements.shippingMessage.textContent =
           "INFORME O CEP PARA CALCULAR O FRETE.";
@@ -1202,6 +1434,11 @@
 
     bindCartPageEvents();
   }
+
+
+  /* =========================================================
+     EVENTOS DO CARRINHO
+  ========================================================= */
 
   function bindCartPageEvents() {
     document
@@ -1231,6 +1468,7 @@
           renderCartPage();
         };
       });
+
 
     document
       .querySelectorAll(
@@ -1267,6 +1505,7 @@
         };
       });
 
+
     document
       .querySelectorAll(
         "[data-cart-remove]"
@@ -1288,8 +1527,10 @@
         };
       });
 
+
     const elements =
       getCartElements();
+
 
     if (elements.cepInput) {
       elements.cepInput.oninput =
@@ -1300,6 +1541,7 @@
             );
         };
     }
+
 
     if (elements.shippingButton) {
       elements.shippingButton.onclick =
@@ -1340,6 +1582,7 @@
             saveShipping(shipping);
 
             renderCartPage();
+
           } catch (error) {
             if (
               elements.shippingMessage
@@ -1348,6 +1591,7 @@
                 error.message ||
                 "NÃO FOI POSSÍVEL CALCULAR O FRETE.";
             }
+
           } finally {
             elements.shippingButton.disabled =
               false;
@@ -1357,6 +1601,7 @@
           }
         };
     }
+
 
     if (elements.couponButton) {
       elements.couponButton.onclick =
@@ -1399,6 +1644,7 @@
         };
     }
 
+
     elements.checkoutButtons.forEach(
       (button) => {
         button.onclick = () => {
@@ -1429,62 +1675,6 @@
     );
   }
 
-  /* =========================================================
-     MENU
-  ========================================================= */
-
-  function initMenu() {
-    const menuButtons =
-      document.querySelectorAll(
-        "#menuButton, .menu-button, [data-menu-button]"
-      );
-
-    const menu =
-      document.querySelector(
-        "#mobileMenu, .mobile-menu, [data-mobile-menu]"
-      );
-
-    if (
-      !menu ||
-      !menuButtons.length
-    ) {
-      return;
-    }
-
-    menuButtons.forEach((button) => {
-      button.addEventListener(
-        "click",
-        () => {
-          menu.classList.toggle(
-            "active"
-          );
-
-          document.body.classList.toggle(
-            "menu-open"
-          );
-        }
-      );
-    });
-
-    menu
-      .querySelectorAll(
-        ".menu-close, [data-menu-close]"
-      )
-      .forEach((button) => {
-        button.addEventListener(
-          "click",
-          () => {
-            menu.classList.remove(
-              "active"
-            );
-
-            document.body.classList.remove(
-              "menu-open"
-            );
-          }
-        );
-      });
-  }
 
   /* =========================================================
      NEWSLETTER
@@ -1529,8 +1719,9 @@
       });
   }
 
+
   /* =========================================================
-     ÂNCORAS LOJA
+     ÂNCORAS DA LOJA
   ========================================================= */
 
   function scrollToStoreHash() {
@@ -1547,13 +1738,17 @@
       return;
     }
 
-    setTimeout(() => {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }, 100);
+    setTimeout(
+      () => {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      },
+      100
+    );
   }
+
 
   /* =========================================================
      INICIALIZAÇÃO
@@ -1561,16 +1756,26 @@
 
   function init() {
     normalizeNavigationLinks();
+
     updateCartCount();
+
     initCartLinks();
+
     initMenu();
+
     initNewsletter();
+
     initStoreVariationButtons();
+
     initStoreAddButtons();
+
     initProductPage();
+
     renderCartPage();
+
     scrollToStoreHash();
   }
+
 
   if (
     document.readyState ===
@@ -1580,6 +1785,7 @@
       "DOMContentLoaded",
       init
     );
+
   } else {
     init();
   }
