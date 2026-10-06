@@ -2,17 +2,11 @@
 <html lang="pt-BR">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="Política de Privacidade OJOBOSCO"
   >
 
   <title>Privacidade — OJOBOSCO</title>
@@ -23,43 +17,74 @@
   >
 
   <style>
-
     :root {
-      --page-font:
+      --fonte:
         "Copperplate",
         "Copperplate Gothic Light",
         "Copperplate Gothic",
         serif;
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #ffffff;
-      color: #111111;
-      font-family: var(--page-font);
+      background: #fff;
+      color: #111;
+      font-family: var(--fonte);
+    }
+
+    .institutional-header {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 4vw;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .institutional-header-left,
+    .institutional-header-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .institutional-header-right {
+      justify-content: flex-end;
+    }
+
+    .institutional-header a {
+      color: #111;
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+
+    .institutional-logo {
+      font-size: 12px !important;
     }
 
     .institutional-page {
-      min-height: 100vh;
-      padding: 150px 6vw 120px;
+      padding: 120px 6vw 130px;
     }
 
     .institutional-inner {
-      width: 100%;
       max-width: 980px;
       margin: 0 auto;
     }
 
     .institutional-title {
-      margin: 0 0 65px;
-      font-size: 28px;
+      margin: 0 0 70px;
+      font-size: 26px;
       font-weight: 400;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: .06em;
     }
 
     .institutional-section {
-      padding: 34px 0;
+      padding: 36px 0;
       border-top: 1px solid #d6d6d6;
     }
 
@@ -68,63 +93,105 @@
     }
 
     .institutional-section h2 {
-      margin: 0 0 22px;
-      font-size: 12px;
+      margin: 0 0 24px;
+      font-size: 11px;
       font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: .08em;
     }
 
     .institutional-section p,
     .institutional-section li {
       font-size: 11px;
       line-height: 1.95;
-      letter-spacing: 0.025em;
+      letter-spacing: .025em;
+    }
+
+    .institutional-section p {
+      margin: 0 0 20px;
     }
 
     .institutional-section ol {
-      margin: 24px 0 0;
+      margin: 25px 0 0;
       padding-left: 22px;
     }
 
     .institutional-section li {
-      margin-bottom: 13px;
+      margin-bottom: 14px;
     }
 
     .institutional-section a {
-      color: #111111;
+      color: #111;
     }
 
     @media (max-width: 700px) {
+      .institutional-header {
+        min-height: 58px;
+        grid-template-columns: 1fr auto;
+        padding: 0 20px;
+      }
+
+      .institutional-header-left {
+        display: none;
+      }
 
       .institutional-page {
-        padding: 110px 22px 80px;
+        padding: 85px 22px 90px;
       }
 
       .institutional-title {
-        margin-bottom: 45px;
-        font-size: 21px;
+        margin-bottom: 48px;
+        font-size: 20px;
       }
 
       .institutional-section p,
       .institutional-section li {
         font-size: 10px;
-        line-height: 1.85;
       }
-
     }
-
   </style>
-
 </head>
 
-
 <body>
+
+  <header class="institutional-header">
+
+    <nav class="institutional-header-left">
+
+      <a href="index.html">
+        UNIVERSO
+      </a>
+
+      <a href="loja.html">
+        LOJA
+      </a>
+
+      <a href="universo.html">
+        SOBRE
+      </a>
+
+    </nav>
+
+    <a
+      href="index.html"
+      class="institutional-logo"
+    >
+      OJOBOSCO
+    </a>
+
+    <div class="institutional-header-right">
+
+      <a href="carrinho.html">
+        CARRINHO
+      </a>
+
+    </div>
+
+  </header>
+
 
   <main class="institutional-page">
 
     <div class="institutional-inner">
-
 
       <h1 class="institutional-title">
         POLÍTICA DE PRIVACIDADE
@@ -138,21 +205,23 @@
         </h2>
 
         <p>
-          A OJOBOSCO respeita a sua privacidade e valoriza a relação
-          que mantém com você.
+          A OJOBOSCO respeita a sua privacidade e valoriza
+          a relação que mantém com você.
         </p>
 
         <p>
-          Esta Política de Privacidade tem por finalidade prestar
-          informações sobre a coleta, o uso, o armazenamento e a
-          proteção de dados pessoais, bem como sobre os direitos dos
-          usuários do site em relação às suas informações.
+          Esta Política de Privacidade tem por finalidade
+          prestar informações sobre a coleta, uso,
+          armazenamento e proteção de dados pessoais,
+          bem como sobre os direitos dos usuários em
+          relação às suas informações.
         </p>
 
         <p>
-          A política também descreve os tipos de informações pessoais
-          que podem ser coletados pela OJOBOSCO e o tratamento de
-          informações eventualmente compartilhadas com terceiros
+          Esta política também descreve os tipos de
+          informações pessoais que poderão ser coletadas
+          pela OJOBOSCO e o tratamento de informações
+          eventualmente compartilhadas com terceiros
           necessários à prestação dos serviços.
         </p>
 
@@ -166,15 +235,17 @@
         </h2>
 
         <p>
-          A OJOBOSCO poderá obter informações pessoais do usuário
-          por meio deste site ou durante atendimentos realizados
-          através de WhatsApp e Instagram.
+          A OJOBOSCO poderá obter informações pessoais
+          sobre o usuário por meio deste site ou durante
+          atendimentos realizados através do WhatsApp
+          e Instagram.
         </p>
 
         <p>
-          Os produtos OJOBOSCO são desenvolvidos pelo próprio atelier
-          da marca e sua comercialização ocorre através dos canais
-          disponibilizados pela OJOBOSCO.
+          Os produtos OJOBOSCO são desenvolvidos pelo
+          próprio atelier da marca e comercializados
+          através dos canais disponibilizados pela
+          OJOBOSCO.
         </p>
 
       </section>
@@ -187,15 +258,15 @@
         </h2>
 
         <p>
-          O usuário poderá fornecer informações pessoais à OJOBOSCO
-          ao realizar compras ou entrar em contato através do site,
-          WhatsApp ou Instagram.
+          O usuário poderá fornecer informações pessoais
+          à OJOBOSCO ao realizar uma compra ou entrar em
+          contato através do site, WhatsApp ou Instagram.
         </p>
 
         <p>
-          Entre as informações que poderão ser fornecidas estão:
+          Entre as informações que poderão ser fornecidas
+          estão:
         </p>
-
 
         <ol>
 
@@ -208,8 +279,8 @@
           </li>
 
           <li>
-            Endereço, e-mail, telefone celular ou outro telefone
-            de contato;
+            Endereço, e-mail, telefone celular ou outro
+            telefone de contato;
           </li>
 
           <li>
@@ -217,19 +288,21 @@
           </li>
 
           <li>
-            Informações fornecidas voluntariamente pelo usuário
-            durante seu relacionamento com a OJOBOSCO;
+            Informações fornecidas voluntariamente pelo
+            usuário durante seu relacionamento com a
+            OJOBOSCO;
           </li>
 
           <li>
-            Informações relacionadas à conta de usuário, caso exista
-            recurso de cadastro no site;
+            Informações relacionadas à conta do usuário,
+            caso exista recurso de cadastro no site;
           </li>
 
           <li>
-            Informações de pagamento, que poderão ser fornecidas
-            diretamente às empresas responsáveis pelo processamento
-            do pagamento e às administradoras de cartão de crédito.
+            Informações de pagamento, que poderão ser
+            fornecidas diretamente às empresas responsáveis
+            pelo processamento do pagamento e às
+            administradoras de cartão de crédito.
           </li>
 
         </ol>
@@ -244,13 +317,14 @@
         </h2>
 
         <p>
-          Os pagamentos realizados no site são processados por
-          prestadores especializados, como o Mercado Pago.
+          Os pagamentos realizados no site são processados
+          por prestadores especializados, como o Mercado
+          Pago.
         </p>
 
         <p>
-          Os dados completos do cartão utilizados durante o pagamento
-          não são armazenados pela OJOBOSCO.
+          Os dados completos do cartão utilizados durante
+          o pagamento não são armazenados pela OJOBOSCO.
         </p>
 
       </section>
@@ -263,23 +337,23 @@
         </h2>
 
         <p>
-          O usuário poderá solicitar à OJOBOSCO a exclusão de suas
-          informações pessoais, observadas as hipóteses em que a
-          manutenção dos dados seja necessária para o cumprimento
-          de obrigações legais ou regulatórias.
+          O usuário poderá solicitar à OJOBOSCO a exclusão
+          de suas informações pessoais, observadas as
+          hipóteses em que a manutenção dos dados seja
+          necessária para o cumprimento de obrigações
+          legais ou regulatórias.
         </p>
 
         <p>
-          De acordo com a Lei Federal nº 12.965/2014 — Marco Civil
-          da Internet — determinados registros relacionados ao acesso
-          à aplicação poderão ser mantidos pelo prazo legal aplicável
-          ou por período superior quando houver determinação de
-          autoridade competente.
+          Determinados registros relacionados ao acesso
+          à aplicação poderão ser mantidos pelo prazo
+          legal aplicável ou por período superior quando
+          houver determinação de autoridade competente.
         </p>
 
         <p>
-          Para solicitações relacionadas aos seus dados pessoais,
-          entre em contato através do e-mail
+          Para solicitações relacionadas aos seus dados
+          pessoais, entre em contato através do e-mail
           <a href="mailto:contato@ojobosco.com">
             contato@ojobosco.com
           </a>.
@@ -287,10 +361,11 @@
 
       </section>
 
-
     </div>
 
   </main>
+
+  <script src="script.js"></script>
 
 </body>
 
