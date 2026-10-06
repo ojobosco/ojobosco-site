@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -16,7 +17,10 @@
 
   <title>Checkout — OJOBOSCO</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
   <script src="https://sdk.mercadopago.com/js/v2"></script>
 
@@ -44,15 +48,19 @@
     body.checkout-body {
       margin: 0;
 
-      background: var(--checkout-bg);
-      color: var(--checkout-text);
+      background:
+        var(--checkout-bg);
 
-      font-family: var(--checkout-font);
+      color:
+        var(--checkout-text);
+
+      font-family:
+        var(--checkout-font);
     }
 
 
     /* =====================================================
-       AVISO SUPERIOR
+       AVISO
     ===================================================== */
 
     .checkout-body .announcement {
@@ -68,7 +76,8 @@
       background: #111111;
       color: #ffffff;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 9px;
 
@@ -118,7 +127,8 @@
 
 
     .checkout-body .topbar-right {
-      justify-content: flex-end;
+      justify-content:
+        flex-end;
     }
 
 
@@ -127,7 +137,8 @@
 
       text-decoration: none;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 9px;
 
@@ -138,14 +149,16 @@
 
 
     .checkout-body .brand {
-      font-size: 13px !important;
+      font-size:
+        13px !important;
 
-      letter-spacing: 0.08em;
+      letter-spacing:
+        0.08em;
     }
 
 
     /* =====================================================
-       PÁGINA
+       TOPO
     ===================================================== */
 
     .checkout-shell {
@@ -180,8 +193,11 @@
 
       display: flex;
 
-      justify-content: space-between;
-      align-items: flex-end;
+      justify-content:
+        space-between;
+
+      align-items:
+        flex-end;
 
       gap: 30px;
     }
@@ -190,7 +206,8 @@
     .checkout-top h1 {
       margin: 0;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 25px;
       font-weight: 400;
@@ -199,7 +216,8 @@
 
       letter-spacing: 0.035em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -212,13 +230,15 @@
 
       color: #111111;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 10px;
 
       letter-spacing: 0.08em;
 
       text-decoration: none;
+
       text-transform: uppercase;
     }
 
@@ -284,7 +304,8 @@
         0
         26px;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 13px;
       font-weight: 400;
@@ -293,7 +314,8 @@
 
       letter-spacing: 0.08em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -332,7 +354,8 @@
 
 
     .checkout-field label {
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 9px;
 
@@ -340,7 +363,8 @@
 
       letter-spacing: 0.08em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -361,9 +385,11 @@
         12px;
 
       background: #ffffff;
+
       color: #111111;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 11px;
 
@@ -382,20 +408,14 @@
     }
 
 
-    .checkout-field input::placeholder {
-      color: #888888;
-
-      opacity: 1;
-    }
-
-
     .checkout-address-note {
       margin:
         14px
         0
         0;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 9px;
 
@@ -403,12 +423,13 @@
 
       letter-spacing: 0.04em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
     /* =====================================================
-       BOTÃO PAGAMENTO
+       PAGAMENTO
     ===================================================== */
 
     .checkout-continue {
@@ -425,7 +446,8 @@
       background: #111111;
       color: #ffffff;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 10px;
 
@@ -434,10 +456,6 @@
       text-transform: uppercase;
 
       cursor: pointer;
-
-      transition:
-        background 0.2s ease,
-        color 0.2s ease;
     }
 
 
@@ -453,10 +471,6 @@
       cursor: default;
     }
 
-
-    /* =====================================================
-       MERCADO PAGO
-    ===================================================== */
 
     .checkout-payment-box {
       display: none;
@@ -476,7 +490,121 @@
 
 
     /* =====================================================
-       MENSAGENS
+       PIX
+    ===================================================== */
+
+    .pix-result {
+      display: none;
+
+      margin-top: 28px;
+
+      padding:
+        26px
+        20px;
+
+      border:
+        1px solid
+        #cfcfcf;
+
+      text-align: center;
+    }
+
+
+    .pix-result.active {
+      display: block;
+    }
+
+
+    .pix-result h3 {
+      margin:
+        0
+        0
+        18px;
+
+      font-family:
+        var(--checkout-font);
+
+      font-size: 12px;
+      font-weight: 400;
+
+      letter-spacing: 0.08em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .pix-result img {
+      display: block;
+
+      width: 220px;
+      max-width: 100%;
+
+      height: auto;
+
+      margin:
+        0 auto
+        20px;
+    }
+
+
+    .pix-code {
+      width: 100%;
+
+      min-height: 88px;
+
+      padding: 12px;
+
+      border:
+        1px solid
+        #cfcfcf;
+
+      background: #ffffff;
+
+      color: #111111;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+
+      resize: vertical;
+    }
+
+
+    .pix-copy-button {
+      width: 100%;
+
+      min-height: 46px;
+
+      margin-top: 10px;
+
+      border:
+        1px solid
+        #111111;
+
+      background: #111111;
+      color: #ffffff;
+
+      font-family:
+        var(--checkout-font);
+
+      font-size: 9px;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+
+      cursor: pointer;
+    }
+
+
+    /* =====================================================
+       MENSAGEM
     ===================================================== */
 
     .checkout-message {
@@ -495,7 +623,8 @@
         1px solid
         #111111;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 9px;
 
@@ -503,7 +632,8 @@
 
       letter-spacing: 0.03em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -527,8 +657,7 @@
 
 
     /* =====================================================
-       TEXTO DE SEGURANÇA
-       AGORA TAMBÉM EM COPPERPLATE
+       SEGURANÇA
     ===================================================== */
 
     .checkout-secure {
@@ -546,8 +675,6 @@
         serif;
 
       font-size: 9px;
-
-      font-weight: 400;
 
       line-height: 1.65;
 
@@ -585,27 +712,26 @@
         0
         28px;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 13px;
       font-weight: 400;
 
       letter-spacing: 0.08em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
     .checkout-products {
       display: flex;
 
-      flex-direction: column;
+      flex-direction:
+        column;
     }
 
-
-    /* =====================================================
-       PRODUTO NO RESUMO
-    ===================================================== */
 
     .checkout-product {
       display: grid;
@@ -645,18 +771,14 @@
     }
 
 
-    .checkout-product-content {
-      min-width: 0;
-    }
-
-
     .checkout-product-name {
       margin:
         0
         0
         6px;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 10px;
       font-weight: 400;
@@ -665,7 +787,8 @@
 
       letter-spacing: 0.04em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -675,7 +798,8 @@
         0
         4px;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 8px;
 
@@ -683,7 +807,8 @@
 
       letter-spacing: 0.04em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -693,21 +818,15 @@
         0
         0;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 9px;
 
-      line-height: 1.4;
-
-      letter-spacing: 0.04em;
-
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
-
-    /* =====================================================
-       TOTAIS
-    ===================================================== */
 
     .checkout-totals {
       margin-top: 22px;
@@ -723,8 +842,11 @@
     .checkout-total-row {
       display: flex;
 
-      justify-content: space-between;
-      align-items: baseline;
+      justify-content:
+        space-between;
+
+      align-items:
+        baseline;
 
       gap: 20px;
 
@@ -732,15 +854,15 @@
         6px
         0;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 9px;
 
-      line-height: 1.4;
-
       letter-spacing: 0.05em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -781,7 +903,8 @@
         1px solid
         #dedede;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 8px;
 
@@ -789,7 +912,8 @@
 
       letter-spacing: 0.05em;
 
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -799,7 +923,8 @@
         0
         0;
 
-      font-family: var(--checkout-font);
+      font-family:
+        var(--checkout-font);
 
       font-size: 8px;
 
@@ -807,44 +932,8 @@
 
       letter-spacing: 0.05em;
 
-      text-transform: uppercase;
-    }
-
-
-    /* =====================================================
-       VAZIO
-    ===================================================== */
-
-    .checkout-empty {
-      padding:
-        60px
-        4vw;
-
-      text-align: center;
-
-      font-family: var(--checkout-font);
-    }
-
-
-    .checkout-empty h1 {
-      margin:
-        0
-        0
-        20px;
-
-      font-size: 22px;
-      font-weight: 400;
-
-      text-transform: uppercase;
-    }
-
-
-    .checkout-empty a {
-      color: #111111;
-
-      font-size: 10px;
-
-      text-transform: uppercase;
+      text-transform:
+        uppercase;
     }
 
 
@@ -872,38 +961,6 @@
       }
 
 
-      .checkout-body .brand {
-        justify-self: start;
-      }
-
-
-      .checkout-body .topbar-right {
-        justify-self: end;
-      }
-
-
-      .checkout-top {
-        padding:
-          30px
-          20px
-          24px;
-      }
-
-
-      .checkout-top-inner {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 16px;
-      }
-
-
-      .checkout-top h1 {
-        font-size: 20px;
-      }
-
-
       .checkout-layout {
         padding:
           34px
@@ -921,11 +978,6 @@
         position: static;
 
         order: -1;
-      }
-
-
-      .checkout-section {
-        margin-bottom: 42px;
       }
 
     }
@@ -951,51 +1003,6 @@
           26px;
       }
 
-
-      .checkout-product {
-        grid-template-columns:
-          64px
-          minmax(0, 1fr);
-      }
-
-
-      .checkout-product-image {
-        width: 64px;
-        height: 78px;
-      }
-
-
-      .checkout-section-title {
-        font-size: 12px;
-      }
-
-
-      .checkout-field label {
-        font-size: 9px;
-      }
-
-
-      .checkout-field input,
-      .checkout-field select {
-        min-height: 48px;
-
-        font-size: 11px;
-      }
-
-
-      .checkout-continue {
-        min-height: 54px;
-
-        font-size: 9.5px;
-      }
-
-
-      .checkout-secure {
-        font-size: 8px;
-
-        line-height: 1.7;
-      }
-
     }
 
   </style>
@@ -1006,18 +1013,10 @@
 <body class="checkout-body">
 
 
-  <!-- =====================================================
-       AVISO
-  ====================================================== -->
-
   <div class="announcement">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
-
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
 
   <header class="topbar">
 
@@ -1041,7 +1040,6 @@
     <a
       href="index.html"
       class="brand"
-      aria-label="OJOBOSCO"
     >
       OJOBOSCO
     </a>
@@ -1061,19 +1059,11 @@
   </header>
 
 
-  <!-- =====================================================
-       CHECKOUT
-  ====================================================== -->
-
   <main
     id="checkoutRoot"
     class="checkout-shell"
   >
 
-
-    <!-- =================================================
-         CABEÇALHO
-    ================================================== -->
 
     <section class="checkout-top">
 
@@ -1099,16 +1089,10 @@
     <div class="checkout-layout">
 
 
-      <!-- =================================================
-           COLUNA FORMULÁRIO
-      ================================================== -->
-
       <div class="checkout-column">
 
 
-        <!-- ===============================================
-             CONTATO
-        ================================================ -->
+        <!-- CONTATO -->
 
         <section class="checkout-section">
 
@@ -1131,7 +1115,6 @@
                 type="email"
                 id="customerEmail"
                 autocomplete="email"
-                placeholder="SEU@EMAIL.COM"
                 required
               >
 
@@ -1183,7 +1166,6 @@
                 type="tel"
                 id="customerPhone"
                 autocomplete="tel"
-                placeholder="(00) 00000-0000"
                 required
               >
 
@@ -1194,9 +1176,7 @@
         </section>
 
 
-        <!-- ===============================================
-             ENTREGA
-        ================================================ -->
+        <!-- ENTREGA -->
 
         <section class="checkout-section">
 
@@ -1218,10 +1198,8 @@
               <input
                 type="text"
                 id="shippingCep"
-                inputmode="numeric"
                 maxlength="9"
                 autocomplete="postal-code"
-                placeholder="00000-000"
                 required
               >
 
@@ -1237,7 +1215,6 @@
 
               <select
                 id="shippingState"
-                autocomplete="address-level1"
                 required
               >
 
@@ -1288,7 +1265,6 @@
               <input
                 type="text"
                 id="shippingAddress"
-                autocomplete="address-line1"
                 required
               >
 
@@ -1321,7 +1297,6 @@
               <input
                 type="text"
                 id="shippingComplement"
-                autocomplete="address-line2"
               >
 
             </div>
@@ -1353,7 +1328,6 @@
               <input
                 type="text"
                 id="shippingCity"
-                autocomplete="address-level2"
                 required
               >
 
@@ -1372,9 +1346,7 @@
         </section>
 
 
-        <!-- ===============================================
-             PAGAMENTO
-        ================================================ -->
+        <!-- PAGAMENTO -->
 
         <section class="checkout-section">
 
@@ -1408,6 +1380,42 @@
           </div>
 
 
+          <div
+            id="pixResult"
+            class="pix-result"
+          >
+
+            <h3>
+              PAGAMENTO VIA PIX
+            </h3>
+
+
+            <img
+              id="pixQrImage"
+              alt="QR Code Pix"
+              hidden
+            >
+
+
+            <textarea
+              id="pixCode"
+              class="pix-code"
+              readonly
+              placeholder="CÓDIGO PIX"
+            ></textarea>
+
+
+            <button
+              type="button"
+              id="pixCopyButton"
+              class="pix-copy-button"
+            >
+              COPIAR CÓDIGO PIX
+            </button>
+
+          </div>
+
+
           <p class="checkout-secure">
             O pagamento é processado com segurança pelo Mercado Pago.
             Os dados completos do cartão não são armazenados pela OJOBOSCO.
@@ -1418,9 +1426,7 @@
       </div>
 
 
-      <!-- =================================================
-           RESUMO
-      ================================================== -->
+      <!-- RESUMO -->
 
       <aside class="checkout-summary">
 
@@ -1517,10 +1523,6 @@
   </main>
 
 
-  <!-- =====================================================
-       JAVASCRIPT
-  ====================================================== -->
-
   <script>
 
     (() => {
@@ -1528,17 +1530,11 @@
       "use strict";
 
 
-      /* ===================================================
-         CONFIGURAÇÃO
-      =================================================== */
-
       const CART_STORAGE_KEY =
         "ojobosco-cart";
 
-
       const COUPON_STORAGE_KEY =
         "ojobosco-coupon";
-
 
       const SHIPPING_STORAGE_KEY =
         "ojobosco-shipping";
@@ -1554,193 +1550,182 @@
       };
 
 
-      /* ===================================================
-         ESTADO
-      =================================================== */
-
       const state = {
-
         cart: [],
-
         couponCode: null,
-
-        subtotal: 0,
-
-        discount: 0,
-
-        shipping: 0,
-
-        total: 0,
-
         shippingData: null,
-
-        paymentBrickController: null,
-
-        paymentRendered: false
-
+        subtotal: 0,
+        discount: 0,
+        shipping: 0,
+        total: 0,
+        paymentBrickController: null
       };
 
 
-      /* ===================================================
-         ELEMENTOS
-      =================================================== */
-
       const elements = {
 
-        checkoutRoot:
+        root:
           document.getElementById(
             "checkoutRoot"
           ),
-
 
         products:
           document.getElementById(
             "checkoutProducts"
           ),
 
-
         subtotal:
           document.getElementById(
             "checkoutSubtotal"
           ),
-
 
         discountRow:
           document.getElementById(
             "checkoutDiscountRow"
           ),
 
-
         discount:
           document.getElementById(
             "checkoutDiscount"
           ),
-
 
         shipping:
           document.getElementById(
             "checkoutShipping"
           ),
 
-
         total:
           document.getElementById(
             "checkoutTotal"
           ),
-
 
         couponInfo:
           document.getElementById(
             "checkoutCouponInfo"
           ),
 
-
         benefitInfo:
           document.getElementById(
             "checkoutBenefitInfo"
           ),
-
 
         email:
           document.getElementById(
             "customerEmail"
           ),
 
-
         firstName:
           document.getElementById(
             "customerFirstName"
           ),
-
 
         lastName:
           document.getElementById(
             "customerLastName"
           ),
 
-
         phone:
           document.getElementById(
             "customerPhone"
           ),
-
 
         cep:
           document.getElementById(
             "shippingCep"
           ),
 
-
         state:
           document.getElementById(
             "shippingState"
           ),
-
 
         address:
           document.getElementById(
             "shippingAddress"
           ),
 
-
         number:
           document.getElementById(
             "shippingNumber"
           ),
-
 
         complement:
           document.getElementById(
             "shippingComplement"
           ),
 
-
         district:
           document.getElementById(
             "shippingDistrict"
           ),
-
 
         city:
           document.getElementById(
             "shippingCity"
           ),
 
-
         shippingMessage:
           document.getElementById(
             "shippingMessage"
           ),
-
 
         continueButton:
           document.getElementById(
             "continuePaymentButton"
           ),
 
-
         paymentBox:
           document.getElementById(
             "checkoutPaymentBox"
           ),
 
-
         message:
           document.getElementById(
             "checkoutMessage"
+          ),
+
+        pixResult:
+          document.getElementById(
+            "pixResult"
+          ),
+
+        pixQrImage:
+          document.getElementById(
+            "pixQrImage"
+          ),
+
+        pixCode:
+          document.getElementById(
+            "pixCode"
+          ),
+
+        pixCopyButton:
+          document.getElementById(
+            "pixCopyButton"
           )
 
       };
 
 
-      /* ===================================================
-         UTILITÁRIOS
-      =================================================== */
-
-      function normalizeText(value) {
-
+      function onlyNumbers(
+        value
+      ) {
         return String(
-          value || ""
+          value ||
+          ""
+        ).replace(
+          /\D/g,
+          ""
+        );
+      }
+
+
+      function normalizeText(
+        value
+      ) {
+        return String(
+          value ||
+          ""
         )
           .normalize("NFD")
           .replace(
@@ -1749,26 +1734,16 @@
           )
           .trim()
           .toUpperCase();
-
       }
 
 
-      function onlyNumbers(value) {
-
-        return String(
-          value || ""
-        ).replace(
-          /\D/g,
-          ""
-        );
-
-      }
-
-
-      function formatCEP(value) {
-
+      function formatCEP(
+        value
+      ) {
         const numbers =
-          onlyNumbers(value)
+          onlyNumbers(
+            value
+          )
             .slice(
               0,
               8
@@ -1778,9 +1753,7 @@
         if (
           numbers.length <= 5
         ) {
-
           return numbers;
-
         }
 
 
@@ -1792,14 +1765,16 @@
           "-" +
           numbers.slice(5)
         );
-
       }
 
 
-      function formatPhone(value) {
-
+      function formatPhone(
+        value
+      ) {
         const numbers =
-          onlyNumbers(value)
+          onlyNumbers(
+            value
+          )
             .slice(
               0,
               11
@@ -1809,16 +1784,13 @@
         if (
           numbers.length <= 2
         ) {
-
           return numbers;
-
         }
 
 
         if (
           numbers.length <= 6
         ) {
-
           return (
             "(" +
             numbers.slice(
@@ -1828,14 +1800,12 @@
             ") " +
             numbers.slice(2)
           );
-
         }
 
 
         if (
           numbers.length <= 10
         ) {
-
           return (
             "(" +
             numbers.slice(
@@ -1850,7 +1820,6 @@
             "-" +
             numbers.slice(6)
           );
-
         }
 
 
@@ -1868,37 +1837,40 @@
           "-" +
           numbers.slice(7)
         );
-
       }
 
 
-      function formatBRL(value) {
-
+      function formatBRL(
+        value
+      ) {
         return Number(
-          value || 0
+          value ||
+          0
         ).toLocaleString(
           "pt-BR",
           {
-            style: "currency",
-            currency: "BRL"
+            style:
+              "currency",
+
+            currency:
+              "BRL"
           }
         );
-
       }
 
 
-      function parseMoney(value) {
-
+      function parseMoney(
+        value
+      ) {
         if (
-          typeof value === "number"
+          typeof value ===
+          "number"
         ) {
-
           return Number.isFinite(
             value
           )
             ? value
             : 0;
-
         }
 
 
@@ -1919,7 +1891,6 @@
           text.includes(",") &&
           text.includes(".")
         ) {
-
           text =
             text
               .replace(
@@ -1930,17 +1901,14 @@
                 ",",
                 "."
               );
-
         } else if (
           text.includes(",")
         ) {
-
           text =
             text.replace(
               ",",
               "."
             );
-
         }
 
 
@@ -1953,14 +1921,15 @@
         )
           ? number
           : 0;
-
       }
 
 
-      function escapeHTML(value) {
-
+      function escapeHTML(
+        value
+      ) {
         return String(
-          value || ""
+          value ||
+          ""
         )
           .replace(
             /&/g,
@@ -1982,23 +1951,56 @@
             /'/g,
             "&#039;"
           );
-
       }
 
 
-      /* ===================================================
-         CARRINHO
-      =================================================== */
+      function getMaximumInstallments(
+        total
+      ) {
+        const value =
+          Number(
+            total ||
+            0
+          );
+
+
+        if (value <= 300) {
+          return 2;
+        }
+
+
+        if (value <= 400) {
+          return 3;
+        }
+
+
+        if (value <= 500) {
+          return 4;
+        }
+
+
+        return Math.min(
+          12,
+          4 +
+          Math.floor(
+            (
+              value -
+              500
+            ) /
+            100
+          )
+        );
+      }
+
 
       function getCart() {
-
         try {
-
           const data =
             JSON.parse(
               localStorage.getItem(
                 CART_STORAGE_KEY
-              ) || "[]"
+              ) ||
+              "[]"
             );
 
 
@@ -2009,21 +2011,18 @@
             : [];
 
         } catch {
-
           return [];
-
         }
-
       }
 
 
-      function getItemQuantity(item) {
-
+      function getItemQuantity(
+        item
+      ) {
         const quantity =
           Number(
             item.quantity ??
             item.qty ??
-            item.quantidade ??
             1
           );
 
@@ -2036,61 +2035,58 @@
         )
           ? quantity
           : 1;
-
       }
 
 
-      function getItemPrice(item) {
-
+      function getItemPrice(
+        item
+      ) {
         return parseMoney(
           item.price ??
           item.currentPrice ??
-          item.preco ??
-          item.valor ??
           0
         );
-
       }
 
 
-      function getItemName(item) {
-
+      function getItemName(
+        item
+      ) {
         return (
           item.name ||
           item.product ||
           item.productName ||
-          item.nome ||
           "Produto OJOBOSCO"
         );
-
       }
 
 
-      function getItemFragrance(item) {
-
+      function getItemFragrance(
+        item
+      ) {
         return (
           item.fragrance ||
           item.fragrancia ||
           ""
         );
-
       }
 
 
-      function getItemSize(item) {
-
+      function getItemSize(
+        item
+      ) {
         return (
           item.size ||
           item.currentSize ||
           item.tamanho ||
           ""
         );
-
       }
 
 
-      function getItemImage(item) {
-
+      function getItemImage(
+        item
+      ) {
         return (
           item.image ||
           item.imageUrl ||
@@ -2098,18 +2094,11 @@
           item.currentImage ||
           ""
         );
-
       }
 
 
-      /* ===================================================
-         CUPOM
-      =================================================== */
-
       function getCouponCode() {
-
         try {
-
           const raw =
             localStorage.getItem(
               COUPON_STORAGE_KEY
@@ -2125,44 +2114,26 @@
 
 
           try {
-
             value =
-              JSON.parse(raw);
-
+              JSON.parse(
+                raw
+              );
           } catch {
-
             value = raw;
-
           }
 
 
-          let code = "";
-
-
-          if (
-            typeof value ===
-            "string"
-          ) {
-
-            code = value;
-
-          } else if (
-            value &&
-            typeof value ===
-            "object"
-          ) {
-
-            code =
-              value.code ||
-              value.coupon ||
-              value.codigo ||
-              "";
-
-          }
-
-
-          code =
-            normalizeText(code);
+          const code =
+            normalizeText(
+              typeof value ===
+              "string"
+                ? value
+                : (
+                    value?.code ||
+                    value?.coupon ||
+                    ""
+                  )
+            );
 
 
           return VALID_COUPONS[
@@ -2172,167 +2143,99 @@
             : null;
 
         } catch {
-
           return null;
-
         }
-
       }
 
 
-      /* ===================================================
-         FRETE SALVO PELO CARRINHO
-      =================================================== */
-
       function getSavedShipping() {
-
         try {
-
           const data =
             JSON.parse(
               localStorage.getItem(
                 SHIPPING_STORAGE_KEY
-              ) || "null"
+              ) ||
+              "null"
             );
 
 
-          if (
-            !data ||
-            !data.cep
-          ) {
-
-            return null;
-
-          }
-
-
-          return data;
+          return (
+            data &&
+            data.cep
+          )
+            ? data
+            : null;
 
         } catch {
-
           return null;
-
         }
-
-      }
-
-
-      /* ===================================================
-         CÁLCULOS
-      =================================================== */
-
-      function calculateSubtotal() {
-
-        return state.cart.reduce(
-          (
-            total,
-            item
-          ) => {
-
-            return (
-              total +
-              (
-                getItemPrice(item) *
-                getItemQuantity(item)
-              )
-            );
-
-          },
-          0
-        );
-
-      }
-
-
-      function calculateDiscount() {
-
-        if (
-          !state.couponCode
-        ) {
-
-          return 0;
-
-        }
-
-
-        return (
-          state.subtotal *
-          VALID_COUPONS[
-            state.couponCode
-          ]
-        );
-
-      }
-
-
-      function calculateShipping() {
-
-        if (
-          !state.shippingData
-        ) {
-
-          return 0;
-
-        }
-
-
-        const normalPrice =
-          Number(
-            state.shippingData
-              .originalPrice ??
-            state.shippingData
-              .price ??
-            0
-          );
-
-
-        /*
-          REGRA DEFINITIVA:
-
-          COM CUPOM:
-          frete normal.
-
-          SEM CUPOM:
-          subtotal >= 500
-          = frete grátis.
-        */
-
-        if (
-          state.couponCode
-        ) {
-
-          return normalPrice;
-
-        }
-
-
-        if (
-          state.subtotal >=
-          FREE_SHIPPING_THRESHOLD
-        ) {
-
-          return 0;
-
-        }
-
-
-        return normalPrice;
-
       }
 
 
       function calculateTotals() {
 
         state.subtotal =
-          calculateSubtotal();
+          state.cart.reduce(
+            (
+              total,
+              item
+            ) =>
+              total +
+              (
+                getItemPrice(
+                  item
+                ) *
+                getItemQuantity(
+                  item
+                )
+              ),
+            0
+          );
 
 
         state.discount =
-          calculateDiscount();
+          state.couponCode
+            ? (
+                state.subtotal *
+                VALID_COUPONS[
+                  state.couponCode
+                ]
+              )
+            : 0;
 
 
-        state.shipping =
-          calculateShipping();
+        if (
+          state.shippingData
+        ) {
+          const normalShipping =
+            Number(
+              state.shippingData
+                .originalPrice ??
+              state.shippingData
+                .price ??
+              0
+            );
+
+
+          if (
+            state.couponCode
+          ) {
+            state.shipping =
+              normalShipping;
+          } else if (
+            state.subtotal >=
+            FREE_SHIPPING_THRESHOLD
+          ) {
+            state.shipping =
+              0;
+          } else {
+            state.shipping =
+              normalShipping;
+          }
+
+        } else {
+          state.shipping = 0;
+        }
 
 
         state.total =
@@ -2345,109 +2248,132 @@
 
 
         renderTotals();
-
       }
 
 
-      /* ===================================================
-         PREENCHER ENDEREÇO SALVO
-      =================================================== */
+      function renderTotals() {
+
+        elements.subtotal.textContent =
+          formatBRL(
+            state.subtotal
+          );
+
+
+        if (
+          state.discount > 0
+        ) {
+          elements.discountRow
+            .classList
+            .add(
+              "active"
+            );
+
+
+          elements.discount.textContent =
+            "- " +
+            formatBRL(
+              state.discount
+            );
+
+        } else {
+          elements.discountRow
+            .classList
+            .remove(
+              "active"
+            );
+        }
+
+
+        elements.shipping.textContent =
+          state.shippingData
+            ? (
+                state.shipping === 0
+                  ? "GRÁTIS"
+                  : formatBRL(
+                      state.shipping
+                    )
+              )
+            : "NÃO CALCULADO";
+
+
+        elements.total.textContent =
+          formatBRL(
+            state.total
+          );
+
+
+        if (
+          state.couponCode
+        ) {
+          elements.couponInfo.hidden =
+            false;
+
+
+          elements.couponInfo.textContent =
+            `CUPOM ${state.couponCode} APLICADO — 10% DE DESCONTO`;
+
+
+          elements.benefitInfo.textContent =
+            "CUPOM DE DESCONTO NÃO É CUMULATIVO COM FRETE GRÁTIS.";
+
+        } else {
+          elements.couponInfo.hidden =
+            true;
+
+
+          elements.benefitInfo.textContent =
+            "FRETE GRÁTIS EM COMPRAS ACIMA DE R$500.";
+        }
+      }
+
 
       function fillSavedShipping() {
-
         const shipping =
           state.shippingData;
 
 
         if (!shipping) {
-
-          elements.shippingMessage
-            .textContent =
+          elements.shippingMessage.textContent =
             "VOLTE AO CARRINHO E CALCULE O FRETE ANTES DE CONTINUAR.";
 
           return;
-
         }
 
 
-        if (
-          shipping.cep
-        ) {
-
-          elements.cep.value =
-            formatCEP(
-              shipping.cep
-            );
-
-        }
+        elements.cep.value =
+          formatCEP(
+            shipping.cep
+          );
 
 
-        if (
-          shipping.street
-        ) {
-
-          elements.address.value =
-            shipping.street;
-
-        }
+        elements.address.value =
+          shipping.street ||
+          "";
 
 
-        if (
-          shipping.district
-        ) {
-
-          elements.district.value =
-            shipping.district;
-
-        }
+        elements.district.value =
+          shipping.district ||
+          "";
 
 
-        if (
-          shipping.city
-        ) {
-
-          elements.city.value =
-            shipping.city;
-
-        }
+        elements.city.value =
+          shipping.city ||
+          "";
 
 
-        if (
-          shipping.state
-        ) {
-
-          elements.state.value =
-            shipping.state;
-
-        }
+        elements.state.value =
+          shipping.state ||
+          "";
 
 
-        elements.shippingMessage
-          .textContent =
-          "FRETE CALCULADO PARA " +
-          (
-            shipping.city ||
-            ""
-          ) +
-          (
-            shipping.state
-              ? " / " +
-                shipping.state
-              : ""
-          ) +
-          ".";
-
+        elements.shippingMessage.textContent =
+          `FRETE CALCULADO PARA ${shipping.city || ""} / ${shipping.state || ""}.`;
       }
 
 
-      /* ===================================================
-         PRODUTOS
-      =================================================== */
+      function renderProducts() {
 
-      function renderCart() {
-
-        elements.products
-          .innerHTML =
+        elements.products.innerHTML =
           "";
 
 
@@ -2464,14 +2390,14 @@
               "checkout-product";
 
 
-            const image =
-              getItemImage(
+            const name =
+              getItemName(
                 item
               );
 
 
-            const name =
-              getItemName(
+            const image =
+              getItemImage(
                 item
               );
 
@@ -2500,28 +2426,24 @@
               );
 
 
-            const imageHTML =
-              image
-                ? `
-                  <img
-                    src="${escapeHTML(image)}"
-                    alt="${escapeHTML(name)}"
-                    class="checkout-product-image"
-                  >
-                `
-                : `
-                  <div
-                    class="checkout-product-image"
-                  ></div>
-                `;
-
-
             row.innerHTML = `
 
-              ${imageHTML}
+              ${
+                image
+                  ? `
+                    <img
+                      src="${escapeHTML(image)}"
+                      alt="${escapeHTML(name)}"
+                      class="checkout-product-image"
+                    >
+                  `
+                  : `
+                    <div class="checkout-product-image"></div>
+                  `
+              }
 
 
-              <div class="checkout-product-content">
+              <div>
 
                 <h3 class="checkout-product-name">
                   ${escapeHTML(name)}
@@ -2576,220 +2498,55 @@
 
           }
         );
-
       }
 
-
-      /* ===================================================
-         TOTAIS
-      =================================================== */
-
-      function renderTotals() {
-
-        elements.subtotal
-          .textContent =
-          formatBRL(
-            state.subtotal
-          );
-
-
-        if (
-          state.discount > 0
-        ) {
-
-          elements.discountRow
-            .classList
-            .add(
-              "active"
-            );
-
-
-          elements.discount
-            .textContent =
-            "- " +
-            formatBRL(
-              state.discount
-            );
-
-        } else {
-
-          elements.discountRow
-            .classList
-            .remove(
-              "active"
-            );
-
-        }
-
-
-        if (
-          state.shippingData
-        ) {
-
-          elements.shipping
-            .textContent =
-            state.shipping === 0
-              ? "GRÁTIS"
-              : formatBRL(
-                  state.shipping
-                );
-
-        } else {
-
-          elements.shipping
-            .textContent =
-            "NÃO CALCULADO";
-
-        }
-
-
-        elements.total
-          .textContent =
-          formatBRL(
-            state.total
-          );
-
-
-        if (
-          state.couponCode
-        ) {
-
-          elements.couponInfo.hidden =
-            false;
-
-
-          elements.couponInfo
-            .textContent =
-            "CUPOM " +
-            state.couponCode +
-            " APLICADO — 10% DE DESCONTO";
-
-
-          elements.benefitInfo
-            .textContent =
-            "CUPOM DE DESCONTO NÃO É CUMULATIVO COM FRETE GRÁTIS.";
-
-        } else {
-
-          elements.couponInfo.hidden =
-            true;
-
-
-          elements.couponInfo
-            .textContent =
-            "";
-
-
-          elements.benefitInfo
-            .textContent =
-            "FRETE GRÁTIS EM COMPRAS ACIMA DE R$500.";
-
-        }
-
-      }
-
-
-      /* ===================================================
-         CARRINHO VAZIO
-      =================================================== */
-
-      function renderEmptyCart() {
-
-        elements.checkoutRoot
-          .innerHTML = `
-
-            <div class="checkout-empty">
-
-              <h1>
-                SEU CARRINHO ESTÁ VAZIO
-              </h1>
-
-
-              <a href="loja.html">
-                VOLTAR PARA A LOJA
-              </a>
-
-            </div>
-
-          `;
-
-      }
-
-
-      /* ===================================================
-         MENSAGENS
-      =================================================== */
 
       function showMessage(
         text,
         type = ""
       ) {
 
-        elements.message
-          .textContent =
+        elements.message.textContent =
           text;
 
 
-        elements.message
-          .className =
+        elements.message.className =
           "checkout-message active";
 
 
         if (type) {
-
           elements.message
             .classList
             .add(
               type
             );
-
         }
-
       }
 
 
       function clearMessage() {
-
-        elements.message
-          .textContent =
+        elements.message.textContent =
           "";
 
 
-        elements.message
-          .className =
+        elements.message.className =
           "checkout-message";
-
       }
 
-
-      /* ===================================================
-         VALIDAÇÃO
-      =================================================== */
 
       function validateCheckout() {
 
         const required = [
-
           elements.email,
-
           elements.firstName,
-
           elements.lastName,
-
           elements.phone,
-
           elements.cep,
-
           elements.state,
-
           elements.address,
-
           elements.number,
-
           elements.district,
-
           elements.city
-
         ];
 
 
@@ -2797,27 +2554,23 @@
           const field
           of required
         ) {
-
           if (
             !String(
               field.value ||
               ""
             ).trim()
           ) {
-
             field.focus();
 
 
             showMessage(
-              "PREENCHA TODOS OS CAMPOS OBRIGATÓRIOS ANTES DE CONTINUAR.",
+              "PREENCHA TODOS OS CAMPOS OBRIGATÓRIOS.",
               "error"
             );
 
 
             return false;
-
           }
-
         }
 
 
@@ -2825,7 +2578,6 @@
           !elements.email
             .checkValidity()
         ) {
-
           elements.email.focus();
 
 
@@ -2836,277 +2588,187 @@
 
 
           return false;
-
-        }
-
-
-        if (
-          onlyNumbers(
-            elements.cep.value
-          ).length !== 8
-        ) {
-
-          elements.cep.focus();
-
-
-          showMessage(
-            "INFORME UM CEP VÁLIDO.",
-            "error"
-          );
-
-
-          return false;
-
         }
 
 
         if (
           !state.shippingData
         ) {
-
           showMessage(
-            "VOLTE AO CARRINHO E CALCULE O FRETE ANTES DE CONTINUAR.",
+            "CALCULE O FRETE NO CARRINHO ANTES DE CONTINUAR.",
             "error"
           );
 
 
           return false;
-
-        }
-
-
-        if (
-          !state.cart.length ||
-          state.total <= 0
-        ) {
-
-          showMessage(
-            "NÃO FOI POSSÍVEL CALCULAR O PEDIDO.",
-            "error"
-          );
-
-
-          return false;
-
         }
 
 
         return true;
-
       }
 
 
-      /* ===================================================
-         CLIENTE
-      =================================================== */
-
       function getCustomerData() {
-
         return {
-
           email:
             elements.email.value
               .trim(),
-
 
           firstName:
             elements.firstName.value
               .trim(),
 
-
           lastName:
             elements.lastName.value
               .trim(),
-
 
           phone:
             onlyNumbers(
               elements.phone.value
             ),
 
-
           address: {
-
             cep:
               onlyNumbers(
                 elements.cep.value
               ),
 
-
             state:
               elements.state.value,
-
 
             city:
               elements.city.value
                 .trim(),
 
-
             street:
               elements.address.value
                 .trim(),
-
 
             number:
               elements.number.value
                 .trim(),
 
-
             complement:
               elements.complement.value
                 .trim(),
 
-
             district:
               elements.district.value
                 .trim()
-
           }
-
         };
-
       }
 
 
-      /* ===================================================
-         PAYLOAD
-      =================================================== */
-
-      function getCheckoutPayload(
+      function buildCheckoutPayload(
         selectedPaymentMethod,
         formData
       ) {
 
         return {
-
           selectedPaymentMethod,
 
           formData,
 
-
           customer:
             getCustomerData(),
-
 
           cart:
             state.cart.map(
               item => ({
-
                 product:
                   getItemName(
                     item
                   ),
-
 
                 fragrance:
                   getItemFragrance(
                     item
                   ),
 
-
                 size:
                   getItemSize(
                     item
                   ),
 
-
                 quantity:
                   getItemQuantity(
                     item
                   )
-
               })
             ),
-
 
           coupon:
             state.couponCode,
 
-
           shipping: {
-
             cep:
               state.shippingData
                 ?.cep ||
               "",
-
 
             city:
               state.shippingData
                 ?.city ||
               "",
 
-
             state:
               state.shippingData
                 ?.state ||
               "",
-
 
             region:
               state.shippingData
                 ?.region ||
               "",
 
-
             originalPrice:
               Number(
                 state.shippingData
-                  ?.originalPrice ||
+                  ?.originalPrice ??
+                state.shippingData
+                  ?.price ??
                 0
-              ),
-
-
-            price:
-              Number(
-                state.shipping
-                  .toFixed(2)
               )
-
-          },
-
-
-          totals: {
-
-            subtotal:
-              Number(
-                state.subtotal
-                  .toFixed(2)
-              ),
-
-
-            discount:
-              Number(
-                state.discount
-                  .toFixed(2)
-              ),
-
-
-            shipping:
-              Number(
-                state.shipping
-                  .toFixed(2)
-              ),
-
-
-            total:
-              Number(
-                state.total
-                  .toFixed(2)
-              )
-
           }
-
         };
-
       }
 
 
-      /* ===================================================
-         MERCADO PAGO
-      =================================================== */
+      async function loadConfig() {
 
-      async function destroyPaymentBrick() {
+        const response =
+          await fetch(
+            "/api/config",
+            {
+              headers: {
+                Accept:
+                  "application/json"
+              }
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (
+          !response.ok ||
+          !data.publicKey
+        ) {
+          throw new Error(
+            data.error ||
+            "PUBLIC KEY NÃO ENCONTRADA."
+          );
+        }
+
+
+        return data;
+      }
+
+
+      async function destroyBrick() {
 
         if (
           state.paymentBrickController &&
@@ -3115,24 +2777,16 @@
             .unmount ===
             "function"
         ) {
-
           try {
-
             await state
               .paymentBrickController
               .unmount();
-
           } catch {}
-
         }
 
 
         state.paymentBrickController =
           null;
-
-
-        state.paymentRendered =
-          false;
 
 
         const container =
@@ -3142,57 +2796,79 @@
 
 
         if (container) {
-
           container.innerHTML =
             "";
-
         }
-
       }
 
 
-      async function loadMercadoPagoConfig() {
+      function showPixResult(
+        result
+      ) {
 
-        const response =
-          await fetch(
-            "/api/config",
-            {
-              method: "GET",
-
-              headers: {
-                Accept:
-                  "application/json"
-              }
-            }
-          );
+        const qrCode =
+          result.qrCode ||
+          "";
 
 
-        if (!response.ok) {
+        const base64 =
+          result.qrCodeBase64 ||
+          "";
 
-          throw new Error(
-            "NÃO FOI POSSÍVEL CARREGAR A CONFIGURAÇÃO DE PAGAMENTO."
-          );
 
+        if (base64) {
+          elements.pixQrImage.src =
+            base64.startsWith(
+              "data:"
+            )
+              ? base64
+              : (
+                  "data:image/png;base64," +
+                  base64
+                );
+
+
+          elements.pixQrImage.hidden =
+            false;
+
+        } else {
+          elements.pixQrImage.hidden =
+            true;
         }
 
 
-        const data =
-          await response.json();
+        elements.pixCode.value =
+          qrCode;
 
 
-        if (
-          !data.publicKey
-        ) {
-
-          throw new Error(
-            "PUBLIC KEY NÃO ENCONTRADA."
+        elements.pixResult
+          .classList
+          .add(
+            "active"
           );
 
-        }
+
+        elements.paymentBox
+          .classList
+          .remove(
+            "active"
+          );
 
 
-        return data;
+        showMessage(
+          "PIX GERADO. O PEDIDO FOI REGISTRADO E ESTÁ AGUARDANDO PAGAMENTO.",
+          "success"
+        );
 
+
+        elements.pixResult
+          .scrollIntoView({
+            behavior:
+              "smooth",
+
+            block:
+              "center"
+          });
       }
 
 
@@ -3201,43 +2877,37 @@
         if (
           !validateCheckout()
         ) {
-
           return;
-
         }
 
 
         clearMessage();
 
 
-        elements.continueButton
-          .disabled =
+        elements.continueButton.disabled =
           true;
 
 
-        elements.continueButton
-          .textContent =
+        elements.continueButton.textContent =
           "CARREGANDO PAGAMENTO...";
 
 
         try {
 
-          await destroyPaymentBrick();
+          await destroyBrick();
 
 
           const config =
-            await loadMercadoPagoConfig();
+            await loadConfig();
 
 
           if (
             typeof MercadoPago ===
             "undefined"
           ) {
-
             throw new Error(
-              "O MERCADO PAGO NÃO CARREGOU CORRETAMENTE."
+              "O MERCADO PAGO NÃO CARREGOU."
             );
-
           }
 
 
@@ -3251,8 +2921,14 @@
             );
 
 
-          const bricksBuilder =
+          const builder =
             mp.bricks();
+
+
+          const maxInstallments =
+            getMaximumInstallments(
+              state.total
+            );
 
 
           const settings = {
@@ -3265,13 +2941,10 @@
                     .toFixed(2)
                 ),
 
-
               payer: {
-
                 email:
                   elements.email.value
                     .trim()
-
               }
 
             },
@@ -3284,22 +2957,15 @@
                 creditCard:
                   "all",
 
-
                 bankTransfer: [
                   "pix"
-                ]
+                ],
 
-              },
+                minInstallments:
+                  1,
 
-
-              visual: {
-
-                style: {
-
-                  theme:
-                    "default"
-
-                }
+                maxInstallments:
+                  maxInstallments
 
               }
 
@@ -3309,10 +2975,6 @@
             callbacks: {
 
               onReady: () => {
-
-                state.paymentRendered =
-                  true;
-
 
                 elements.paymentBox
                   .classList
@@ -3327,16 +2989,6 @@
 
 
                 clearMessage();
-
-
-                elements.paymentBox
-                  .scrollIntoView({
-                    behavior:
-                      "smooth",
-
-                    block:
-                      "start"
-                  });
 
               },
 
@@ -3355,7 +3007,7 @@
                     try {
 
                       const payload =
-                        getCheckoutPayload(
+                        buildCheckoutPayload(
                           selectedPaymentMethod,
                           formData
                         );
@@ -3365,24 +3017,18 @@
                         await fetch(
                           "/api/process-payment",
                           {
-
                             method:
                               "POST",
 
-
                             headers: {
-
                               "Content-Type":
                                 "application/json"
-
                             },
-
 
                             body:
                               JSON.stringify(
                                 payload
                               )
-
                           }
                         );
 
@@ -3394,36 +3040,47 @@
                       if (
                         !response.ok
                       ) {
-
                         throw new Error(
-                          result.message ||
                           result.error ||
+                          result.message ||
                           "NÃO FOI POSSÍVEL CONCLUIR O PAGAMENTO."
                         );
+                      }
 
+
+                      const method =
+                        String(
+                          result.paymentMethod ||
+                          formData
+                            ?.payment_method_id ||
+                          ""
+                        ).toLowerCase();
+
+
+                      if (
+                        method === "pix" ||
+                        result.qrCode ||
+                        result.qrCodeBase64
+                      ) {
+                        showPixResult(
+                          result
+                        );
+
+
+                        resolve();
+
+                        return;
                       }
 
 
                       if (
                         result.status ===
-                          "approved" ||
+                          "processed" ||
                         result.status ===
-                          "processed"
+                          "approved"
                       ) {
 
-                        localStorage.removeItem(
-                          CART_STORAGE_KEY
-                        );
-
-
-                        localStorage.removeItem(
-                          COUPON_STORAGE_KEY
-                        );
-
-
-                        localStorage.removeItem(
-                          SHIPPING_STORAGE_KEY
-                        );
+                        clearCheckoutStorage();
 
 
                         showMessage(
@@ -3439,15 +3096,18 @@
                           () => {
 
                             window.location.href =
-                              "pedido-confirmado.html";
+                              "pedido-confirmado.html?order=" +
+                              encodeURIComponent(
+                                result.orderCode ||
+                                ""
+                              );
 
                           },
-                          1200
+                          1000
                         );
 
 
                         return;
-
                       }
 
 
@@ -3455,36 +3115,20 @@
                         result.status ===
                           "pending" ||
                         result.status ===
-                          "in_process"
+                          "in_process" ||
+                        result.status ===
+                          "created"
                       ) {
 
-                        resolve();
-
-
-                        if (
-                          result.paymentId
-                        ) {
-
-                          window.location.href =
-                            "pedido-confirmado.html?payment_id=" +
-                            encodeURIComponent(
-                              result.paymentId
-                            );
-
-
-                          return;
-
-                        }
-
-
                         showMessage(
-                          "PAGAMENTO CRIADO. AGUARDANDO CONFIRMAÇÃO.",
+                          "PAGAMENTO REGISTRADO E AGUARDANDO CONFIRMAÇÃO.",
                           "success"
                         );
 
 
-                        return;
+                        resolve();
 
+                        return;
                       }
 
 
@@ -3529,7 +3173,7 @@
 
 
                 showMessage(
-                  "NÃO FOI POSSÍVEL CARREGAR OU PROCESSAR O PAGAMENTO. TENTE NOVAMENTE.",
+                  "NÃO FOI POSSÍVEL CARREGAR O PAGAMENTO. TENTE NOVAMENTE.",
                   "error"
                 );
 
@@ -3541,7 +3185,7 @@
 
 
           state.paymentBrickController =
-            await bricksBuilder.create(
+            await builder.create(
               "payment",
               "paymentBrick_container",
               settings
@@ -3557,18 +3201,17 @@
 
 
           showMessage(
-            "A CONEXÃO COM O MERCADO PAGO AINDA PRECISA SER PUBLICADA NO CLOUDFLARE.",
+            error.message ||
+            "NÃO FOI POSSÍVEL CONECTAR AO MERCADO PAGO.",
             "error"
           );
 
 
-          elements.continueButton
-            .disabled =
+          elements.continueButton.disabled =
             false;
 
 
-          elements.continueButton
-            .textContent =
+          elements.continueButton.textContent =
             "CONTINUAR PARA PAGAMENTO";
 
         }
@@ -3576,9 +3219,64 @@
       }
 
 
-      /* ===================================================
-         EVENTOS
-      =================================================== */
+      function clearCheckoutStorage() {
+
+        localStorage.removeItem(
+          CART_STORAGE_KEY
+        );
+
+
+        localStorage.removeItem(
+          COUPON_STORAGE_KEY
+        );
+
+
+        localStorage.removeItem(
+          SHIPPING_STORAGE_KEY
+        );
+      }
+
+
+      function renderEmptyCart() {
+
+        elements.root.innerHTML = `
+
+          <div
+            style="
+              padding:70px 20px;
+              text-align:center;
+              font-family:
+                'Copperplate',
+                'Copperplate Gothic Light',
+                serif;
+            "
+          >
+
+            <h1
+              style="
+                font-size:20px;
+                font-weight:400;
+              "
+            >
+              SEU CARRINHO ESTÁ VAZIO
+            </h1>
+
+
+            <a
+              href="loja.html"
+              style="
+                color:#111;
+                font-size:10px;
+              "
+            >
+              VOLTAR PARA A LOJA
+            </a>
+
+          </div>
+
+        `;
+      }
+
 
       function attachEvents() {
 
@@ -3616,12 +3314,60 @@
             renderPaymentBrick
           );
 
+
+        elements.pixCopyButton
+          .addEventListener(
+            "click",
+            async () => {
+
+              const value =
+                elements.pixCode
+                  .value
+                  .trim();
+
+
+              if (!value) {
+                return;
+              }
+
+
+              try {
+
+                await navigator
+                  .clipboard
+                  .writeText(
+                    value
+                  );
+
+
+                elements.pixCopyButton
+                  .textContent =
+                  "CÓDIGO COPIADO";
+
+
+                setTimeout(
+                  () => {
+
+                    elements.pixCopyButton
+                      .textContent =
+                      "COPIAR CÓDIGO PIX";
+
+                  },
+                  1500
+                );
+
+              } catch {
+
+                elements.pixCode
+                  .select();
+
+              }
+
+            }
+          );
+
       }
 
-
-      /* ===================================================
-         INICIAR
-      =================================================== */
 
       function init() {
 
@@ -3640,15 +3386,13 @@
         if (
           !state.cart.length
         ) {
-
           renderEmptyCart();
 
           return;
-
         }
 
 
-        renderCart();
+        renderProducts();
 
 
         fillSavedShipping();
@@ -3658,7 +3402,6 @@
 
 
         attachEvents();
-
       }
 
 
