@@ -2,17 +2,11 @@
 <html lang="pt-BR">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="Contato e atendimento OJOBOSCO"
   >
 
   <title>Contato — OJOBOSCO</title>
@@ -23,43 +17,75 @@
   >
 
   <style>
-
     :root {
-      --page-font:
+      --fonte:
         "Copperplate",
         "Copperplate Gothic Light",
         "Copperplate Gothic",
         serif;
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #ffffff;
-      color: #111111;
-      font-family: var(--page-font);
+      background: #fff;
+      color: #111;
+      font-family: var(--fonte);
+    }
+
+    .institutional-header {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 4vw;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .institutional-header-left,
+    .institutional-header-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .institutional-header-right {
+      justify-content: flex-end;
+    }
+
+    .institutional-header a {
+      color: #111;
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+
+    .institutional-logo {
+      font-size: 12px !important;
     }
 
     .institutional-page {
-      min-height: 100vh;
-      padding: 150px 6vw 120px;
+      min-height: 75vh;
+      padding: 120px 6vw 130px;
     }
 
     .institutional-inner {
-      width: 100%;
       max-width: 900px;
       margin: 0 auto;
     }
 
     .institutional-title {
-      margin: 0 0 65px;
-      font-size: 28px;
+      margin: 0 0 70px;
+      font-size: 26px;
       font-weight: 400;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: .06em;
     }
 
     .institutional-block {
-      padding: 32px 0;
+      padding: 34px 0;
       border-top: 1px solid #d6d6d6;
     }
 
@@ -68,51 +94,82 @@
     }
 
     .institutional-block h2 {
-      margin: 0 0 18px;
-      font-size: 11px;
+      margin: 0 0 20px;
+      font-size: 10px;
       font-weight: 400;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
+      letter-spacing: .09em;
     }
 
     .institutional-block p,
     .institutional-block a {
       margin: 0 0 8px;
-      color: #111111;
-      font-size: 12px;
+      color: #111;
+      font-size: 11px;
       line-height: 1.9;
-      letter-spacing: 0.03em;
-      text-decoration: none;
+      letter-spacing: .03em;
     }
 
     .institutional-block a {
-      border-bottom: 1px solid #111111;
+      text-decoration: none;
+      border-bottom: 1px solid #111;
     }
 
     @media (max-width: 700px) {
+      .institutional-header {
+        min-height: 58px;
+        grid-template-columns: 1fr auto;
+        padding: 0 20px;
+      }
+
+      .institutional-header-left {
+        display: none;
+      }
 
       .institutional-page {
-        padding: 110px 22px 80px;
+        padding: 85px 22px 90px;
       }
 
       .institutional-title {
-        margin-bottom: 45px;
-        font-size: 21px;
+        margin-bottom: 48px;
+        font-size: 20px;
       }
-
-      .institutional-block p,
-      .institutional-block a {
-        font-size: 11px;
-      }
-
     }
-
   </style>
-
 </head>
 
-
 <body>
+
+  <header class="institutional-header">
+
+    <nav class="institutional-header-left">
+      <a href="index.html">
+        UNIVERSO
+      </a>
+
+      <a href="loja.html">
+        LOJA
+      </a>
+
+      <a href="universo.html">
+        SOBRE
+      </a>
+    </nav>
+
+    <a
+      href="index.html"
+      class="institutional-logo"
+    >
+      OJOBOSCO
+    </a>
+
+    <div class="institutional-header-right">
+      <a href="carrinho.html">
+        CARRINHO
+      </a>
+    </div>
+
+  </header>
+
 
   <main class="institutional-page">
 
@@ -121,7 +178,6 @@
       <h1 class="institutional-title">
         ATENDIMENTO
       </h1>
-
 
       <section class="institutional-block">
 
@@ -139,7 +195,6 @@
 
       </section>
 
-
       <section class="institutional-block">
 
         <h2>
@@ -156,7 +211,6 @@
 
       </section>
 
-
       <section class="institutional-block">
 
         <h2>
@@ -172,6 +226,8 @@
     </div>
 
   </main>
+
+  <script src="script.js"></script>
 
 </body>
 
