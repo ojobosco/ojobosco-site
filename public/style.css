@@ -42,6 +42,11 @@ body {
 }
 
 
+body.menu-open {
+  overflow: hidden;
+}
+
+
 a {
   color: inherit;
   text-decoration: none;
@@ -175,7 +180,8 @@ img {
 }
 
 
-.side-menu.open {
+.side-menu.open,
+.side-menu.active {
   transform: translateY(0);
 }
 
