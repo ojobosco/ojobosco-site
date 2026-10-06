@@ -2,12 +2,6 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    /*
-     * =====================================================
-     * CORS
-     * =====================================================
-     */
-
     const allowedOrigins = new Set([
       "https://www.ojobosco.com",
       "https://ojobosco.com",
@@ -41,11 +35,9 @@ export default {
     }
 
 
-    /*
-     * =====================================================
-     * GET /api/config
-     * =====================================================
-     */
+    /* =====================================================
+       CONFIG
+    ===================================================== */
 
     if (
       url.pathname === "/api/config" &&
@@ -73,11 +65,9 @@ export default {
     }
 
 
-    /*
-     * =====================================================
-     * POST /api/process-payment
-     * =====================================================
-     */
+    /* =====================================================
+       PROCESSAR PAGAMENTO
+    ===================================================== */
 
     if (
       url.pathname === "/api/process-payment" &&
@@ -88,6 +78,18 @@ export default {
           {
             error:
               "MERCADO_PAGO_ACCESS_TOKEN não configurado."
+          },
+          500,
+          corsHeaders
+        );
+      }
+
+
+      if (!env.DB) {
+        return json(
+          {
+            error:
+              "Banco de pedidos não conectado."
           },
           500,
           corsHeaders
@@ -116,22 +118,15 @@ export default {
         }
 
 
-        /*
-         * IMPORTANTE:
-         *
-         * Recalculamos os valores no backend.
-         * Não confiamos no total enviado pelo navegador.
-         */
-
-        const serverOrder =
+        const order =
           calculateServerOrder(body);
 
 
-        if (!serverOrder.ok) {
+        if (!order.ok) {
           return json(
             {
               error:
-                serverOrder.message
+                order.message
             },
             400,
             corsHeaders
@@ -139,33 +134,42 @@ export default {
         }
 
 
-        const selectedPaymentMethod =
-          body.selectedPaymentMethod;
+        const paymentData =
+          normalizeBrickPaymentData(
+            body
+          );
 
 
-        const formData =
-          body.formData || {};
+        const paymentValidation =
+          validatePaymentSelection(
+            paymentData,
+            order.total
+          );
 
 
-        let mercadoPagoPayload;
-
-
-        if (
-          selectedPaymentMethod === "bank_transfer" ||
-          formData.payment_method_id === "pix"
-        ) {
-          mercadoPagoPayload =
-            buildPixOrder(
-              body,
-              serverOrder
-            );
-        } else {
-          mercadoPagoPayload =
-            buildCardOrder(
-              body,
-              serverOrder
-            );
+        if (!paymentValidation.ok) {
+          return json(
+            {
+              error:
+                paymentValidation.message
+            },
+            400,
+            corsHeaders
+          );
         }
+
+
+        const externalReference =
+          createExternalReference();
+
+
+        const mercadoPagoPayload =
+          buildMercadoPagoOrder(
+            body,
+            order,
+            paymentData,
+            externalReference
+          );
 
 
         const idempotencyKey =
@@ -185,6 +189,9 @@ export default {
                 "Content-Type":
                   "application/json",
 
+                "Accept":
+                  "application/json",
+
                 "X-Idempotency-Key":
                   idempotencyKey
               },
@@ -197,19 +204,28 @@ export default {
           );
 
 
-        const mpData =
-          await mpResponse.json();
+        let mpData = {};
+
+
+        try {
+          mpData =
+            await mpResponse.json();
+        } catch {
+          mpData = {};
+        }
 
 
         if (!mpResponse.ok) {
           console.error(
             "Mercado Pago error:",
-            mpData
+            JSON.stringify(mpData)
           );
+
 
           return json(
             {
               error:
+                mpData?.message ||
                 "O Mercado Pago não conseguiu processar o pagamento.",
 
               details:
@@ -223,10 +239,36 @@ export default {
         }
 
 
-        return json(
+        const normalizedMP =
           normalizeMercadoPagoResponse(
             mpData
-          ),
+          );
+
+
+        const savedOrder =
+          await saveOrderToDatabase(
+            env.DB,
+            {
+              externalReference,
+              body,
+              order,
+              paymentData,
+              mercadoPago:
+                normalizedMP
+            }
+          );
+
+
+        return json(
+          {
+            ...normalizedMP,
+
+            internalOrderId:
+              savedOrder.id,
+
+            orderCode:
+              savedOrder.orderCode
+          },
           200,
           corsHeaders
         );
@@ -237,9 +279,11 @@ export default {
           error
         );
 
+
         return json(
           {
             error:
+              error?.message ||
               "Erro interno ao processar o pagamento."
           },
           500,
@@ -249,27 +293,20 @@ export default {
     }
 
 
-    /*
-     * =====================================================
-     * SITE ESTÁTICO
-     * =====================================================
-     */
+    /* =====================================================
+       SITE ESTÁTICO
+    ===================================================== */
 
     return env.ASSETS.fetch(request);
   }
 };
 
 
-/*
- * =========================================================
- * CATÁLOGO OFICIAL
- * =========================================================
- *
- * O frontend envia só produto,
- * fragrância, tamanho e quantidade.
- *
- * O preço é definido aqui.
- */
+/* =========================================================
+   CATÁLOGO OFICIAL
+
+   O PREÇO É RECALCULADO NO SERVIDOR.
+========================================================= */
 
 const PRODUCT_CATALOG = {
   "AROMATIZADOR|100": 179,
@@ -280,11 +317,16 @@ const PRODUCT_CATALOG = {
 
   "BIBLIOTECA OLFATIVA|5": 239,
   "BIBLIOTECA|5": 239,
+  "BIBLIOTECA OLFATIVA|": 239,
+  "BIBLIOTECA|": 239,
 
   "VELA|200": 289,
+  "VELA|": 289,
 
   "PERFUME|100": 429,
-  "CEDRO SOLAR|100": 429
+  "CEDRO SOLAR|100": 429,
+  "PERFUME|": 429,
+  "CEDRO SOLAR|": 429
 };
 
 
@@ -307,11 +349,61 @@ const SHIPPING_PRICES = {
 };
 
 
-/*
- * =========================================================
- * VALIDAÇÃO
- * =========================================================
- */
+/* =========================================================
+   PARCELAMENTO
+========================================================= */
+
+function getMaximumInstallments(total) {
+  const value =
+    Number(total || 0);
+
+
+  if (
+    !Number.isFinite(value) ||
+    value <= 0
+  ) {
+    return 1;
+  }
+
+
+  if (value <= 300) {
+    return 2;
+  }
+
+
+  if (value <= 400) {
+    return 3;
+  }
+
+
+  if (value <= 500) {
+    return 4;
+  }
+
+
+  const installments =
+    4 +
+    Math.floor(
+      (
+        value -
+        500
+      ) / 100
+    );
+
+
+  return Math.min(
+    12,
+    Math.max(
+      1,
+      installments
+    )
+  );
+}
+
+
+/* =========================================================
+   VALIDAÇÃO
+========================================================= */
 
 function validateRequest(body) {
   if (
@@ -340,12 +432,15 @@ function validateRequest(body) {
 
   if (
     !body.customer ||
-    !body.customer.email
+    !String(
+      body.customer.email ||
+      ""
+    ).trim()
   ) {
     return {
       ok: false,
       message:
-        "Dados do cliente incompletos."
+        "E-mail do cliente não informado."
     };
   }
 
@@ -368,15 +463,12 @@ function validateRequest(body) {
 }
 
 
-/*
- * =========================================================
- * CALCULAR PEDIDO NO SERVIDOR
- * =========================================================
- */
+/* =========================================================
+   CÁLCULO DO PEDIDO
+========================================================= */
 
 function calculateServerOrder(body) {
   let subtotal = 0;
-
 
   const normalizedItems = [];
 
@@ -404,9 +496,9 @@ function calculateServerOrder(body) {
 
 
     if (
-      !quantity ||
+      !Number.isInteger(quantity) ||
       quantity < 1 ||
-      !Number.isInteger(quantity)
+      quantity > 50
     ) {
       return {
         ok: false,
@@ -426,11 +518,14 @@ function calculateServerOrder(body) {
       ];
 
 
-    if (!unitPrice) {
+    if (
+      unitPrice === undefined
+    ) {
       return {
         ok: false,
+
         message:
-          `Produto não reconhecido: ${item.product} ${item.size}`
+          `Produto não reconhecido: ${item.product} ${item.size || ""}`.trim()
       };
     }
 
@@ -442,24 +537,46 @@ function calculateServerOrder(body) {
 
     normalizedItems.push({
       product:
-        item.product,
+        String(
+          item.product ||
+          ""
+        ).trim(),
 
       fragrance:
-        item.fragrance || "",
+        String(
+          item.fragrance ||
+          ""
+        ).trim(),
 
       size:
-        item.size || "",
+        String(
+          item.size ||
+          ""
+        ).trim(),
 
       quantity,
 
-      unitPrice
+      unitPrice,
+
+      totalPrice:
+        roundMoney(
+          unitPrice *
+          quantity
+        )
     });
   }
 
 
+  subtotal =
+    roundMoney(
+      subtotal
+    );
+
+
   const couponCode =
     normalizeText(
-      body.coupon || ""
+      body.coupon ||
+      ""
     );
 
 
@@ -470,8 +587,10 @@ function calculateServerOrder(body) {
 
 
   const discount =
-    subtotal *
-    couponRate;
+    roundMoney(
+      subtotal *
+      couponRate
+    );
 
 
   const region =
@@ -499,14 +618,15 @@ function calculateServerOrder(body) {
 
 
   /*
-   * REGRA:
-   *
-   * COM CUPOM:
-   * desconto + frete normal.
-   *
-   * SEM CUPOM:
-   * acima de R$500 = frete grátis.
-   */
+    REGRA OJOBOSCO:
+
+    COM CUPOM:
+    desconto + frete normal.
+
+    SEM CUPOM:
+    subtotal >= 500
+    = frete grátis.
+  */
 
   let shipping;
 
@@ -525,6 +645,12 @@ function calculateServerOrder(body) {
   }
 
 
+  shipping =
+    roundMoney(
+      shipping
+    );
+
+
   const total =
     roundMoney(
       subtotal -
@@ -539,20 +665,11 @@ function calculateServerOrder(body) {
     items:
       normalizedItems,
 
-    subtotal:
-      roundMoney(
-        subtotal
-      ),
+    subtotal,
 
-    discount:
-      roundMoney(
-        discount
-      ),
+    discount,
 
-    shipping:
-      roundMoney(
-        shipping
-      ),
+    shipping,
 
     total,
 
@@ -564,84 +681,50 @@ function calculateServerOrder(body) {
 }
 
 
-/*
- * =========================================================
- * ORDER PIX
- * =========================================================
- */
+/* =========================================================
+   DADOS DO PAYMENT BRICK
+========================================================= */
 
-function buildPixOrder(
-  body,
-  order
-) {
-  return {
-    type:
-      "online",
-
-    processing_mode:
-      "automatic",
-
-    total_amount:
-      formatAmount(
-        order.total
-      ),
-
-    external_reference:
-      createExternalReference(),
-
-    payer: {
-      email:
-        body.customer.email,
-
-      first_name:
-        body.customer.firstName || "",
-
-      last_name:
-        body.customer.lastName || ""
-    },
-
-    transactions: {
-      payments: [
-        {
-          amount:
-            formatAmount(
-              order.total
-            ),
-
-          payment_method: {
-            id:
-              "pix",
-
-            type:
-              "bank_transfer"
-          }
-        }
-      ]
-    }
-  };
-}
-
-
-/*
- * =========================================================
- * ORDER CARTÃO
- * =========================================================
- */
-
-function buildCardOrder(
-  body,
-  order
+function normalizeBrickPaymentData(
+  body
 ) {
   const form =
-    body.formData || {};
+    body.formData ||
+    {};
 
 
-  const token =
-    form.token;
+  const selected =
+    normalizeText(
+      body.selectedPaymentMethod ||
+      ""
+    );
 
 
   const paymentMethodId =
-    form.payment_method_id;
+    String(
+      form.payment_method_id ||
+      form.paymentMethodId ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  const type =
+    String(
+      form.payment_method_type ||
+      form.paymentMethodType ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  const token =
+    String(
+      form.token ||
+      ""
+    ).trim();
 
 
   const installments =
@@ -651,17 +734,174 @@ function buildCardOrder(
     );
 
 
-  if (!token) {
-    throw new Error(
-      "Token do cartão não recebido."
-    );
+  const isPix =
+    paymentMethodId === "pix" ||
+    selected === "PIX" ||
+    selected === "BANK_TRANSFER" ||
+    type === "bank_transfer";
+
+
+  return {
+    isPix,
+
+    paymentMethodId:
+      isPix
+        ? "pix"
+        : paymentMethodId,
+
+    paymentMethodType:
+      isPix
+        ? "bank_transfer"
+        : (
+            type ||
+            "credit_card"
+          ),
+
+    token,
+
+    installments:
+      Number.isInteger(
+        installments
+      )
+        ? installments
+        : 1
+  };
+}
+
+
+function validatePaymentSelection(
+  payment,
+  total
+) {
+  if (payment.isPix) {
+    return {
+      ok: true
+    };
   }
 
 
-  if (!paymentMethodId) {
-    throw new Error(
-      "Método de pagamento não recebido."
+  if (!payment.token) {
+    return {
+      ok: false,
+      message:
+        "Token do cartão não recebido."
+    };
+  }
+
+
+  if (
+    !payment.paymentMethodId
+  ) {
+    return {
+      ok: false,
+      message:
+        "Bandeira do cartão não recebida."
+    };
+  }
+
+
+  const maxInstallments =
+    getMaximumInstallments(
+      total
     );
+
+
+  if (
+    payment.installments < 1 ||
+    payment.installments >
+      maxInstallments
+  ) {
+    return {
+      ok: false,
+      message:
+        `Número de parcelas inválido. Máximo permitido: ${maxInstallments}x.`
+    };
+  }
+
+
+  return {
+    ok: true
+  };
+}
+
+
+/* =========================================================
+   MERCADO PAGO ORDER
+========================================================= */
+
+function buildMercadoPagoOrder(
+  body,
+  order,
+  payment,
+  externalReference
+) {
+  const customer =
+    body.customer ||
+    {};
+
+
+  const payer = {
+    email:
+      String(
+        customer.email ||
+        ""
+      ).trim()
+  };
+
+
+  if (customer.firstName) {
+    payer.first_name =
+      String(
+        customer.firstName
+      ).trim();
+  }
+
+
+  if (customer.lastName) {
+    payer.last_name =
+      String(
+        customer.lastName
+      ).trim();
+  }
+
+
+  if (payment.isPix) {
+    return {
+      type:
+        "online",
+
+      processing_mode:
+        "automatic",
+
+      total_amount:
+        formatAmount(
+          order.total
+        ),
+
+      external_reference:
+        externalReference,
+
+      payer,
+
+      transactions: {
+        payments: [
+          {
+            amount:
+              formatAmount(
+                order.total
+              ),
+
+            payment_method: {
+              id:
+                "pix",
+
+              type:
+                "bank_transfer"
+            }
+          }
+        ]
+      }
+    };
   }
 
 
@@ -678,18 +918,9 @@ function buildCardOrder(
       ),
 
     external_reference:
-      createExternalReference(),
+      externalReference,
 
-    payer: {
-      email:
-        body.customer.email,
-
-      first_name:
-        body.customer.firstName || "",
-
-      last_name:
-        body.customer.lastName || ""
-    },
+    payer,
 
     transactions: {
       payments: [
@@ -701,16 +932,20 @@ function buildCardOrder(
 
           payment_method: {
             id:
-              paymentMethodId,
+              payment
+                .paymentMethodId,
 
             type:
+              payment
+                .paymentMethodType ||
               "credit_card",
 
-            token
-          },
+            token:
+              payment.token,
 
-          installments:
-            installments
+            installments:
+              payment.installments
+          }
         }
       ]
     }
@@ -718,11 +953,9 @@ function buildCardOrder(
 }
 
 
-/*
- * =========================================================
- * RESPOSTA DO MERCADO PAGO
- * =========================================================
- */
+/* =========================================================
+   RESPOSTA DO MERCADO PAGO
+========================================================= */
 
 function normalizeMercadoPagoResponse(
   data
@@ -734,75 +967,356 @@ function normalizeMercadoPagoResponse(
     {};
 
 
+  const paymentMethod =
+    payment
+      ?.payment_method ||
+    {};
+
+
+  const transactionData =
+    payment
+      ?.transaction_data ||
+    paymentMethod
+      ?.transaction_data ||
+    {};
+
+
   return {
     orderId:
-      data.id || null,
+      data?.id ||
+      null,
 
     paymentId:
-      payment.id || null,
+      payment?.id ||
+      null,
 
     status:
-      payment.status ||
-      data.status ||
+      payment?.status ||
+      data?.status ||
       "pending",
 
     statusDetail:
-      payment.status_detail ||
-      data.status_detail ||
+      payment?.status_detail ||
+      data?.status_detail ||
       "",
 
+    paymentMethod:
+      paymentMethod?.id ||
+      "",
+
+    paymentMethodType:
+      paymentMethod?.type ||
+      "",
+
+    installments:
+      Number(
+        paymentMethod?.installments ||
+        1
+      ),
+
     qrCode:
-      payment.payment_method
-        ?.qr_code ||
-      payment.qr_code ||
+      transactionData?.qr_code ||
+      paymentMethod?.qr_code ||
+      payment?.qr_code ||
       null,
 
     qrCodeBase64:
-      payment.payment_method
+      transactionData
         ?.qr_code_base64 ||
-      payment.qr_code_base64 ||
+      paymentMethod
+        ?.qr_code_base64 ||
+      payment
+        ?.qr_code_base64 ||
       null,
 
     ticketUrl:
-      payment.payment_method
+      transactionData
         ?.ticket_url ||
-      payment.ticket_url ||
+      paymentMethod
+        ?.ticket_url ||
+      payment?.ticket_url ||
       null
   };
 }
 
 
-/*
- * =========================================================
- * SEGURANÇA DE ERROS
- * =========================================================
- */
+/* =========================================================
+   SALVAR NO D1
+========================================================= */
+
+async function saveOrderToDatabase(
+  DB,
+  {
+    externalReference,
+    body,
+    order,
+    paymentData,
+    mercadoPago
+  }
+) {
+  const customer =
+    body.customer ||
+    {};
+
+
+  const address =
+    customer.address ||
+    {};
+
+
+  const orderCode =
+    externalReference;
+
+
+  const insertOrder =
+    await DB
+      .prepare(
+        `
+        INSERT INTO orders (
+          order_code,
+          mercado_pago_order_id,
+          mercado_pago_payment_id,
+          status,
+          status_detail,
+          payment_method,
+          installments,
+          customer_first_name,
+          customer_last_name,
+          customer_email,
+          customer_phone,
+          shipping_cep,
+          shipping_state,
+          shipping_city,
+          shipping_district,
+          shipping_street,
+          shipping_number,
+          shipping_complement,
+          coupon_code,
+          subtotal,
+          discount,
+          shipping_amount,
+          total,
+          updated_at
+        )
+        VALUES (
+          ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+          ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+          CURRENT_TIMESTAMP
+        )
+        `
+      )
+      .bind(
+        orderCode,
+
+        mercadoPago.orderId,
+
+        mercadoPago.paymentId,
+
+        mercadoPago.status,
+
+        mercadoPago.statusDetail,
+
+        mercadoPago.paymentMethod ||
+        (
+          paymentData.isPix
+            ? "pix"
+            : paymentData.paymentMethodId
+        ),
+
+        paymentData.isPix
+          ? 1
+          : paymentData.installments,
+
+        String(
+          customer.firstName ||
+          ""
+        ).trim(),
+
+        String(
+          customer.lastName ||
+          ""
+        ).trim(),
+
+        String(
+          customer.email ||
+          ""
+        ).trim(),
+
+        String(
+          customer.phone ||
+          ""
+        ).trim(),
+
+        String(
+          address.cep ||
+          body.shipping?.cep ||
+          ""
+        ).trim(),
+
+        String(
+          address.state ||
+          body.shipping?.state ||
+          ""
+        ).trim(),
+
+        String(
+          address.city ||
+          body.shipping?.city ||
+          ""
+        ).trim(),
+
+        String(
+          address.district ||
+          ""
+        ).trim(),
+
+        String(
+          address.street ||
+          ""
+        ).trim(),
+
+        String(
+          address.number ||
+          ""
+        ).trim(),
+
+        String(
+          address.complement ||
+          ""
+        ).trim(),
+
+        order.coupon,
+
+        order.subtotal,
+
+        order.discount,
+
+        order.shipping,
+
+        order.total
+      )
+      .run();
+
+
+  const orderId =
+    Number(
+      insertOrder?.meta
+        ?.last_row_id
+    );
+
+
+  if (
+    !orderId ||
+    !Number.isFinite(orderId)
+  ) {
+    throw new Error(
+      "Não foi possível salvar o pedido no banco."
+    );
+  }
+
+
+  const statements =
+    order.items.map(
+      item =>
+        DB
+          .prepare(
+            `
+            INSERT INTO order_items (
+              order_id,
+              product_name,
+              fragrance,
+              size,
+              quantity,
+              unit_price,
+              total_price
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            `
+          )
+          .bind(
+            orderId,
+
+            item.product,
+
+            item.fragrance,
+
+            item.size,
+
+            item.quantity,
+
+            item.unitPrice,
+
+            item.totalPrice
+          )
+    );
+
+
+  if (
+    statements.length
+  ) {
+    await DB.batch(
+      statements
+    );
+  }
+
+
+  return {
+    id:
+      orderId,
+
+    orderCode
+  };
+}
+
+
+/* =========================================================
+   ERROS
+========================================================= */
 
 function sanitizeMercadoPagoError(
   data
 ) {
   return {
     message:
-      data?.message || null,
+      data?.message ||
+      null,
 
-    code:
-      data?.error || null,
+    error:
+      data?.error ||
+      null,
 
     status:
-      data?.status || null
+      data?.status ||
+      null,
+
+    cause:
+      Array.isArray(
+        data?.cause
+      )
+        ? data.cause.map(
+            item => ({
+              code:
+                item?.code ||
+                null,
+
+              description:
+                item?.description ||
+                null
+            })
+          )
+        : []
   };
 }
 
 
-/*
- * =========================================================
- * HELPERS
- * =========================================================
- */
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function normalizeText(value) {
   return String(
-    value || ""
+    value ||
+    ""
   )
     .normalize("NFD")
     .replace(
@@ -820,7 +1334,8 @@ function normalizeText(value) {
 
 function onlyNumbers(value) {
   return String(
-    value || ""
+    value ||
+    ""
   ).replace(
     /\D/g,
     ""
@@ -871,6 +1386,9 @@ function json(
       headers: {
         "Content-Type":
           "application/json; charset=utf-8",
+
+        "Cache-Control":
+          "no-store",
 
         ...corsHeaders
       }
