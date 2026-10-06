@@ -11,6 +11,14 @@
     "MERCADO_PAGO_PUBLIC_KEY": "APP_USR-5682aac0-d4c8-4e99-81db-e25314fca870"
   },
 
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ojobosco-orders",
+      "database_id": "87578914-7f18-401e-a28e-e1946c229b0f"
+    }
+  ],
+
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
