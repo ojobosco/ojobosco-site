@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -10,35 +9,16 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Cedro Solar | OJOBOSCO</title>
+  <title>Cedro Solar — OJOBOSCO</title>
 
-  <meta
-    name="description"
-    content="Cedro Solar — perfume OJOBOSCO."
-  >
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
+  <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-
-
-  <!-- =====================================
-       FAIXA SUPERIOR
-  ====================================== -->
+<body data-detail-product="perfume">
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
-
-
-  <!-- =====================================
-       HEADER
-  ====================================== -->
 
   <header class="topbar">
 
@@ -46,42 +26,19 @@
       class="menu-toggle"
       id="menuToggle"
       type="button"
-      aria-label="Abrir menu"
     >
       MENU
     </button>
 
-
-    <a
-      href="index.html"
-      class="brand-top"
-    >
+    <a href="index.html" class="brand-top">
       OJOBOSCO
     </a>
 
-
     <div class="top-actions">
 
-      <a
-        href="universo.html"
-        class="nav-link"
-      >
-        UNIVERSO
-      </a>
-
-      <a
-        href="loja.html"
-        class="nav-link"
-      >
-        LOJA
-      </a>
-
-      <a
-        href="universo.html"
-        class="nav-link"
-      >
-        SOBRE
-      </a>
+      <a href="index.html" class="nav-link">UNIVERSO</a>
+      <a href="loja.html" class="nav-link">LOJA</a>
+      <a href="universo.html" class="nav-link">SOBRE</a>
 
       <button
         class="cart-link"
@@ -96,15 +53,7 @@
 
   </header>
 
-
-  <!-- =====================================
-       MENU
-  ====================================== -->
-
-  <nav
-    class="side-menu"
-    id="sideMenu"
-  >
+  <nav class="side-menu" id="sideMenu">
 
     <div class="side-menu-inner">
 
@@ -112,90 +61,64 @@
         class="close-menu"
         id="closeMenu"
         type="button"
-        aria-label="Fechar menu"
       >
         FECHAR
       </button>
 
-      <a href="universo.html">
-        UNIVERSO
-      </a>
-
-      <a href="loja.html">
-        LOJA
-      </a>
-
-      <a href="universo.html">
-        SOBRE
-      </a>
-
-      <a href="#contato">
-        CONTATO
-      </a>
+      <a href="index.html">UNIVERSO</a>
+      <a href="loja.html">LOJA</a>
+      <a href="universo.html">SOBRE</a>
+      <a href="index.html#newsletter">NEWSLETTER</a>
+      <a href="contato.html">CONTATO</a>
 
     </div>
 
   </nav>
 
-
-  <!-- =====================================
-       PRODUTO
-  ====================================== -->
-
   <main class="produto-detalhe-page">
 
-
     <section class="produto-detalhe-topo">
-
-
-      <!-- FOTO -->
 
       <div class="produto-detalhe-foto">
 
         <img
-          src="perfume-cedro-solar.jpg"
-          alt="Perfume Cedro Solar OJOBOSCO"
+          id="productDetailImage"
+          src="perfume.jpg"
+          alt="Cedro Solar OJOBOSCO"
         >
 
       </div>
 
-
-      <!-- INFORMAÇÕES -->
-
       <div class="produto-detalhe-info">
 
         <p class="produto-detalhe-tipo">
-          OJOBOSCO
+          EAU DE PARFUM
         </p>
 
-
         <h1>
-          PERFUME
+          CEDRO
+          <br>
+          SOLAR
         </h1>
-
 
         <p class="produto-fragrancia-nome">
           CEDRO SOLAR
         </p>
 
-
-        <p class="produto-detalhe-preco">
+        <p
+          class="produto-detalhe-preco"
+          id="productDetailPrice"
+        >
           R$429
         </p>
-
 
         <p class="produto-detalhe-medida">
           100 ML
         </p>
 
-
         <button
           class="produto-adicionar"
           type="button"
-          data-product-type="PERFUME"
-          data-fragrance="CEDRO SOLAR"
-          data-size="100 ML"
-          data-price="429"
         >
           ADICIONAR AO CARRINHO
         </button>
@@ -204,189 +127,84 @@
 
     </section>
 
+    <section class="produto-texto-section">
 
-    <!-- =====================================
-         CEDRO SOLAR
-         MESMO FORMATO DAS OUTRAS FRAGRÂNCIAS
-    ====================================== -->
+      <div class="produto-texto-label">
+        FRAGRÂNCIA
+      </div>
 
-    <section
-      class="fragrancia-detalhe active"
-      data-fragrance-panel="cedro-solar"
-    >
-
-      <h2>
-        CEDRO SOLAR
-      </h2>
-
-
-      <p class="fragrancia-descricao">
-
-        Uma fragrância amadeirada cítrica, que desperta
-        a sensação de janelas abertas e dias ensolarados.
-        A toranja abre a composição com uma presença
-        vibrante e levemente amarga, enquanto o jasmim
-        revela uma delicadeza floral transparente.
-        O cedro traz estrutura e uma textura seca e
-        envolvente, evocando a madeira aquecida pela luz.
-
-      </p>
-
-
-      <div class="piramide">
-
-        <h3>
-          PIRÂMIDE OLFATIVA
-        </h3>
-
+      <div class="produto-texto-corpo">
 
         <p>
-
-          <strong>
-            NOTAS DE SAÍDA:
-          </strong>
-
-          TORANJA, BERGAMOTA, MADARINA
-
+          Cedro Solar traduz a linguagem olfativa
+          da OJOBOSCO para o corpo.
         </p>
 
-
         <p>
-
-          <strong>
-            NOTAS DE CORPO:
-          </strong>
-
-          JASMIN, FLOR DE LARANJEIRA, VETIVER
-
-        </p>
-
-
-        <p>
-
-          <strong>
-            NOTAS DE FUNDO:
-          </strong>
-
-          CEDRO, SÂNDALO, ALMÍSCAR
-
+          Uma composição de presença íntima,
+          criada para permanecer próxima à pele
+          e se transformar ao longo do tempo.
         </p>
 
       </div>
 
     </section>
 
-
   </main>
 
-
-  <!-- =====================================
-       FOOTER
-  ====================================== -->
-
-  <footer
-    class="footer"
-    id="contato"
-  >
+  <footer class="footer">
 
     <div class="footer-columns">
 
-
       <div>
-
-        <p class="footer-title">
-          UNIVERSO
-        </p>
-
-        <a href="index.html">
-          INÍCIO
-        </a>
-
-        <a href="universo.html">
-          NOSSA HISTÓRIA
-        </a>
-
+        <p class="footer-title">UNIVERSO</p>
+        <a href="index.html">INÍCIO</a>
+        <a href="universo.html">NOSSA HISTÓRIA</a>
       </div>
 
-
       <div>
-
-        <p class="footer-title">
-          LOJA
-        </p>
-
-        <a href="loja.html#aromatizadores">
-          AROMATIZADOR
-        </a>
-
-        <a href="loja.html#difusores">
-          DIFUSOR
-        </a>
-
-        <a href="loja.html#biblioteca">
-          BIBLIOTECA OLFATIVA
-        </a>
-
-        <a href="loja.html#velas">
-          VELA
-        </a>
-
-        <a href="loja.html#perfume">
-          PERFUME
-        </a>
-
+        <p class="footer-title">LOJA</p>
+        <a href="loja.html#aromatizadores">AROMATIZADOR</a>
+        <a href="loja.html#difusores">DIFUSOR</a>
+        <a href="loja.html#biblioteca">BIBLIOTECA OLFATIVA</a>
+        <a href="loja.html#velas">VELA</a>
+        <a href="loja.html#perfume">PERFUME</a>
       </div>
 
-
       <div>
 
-        <p class="footer-title">
-          SOBRE
-        </p>
+        <p class="footer-title">SOBRE</p>
 
-        <a href="#contato">
-          CONTATO
-        </a>
+        <a href="contato.html">CONTATO</a>
 
-        <a href="#">
+        <a
+          href="https://www.instagram.com/ojobosco/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           INSTAGRAM
         </a>
 
-        <a href="#">
-          ENVIOS
+        <a href="trocas.html">
+          TROCAS E DEVOLUÇÕES
         </a>
 
-        <a href="#">
-          TROCAS
-        </a>
-
-        <a href="#">
+        <a href="privacidade.html">
           PRIVACIDADE
         </a>
 
       </div>
 
-
     </div>
 
-
     <div class="footer-bottom">
-
-      <span>
-        © 2026 OJOBOSCO
-      </span>
-
-      <span>
-        BRASIL
-      </span>
-
+      <span>© 2026 OJOBOSCO</span>
+      <span>BRASIL</span>
     </div>
 
   </footer>
 
-
   <script src="script.js"></script>
-
 
 </body>
 
