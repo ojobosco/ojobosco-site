@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -10,60 +9,36 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Biblioteca Olfativa | OJOBOSCO</title>
+  <title>Biblioteca Olfativa — OJOBOSCO</title>
 
-  <meta
-    name="description"
-    content="Biblioteca Olfativa OJOBOSCO."
-  >
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
+  <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-
+<body data-detail-product="biblioteca">
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
-
 
   <header class="topbar">
 
     <button
       class="menu-toggle"
       id="menuToggle"
-      aria-label="Abrir menu"
+      type="button"
     >
       MENU
     </button>
 
-
-    <a
-      href="index.html"
-      class="brand-top"
-    >
+    <a href="index.html" class="brand-top">
       OJOBOSCO
     </a>
 
-
     <div class="top-actions">
 
-      <a href="universo.html" class="nav-link">
-        UNIVERSO
-      </a>
-
-      <a href="loja.html" class="nav-link">
-        LOJA
-      </a>
-
-      <a href="universo.html" class="nav-link">
-        SOBRE
-      </a>
+      <a href="index.html" class="nav-link">UNIVERSO</a>
+      <a href="loja.html" class="nav-link">LOJA</a>
+      <a href="universo.html" class="nav-link">SOBRE</a>
 
       <button
         class="cart-link"
@@ -78,61 +53,46 @@
 
   </header>
 
-
-  <nav
-    class="side-menu"
-    id="sideMenu"
-  >
+  <nav class="side-menu" id="sideMenu">
 
     <div class="side-menu-inner">
 
       <button
         class="close-menu"
         id="closeMenu"
+        type="button"
       >
         FECHAR
       </button>
 
-      <a href="universo.html">
-        UNIVERSO
-      </a>
-
-      <a href="loja.html">
-        LOJA
-      </a>
-
-      <a href="universo.html">
-        SOBRE
-      </a>
-
-      <a href="#contato">
-        CONTATO
-      </a>
+      <a href="index.html">UNIVERSO</a>
+      <a href="loja.html">LOJA</a>
+      <a href="universo.html">SOBRE</a>
+      <a href="index.html#newsletter">NEWSLETTER</a>
+      <a href="contato.html">CONTATO</a>
 
     </div>
 
   </nav>
 
-
   <main class="produto-detalhe-page">
-
 
     <section class="produto-detalhe-topo">
 
       <div class="produto-detalhe-foto">
 
         <img
-          src="biblioteca-still.jpg"
+          id="productDetailImage"
+          src="biblioteca.jpg"
           alt="Biblioteca Olfativa OJOBOSCO"
         >
 
       </div>
 
-
       <div class="produto-detalhe-info">
 
         <p class="produto-detalhe-tipo">
-          OBJETO OLFATIVO
+          BIBLIOTECA OLFATIVA
         </p>
 
         <h1>
@@ -141,11 +101,10 @@
           OLFATIVA
         </h1>
 
-        <p class="produto-fragrancia-nome">
-          6 MINIATURAS · 5 ML CADA
-        </p>
-
-        <p class="produto-detalhe-preco">
+        <p
+          class="produto-detalhe-preco"
+          id="productDetailPrice"
+        >
           R$239
         </p>
 
@@ -160,148 +119,70 @@
 
     </section>
 
-
     <section class="produto-texto-section">
 
-      <p class="produto-texto-label">
-        SOBRE O OBJETO
-      </p>
+      <div class="produto-texto-label">
+        SOBRE
+      </div>
 
       <div class="produto-texto-corpo">
 
         <p>
-          Uma caixa exclusiva que reúne todas as fragrâncias de ambiente da marca, em miniaturas de 5 ml cada, foi criada para transportar o universo OJOBOSCO do virtual para o físico.
+          A Biblioteca Olfativa reúne a linguagem
+          aromática da OJOBOSCO em uma experiência
+          de descoberta e contemplação.
         </p>
 
         <p>
-          É um convite para a uma jornada de descobertas, permitindo conhecer, sentir e vivenciar cada composição de forma íntima, tátil e imersiva para possibilitar a escolha da favorita.
+          Um objeto criado para permitir o contato
+          com diferentes construções olfativas antes
+          de escolher aquela que irá habitar o espaço.
         </p>
 
       </div>
 
     </section>
-
-
-    <section class="produto-texto-section">
-
-      <p class="produto-texto-label">
-        FRAGRÂNCIAS
-      </p>
-
-      <div class="produto-texto-corpo">
-
-        <ol class="produto-lista-fragrancias">
-
-          <li>
-            CHÁ FLORAL
-          </li>
-
-          <li>
-            FIGO TÍRIO
-          </li>
-
-          <li>
-            LAVANDA ROSADA
-          </li>
-
-          <li>
-            LIMOEIRA
-          </li>
-
-          <li>
-            VERDE QUENTE
-          </li>
-
-          <li>
-            ORBE AMAZÔNICO
-          </li>
-
-        </ol>
-
-      </div>
-
-    </section>
-
 
   </main>
 
-
-  <footer
-    class="footer"
-    id="contato"
-  >
+  <footer class="footer">
 
     <div class="footer-columns">
 
       <div>
-
-        <p class="footer-title">
-          UNIVERSO
-        </p>
-
-        <a href="index.html">
-          INÍCIO
-        </a>
-
-        <a href="universo.html">
-          NOSSA HISTÓRIA
-        </a>
-
+        <p class="footer-title">UNIVERSO</p>
+        <a href="index.html">INÍCIO</a>
+        <a href="universo.html">NOSSA HISTÓRIA</a>
       </div>
 
+      <div>
+        <p class="footer-title">LOJA</p>
+        <a href="loja.html#aromatizadores">AROMATIZADOR</a>
+        <a href="loja.html#difusores">DIFUSOR</a>
+        <a href="loja.html#biblioteca">BIBLIOTECA OLFATIVA</a>
+        <a href="loja.html#velas">VELA</a>
+        <a href="loja.html#perfume">PERFUME</a>
+      </div>
 
       <div>
 
-        <p class="footer-title">
-          LOJA
-        </p>
+        <p class="footer-title">SOBRE</p>
 
-        <a href="loja.html#aromatizadores">
-          AROMATIZADOR
-        </a>
+        <a href="contato.html">CONTATO</a>
 
-        <a href="loja.html#difusores">
-          DIFUSOR
-        </a>
-
-        <a href="loja.html#biblioteca">
-          BIBLIOTECA OLFATIVA
-        </a>
-
-        <a href="loja.html#velas">
-          VELA
-        </a>
-
-        <a href="loja.html#perfume">
-          PERFUME
-        </a>
-
-      </div>
-
-
-      <div>
-
-        <p class="footer-title">
-          SOBRE
-        </p>
-
-        <a href="#contato">
-          CONTATO
-        </a>
-
-        <a href="#">
+        <a
+          href="https://www.instagram.com/ojobosco/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           INSTAGRAM
         </a>
 
-        <a href="#">
-          ENVIOS
+        <a href="trocas.html">
+          TROCAS E DEVOLUÇÕES
         </a>
 
-        <a href="#">
-          TROCAS
-        </a>
-
-        <a href="#">
+        <a href="privacidade.html">
           PRIVACIDADE
         </a>
 
@@ -309,21 +190,12 @@
 
     </div>
 
-
     <div class="footer-bottom">
-
-      <span>
-        © 2026 OJOBOSCO
-      </span>
-
-      <span>
-        BRASIL
-      </span>
-
+      <span>© 2026 OJOBOSCO</span>
+      <span>BRASIL</span>
     </div>
 
   </footer>
-
 
   <script src="script.js"></script>
 
