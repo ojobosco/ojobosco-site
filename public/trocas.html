@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -9,27 +10,302 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Trocas — OJOBOSCO</title>
+  <title>Trocas e Devoluções — OJOBOSCO</title>
 
-  <meta
-    http-equiv="refresh"
-    content="0; url=envios.html"
+  <link
+    rel="stylesheet"
+    href="style.css"
   >
 
-  <script>
-    window.location.replace(
-      "envios.html"
-    );
-  </script>
+  <style>
+
+    .institucional-page {
+      min-height: 100vh;
+      padding: 170px 7vw 100px;
+      background: #fff;
+      color: #111;
+    }
+
+    .institucional-inner {
+      width: min(860px, 100%);
+      margin: 0 auto;
+    }
+
+    .institucional-inner h1 {
+      margin-bottom: 55px;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    .institucional-inner h2 {
+      margin: 45px 0 18px;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+    }
+
+    .institucional-inner p,
+    .institucional-inner a {
+      color: #111;
+      font-size: 13px;
+      line-height: 2;
+      letter-spacing: 0.04em;
+    }
+
+  </style>
+
 </head>
 
 <body>
 
-  <p>
-    <a href="envios.html">
-      TROCAS E DEVOLUÇÕES
+  <div class="announcement-bar">
+    GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
+  </div>
+
+  <header class="topbar">
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+    >
+      MENU
+    </button>
+
+    <a
+      href="index.html"
+      class="brand-top"
+    >
+      OJOBOSCO
     </a>
-  </p>
+
+    <div class="top-actions">
+
+      <a
+        href="index.html"
+        class="nav-link"
+      >
+        UNIVERSO
+      </a>
+
+      <a
+        href="loja.html"
+        class="nav-link"
+      >
+        LOJA
+      </a>
+
+      <a
+        href="universo.html"
+        class="nav-link"
+      >
+        SOBRE
+      </a>
+
+      <button
+        class="cart-link"
+        id="cartButton"
+        type="button"
+      >
+        CARRINHO
+        <span id="cartCount">0</span>
+      </button>
+
+    </div>
+
+  </header>
+
+  <nav
+    class="side-menu"
+    id="sideMenu"
+  >
+
+    <div class="side-menu-inner">
+
+      <button
+        class="close-menu"
+        id="closeMenu"
+        type="button"
+      >
+        FECHAR
+      </button>
+
+      <a href="index.html">
+        UNIVERSO
+      </a>
+
+      <a href="loja.html">
+        LOJA
+      </a>
+
+      <a href="universo.html">
+        SOBRE
+      </a>
+
+      <a href="index.html#newsletter">
+        NEWSLETTER
+      </a>
+
+      <a href="contato.html">
+        CONTATO
+      </a>
+
+    </div>
+
+  </nav>
+
+  <main class="institucional-page">
+
+    <div class="institucional-inner">
+
+      <h1>
+        TROCAS E DEVOLUÇÕES
+      </h1>
+
+      <h2>
+        DESISTÊNCIA DA COMPRA
+      </h2>
+
+      <p>
+        Caso deseje desistir de uma compra realizada
+        pela loja online, entre em contato conosco em
+        até 7 dias corridos após o recebimento do pedido.
+      </p>
+
+      <p>
+        O produto deverá ser devolvido sem sinais de uso,
+        acompanhado de sua embalagem original e dos itens
+        recebidos juntamente com ele.
+      </p>
+
+      <p>
+        Para iniciar a solicitação, entre em contato pelo
+        e-mail
+        <a href="mailto:contato@ojobosco.com">
+          contato@ojobosco.com
+        </a>.
+      </p>
+
+      <p>
+        Após o recebimento e a avaliação do produto,
+        o processo de reembolso será realizado de acordo
+        com a forma de pagamento utilizada na compra.
+      </p>
+
+      <h2>
+        PRODUTO COM DEFEITO OU VÍCIO
+      </h2>
+
+      <p>
+        Caso identifique qualquer problema no produto,
+        entre em contato com nosso atendimento informando
+        o número do pedido e, quando necessário,
+        imagens que auxiliem na análise.
+      </p>
+
+      <p>
+        Cada solicitação será analisada individualmente
+        e tratada de acordo com a legislação aplicável.
+      </p>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+
+    <div class="footer-columns">
+
+      <div>
+
+        <p class="footer-title">
+          UNIVERSO
+        </p>
+
+        <a href="index.html">
+          INÍCIO
+        </a>
+
+        <a href="universo.html">
+          NOSSA HISTÓRIA
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          LOJA
+        </p>
+
+        <a href="loja.html#aromatizadores">
+          AROMATIZADOR
+        </a>
+
+        <a href="loja.html#difusores">
+          DIFUSOR
+        </a>
+
+        <a href="loja.html#biblioteca">
+          BIBLIOTECA OLFATIVA
+        </a>
+
+        <a href="loja.html#velas">
+          VELA
+        </a>
+
+        <a href="loja.html#perfume">
+          PERFUME
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          SOBRE
+        </p>
+
+        <a href="contato.html">
+          CONTATO
+        </a>
+
+        <a
+          href="https://www.instagram.com/ojobosco/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          INSTAGRAM
+        </a>
+
+        <a href="trocas.html">
+          TROCAS E DEVOLUÇÕES
+        </a>
+
+        <a href="privacidade.html">
+          PRIVACIDADE
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 OJOBOSCO
+      </span>
+
+      <span>
+        BRASIL
+      </span>
+
+    </div>
+
+  </footer>
+
+  <script src="script.js"></script>
 
 </body>
 
