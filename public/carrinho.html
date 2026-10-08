@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -11,333 +10,294 @@
 
   <title>Carrinho — OJOBOSCO</title>
 
+  <meta
+    name="description"
+    content="Carrinho de compras OJOBOSCO."
+  >
+
   <link
     rel="stylesheet"
     href="style.css"
   >
 
   <style>
-    /* =========================================================
-       CARRINHO — AJUSTE VISUAL COMPLETO
-    ========================================================= */
+    html,
+    body {
+      background: #ffffff;
+    }
 
     body {
-      background: #f4f3f1;
+      color: #111111;
     }
 
     .cart-page {
+      background: #ffffff;
       min-height: 100vh;
       padding-top: 106px;
-      background: #f4f3f1;
-      color: #111111;
     }
 
-    .cart-page-grid {
-      width: 100%;
+    .cart-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 390px;
-      align-items: start;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      width: 100%;
+      min-height: calc(100vh - 106px);
+      background: #ffffff;
     }
-
-    /* =========================================================
-       COLUNA ESQUERDA
-    ========================================================= */
 
     .cart-main {
-      min-width: 0;
-      padding: 46px 54px 80px;
-      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 52px 54px 72px;
+      border-right: 1px solid rgba(0, 0, 0, 0.10);
+      background: #ffffff;
     }
 
-    .cart-page-title {
+    .cart-summary {
+      padding: 24px 22px 50px;
+      background: #ffffff;
+      position: sticky;
+      top: 106px;
+      align-self: start;
+      height: fit-content;
+    }
+
+    .cart-title {
       margin: 0 0 38px;
-      color: #111111;
       text-align: center;
-      font-size: clamp(28px, 2.6vw, 46px);
+      font-size: clamp(26px, 2.7vw, 46px);
       line-height: 1.15;
       font-weight: 400;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: #111111;
     }
 
-    .cart-page-items {
+    .cart-items {
       width: 100%;
+      border-top: 1px solid rgba(0, 0, 0, 0.10);
     }
-
-    /* =========================================================
-       ITEM DO CARRINHO
-    ========================================================= */
 
     .cart-item {
-      width: 100%;
       display: grid;
-      grid-template-columns: 150px minmax(0, 1fr) auto;
-      gap: 30px;
+      grid-template-columns: 130px minmax(0, 1fr) 120px;
       align-items: center;
-      padding: 28px 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      gap: 36px;
+      padding: 34px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+      background: #ffffff;
     }
 
-    .cart-item:last-child {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    .cart-item-image-wrap {
-      width: 150px;
-      height: 180px;
+    .cart-item-image-box {
+      width: 130px;
+      height: 150px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #ffffff;
       overflow: hidden;
+      border-radius: 0;
     }
 
-    .cart-item-image {
+    .cart-item-image-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      object-position: center;
       display: block;
-    }
-
-    .cart-item-image-empty {
-      width: 100%;
-      height: 100%;
-      background: #efefef;
     }
 
     .cart-item-info {
       min-width: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
+    }
+
+    .cart-item-category {
+      margin: 0 0 18px;
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #111111;
     }
 
     .cart-item-name {
-      margin: 0 0 10px;
-      font-size: 16px;
+      margin: 0 0 8px;
+      font-size: 17px;
       line-height: 1.35;
-      font-weight: 400;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #111111;
     }
 
-    .cart-item-variant {
-      margin: 0 0 6px;
-      font-size: 11px;
-      line-height: 1.5;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #555555;
-    }
-
-    .cart-item-unit-price {
-      margin: 10px 0 18px;
+    .cart-item-size {
+      margin: 0 0 20px;
       font-size: 12px;
-      line-height: 1.4;
-      letter-spacing: 0.08em;
+      line-height: 1.5;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #111111;
+      color: #444444;
     }
 
-    .cart-item-actions {
+    .cart-item-controls {
       display: flex;
       align-items: center;
       gap: 18px;
       flex-wrap: wrap;
     }
 
-    .cart-quantity {
-      display: grid;
-      grid-template-columns: 34px 42px 34px;
-      height: 36px;
-      border: 1px solid #cfcfcf;
+    .cart-qty {
+      display: inline-grid;
+      grid-template-columns: 32px 42px 32px;
+      align-items: center;
+      height: 34px;
+      border: 1px solid rgba(0, 0, 0, 0.20);
+      border-radius: 0;
+      overflow: hidden;
       background: #ffffff;
     }
 
-    .cart-quantity button,
-    .cart-quantity span {
+    .cart-qty button,
+    .cart-qty span {
       width: 100%;
       height: 34px;
       border: 0;
-      background: transparent;
+      background: #ffffff;
+      color: #111111;
+      font-size: 12px;
+      line-height: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      color: #111111;
       font-family: inherit;
+      border-radius: 0;
     }
 
-    .cart-quantity button {
+    .cart-qty button {
       cursor: pointer;
     }
 
     .cart-remove {
       padding: 0;
       border: 0;
-      border-bottom: 1px solid #111111;
       background: transparent;
-      cursor: pointer;
-      font-size: 9px;
-      line-height: 1.4;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      border-bottom: 1px solid #111111;
       color: #111111;
+      font-size: 10px;
+      line-height: 1.3;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
       font-family: inherit;
+      border-radius: 0;
     }
 
-    .cart-item-total {
-      min-width: 110px;
+    .cart-item-price {
       text-align: right;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.4;
-      font-weight: 400;
       letter-spacing: 0.05em;
+      text-transform: uppercase;
       color: #111111;
       white-space: nowrap;
     }
 
-    /* =========================================================
-       CARRINHO VAZIO
-    ========================================================= */
-
-    .cart-page-empty {
-      min-height: 320px;
-      padding: 60px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      background: #ffffff;
+    .cart-secure {
+      padding-top: 36px;
     }
 
-    .cart-page-empty[hidden] {
+    .cart-secure-title {
+      margin: 0 0 14px;
+      font-size: 10px;
+      line-height: 1.5;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #111111;
+    }
+
+    .cart-secure-text {
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.8;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: #111111;
+    }
+
+    .cart-empty {
+      padding: 60px 0;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+    }
+
+    .cart-empty[hidden] {
       display: none;
     }
 
-    .cart-page-empty p {
+    .cart-empty p {
       margin: 0 0 24px;
-      font-size: 12px;
-      line-height: 1.7;
+      font-size: 11px;
+      line-height: 1.8;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #111111;
     }
 
-    .cart-page-shop-button {
+    .cart-empty a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 210px;
-      min-height: 50px;
-      padding: 0 22px;
+      min-width: 220px;
+      height: 50px;
+      padding: 0 24px;
       background: #000000;
       color: #ffffff;
       text-decoration: none;
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+      border-radius: 0;
     }
 
-    /* =========================================================
-       COMPRA SEGURA
-    ========================================================= */
-
-    .cart-guarantee {
-      padding: 36px 0 0;
-    }
-
-    .cart-guarantee h2 {
-      margin: 0 0 14px;
-      font-size: 10px;
-      line-height: 1.6;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #111111;
-    }
-
-    .cart-guarantee p {
-      margin: 0;
-      max-width: 720px;
-      font-size: 11px;
-      line-height: 1.8;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #111111;
-    }
-
-    /* =========================================================
-       COLUNA DIREITA
-    ========================================================= */
-
-    .cart-summary {
-      position: sticky;
-      top: 106px;
-      min-width: 0;
-      padding: 22px 22px 50px;
-      background: #f4f3f1;
-      align-self: start;
-      height: fit-content;
-    }
-
-    .cart-page-checkout {
+    .cart-summary-button {
       width: 100%;
-      min-height: 56px;
-      padding: 0 20px;
-      border: 0;
+      height: 50px;
+      padding: 0 18px;
       background: #000000;
       color: #ffffff;
+      border: 0;
       cursor: pointer;
       font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       font-family: inherit;
+      border-radius: 0;
     }
 
-    .cart-page-checkout-desktop {
-      margin-bottom: 18px;
-    }
-
-    .cart-lock {
-      margin-right: 20px;
+    .cart-summary-button-secondary {
+      margin-top: 18px;
     }
 
     .cart-summary-panel {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 24px 22px;
+      margin-top: 18px;
+      border-top: 1px solid rgba(0, 0, 0, 0.10);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+      padding: 20px 0 0;
     }
 
-    .cart-summary-block {
-      padding: 0 0 26px;
-      margin-bottom: 26px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    .cart-summary-section {
+      padding: 0 0 24px;
+      margin: 0 0 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
     }
 
-    .cart-summary-block:last-child {
+    .cart-summary-section:last-child {
       margin-bottom: 0;
-      padding-bottom: 0;
       border-bottom: 0;
+      padding-bottom: 0;
     }
 
     .cart-summary-heading {
-      margin-bottom: 22px;
-    }
-
-    .cart-summary-heading h2 {
-      margin: 0;
+      margin: 0 0 20px;
       font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
+      line-height: 1.4;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #111111;
     }
@@ -346,13 +306,17 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 22px;
+      gap: 16px;
+      margin-bottom: 18px;
       font-size: 11px;
       line-height: 1.5;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #111111;
+    }
+
+    .cart-summary-row:last-child {
+      margin-bottom: 0;
     }
 
     .cart-summary-row strong {
@@ -361,214 +325,189 @@
       white-space: nowrap;
     }
 
-    .cart-summary-total {
-      margin-top: 30px;
-      margin-bottom: 0;
-      padding-top: 2px;
+    .cart-total-row {
+      margin-top: 26px;
       font-size: 13px;
     }
 
-    /* =========================================================
-       FRETE
-    ========================================================= */
-
-    .cart-shipping-title {
+    .cart-cep-grid,
+    .cart-coupon-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 120px;
+      grid-template-columns: minmax(0, 1fr) 134px;
       gap: 12px;
     }
 
-    .cart-shipping-title input {
+    .cart-cep-grid input,
+    .cart-coupon-grid input {
       width: 100%;
       height: 46px;
       padding: 0 14px;
-      border: 1px solid #d4d4d4;
+      border: 1px solid rgba(0, 0, 0, 0.16);
       background: #ffffff;
       color: #111111;
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: inherit;
       outline: none;
       border-radius: 0;
-      font-size: 11px;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      font-family: inherit;
+      box-sizing: border-box;
     }
 
-    .cart-shipping-title button {
+    .cart-cep-grid button,
+    .cart-coupon-grid button {
       width: 100%;
       height: 46px;
-      border: 1px solid #d4d4d4;
-      background: #f8f8f8;
-      color: #666666;
-      cursor: pointer;
-      border-radius: 0;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      background: #ffffff;
+      color: #111111;
       font-size: 10px;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       font-family: inherit;
+      cursor: pointer;
+      border-radius: 0;
     }
 
-    .cart-shipping-message,
-    .cart-free-shipping-message {
+    .cart-help-text {
       margin: 14px 0 0;
       font-size: 9px;
       line-height: 1.8;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
-      color: #666666;
+      color: #555555;
     }
 
-    .cart-shipping-method {
-      margin-top: 16px;
-      padding-top: 16px;
+    .cart-shipping-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0, 0, 0, 0.10);
       font-size: 10px;
       line-height: 1.6;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
       color: #111111;
     }
 
-    /* =========================================================
-       CUPOM
-    ========================================================= */
-
-    .cart-coupon-description {
-      margin: 0 0 18px;
-      font-size: 10px;
-      line-height: 1.7;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #111111;
-    }
-
-    .cart-coupon-form {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 94px;
-      gap: 10px;
-    }
-
-    .cart-coupon-form input {
-      width: 100%;
-      height: 46px;
-      padding: 0 14px;
-      border: 1px solid #d4d4d4;
+    .cart-applied-coupon {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.10);
       background: #ffffff;
-      color: #111111;
-      outline: none;
       border-radius: 0;
-      font-size: 11px;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      font-family: inherit;
     }
 
-    .cart-coupon-form button {
-      height: 46px;
-      border: 0;
-      background: #000000;
-      color: #ffffff;
-      cursor: pointer;
-      border-radius: 0;
-      font-size: 10px;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      font-family: inherit;
+    .cart-applied-coupon[hidden] {
+      display: none;
     }
 
-    .cart-coupon-message {
-      margin: 12px 0 0;
+    .cart-applied-coupon-label {
+      display: block;
+      margin: 0 0 8px;
       font-size: 9px;
-      line-height: 1.7;
-      letter-spacing: 0.08em;
+      line-height: 1.6;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #444444;
+      color: #555555;
     }
 
-    /* =========================================================
-       RESPONSIVO
-    ========================================================= */
+    .cart-applied-coupon-name {
+      display: block;
+      margin: 0 0 10px;
+      font-size: 11px;
+      line-height: 1.6;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #111111;
+    }
+
+    .cart-remove-coupon {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      border-bottom: 1px solid #111111;
+      color: #111111;
+      font-size: 9px;
+      line-height: 1.5;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: inherit;
+      border-radius: 0;
+    }
 
     @media (max-width: 1100px) {
-      .cart-page-grid {
+      .cart-layout {
         grid-template-columns: 1fr;
+      }
+
+      .cart-main {
+        border-right: 0;
       }
 
       .cart-summary {
         position: static;
         top: auto;
-        padding: 0 54px 60px;
-      }
-
-      .cart-summary-panel {
-        margin-top: 26px;
-      }
-
-      .cart-main {
-        border-right: 0;
-        padding-bottom: 30px;
+        padding: 0 54px 50px;
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 740px) {
       .cart-page {
-        padding-top: 92px;
+        padding-top: 96px;
       }
 
       .cart-main {
-        padding: 30px 16px 26px;
-      }
-
-      .cart-page-title {
-        margin-bottom: 26px;
-        text-align: left;
-        font-size: 26px;
-      }
-
-      .cart-item {
-        grid-template-columns: 90px minmax(0, 1fr);
-        gap: 16px;
-        align-items: start;
-      }
-
-      .cart-item-image-wrap {
-        width: 90px;
-        height: 112px;
-      }
-
-      .cart-item-total {
-        grid-column: 2;
-        text-align: left;
-        margin-top: 10px;
-        min-width: 0;
-      }
-
-      .cart-item-name {
-        font-size: 13px;
-      }
-
-      .cart-item-variant,
-      .cart-item-unit-price {
-        font-size: 10px;
+        padding: 34px 16px 40px;
       }
 
       .cart-summary {
-        padding: 0 16px 46px;
+        padding: 0 16px 40px;
       }
 
-      .cart-shipping-title {
+      .cart-title {
+        text-align: left;
+        font-size: 28px;
+        margin-bottom: 28px;
+      }
+
+      .cart-item {
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .cart-item-image-box {
+        width: 92px;
+        height: 112px;
+      }
+
+      .cart-item-price {
+        grid-column: 2;
+        text-align: left;
+        margin-top: 6px;
+      }
+
+      .cart-item-category {
+        margin-bottom: 12px;
+      }
+
+      .cart-item-name {
+        font-size: 15px;
+      }
+
+      .cart-item-size {
+        margin-bottom: 16px;
+      }
+
+      .cart-cep-grid,
+      .cart-coupon-grid {
         grid-template-columns: 1fr 110px;
-      }
-
-      .cart-coupon-form {
-        grid-template-columns: 1fr 92px;
-      }
-
-      .cart-guarantee {
-        padding-top: 30px;
       }
     }
   </style>
@@ -585,9 +524,8 @@
     <button
       class="menu-toggle"
       id="menuToggle"
-      type="button"
       aria-label="Abrir menu"
-      aria-expanded="false"
+      type="button"
     >
       MENU
     </button>
@@ -639,14 +577,13 @@
     class="side-menu"
     id="sideMenu"
   >
-
     <div class="side-menu-inner">
 
       <button
         class="close-menu"
         id="closeMenu"
-        type="button"
         aria-label="Fechar menu"
+        type="button"
       >
         FECHAR
       </button>
@@ -672,45 +609,42 @@
       </a>
 
     </div>
-
   </nav>
 
   <main class="cart-page">
 
-    <div class="cart-page-grid">
+    <div class="cart-layout">
 
       <section class="cart-main">
 
-        <h1 class="cart-page-title">
+        <h1 class="cart-title">
           CARRINHO DE COMPRAS
           <span id="cartTitleCount">[0]</span>
         </h1>
 
         <div
-          class="cart-page-items"
-          id="cartPageItems"
+          class="cart-items"
+          id="cartItems"
         ></div>
 
         <div
-          class="cart-page-empty"
+          class="cart-empty"
           id="cartEmpty"
           hidden
         >
-          <p>
-            SEU CARRINHO ESTÁ VAZIO.
-          </p>
+          <p>SEU CARRINHO ESTÁ VAZIO.</p>
 
-          <a
-            href="loja.html"
-            class="cart-page-shop-button"
-          >
+          <a href="loja.html">
             IR PARA A LOJA
           </a>
         </div>
 
-        <div class="cart-guarantee">
-          <h2>COMPRA SEGURA</h2>
-          <p>
+        <div class="cart-secure">
+          <h2 class="cart-secure-title">
+            COMPRA SEGURA
+          </h2>
+
+          <p class="cart-secure-text">
             O PAGAMENTO É PROCESSADO COM SEGURANÇA PELO MERCADO PAGO.
           </p>
         </div>
@@ -720,63 +654,61 @@
       <aside class="cart-summary">
 
         <button
-          class="cart-page-checkout cart-page-checkout-desktop"
-          id="checkoutButton"
+          class="cart-summary-button"
+          id="checkoutButtonTop"
           type="button"
         >
-          <span class="cart-lock">◇</span>
           FINALIZAR COMPRA
         </button>
 
         <div class="cart-summary-panel">
 
-          <div class="cart-summary-block">
+          <div class="cart-summary-section">
 
-            <div class="cart-summary-heading">
-              <h2>RESUMO</h2>
-            </div>
+            <h2 class="cart-summary-heading">
+              RESUMO
+            </h2>
 
             <div class="cart-summary-row">
               <span>SUBTOTAL</span>
-              <strong id="cartSubtotal">R$0,00</strong>
+              <strong id="summarySubtotal">R$ 0,00</strong>
             </div>
 
             <div
               class="cart-summary-row"
-              id="cartDiscountRow"
+              id="discountRow"
               hidden
             >
-              <span id="cartDiscountLabel">DESCONTO</span>
-              <strong id="cartDiscount">R$0,00</strong>
+              <span id="discountLabel">DESCONTO</span>
+              <strong id="summaryDiscount">- R$ 0,00</strong>
             </div>
 
             <div class="cart-summary-row">
               <span>FRETE</span>
-              <strong id="cartShipping">—</strong>
+              <strong id="summaryShipping">—</strong>
             </div>
 
-            <div class="cart-summary-row cart-summary-total">
+            <div class="cart-summary-row cart-total-row">
               <span>TOTAL</span>
-              <strong id="cartTotal">R$0,00</strong>
+              <strong id="summaryTotal">R$ 0,00</strong>
             </div>
 
           </div>
 
-          <div class="cart-summary-block">
+          <div class="cart-summary-section">
 
-            <div class="cart-shipping-title">
+            <div class="cart-cep-grid">
 
               <input
-                id="cartShippingCep"
+                id="shippingCep"
                 type="text"
-                inputmode="numeric"
                 maxlength="9"
                 placeholder="CEP"
                 autocomplete="postal-code"
               >
 
               <button
-                id="cartShippingButton"
+                id="calculateShippingButton"
                 type="button"
               >
                 CALCULAR
@@ -785,44 +717,33 @@
             </div>
 
             <p
-              class="cart-shipping-message"
-              id="cartShippingMessage"
+              class="cart-help-text"
+              id="shippingHelpText"
             >
               DIGITE SEU CEP PARA CALCULAR O FRETE.
             </p>
 
             <div
-              class="cart-shipping-method"
-              id="cartShippingRow"
-              hidden
+              class="cart-shipping-line"
+              id="shippingMethodLine"
             >
-              <span id="cartShippingMethod">PADRÃO</span>
-              <strong id="cartShippingMethodPrice">—</strong>
+              <span id="shippingMethodLabel">PADRÃO</span>
+              <strong id="shippingMethodPrice">—</strong>
             </div>
 
-            <p
-              class="cart-free-shipping-message"
-              id="cartFreeShippingMessage"
-            >
+            <p class="cart-help-text">
               FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500.
             </p>
 
           </div>
 
-          <div class="cart-summary-block">
+          <div class="cart-summary-section">
 
-            <div class="cart-summary-heading">
-              <h2>CUPOM</h2>
-            </div>
+            <h2 class="cart-summary-heading">
+              CUPOM
+            </h2>
 
-            <p class="cart-coupon-description">
-              INSIRA SEU CÓDIGO DE DESCONTO.
-            </p>
-
-            <form
-              class="cart-coupon-form"
-              id="couponForm"
-            >
+            <div class="cart-coupon-grid">
 
               <input
                 id="couponInput"
@@ -831,20 +752,58 @@
                 autocomplete="off"
               >
 
-              <button type="submit">
+              <button
+                id="applyCouponButton"
+                type="button"
+              >
                 APLICAR
               </button>
 
-            </form>
+            </div>
 
             <p
-              class="cart-coupon-message"
-              id="couponMessage"
-            ></p>
+              class="cart-help-text"
+              id="couponFeedback"
+            >
+              APENAS UM CUPOM PODE SER UTILIZADO POR VEZ.
+            </p>
+
+            <div
+              class="cart-applied-coupon"
+              id="appliedCouponBox"
+              hidden
+            >
+              <span class="cart-applied-coupon-label">
+                CUPOM APLICADO
+              </span>
+
+              <strong
+                class="cart-applied-coupon-name"
+                id="appliedCouponName"
+              >
+                —
+              </strong>
+
+              <button
+                class="cart-remove-coupon"
+                id="removeCouponButton"
+                type="button"
+              >
+                REMOVER CUPOM
+              </button>
+            </div>
 
           </div>
 
         </div>
+
+        <button
+          class="cart-summary-button cart-summary-button-secondary"
+          id="checkoutButtonBottom"
+          type="button"
+        >
+          FECHAR PEDIDO
+        </button>
 
       </aside>
 
@@ -857,7 +816,6 @@
     <div class="footer-columns">
 
       <div>
-
         <p class="footer-title">UNIVERSO</p>
 
         <a href="index.html">
@@ -867,11 +825,9 @@
         <a href="universo.html">
           NOSSA HISTÓRIA
         </a>
-
       </div>
 
       <div>
-
         <p class="footer-title">LOJA</p>
 
         <a href="loja.html#aromatizadores">
@@ -893,11 +849,9 @@
         <a href="loja.html#perfume">
           PERFUME
         </a>
-
       </div>
 
       <div>
-
         <p class="footer-title">SOBRE</p>
 
         <a href="contato.html">
@@ -919,7 +873,6 @@
         <a href="privacidade.html">
           PRIVACIDADE
         </a>
-
       </div>
 
     </div>
@@ -931,7 +884,513 @@
 
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    /* =========================================================
+       MENU
+    ========================================================= */
+    const menuToggle = document.getElementById('menuToggle');
+    const closeMenu = document.getElementById('closeMenu');
+    const sideMenu = document.getElementById('sideMenu');
+
+    if (menuToggle && sideMenu) {
+      menuToggle.addEventListener('click', () => {
+        sideMenu.classList.add('open');
+      });
+    }
+
+    if (closeMenu && sideMenu) {
+      closeMenu.addEventListener('click', () => {
+        sideMenu.classList.remove('open');
+      });
+    }
+
+    document.addEventListener('click', (event) => {
+      if (!sideMenu || !menuToggle) return;
+
+      const clickedInsideMenu = sideMenu.contains(event.target);
+      const clickedMenuButton = menuToggle.contains(event.target);
+
+      if (!clickedInsideMenu && !clickedMenuButton) {
+        sideMenu.classList.remove('open');
+      }
+    });
+
+    /* =========================================================
+       STORAGE
+    ========================================================= */
+    const CART_KEYS = ['ojobosco_cart', 'ojoboscoCart', 'cart'];
+    const COUPON_KEY = 'ojobosco_coupon';
+    const SHIPPING_KEY = 'ojobosco_shipping';
+
+    function getSavedValue(keys) {
+      for (const key of keys) {
+        const value = localStorage.getItem(key);
+        if (value) return value;
+      }
+      return null;
+    }
+
+    function getCart() {
+      const raw = getSavedValue(CART_KEYS);
+
+      if (!raw) return [];
+
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      const serialized = JSON.stringify(cart);
+
+      CART_KEYS.forEach((key) => {
+        localStorage.setItem(key, serialized);
+      });
+    }
+
+    function getAppliedCoupon() {
+      const raw = localStorage.getItem(COUPON_KEY);
+
+      if (!raw) return null;
+
+      try {
+        return JSON.parse(raw);
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function saveAppliedCoupon(coupon) {
+      if (!coupon) {
+        localStorage.removeItem(COUPON_KEY);
+        return;
+      }
+
+      localStorage.setItem(COUPON_KEY, JSON.stringify(coupon));
+    }
+
+    function getShippingValue() {
+      const raw = localStorage.getItem(SHIPPING_KEY);
+      const value = Number(raw);
+
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function saveShippingValue(value) {
+      localStorage.setItem(SHIPPING_KEY, String(value));
+    }
+
+    /* =========================================================
+       HELPERS
+    ========================================================= */
+    const couponList = {
+      BEMVINDO: {
+        code: 'BEMVINDO',
+        label: 'BEMVINDO — 10% DE DESCONTO',
+        type: 'percent',
+        value: 10
+      }
+    };
+
+    function formatPrice(value) {
+      return Number(value || 0).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+    }
+
+    function slugText(value) {
+      return String(value || '').trim();
+    }
+
+    function getItemCategory(item) {
+      return (
+        item.category ||
+        item.categoria ||
+        item.type ||
+        item.tipo ||
+        item.productType ||
+        'Produto'
+      );
+    }
+
+    function getItemName(item) {
+      return (
+        item.name ||
+        item.nome ||
+        item.fragrance ||
+        item.fragrancia ||
+        item.variant ||
+        item.variante ||
+        'Produto'
+      );
+    }
+
+    function getItemSize(item) {
+      return (
+        item.size ||
+        item.tamanho ||
+        item.volume ||
+        item.ml ||
+        ''
+      );
+    }
+
+    function getItemQuantity(item) {
+      const quantity = Number(
+        item.quantity ||
+        item.quantidade ||
+        1
+      );
+
+      return quantity > 0 ? quantity : 1;
+    }
+
+    function getItemPrice(item) {
+      return Number(
+        item.price ||
+        item.preco ||
+        item.valor ||
+        0
+      );
+    }
+
+    function getItemImage(item) {
+      return (
+        item.image ||
+        item.imagem ||
+        item.photo ||
+        item.foto ||
+        ''
+      );
+    }
+
+    function getCartCount(cart) {
+      return cart.reduce((total, item) => total + getItemQuantity(item), 0);
+    }
+
+    function getSubtotal(cart) {
+      return cart.reduce((total, item) => {
+        return total + (getItemPrice(item) * getItemQuantity(item));
+      }, 0);
+    }
+
+    function getDiscountValue(subtotal, coupon) {
+      if (!coupon) return 0;
+
+      if (coupon.type === 'percent') {
+        return subtotal * (coupon.value / 100);
+      }
+
+      if (coupon.type === 'fixed') {
+        return coupon.value;
+      }
+
+      return 0;
+    }
+
+    function getCurrentShipping(subtotal) {
+      if (subtotal >= 500) return 0;
+
+      const saved = getShippingValue();
+      return saved > 0 ? saved : 15;
+    }
+
+    function normalizeCep(value) {
+      return String(value || '').replace(/\D/g, '').slice(0, 8);
+    }
+
+    function formatCepInput(value) {
+      const cep = normalizeCep(value);
+
+      if (cep.length <= 5) return cep;
+      return cep.slice(0, 5) + '-' + cep.slice(5);
+    }
+
+    function goToCheckout() {
+      const cart = getCart();
+
+      if (!cart.length) {
+        alert('Seu carrinho está vazio.');
+        return;
+      }
+
+      window.location.href = '/checkout';
+    }
+
+    /* =========================================================
+       RENDER
+    ========================================================= */
+    const cartItems = document.getElementById('cartItems');
+    const cartEmpty = document.getElementById('cartEmpty');
+    const cartCount = document.getElementById('cartCount');
+    const cartTitleCount = document.getElementById('cartTitleCount');
+
+    const summarySubtotal = document.getElementById('summarySubtotal');
+    const summaryDiscount = document.getElementById('summaryDiscount');
+    const summaryShipping = document.getElementById('summaryShipping');
+    const summaryTotal = document.getElementById('summaryTotal');
+
+    const discountRow = document.getElementById('discountRow');
+    const discountLabel = document.getElementById('discountLabel');
+
+    const shippingMethodPrice = document.getElementById('shippingMethodPrice');
+    const shippingHelpText = document.getElementById('shippingHelpText');
+
+    const couponFeedback = document.getElementById('couponFeedback');
+    const appliedCouponBox = document.getElementById('appliedCouponBox');
+    const appliedCouponName = document.getElementById('appliedCouponName');
+
+    function renderCart() {
+      const cart = getCart();
+      const coupon = getAppliedCoupon();
+      const count = getCartCount(cart);
+
+      cartCount.textContent = count;
+      cartTitleCount.textContent = `[${count}]`;
+
+      if (!cart.length) {
+        cartItems.innerHTML = '';
+        cartEmpty.hidden = false;
+
+        summarySubtotal.textContent = formatPrice(0);
+        summaryDiscount.textContent = '- ' + formatPrice(0);
+        summaryShipping.textContent = '—';
+        summaryTotal.textContent = formatPrice(0);
+        shippingMethodPrice.textContent = '—';
+        discountRow.hidden = true;
+
+        appliedCouponBox.hidden = true;
+        return;
+      }
+
+      cartEmpty.hidden = true;
+
+      cartItems.innerHTML = cart.map((item, index) => {
+        const category = slugText(getItemCategory(item)).toUpperCase();
+        const name = slugText(getItemName(item)).toUpperCase();
+        const size = slugText(getItemSize(item)).toUpperCase();
+        const quantity = getItemQuantity(item);
+        const unitPrice = getItemPrice(item);
+        const totalPrice = unitPrice * quantity;
+        const image = getItemImage(item);
+
+        return `
+          <article class="cart-item">
+            <div class="cart-item-image-box">
+              ${image ? `<img src="${image}" alt="${name}">` : ''}
+            </div>
+
+            <div class="cart-item-info">
+              <p class="cart-item-category">${category}</p>
+              <h2 class="cart-item-name">${name}</h2>
+              <p class="cart-item-size">${size}</p>
+
+              <div class="cart-item-controls">
+
+                <div class="cart-qty">
+                  <button type="button" onclick="changeQuantity(${index}, -1)">−</button>
+                  <span>${quantity}</span>
+                  <button type="button" onclick="changeQuantity(${index}, 1)">+</button>
+                </div>
+
+                <button
+                  class="cart-remove"
+                  type="button"
+                  onclick="removeCartItem(${index})"
+                >
+                  REMOVER
+                </button>
+
+              </div>
+            </div>
+
+            <div class="cart-item-price">
+              ${formatPrice(totalPrice)}
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      const subtotal = getSubtotal(cart);
+      const discountValue = getDiscountValue(subtotal, coupon);
+      const shippingValue = getCurrentShipping(subtotal);
+      const total = Math.max(subtotal - discountValue + shippingValue, 0);
+
+      summarySubtotal.textContent = formatPrice(subtotal);
+      summaryShipping.textContent = shippingValue === 0 ? 'GRÁTIS' : formatPrice(shippingValue);
+      shippingMethodPrice.textContent = shippingValue === 0 ? 'GRÁTIS' : formatPrice(shippingValue);
+      summaryTotal.textContent = formatPrice(total);
+
+      if (coupon && discountValue > 0) {
+        discountRow.hidden = false;
+        discountLabel.textContent = `DESCONTO (${coupon.code})`;
+        summaryDiscount.textContent = '- ' + formatPrice(discountValue);
+
+        appliedCouponBox.hidden = false;
+        appliedCouponName.textContent = coupon.label;
+      } else {
+        discountRow.hidden = true;
+        appliedCouponBox.hidden = true;
+      }
+    }
+
+    /* =========================================================
+       ACTIONS
+    ========================================================= */
+    function changeQuantity(index, delta) {
+      const cart = getCart();
+
+      if (!cart[index]) return;
+
+      const currentQuantity = getItemQuantity(cart[index]);
+      const nextQuantity = currentQuantity + delta;
+
+      if (nextQuantity <= 0) {
+        cart.splice(index, 1);
+      } else {
+        cart[index].quantity = nextQuantity;
+        cart[index].quantidade = nextQuantity;
+      }
+
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeCartItem(index) {
+      const cart = getCart();
+
+      if (!cart[index]) return;
+
+      cart.splice(index, 1);
+      saveCart(cart);
+      renderCart();
+    }
+
+    window.changeQuantity = changeQuantity;
+    window.removeCartItem = removeCartItem;
+
+    /* =========================================================
+       CUPOM
+    ========================================================= */
+    const couponInput = document.getElementById('couponInput');
+    const applyCouponButton = document.getElementById('applyCouponButton');
+    const removeCouponButton = document.getElementById('removeCouponButton');
+
+    function applyCoupon() {
+      const code = String(couponInput.value || '').trim().toUpperCase();
+
+      if (!code) {
+        couponFeedback.textContent = 'DIGITE UM CÓDIGO DE CUPOM.';
+        return;
+      }
+
+      const coupon = couponList[code];
+
+      if (!coupon) {
+        couponFeedback.textContent = 'CUPOM INVÁLIDO.';
+        return;
+      }
+
+      saveAppliedCoupon(coupon);
+      couponFeedback.textContent = `CUPOM ${coupon.code} APLICADO COM SUCESSO.`;
+      couponInput.value = '';
+      renderCart();
+    }
+
+    function removeCoupon() {
+      saveAppliedCoupon(null);
+      couponFeedback.textContent = 'CUPOM REMOVIDO.';
+      renderCart();
+    }
+
+    if (applyCouponButton) {
+      applyCouponButton.addEventListener('click', applyCoupon);
+    }
+
+    if (couponInput) {
+      couponInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          applyCoupon();
+        }
+      });
+    }
+
+    if (removeCouponButton) {
+      removeCouponButton.addEventListener('click', removeCoupon);
+    }
+
+    /* =========================================================
+       FRETE
+    ========================================================= */
+    const shippingCep = document.getElementById('shippingCep');
+    const calculateShippingButton = document.getElementById('calculateShippingButton');
+
+    if (shippingCep) {
+      shippingCep.addEventListener('input', () => {
+        shippingCep.value = formatCepInput(shippingCep.value);
+      });
+    }
+
+    function calculateShipping() {
+      const cep = normalizeCep(shippingCep.value);
+      const subtotal = getSubtotal(getCart());
+
+      if (!cep || cep.length !== 8) {
+        shippingHelpText.textContent = 'DIGITE UM CEP VÁLIDO.';
+        return;
+      }
+
+      let shippingValue = 15;
+
+      if (subtotal >= 500) {
+        shippingValue = 0;
+      }
+
+      saveShippingValue(shippingValue);
+
+      shippingHelpText.textContent = shippingValue === 0
+        ? 'FRETE GRÁTIS APLICADO.'
+        : 'FRETE CALCULADO COM SUCESSO.';
+
+      renderCart();
+    }
+
+    if (calculateShippingButton) {
+      calculateShippingButton.addEventListener('click', calculateShipping);
+    }
+
+    /* =========================================================
+       CHECKOUT
+    ========================================================= */
+    const checkoutButtonTop = document.getElementById('checkoutButtonTop');
+    const checkoutButtonBottom = document.getElementById('checkoutButtonBottom');
+    const cartButton = document.getElementById('cartButton');
+
+    if (checkoutButtonTop) {
+      checkoutButtonTop.addEventListener('click', goToCheckout);
+    }
+
+    if (checkoutButtonBottom) {
+      checkoutButtonBottom.addEventListener('click', goToCheckout);
+    }
+
+    if (cartButton) {
+      cartButton.addEventListener('click', () => {
+        window.location.href = '/carrinho';
+      });
+    }
+
+    /* =========================================================
+       INIT
+    ========================================================= */
+    renderCart();
+  </script>
+
 </body>
 
 </html>
