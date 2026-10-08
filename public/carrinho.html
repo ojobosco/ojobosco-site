@@ -17,13 +17,1152 @@
     href="style.css"
   >
 
+  <style>
+
+    /* =========================================================
+       CARRINHO — AJUSTE ESPECÍFICO DESTA PÁGINA
+    ========================================================= */
+
+    .cart-page {
+      min-height: 100vh;
+      padding-top: 106px;
+      background: #ffffff;
+      color: #111111;
+      font-family: var(--fonte);
+    }
+
+
+    .cart-page-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(340px, 29vw);
+      align-items: stretch;
+    }
+
+
+    /* =========================================================
+       COLUNA ESQUERDA
+    ========================================================= */
+
+    .cart-main {
+      min-width: 0;
+      padding: 36px 0 80px;
+      border-right: 1px solid #dddddd;
+    }
+
+
+    .cart-page-title {
+      margin: 0 40px 28px;
+      color: #111111;
+      text-align: center;
+      font-family: var(--fonte);
+      font-size: clamp(25px, 2.5vw, 35px);
+      line-height: 1.2;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+
+    .cart-page-items {
+      width: 100%;
+    }
+
+
+    /* =========================================================
+       ITEM DO CARRINHO
+    ========================================================= */
+
+    .cart-item {
+      width: 100%;
+      min-height: 215px;
+
+      padding:
+        26px
+        34px
+        26px
+        42px;
+
+      display: grid;
+
+      grid-template-columns:
+        120px
+        minmax(0, 1fr)
+        auto;
+
+      gap: 30px;
+
+      align-items: center;
+
+      border-top:
+        1px solid
+        #dddddd;
+
+      background:
+        #ffffff;
+    }
+
+
+    .cart-item:last-child {
+      border-bottom:
+        1px solid
+        #dddddd;
+    }
+
+
+    /* IMAGEM */
+
+    .cart-item-image-wrap {
+      width: 120px;
+      height: 150px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      background:
+        #ffffff;
+    }
+
+
+    .cart-item-image {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      max-width: 120px;
+      max-height: 150px;
+
+      object-fit: contain;
+      object-position: center;
+    }
+
+
+    .cart-item-image-empty {
+      width: 100%;
+      height: 100%;
+
+      background:
+        #f5f5f5;
+    }
+
+
+    /* INFORMAÇÕES */
+
+    .cart-item-info {
+      min-width: 0;
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+
+    .cart-item-name {
+      margin:
+        0
+        0
+        8px;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        15px;
+
+      line-height:
+        1.4;
+
+      font-weight:
+        400;
+
+      letter-spacing:
+        0.06em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-item-variant {
+      margin:
+        0
+        0
+        5px;
+
+      color:
+        #4d4d4d;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        11px;
+
+      line-height:
+        1.5;
+
+      letter-spacing:
+        0.08em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-item-unit-price {
+      margin:
+        9px
+        0
+        18px;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        12px;
+
+      letter-spacing:
+        0.05em;
+    }
+
+
+    /* QUANTIDADE E REMOVER */
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+
+    .cart-quantity {
+      height: 34px;
+
+      display: grid;
+
+      grid-template-columns:
+        34px
+        34px
+        34px;
+
+      border:
+        1px solid
+        #cfcfcf;
+    }
+
+
+    .cart-quantity button,
+    .cart-quantity span {
+      width: 34px;
+      height: 32px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0;
+
+      border: 0;
+
+      background:
+        transparent;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        12px;
+
+      line-height:
+        1;
+
+      text-align:
+        center;
+    }
+
+
+    .cart-quantity button {
+      cursor: pointer;
+    }
+
+
+    .cart-remove {
+      padding: 0;
+
+      border: 0;
+
+      border-bottom:
+        1px solid
+        #111111;
+
+      background:
+        transparent;
+
+      color:
+        #111111;
+
+      cursor:
+        pointer;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        9px;
+
+      line-height:
+        1.4;
+
+      letter-spacing:
+        0.12em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* TOTAL DO ITEM */
+
+    .cart-item-total {
+      min-width: 90px;
+
+      align-self: center;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        13px;
+
+      line-height:
+        1.4;
+
+      letter-spacing:
+        0.05em;
+
+      text-align:
+        right;
+
+      white-space:
+        nowrap;
+    }
+
+
+    /* =========================================================
+       CARRINHO VAZIO
+    ========================================================= */
+
+    .cart-page-empty {
+      min-height: 300px;
+
+      padding:
+        60px
+        30px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      border-top:
+        1px solid
+        #dddddd;
+
+      border-bottom:
+        1px solid
+        #dddddd;
+    }
+
+
+    .cart-page-empty[hidden] {
+      display: none;
+    }
+
+
+    .cart-page-empty p {
+      margin:
+        0
+        0
+        25px;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        12px;
+
+      letter-spacing:
+        0.1em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-page-shop-button {
+      padding:
+        14px
+        24px;
+
+      background:
+        #000000;
+
+      color:
+        #ffffff;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        10px;
+
+      letter-spacing:
+        0.12em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* =========================================================
+       COMPRA SEGURA
+    ========================================================= */
+
+    .cart-guarantee {
+      padding:
+        40px
+        42px
+        0;
+    }
+
+
+    .cart-guarantee h2 {
+      margin:
+        0
+        0
+        16px;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        9px;
+
+      font-weight:
+        400;
+
+      letter-spacing:
+        0.22em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-guarantee p {
+      max-width:
+        700px;
+
+      margin:
+        0;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        11px;
+
+      line-height:
+        1.8;
+
+      letter-spacing:
+        0.05em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* =========================================================
+       COLUNA DIREITA
+    ========================================================= */
+
+    .cart-summary {
+      min-width: 0;
+
+      padding:
+        16px
+        22px
+        60px
+        30px;
+
+      background:
+        #ffffff;
+
+      font-family:
+        var(--fonte);
+    }
+
+
+    .cart-page-checkout {
+      width: 100%;
+
+      min-height:
+        50px;
+
+      padding:
+        0
+        18px;
+
+      border:
+        0;
+
+      background:
+        #000000;
+
+      color:
+        #ffffff;
+
+      cursor:
+        pointer;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        11px;
+
+      font-weight:
+        400;
+
+      letter-spacing:
+        0.09em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-page-checkout-desktop {
+      margin-bottom:
+        18px;
+    }
+
+
+    .cart-lock {
+      margin-right:
+        28px;
+    }
+
+
+    /* =========================================================
+       RESUMO
+    ========================================================= */
+
+    .cart-summary-block {
+      padding:
+        18px
+        0
+        25px;
+
+      border-top:
+        1px solid
+        #dddddd;
+    }
+
+
+    .cart-summary-heading {
+      margin-bottom:
+        25px;
+    }
+
+
+    .cart-summary-heading h2 {
+      margin: 0;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        11px;
+
+      font-weight:
+        400;
+
+      letter-spacing:
+        0.08em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-summary-row {
+      display: flex;
+
+      align-items: center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      margin-bottom:
+        25px;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        11px;
+
+      letter-spacing:
+        0.08em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-summary-row strong {
+      font-weight:
+        400;
+    }
+
+
+    .cart-summary-total {
+      margin-top:
+        35px;
+
+      padding-top:
+        4px;
+
+      font-size:
+        12px;
+    }
+
+
+    /* =========================================================
+       FRETE
+    ========================================================= */
+
+    .cart-shipping {
+      padding:
+        25px
+        0;
+
+      border-top:
+        1px solid
+        #dddddd;
+    }
+
+
+    .cart-shipping-title {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        135px;
+
+      gap:
+        14px;
+    }
+
+
+    .cart-shipping-title input {
+      width:
+        100%;
+
+      height:
+        46px;
+
+      padding:
+        0
+        15px;
+
+      border:
+        1px solid
+        #d1d1d1;
+
+      border-radius:
+        0;
+
+      outline:
+        0;
+
+      background:
+        #ffffff;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        11px;
+
+      letter-spacing:
+        0.05em;
+    }
+
+
+    .cart-shipping-title button {
+      height:
+        46px;
+
+      border:
+        1px solid
+        #d1d1d1;
+
+      border-radius:
+        0;
+
+      background:
+        #ffffff;
+
+      color:
+        #666666;
+
+      cursor:
+        pointer;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        10px;
+
+      letter-spacing:
+        0.06em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-shipping-message,
+    .cart-free-shipping-message {
+      margin:
+        12px
+        0
+        0;
+
+      color:
+        #666666;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        9px;
+
+      line-height:
+        1.6;
+
+      letter-spacing:
+        0.07em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-shipping-method {
+      margin-top:
+        18px;
+
+      padding-top:
+        16px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      border-top:
+        1px solid
+        #e2e2e2;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        10px;
+
+      letter-spacing:
+        0.08em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* =========================================================
+       CUPOM
+    ========================================================= */
+
+    .cart-coupon-description {
+      margin:
+        0
+        0
+        18px;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        10px;
+
+      line-height:
+        1.6;
+
+      letter-spacing:
+        0.07em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-coupon-form {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        94px;
+
+      gap:
+        10px;
+    }
+
+
+    .cart-coupon-form input {
+      width:
+        100%;
+
+      height:
+        46px;
+
+      padding:
+        0
+        15px;
+
+      border:
+        1px solid
+        #d1d1d1;
+
+      border-radius:
+        0;
+
+      outline:
+        0;
+
+      background:
+        #ffffff;
+
+      color:
+        #111111;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        11px;
+
+      letter-spacing:
+        0.05em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-coupon-form button {
+      height:
+        46px;
+
+      border:
+        0;
+
+      border-radius:
+        0;
+
+      background:
+        #000000;
+
+      color:
+        #ffffff;
+
+      cursor:
+        pointer;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        10px;
+
+      letter-spacing:
+        0.07em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-coupon-message {
+      margin:
+        12px
+        0
+        0;
+
+      color:
+        #333333;
+
+      font-family:
+        var(--fonte);
+
+      font-size:
+        9px;
+
+      line-height:
+        1.6;
+
+      letter-spacing:
+        0.07em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 900px) {
+
+      .cart-page-grid {
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .cart-main {
+        border-right:
+          0;
+
+        padding-bottom:
+          35px;
+      }
+
+
+      .cart-summary {
+        border-top:
+          1px solid
+          #dddddd;
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .cart-page {
+        padding-top:
+          92px;
+      }
+
+
+      .cart-main {
+        padding:
+          30px
+          16px
+          35px;
+      }
+
+
+      .cart-page-title {
+        margin:
+          0
+          0
+          25px;
+
+        text-align:
+          left;
+
+        font-size:
+          23px;
+      }
+
+
+      .cart-item {
+        min-height:
+          0;
+
+        padding:
+          20px
+          0;
+
+        grid-template-columns:
+          85px
+          minmax(0, 1fr);
+
+        gap:
+          16px;
+
+        align-items:
+          start;
+      }
+
+
+      .cart-item-image-wrap {
+        width:
+          85px;
+
+        height:
+          110px;
+      }
+
+
+      .cart-item-image {
+        max-width:
+          85px;
+
+        max-height:
+          110px;
+      }
+
+
+      .cart-item-total {
+        grid-column:
+          2;
+
+        justify-self:
+          start;
+
+        margin-top:
+          12px;
+
+        text-align:
+          left;
+      }
+
+
+      .cart-item-name {
+        font-size:
+          12px;
+      }
+
+
+      .cart-item-variant,
+      .cart-item-unit-price {
+        font-size:
+          10px;
+      }
+
+
+      .cart-item-actions {
+        margin-top:
+          8px;
+
+        flex-wrap:
+          wrap;
+      }
+
+
+      .cart-guarantee {
+        padding:
+          35px
+          0
+          0;
+      }
+
+
+      .cart-summary {
+        padding:
+          32px
+          16px
+          50px;
+      }
+
+
+      .cart-shipping-title {
+        grid-template-columns:
+          1fr
+          115px;
+      }
+
+    }
+
+  </style>
+
 </head>
 
 <body>
 
+  <!-- =========================================
+       FAIXA SUPERIOR
+  ========================================== -->
+
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
+
+
+  <!-- =========================================
+       HEADER
+  ========================================== -->
 
   <header class="topbar">
 
@@ -31,6 +1170,8 @@
       class="menu-toggle"
       id="menuToggle"
       type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
     >
       MENU
     </button>
@@ -44,15 +1185,24 @@
 
     <div class="top-actions">
 
-      <a href="index.html" class="nav-link">
+      <a
+        href="index.html"
+        class="nav-link"
+      >
         UNIVERSO
       </a>
 
-      <a href="loja.html" class="nav-link">
+      <a
+        href="loja.html"
+        class="nav-link"
+      >
         LOJA
       </a>
 
-      <a href="universo.html" class="nav-link">
+      <a
+        href="universo.html"
+        class="nav-link"
+      >
         SOBRE
       </a>
 
@@ -69,6 +1219,11 @@
 
   </header>
 
+
+  <!-- =========================================
+       MENU
+  ========================================== -->
+
   <nav
     class="side-menu"
     id="sideMenu"
@@ -80,6 +1235,7 @@
         class="close-menu"
         id="closeMenu"
         type="button"
+        aria-label="Fechar menu"
       >
         FECHAR
       </button>
@@ -108,27 +1264,40 @@
 
   </nav>
 
+
+  <!-- =========================================
+       CARRINHO
+  ========================================== -->
+
   <main class="cart-page">
 
     <div class="cart-page-grid">
 
+
+      <!-- =====================================
+           PRODUTOS
+      ====================================== -->
+
       <section class="cart-main">
 
-        <h1
-          class="cart-page-title"
-          id="cartPageTitle"
-        >
-          CARRINHO DE COMPRAS [0]
+        <h1 class="cart-page-title">
+          CARRINHO DE COMPRAS
+          <span id="cartTitleCount">
+            [0]
+          </span>
         </h1>
+
 
         <div
           class="cart-page-items"
           id="cartPageItems"
         ></div>
 
+
         <div
           class="cart-page-empty"
           id="cartEmpty"
+          hidden
         >
 
           <p>
@@ -144,6 +1313,7 @@
 
         </div>
 
+
         <div class="cart-guarantee">
 
           <h2>
@@ -151,27 +1321,36 @@
           </h2>
 
           <p>
-            O pagamento é processado com segurança
-            pelo Mercado Pago.
+            O PAGAMENTO É PROCESSADO COM SEGURANÇA
+            PELO MERCADO PAGO.
           </p>
 
         </div>
 
       </section>
 
+
+      <!-- =====================================
+           RESUMO
+      ====================================== -->
+
       <aside class="cart-summary">
+
 
         <button
           class="cart-page-checkout cart-page-checkout-desktop"
-          id="cartCheckoutButton"
+          id="checkoutButton"
           type="button"
         >
+
           <span class="cart-lock">
             ◇
           </span>
 
           FINALIZAR COMPRA
+
         </button>
+
 
         <div class="cart-summary-block">
 
@@ -182,6 +1361,7 @@
             </h2>
 
           </div>
+
 
           <div class="cart-summary-row">
 
@@ -195,12 +1375,14 @@
 
           </div>
 
+
           <div
-            class="cart-summary-row cart-discount-row"
+            class="cart-summary-row"
             id="cartDiscountRow"
+            hidden
           >
 
-            <span>
+            <span id="cartDiscountLabel">
               DESCONTO
             </span>
 
@@ -210,6 +1392,7 @@
 
           </div>
 
+
           <div class="cart-summary-row">
 
             <span>
@@ -217,10 +1400,11 @@
             </span>
 
             <strong id="cartShipping">
-              A CALCULAR
+              —
             </strong>
 
           </div>
+
 
           <div class="cart-summary-row cart-summary-total">
 
@@ -236,12 +1420,17 @@
 
         </div>
 
+
+        <!-- ===================================
+             CEP / FRETE
+        ==================================== -->
+
         <div class="cart-shipping">
 
           <div class="cart-shipping-title">
 
             <input
-              id="cartCepInput"
+              id="cartShippingCep"
               type="text"
               inputmode="numeric"
               maxlength="9"
@@ -250,7 +1439,6 @@
             >
 
             <button
-              class="cart-shipping-select"
               id="cartShippingButton"
               type="button"
             >
@@ -259,14 +1447,47 @@
 
           </div>
 
+
           <p
             class="cart-shipping-message"
             id="cartShippingMessage"
-          ></p>
+          >
+            DIGITE SEU CEP PARA CALCULAR O FRETE.
+          </p>
+
+
+          <div
+            class="cart-shipping-method"
+            id="cartShippingRow"
+            hidden
+          >
+
+            <span id="cartShippingMethod">
+              PADRÃO
+            </span>
+
+            <strong id="cartShippingMethodPrice">
+              —
+            </strong>
+
+          </div>
+
+
+          <p
+            class="cart-free-shipping-message"
+            id="cartFreeShippingMessage"
+          >
+            FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500.
+          </p>
 
         </div>
 
-        <div class="cart-summary-block cart-coupon-block">
+
+        <!-- ===================================
+             CUPOM
+        ==================================== -->
+
+        <div class="cart-summary-block">
 
           <div class="cart-summary-heading">
 
@@ -276,41 +1497,39 @@
 
           </div>
 
+
           <p class="cart-coupon-description">
             INSIRA SEU CÓDIGO DE DESCONTO.
           </p>
 
-          <div class="cart-coupon-form">
+
+          <form
+            class="cart-coupon-form"
+            id="couponForm"
+          >
 
             <input
-              id="cartCouponInput"
+              id="couponInput"
               type="text"
               placeholder="CÓDIGO"
+              autocomplete="off"
             >
 
             <button
-              id="cartCouponButton"
-              type="button"
+              type="submit"
             >
               APLICAR
             </button>
 
-          </div>
+          </form>
+
 
           <p
             class="cart-coupon-message"
-            id="cartCouponMessage"
+            id="couponMessage"
           ></p>
 
         </div>
-
-        <button
-          class="cart-page-checkout cart-page-checkout-mobile"
-          id="cartCheckoutMobile"
-          type="button"
-        >
-          FINALIZAR COMPRA
-        </button>
 
       </aside>
 
@@ -318,24 +1537,60 @@
 
   </main>
 
+
+  <!-- =========================================
+       FOOTER
+  ========================================== -->
+
   <footer class="footer">
 
     <div class="footer-columns">
 
       <div>
-        <p class="footer-title">UNIVERSO</p>
-        <a href="index.html">INÍCIO</a>
-        <a href="universo.html">NOSSA HISTÓRIA</a>
+
+        <p class="footer-title">
+          UNIVERSO
+        </p>
+
+        <a href="index.html">
+          INÍCIO
+        </a>
+
+        <a href="universo.html">
+          NOSSA HISTÓRIA
+        </a>
+
       </div>
 
+
       <div>
-        <p class="footer-title">LOJA</p>
-        <a href="loja.html#aromatizadores">AROMATIZADOR</a>
-        <a href="loja.html#difusores">DIFUSOR</a>
-        <a href="loja.html#biblioteca">BIBLIOTECA OLFATIVA</a>
-        <a href="loja.html#velas">VELA</a>
-        <a href="loja.html#perfume">PERFUME</a>
+
+        <p class="footer-title">
+          LOJA
+        </p>
+
+        <a href="loja.html#aromatizadores">
+          AROMATIZADOR
+        </a>
+
+        <a href="loja.html#difusores">
+          DIFUSOR
+        </a>
+
+        <a href="loja.html#biblioteca">
+          BIBLIOTECA OLFATIVA
+        </a>
+
+        <a href="loja.html#velas">
+          VELA
+        </a>
+
+        <a href="loja.html#perfume">
+          PERFUME
+        </a>
+
       </div>
+
 
       <div>
 
@@ -367,12 +1622,21 @@
 
     </div>
 
+
     <div class="footer-bottom">
-      <span>© 2026 OJOBOSCO</span>
-      <span>BRASIL</span>
+
+      <span>
+        © 2026 OJOBOSCO
+      </span>
+
+      <span>
+        BRASIL
+      </span>
+
     </div>
 
   </footer>
+
 
   <script src="script.js"></script>
 
