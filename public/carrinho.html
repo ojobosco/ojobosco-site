@@ -2,7 +2,9 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -21,514 +23,1206 @@
   >
 
   <style>
+
+    /* =========================================================
+       CARRINHO
+       Somente visual.
+       Toda a lógica permanece no script.js.
+    ========================================================= */
+
     html,
     body {
       background: #ffffff;
     }
 
-    body {
-      color: #111111;
-    }
 
     .cart-page {
-      background: #ffffff;
       min-height: 100vh;
+
       padding-top: 106px;
+
+      background: #ffffff;
+
+      color: #111111;
+
+      font-family: var(--fonte);
     }
 
-    .cart-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 380px;
+
+    .cart-page-grid {
       width: 100%;
-      min-height: calc(100vh - 106px);
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        385px;
+
+      align-items: stretch;
+
       background: #ffffff;
     }
+
+
+    /* =========================================================
+       GARANTIA DO MENU
+    ========================================================= */
+
+    .side-menu {
+      z-index: 9999;
+    }
+
+
+    .side-menu.open,
+    .side-menu.active {
+      transform: translateY(0);
+    }
+
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+
+    /* =========================================================
+       COLUNA ESQUERDA
+    ========================================================= */
 
     .cart-main {
-      padding: 52px 54px 72px;
-      border-right: 1px solid rgba(0, 0, 0, 0.10);
+      min-width: 0;
+
+      padding:
+        52px
+        54px
+        80px;
+
       background: #ffffff;
+
+      border-right:
+        1px solid
+        #dfdfdf;
     }
 
-    .cart-summary {
-      padding: 24px 22px 50px;
-      background: #ffffff;
-      position: sticky;
-      top: 106px;
-      align-self: start;
-      height: fit-content;
-    }
 
-    .cart-title {
-      margin: 0 0 38px;
-      text-align: center;
-      font-size: clamp(26px, 2.7vw, 46px);
-      line-height: 1.15;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .cart-page-title {
+      margin:
+        0
+        0
+        42px;
+
       color: #111111;
+
+      text-align: center;
+
+      font-family: var(--fonte);
+
+      font-size:
+        clamp(
+          27px,
+          2.6vw,
+          42px
+        );
+
+      line-height: 1.15;
+
+      font-weight: 400;
+
+      letter-spacing:
+        0.08em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-items {
-      width: 100%;
-      border-top: 1px solid rgba(0, 0, 0, 0.10);
+
+    .cart-page-title span {
+      white-space: nowrap;
     }
+
+
+    .cart-page-items {
+      width: 100%;
+
+      border-top:
+        1px solid
+        #dfdfdf;
+    }
+
+
+    .cart-page-items[hidden] {
+      display: none;
+    }
+
+
+    /* =========================================================
+       ITEM DO CARRINHO
+       Gerado pelo script.js
+    ========================================================= */
 
     .cart-item {
+      width: 100%;
+
+      min-height: 220px;
+
+      padding:
+        36px
+        0;
+
       display: grid;
-      grid-template-columns: 130px minmax(0, 1fr) 120px;
+
+      grid-template-columns:
+        145px
+        minmax(0, 1fr)
+        125px;
+
+      gap: 42px;
+
       align-items: center;
-      gap: 36px;
-      padding: 34px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+
+      border-bottom:
+        1px solid
+        #dfdfdf;
+
       background: #ffffff;
     }
 
-    .cart-item-image-box {
-      width: 130px;
-      height: 150px;
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+
+    /* IMAGEM */
+
+    .cart-item-image-wrap {
+      width: 145px;
+      height: 175px;
+
       display: flex;
+
       align-items: center;
       justify-content: center;
+
       overflow: hidden;
+
+      border:
+        1px solid
+        #eeeeee;
+
+      border-radius: 0;
+
+      background: #ffffff;
+    }
+
+
+    .cart-item-image {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+      object-position: center;
+
       border-radius: 0;
     }
 
-    .cart-item-image-box img {
+
+    .cart-item-image-empty {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      display: block;
+
+      background: #f5f5f5;
+
+      border-radius: 0;
     }
+
+
+    /* INFORMAÇÕES */
 
     .cart-item-info {
       min-width: 0;
+
+      padding:
+        8px
+        0;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: flex-start;
     }
 
-    .cart-item-category {
-      margin: 0 0 18px;
-      font-size: 12px;
-      line-height: 1.4;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #111111;
-    }
 
     .cart-item-name {
-      margin: 0 0 8px;
-      font-size: 17px;
-      line-height: 1.35;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      margin:
+        0
+        0
+        20px;
+
       color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 15px;
+
+      line-height: 1.45;
+
+      font-weight: 400;
+
+      letter-spacing:
+        0.12em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-item-size {
-      margin: 0 0 20px;
-      font-size: 12px;
+
+    .cart-item-variant {
+      margin:
+        0
+        0
+        10px;
+
+      color: #333333;
+
+      font-family: var(--fonte);
+
+      font-size: 11px;
+
+      line-height: 1.55;
+
+      letter-spacing:
+        0.11em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-item-unit-price {
+      margin:
+        12px
+        0
+        24px;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 11px;
+
       line-height: 1.5;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #444444;
+
+      letter-spacing:
+        0.09em;
     }
 
-    .cart-item-controls {
+
+    /* QUANTIDADE */
+
+    .cart-item-actions {
       display: flex;
+
       align-items: center;
-      gap: 18px;
+
+      gap: 26px;
+
       flex-wrap: wrap;
     }
 
-    .cart-qty {
-      display: inline-grid;
-      grid-template-columns: 32px 42px 32px;
+
+    .cart-quantity {
+      height: 38px;
+
+      display: grid;
+
+      grid-template-columns:
+        38px
+        44px
+        38px;
+
       align-items: center;
-      height: 34px;
-      border: 1px solid rgba(0, 0, 0, 0.20);
+
+      border:
+        1px solid
+        #cfcfcf;
+
       border-radius: 0;
+
       overflow: hidden;
+
       background: #ffffff;
     }
 
-    .cart-qty button,
-    .cart-qty span {
+
+    .cart-quantity button,
+    .cart-quantity span {
       width: 100%;
-      height: 34px;
-      border: 0;
-      background: #ffffff;
-      color: #111111;
-      font-size: 12px;
-      line-height: 1;
+      height: 36px;
+
+      margin: 0;
+      padding: 0;
+
       display: flex;
+
       align-items: center;
       justify-content: center;
-      font-family: inherit;
+
+      border: 0;
+
       border-radius: 0;
+
+      background: #ffffff;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 11px;
+
+      line-height: 1;
     }
 
-    .cart-qty button {
+
+    .cart-quantity button {
       cursor: pointer;
     }
+
+
+    .cart-quantity-minus {
+      border-right:
+        1px solid
+        #ececec !important;
+    }
+
+
+    .cart-quantity-plus {
+      border-left:
+        1px solid
+        #ececec !important;
+    }
+
 
     .cart-remove {
+      margin: 0;
       padding: 0;
+
       border: 0;
-      background: transparent;
-      border-bottom: 1px solid #111111;
-      color: #111111;
-      font-size: 10px;
-      line-height: 1.3;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      cursor: pointer;
-      font-family: inherit;
+
+      border-bottom:
+        1px solid
+        #111111;
+
       border-radius: 0;
+
+      background: transparent;
+
+      color: #111111;
+
+      cursor: pointer;
+
+      font-family: var(--fonte);
+
+      font-size: 9px;
+
+      line-height: 1.5;
+
+      letter-spacing:
+        0.16em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-item-price {
-      text-align: right;
-      font-size: 16px;
-      line-height: 1.4;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+
+    /* PREÇO DO ITEM */
+
+    .cart-item-total {
+      min-width: 115px;
+
+      justify-self: end;
+
+      align-self: center;
+
       color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 14px;
+
+      line-height: 1.4;
+
+      letter-spacing:
+        0.05em;
+
+      text-align: right;
+
       white-space: nowrap;
     }
 
-    .cart-secure {
-      padding-top: 36px;
-    }
 
-    .cart-secure-title {
-      margin: 0 0 14px;
-      font-size: 10px;
-      line-height: 1.5;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #111111;
-    }
+    /* =========================================================
+       CARRINHO VAZIO
+    ========================================================= */
 
-    .cart-secure-text {
-      margin: 0;
-      font-size: 11px;
-      line-height: 1.8;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: #111111;
-    }
+    .cart-page-empty {
+      min-height: 300px;
 
-    .cart-empty {
-      padding: 60px 0;
+      padding:
+        65px
+        20px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
       text-align: center;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+
+      border-bottom:
+        1px solid
+        #dfdfdf;
+
+      background: #ffffff;
     }
 
-    .cart-empty[hidden] {
+
+    .cart-page-empty[hidden] {
       display: none;
     }
 
-    .cart-empty p {
-      margin: 0 0 24px;
-      font-size: 11px;
-      line-height: 1.8;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+
+    .cart-page-empty p {
+      margin:
+        0
+        0
+        28px;
+
       color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 10px;
+
+      line-height: 1.8;
+
+      letter-spacing:
+        0.17em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-empty a {
+
+    .cart-page-shop-button {
+      min-width: 220px;
+
+      min-height: 50px;
+
+      padding:
+        0
+        24px;
+
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
-      min-width: 220px;
-      height: 50px;
-      padding: 0 24px;
+
+      border-radius: 0;
+
       background: #000000;
+
       color: #ffffff;
-      text-decoration: none;
+
+      font-family: var(--fonte);
+
       font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      border-radius: 0;
+
+      letter-spacing:
+        0.15em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-summary-button {
-      width: 100%;
-      height: 50px;
-      padding: 0 18px;
-      background: #000000;
-      color: #ffffff;
-      border: 0;
-      cursor: pointer;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-family: inherit;
-      border-radius: 0;
+
+    /* =========================================================
+       COMPRA SEGURA
+    ========================================================= */
+
+    .cart-guarantee {
+      padding:
+        42px
+        0
+        0;
     }
 
-    .cart-summary-button-secondary {
-      margin-top: 18px;
+
+    .cart-guarantee h2 {
+      margin:
+        0
+        0
+        18px;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 9px;
+
+      font-weight: 400;
+
+      letter-spacing:
+        0.22em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-summary-panel {
-      margin-top: 18px;
-      border-top: 1px solid rgba(0, 0, 0, 0.10);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
-      padding: 20px 0 0;
+
+    .cart-guarantee p {
+      max-width: 680px;
+
+      margin: 0;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 10px;
+
+      line-height: 1.9;
+
+      letter-spacing:
+        0.10em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-summary-section {
-      padding: 0 0 24px;
-      margin: 0 0 24px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+
+    /* =========================================================
+       COLUNA DIREITA
+    ========================================================= */
+
+    .cart-summary {
+      min-width: 0;
+
+      padding:
+        42px
+        24px
+        55px;
+
+      background: #ffffff;
+
+      font-family: var(--fonte);
     }
 
-    .cart-summary-section:last-child {
-      margin-bottom: 0;
-      border-bottom: 0;
-      padding-bottom: 0;
+
+    .cart-summary-block {
+      padding:
+        0
+        0
+        30px;
+
+      margin:
+        0
+        0
+        30px;
+
+      border-bottom:
+        1px solid
+        #dfdfdf;
     }
+
 
     .cart-summary-heading {
-      margin: 0 0 20px;
-      font-size: 11px;
-      line-height: 1.4;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #111111;
+      margin:
+        0
+        0
+        27px;
     }
+
+
+    .cart-summary-heading h2 {
+      margin: 0;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 10px;
+
+      font-weight: 400;
+
+      letter-spacing:
+        0.18em;
+
+      text-transform:
+        uppercase;
+    }
+
 
     .cart-summary-row {
       display: flex;
+
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-      font-size: 11px;
-      line-height: 1.5;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+
+      justify-content:
+        space-between;
+
+      gap: 18px;
+
+      margin:
+        0
+        0
+        23px;
+
       color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 10px;
+
+      line-height: 1.5;
+
+      letter-spacing:
+        0.12em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-summary-row:last-child {
-      margin-bottom: 0;
-    }
 
     .cart-summary-row strong {
       font-weight: 400;
-      color: #111111;
+
       white-space: nowrap;
     }
 
-    .cart-total-row {
-      margin-top: 26px;
-      font-size: 13px;
+
+    .cart-summary-total {
+      margin:
+        34px
+        0
+        0;
+
+      font-size: 12px;
     }
 
-    .cart-cep-grid,
-    .cart-coupon-grid {
+
+    /* =========================================================
+       CEP / FRETE
+    ========================================================= */
+
+    .cart-shipping {
+      padding:
+        0
+        0
+        30px;
+
+      margin:
+        0
+        0
+        30px;
+
+      border-bottom:
+        1px solid
+        #dfdfdf;
+    }
+
+
+    .cart-shipping-title {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 134px;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        120px;
+
       gap: 12px;
     }
 
-    .cart-cep-grid input,
-    .cart-coupon-grid input {
+
+    .cart-shipping-title input {
       width: 100%;
-      height: 46px;
-      padding: 0 14px;
-      border: 1px solid rgba(0, 0, 0, 0.16);
-      background: #ffffff;
-      color: #111111;
-      font-size: 11px;
-      line-height: 1;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-family: inherit;
+
+      height: 48px;
+
+      padding:
+        0
+        15px;
+
+      box-sizing:
+        border-box;
+
+      border:
+        1px solid
+        #d2d2d2;
+
+      border-radius: 0;
+
       outline: none;
-      border-radius: 0;
-      box-sizing: border-box;
+
+      background: #ffffff;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 10px;
+
+      letter-spacing:
+        0.10em;
+
+      text-transform:
+        uppercase;
     }
 
-    .cart-cep-grid button,
-    .cart-coupon-grid button {
+
+    .cart-shipping-title button {
       width: 100%;
-      height: 46px;
-      border: 1px solid rgba(0, 0, 0, 0.16);
-      background: #ffffff;
-      color: #111111;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-family: inherit;
-      cursor: pointer;
-      border-radius: 0;
-    }
 
-    .cart-help-text {
-      margin: 14px 0 0;
-      font-size: 9px;
-      line-height: 1.8;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: #555555;
-    }
+      height: 48px;
 
-    .cart-shipping-line {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(0, 0, 0, 0.10);
-      font-size: 10px;
-      line-height: 1.6;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: #111111;
-    }
-
-    .cart-applied-coupon {
-      margin-top: 16px;
-      padding: 14px;
-      border: 1px solid rgba(0, 0, 0, 0.10);
-      background: #ffffff;
-      border-radius: 0;
-    }
-
-    .cart-applied-coupon[hidden] {
-      display: none;
-    }
-
-    .cart-applied-coupon-label {
-      display: block;
-      margin: 0 0 8px;
-      font-size: 9px;
-      line-height: 1.6;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #555555;
-    }
-
-    .cart-applied-coupon-name {
-      display: block;
-      margin: 0 0 10px;
-      font-size: 11px;
-      line-height: 1.6;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #111111;
-    }
-
-    .cart-remove-coupon {
       padding: 0;
-      border: 0;
-      background: transparent;
-      border-bottom: 1px solid #111111;
-      color: #111111;
-      font-size: 9px;
-      line-height: 1.5;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      font-family: inherit;
+
+      border:
+        1px solid
+        #d2d2d2;
+
       border-radius: 0;
+
+      background: #ffffff;
+
+      color: #111111;
+
+      cursor: pointer;
+
+      font-family: var(--fonte);
+
+      font-size: 9px;
+
+      letter-spacing:
+        0.13em;
+
+      text-transform:
+        uppercase;
     }
 
-    @media (max-width: 1100px) {
-      .cart-layout {
-        grid-template-columns: 1fr;
+
+    .cart-shipping-message,
+    .cart-free-shipping-message {
+      margin:
+        15px
+        0
+        0;
+
+      color: #666666;
+
+      font-family: var(--fonte);
+
+      font-size: 8px;
+
+      line-height: 1.8;
+
+      letter-spacing:
+        0.10em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-shipping-method {
+      margin-top: 20px;
+
+      padding-top: 18px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content:
+        space-between;
+
+      gap: 15px;
+
+      border-top:
+        1px solid
+        #ededed;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 9px;
+
+      letter-spacing:
+        0.11em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* =========================================================
+       CUPOM
+    ========================================================= */
+
+    .cart-coupon-description {
+      margin:
+        0
+        0
+        19px;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 9px;
+
+      line-height: 1.8;
+
+      letter-spacing:
+        0.11em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-coupon-form {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        96px;
+
+      gap: 12px;
+    }
+
+
+    .cart-coupon-form input {
+      width: 100%;
+
+      height: 48px;
+
+      padding:
+        0
+        15px;
+
+      box-sizing:
+        border-box;
+
+      border:
+        1px solid
+        #d2d2d2;
+
+      border-radius: 0;
+
+      outline: none;
+
+      background: #ffffff;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 10px;
+
+      letter-spacing:
+        0.10em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-coupon-form button {
+      width: 100%;
+
+      height: 48px;
+
+      padding: 0;
+
+      border: 0;
+
+      border-radius: 0;
+
+      background: #000000;
+
+      color: #ffffff;
+
+      cursor: pointer;
+
+      font-family: var(--fonte);
+
+      font-size: 9px;
+
+      letter-spacing:
+        0.12em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .cart-coupon-message {
+      margin:
+        16px
+        0
+        0;
+
+      color: #111111;
+
+      font-family: var(--fonte);
+
+      font-size: 9px;
+
+      line-height: 1.8;
+
+      letter-spacing:
+        0.10em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* =========================================================
+       FINALIZAR PEDIDO
+       APENAS EMBAIXO
+    ========================================================= */
+
+    .cart-page-checkout {
+      width: 100%;
+
+      min-height: 56px;
+
+      margin:
+        4px
+        0
+        0;
+
+      padding:
+        0
+        20px;
+
+      border: 0;
+
+      border-radius: 0;
+
+      background: #000000;
+
+      color: #ffffff;
+
+      cursor: pointer;
+
+      font-family: var(--fonte);
+
+      font-size: 10px;
+
+      font-weight: 400;
+
+      letter-spacing:
+        0.15em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    /* =========================================================
+       RESPONSIVO
+    ========================================================= */
+
+    @media (max-width: 1050px) {
+
+      .cart-page-grid {
+        grid-template-columns:
+          1fr;
       }
+
 
       .cart-main {
         border-right: 0;
       }
 
+
       .cart-summary {
-        position: static;
-        top: auto;
-        padding: 0 54px 50px;
+        padding:
+          10px
+          54px
+          60px;
+
+        border-top:
+          1px solid
+          #dfdfdf;
       }
+
     }
 
-    @media (max-width: 740px) {
+
+    @media (max-width: 650px) {
+
       .cart-page {
-        padding-top: 96px;
+        padding-top: 92px;
       }
+
 
       .cart-main {
-        padding: 34px 16px 40px;
+        padding:
+          32px
+          16px
+          42px;
       }
 
-      .cart-summary {
-        padding: 0 16px 40px;
-      }
 
-      .cart-title {
-        text-align: left;
-        font-size: 28px;
+      .cart-page-title {
         margin-bottom: 28px;
+
+        text-align: left;
+
+        font-size: 25px;
       }
+
 
       .cart-item {
-        grid-template-columns: 92px minmax(0, 1fr);
-        gap: 18px;
+        min-height: 0;
+
+        padding:
+          25px
+          0;
+
+        grid-template-columns:
+          92px
+          minmax(0, 1fr);
+
+        gap:
+          18px;
+
         align-items: start;
       }
 
-      .cart-item-image-box {
+
+      .cart-item-image-wrap {
         width: 92px;
-        height: 112px;
+        height: 115px;
       }
 
-      .cart-item-price {
-        grid-column: 2;
-        text-align: left;
-        margin-top: 6px;
-      }
-
-      .cart-item-category {
-        margin-bottom: 12px;
-      }
 
       .cart-item-name {
-        font-size: 15px;
+        margin-bottom: 14px;
+
+        font-size: 12px;
       }
 
-      .cart-item-size {
-        margin-bottom: 16px;
+
+      .cart-item-variant {
+        font-size: 10px;
       }
 
-      .cart-cep-grid,
-      .cart-coupon-grid {
-        grid-template-columns: 1fr 110px;
+
+      .cart-item-unit-price {
+        margin-bottom: 17px;
+
+        font-size: 10px;
       }
+
+
+      .cart-item-actions {
+        gap: 15px;
+      }
+
+
+      .cart-quantity {
+        grid-template-columns:
+          32px
+          36px
+          32px;
+
+        height: 34px;
+      }
+
+
+      .cart-quantity button,
+      .cart-quantity span {
+        height: 32px;
+      }
+
+
+      .cart-item-total {
+        grid-column: 2;
+
+        justify-self: start;
+
+        min-width: 0;
+
+        margin-top: 8px;
+
+        text-align: left;
+
+        font-size: 12px;
+      }
+
+
+      .cart-summary {
+        padding:
+          32px
+          16px
+          50px;
+      }
+
+
+      .cart-shipping-title {
+        grid-template-columns:
+          1fr
+          108px;
+      }
+
+
+      .cart-coupon-form {
+        grid-template-columns:
+          1fr
+          88px;
+      }
+
     }
+
   </style>
+
 </head>
 
+
 <body>
+
+
+  <!-- ======================================================
+       FAIXA SUPERIOR
+  ======================================================= -->
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
+
   <header class="topbar">
+
 
     <button
       class="menu-toggle"
       id="menuToggle"
-      aria-label="Abrir menu"
       type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
     >
       MENU
     </button>
+
 
     <a
       href="index.html"
@@ -537,7 +1231,9 @@
       OJOBOSCO
     </a>
 
+
     <div class="top-actions">
+
 
       <a
         href="index.html"
@@ -546,6 +1242,7 @@
         UNIVERSO
       </a>
 
+
       <a
         href="loja.html"
         class="nav-link"
@@ -553,12 +1250,14 @@
         LOJA
       </a>
 
+
       <a
         href="universo.html"
         class="nav-link"
       >
         SOBRE
       </a>
+
 
       <button
         class="cart-link"
@@ -569,294 +1268,448 @@
         <span id="cartCount">0</span>
       </button>
 
+
     </div>
 
   </header>
 
+
+  <!-- ======================================================
+       MENU
+  ======================================================= -->
+
   <nav
     class="side-menu"
     id="sideMenu"
+    aria-label="Menu principal"
   >
+
     <div class="side-menu-inner">
+
 
       <button
         class="close-menu"
         id="closeMenu"
-        aria-label="Fechar menu"
         type="button"
+        aria-label="Fechar menu"
       >
         FECHAR
       </button>
+
 
       <a href="index.html">
         UNIVERSO
       </a>
 
+
       <a href="loja.html">
         LOJA
       </a>
+
 
       <a href="universo.html">
         SOBRE
       </a>
 
+
       <a href="index.html#newsletter">
         NEWSLETTER
       </a>
+
 
       <a href="contato.html">
         CONTATO
       </a>
 
+
     </div>
+
   </nav>
+
+
+  <!-- ======================================================
+       CARRINHO
+  ======================================================= -->
 
   <main class="cart-page">
 
-    <div class="cart-layout">
+
+    <div class="cart-page-grid">
+
+
+      <!-- ==================================================
+           PRODUTOS
+      =================================================== -->
 
       <section class="cart-main">
 
-        <h1 class="cart-title">
+
+        <h1 class="cart-page-title">
+
           CARRINHO DE COMPRAS
-          <span id="cartTitleCount">[0]</span>
+
+          <span id="cartTitleCount">
+            [0]
+          </span>
+
         </h1>
 
-        <div
-          class="cart-items"
-          id="cartItems"
-        ></div>
 
         <div
-          class="cart-empty"
+          class="cart-page-items"
+          id="cartPageItems"
+        ></div>
+
+
+        <div
+          class="cart-page-empty"
           id="cartEmpty"
           hidden
         >
-          <p>SEU CARRINHO ESTÁ VAZIO.</p>
 
-          <a href="loja.html">
+          <p>
+            SEU CARRINHO ESTÁ VAZIO.
+          </p>
+
+
+          <a
+            href="loja.html"
+            class="cart-page-shop-button"
+          >
             IR PARA A LOJA
           </a>
+
         </div>
 
-        <div class="cart-secure">
-          <h2 class="cart-secure-title">
+
+        <div class="cart-guarantee">
+
+
+          <h2>
             COMPRA SEGURA
           </h2>
 
-          <p class="cart-secure-text">
-            O PAGAMENTO É PROCESSADO COM SEGURANÇA PELO MERCADO PAGO.
+
+          <p>
+            O PAGAMENTO É PROCESSADO COM SEGURANÇA
+            PELO MERCADO PAGO.
           </p>
+
+
         </div>
+
 
       </section>
 
+
+      <!-- ==================================================
+           RESUMO
+      =================================================== -->
+
       <aside class="cart-summary">
 
-        <button
-          class="cart-summary-button"
-          id="checkoutButtonTop"
-          type="button"
-        >
-          FINALIZAR COMPRA
-        </button>
 
-        <div class="cart-summary-panel">
+        <!-- RESUMO -->
 
-          <div class="cart-summary-section">
+        <div class="cart-summary-block">
 
-            <h2 class="cart-summary-heading">
+
+          <div class="cart-summary-heading">
+
+            <h2>
               RESUMO
             </h2>
 
-            <div class="cart-summary-row">
-              <span>SUBTOTAL</span>
-              <strong id="summarySubtotal">R$ 0,00</strong>
-            </div>
+          </div>
 
-            <div
-              class="cart-summary-row"
-              id="discountRow"
-              hidden
-            >
-              <span id="discountLabel">DESCONTO</span>
-              <strong id="summaryDiscount">- R$ 0,00</strong>
-            </div>
 
-            <div class="cart-summary-row">
-              <span>FRETE</span>
-              <strong id="summaryShipping">—</strong>
-            </div>
+          <div class="cart-summary-row">
 
-            <div class="cart-summary-row cart-total-row">
-              <span>TOTAL</span>
-              <strong id="summaryTotal">R$ 0,00</strong>
-            </div>
+            <span>
+              SUBTOTAL
+            </span>
+
+            <strong id="cartSubtotal">
+              R$0,00
+            </strong>
 
           </div>
 
-          <div class="cart-summary-section">
 
-            <div class="cart-cep-grid">
+          <div
+            class="cart-summary-row"
+            id="cartDiscountRow"
+            hidden
+          >
 
-              <input
-                id="shippingCep"
-                type="text"
-                maxlength="9"
-                placeholder="CEP"
-                autocomplete="postal-code"
-              >
+            <span id="cartDiscountLabel">
+              DESCONTO
+            </span>
 
-              <button
-                id="calculateShippingButton"
-                type="button"
-              >
-                CALCULAR
-              </button>
-
-            </div>
-
-            <p
-              class="cart-help-text"
-              id="shippingHelpText"
-            >
-              DIGITE SEU CEP PARA CALCULAR O FRETE.
-            </p>
-
-            <div
-              class="cart-shipping-line"
-              id="shippingMethodLine"
-            >
-              <span id="shippingMethodLabel">PADRÃO</span>
-              <strong id="shippingMethodPrice">—</strong>
-            </div>
-
-            <p class="cart-help-text">
-              FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500.
-            </p>
+            <strong id="cartDiscount">
+              R$0,00
+            </strong>
 
           </div>
 
-          <div class="cart-summary-section">
 
-            <h2 class="cart-summary-heading">
-              CUPOM
-            </h2>
+          <div class="cart-summary-row">
 
-            <div class="cart-coupon-grid">
+            <span>
+              FRETE
+            </span>
 
-              <input
-                id="couponInput"
-                type="text"
-                placeholder="CÓDIGO"
-                autocomplete="off"
-              >
-
-              <button
-                id="applyCouponButton"
-                type="button"
-              >
-                APLICAR
-              </button>
-
-            </div>
-
-            <p
-              class="cart-help-text"
-              id="couponFeedback"
-            >
-              APENAS UM CUPOM PODE SER UTILIZADO POR VEZ.
-            </p>
-
-            <div
-              class="cart-applied-coupon"
-              id="appliedCouponBox"
-              hidden
-            >
-              <span class="cart-applied-coupon-label">
-                CUPOM APLICADO
-              </span>
-
-              <strong
-                class="cart-applied-coupon-name"
-                id="appliedCouponName"
-              >
-                —
-              </strong>
-
-              <button
-                class="cart-remove-coupon"
-                id="removeCouponButton"
-                type="button"
-              >
-                REMOVER CUPOM
-              </button>
-            </div>
+            <strong id="cartShipping">
+              —
+            </strong>
 
           </div>
+
+
+          <div
+            class="cart-summary-row cart-summary-total"
+          >
+
+            <span>
+              TOTAL
+            </span>
+
+            <strong id="cartTotal">
+              R$0,00
+            </strong>
+
+          </div>
+
 
         </div>
 
+
+        <!-- ==================================================
+             FRETE
+        =================================================== -->
+
+        <div class="cart-shipping">
+
+
+          <div class="cart-shipping-title">
+
+
+            <input
+              id="cartShippingCep"
+              type="text"
+              inputmode="numeric"
+              maxlength="9"
+              placeholder="CEP"
+              autocomplete="postal-code"
+            >
+
+
+            <button
+              id="cartShippingButton"
+              type="button"
+            >
+              CALCULAR
+            </button>
+
+
+          </div>
+
+
+          <p
+            class="cart-shipping-message"
+            id="cartShippingMessage"
+          >
+            DIGITE SEU CEP PARA CALCULAR O FRETE.
+          </p>
+
+
+          <div
+            class="cart-shipping-method"
+            id="cartShippingRow"
+            hidden
+          >
+
+
+            <span id="cartShippingMethod">
+              PADRÃO
+            </span>
+
+
+            <strong id="cartShippingMethodPrice">
+              —
+            </strong>
+
+
+          </div>
+
+
+          <p
+            class="cart-free-shipping-message"
+            id="cartFreeShippingMessage"
+          >
+            FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500.
+          </p>
+
+
+        </div>
+
+
+        <!-- ==================================================
+             CUPOM
+        =================================================== -->
+
+        <div class="cart-summary-block">
+
+
+          <div class="cart-summary-heading">
+
+            <h2>
+              CUPOM
+            </h2>
+
+          </div>
+
+
+          <p class="cart-coupon-description">
+            INSIRA SEU CÓDIGO DE DESCONTO.
+          </p>
+
+
+          <form
+            class="cart-coupon-form"
+            id="couponForm"
+          >
+
+
+            <input
+              id="couponInput"
+              type="text"
+              placeholder="CÓDIGO"
+              autocomplete="off"
+            >
+
+
+            <button
+              type="submit"
+            >
+              APLICAR
+            </button>
+
+
+          </form>
+
+
+          <p
+            class="cart-coupon-message"
+            id="couponMessage"
+          ></p>
+
+
+        </div>
+
+
+        <!-- ==================================================
+             FINALIZAR
+             ÚNICO BOTÃO DE CHECKOUT
+        =================================================== -->
+
         <button
-          class="cart-summary-button cart-summary-button-secondary"
-          id="checkoutButtonBottom"
+          class="cart-page-checkout"
+          id="checkoutButton"
           type="button"
         >
-          FECHAR PEDIDO
+          FINALIZAR PEDIDO
         </button>
+
 
       </aside>
 
+
     </div>
+
 
   </main>
 
+
+  <!-- ======================================================
+       FOOTER
+  ======================================================= -->
+
   <footer class="footer">
+
 
     <div class="footer-columns">
 
+
       <div>
-        <p class="footer-title">UNIVERSO</p>
+
+
+        <p class="footer-title">
+          UNIVERSO
+        </p>
+
 
         <a href="index.html">
           INÍCIO
         </a>
 
+
         <a href="universo.html">
           NOSSA HISTÓRIA
         </a>
+
+
       </div>
 
+
       <div>
-        <p class="footer-title">LOJA</p>
+
+
+        <p class="footer-title">
+          LOJA
+        </p>
+
 
         <a href="loja.html#aromatizadores">
           AROMATIZADOR
         </a>
 
+
         <a href="loja.html#difusores">
           DIFUSOR
         </a>
+
 
         <a href="loja.html#biblioteca">
           BIBLIOTECA OLFATIVA
         </a>
 
+
         <a href="loja.html#velas">
           VELA
         </a>
 
+
         <a href="loja.html#perfume">
           PERFUME
         </a>
+
+
       </div>
 
+
       <div>
-        <p class="footer-title">SOBRE</p>
+
+
+        <p class="footer-title">
+          SOBRE
+        </p>
+
 
         <a href="contato.html">
           CONTATO
         </a>
+
 
         <a
           href="https://www.instagram.com/ojobosco/"
@@ -866,530 +1719,48 @@
           INSTAGRAM
         </a>
 
+
         <a href="trocas.html">
           TROCAS E DEVOLUÇÕES
         </a>
 
+
         <a href="privacidade.html">
           PRIVACIDADE
         </a>
+
+
       </div>
 
+
     </div>
 
+
     <div class="footer-bottom">
-      <span>© 2026 OJOBOSCO</span>
-      <span>BRASIL</span>
+
+
+      <span>
+        © 2026 OJOBOSCO
+      </span>
+
+
+      <span>
+        BRASIL
+      </span>
+
+
     </div>
+
 
   </footer>
 
-  <script>
-    /* =========================================================
-       MENU
-    ========================================================= */
-    const menuToggle = document.getElementById('menuToggle');
-    const closeMenu = document.getElementById('closeMenu');
-    const sideMenu = document.getElementById('sideMenu');
 
-    if (menuToggle && sideMenu) {
-      menuToggle.addEventListener('click', () => {
-        sideMenu.classList.add('open');
-      });
-    }
+  <!-- ======================================================
+       SCRIPT OFICIAL DO SITE
+  ======================================================= -->
 
-    if (closeMenu && sideMenu) {
-      closeMenu.addEventListener('click', () => {
-        sideMenu.classList.remove('open');
-      });
-    }
+  <script src="script.js"></script>
 
-    document.addEventListener('click', (event) => {
-      if (!sideMenu || !menuToggle) return;
-
-      const clickedInsideMenu = sideMenu.contains(event.target);
-      const clickedMenuButton = menuToggle.contains(event.target);
-
-      if (!clickedInsideMenu && !clickedMenuButton) {
-        sideMenu.classList.remove('open');
-      }
-    });
-
-    /* =========================================================
-       STORAGE
-    ========================================================= */
-    const CART_KEYS = ['ojobosco_cart', 'ojoboscoCart', 'cart'];
-    const COUPON_KEY = 'ojobosco_coupon';
-    const SHIPPING_KEY = 'ojobosco_shipping';
-
-    function getSavedValue(keys) {
-      for (const key of keys) {
-        const value = localStorage.getItem(key);
-        if (value) return value;
-      }
-      return null;
-    }
-
-    function getCart() {
-      const raw = getSavedValue(CART_KEYS);
-
-      if (!raw) return [];
-
-      try {
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (error) {
-        return [];
-      }
-    }
-
-    function saveCart(cart) {
-      const serialized = JSON.stringify(cart);
-
-      CART_KEYS.forEach((key) => {
-        localStorage.setItem(key, serialized);
-      });
-    }
-
-    function getAppliedCoupon() {
-      const raw = localStorage.getItem(COUPON_KEY);
-
-      if (!raw) return null;
-
-      try {
-        return JSON.parse(raw);
-      } catch (error) {
-        return null;
-      }
-    }
-
-    function saveAppliedCoupon(coupon) {
-      if (!coupon) {
-        localStorage.removeItem(COUPON_KEY);
-        return;
-      }
-
-      localStorage.setItem(COUPON_KEY, JSON.stringify(coupon));
-    }
-
-    function getShippingValue() {
-      const raw = localStorage.getItem(SHIPPING_KEY);
-      const value = Number(raw);
-
-      return Number.isFinite(value) ? value : 0;
-    }
-
-    function saveShippingValue(value) {
-      localStorage.setItem(SHIPPING_KEY, String(value));
-    }
-
-    /* =========================================================
-       HELPERS
-    ========================================================= */
-    const couponList = {
-      BEMVINDO: {
-        code: 'BEMVINDO',
-        label: 'BEMVINDO — 10% DE DESCONTO',
-        type: 'percent',
-        value: 10
-      }
-    };
-
-    function formatPrice(value) {
-      return Number(value || 0).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      });
-    }
-
-    function slugText(value) {
-      return String(value || '').trim();
-    }
-
-    function getItemCategory(item) {
-      return (
-        item.category ||
-        item.categoria ||
-        item.type ||
-        item.tipo ||
-        item.productType ||
-        'Produto'
-      );
-    }
-
-    function getItemName(item) {
-      return (
-        item.name ||
-        item.nome ||
-        item.fragrance ||
-        item.fragrancia ||
-        item.variant ||
-        item.variante ||
-        'Produto'
-      );
-    }
-
-    function getItemSize(item) {
-      return (
-        item.size ||
-        item.tamanho ||
-        item.volume ||
-        item.ml ||
-        ''
-      );
-    }
-
-    function getItemQuantity(item) {
-      const quantity = Number(
-        item.quantity ||
-        item.quantidade ||
-        1
-      );
-
-      return quantity > 0 ? quantity : 1;
-    }
-
-    function getItemPrice(item) {
-      return Number(
-        item.price ||
-        item.preco ||
-        item.valor ||
-        0
-      );
-    }
-
-    function getItemImage(item) {
-      return (
-        item.image ||
-        item.imagem ||
-        item.photo ||
-        item.foto ||
-        ''
-      );
-    }
-
-    function getCartCount(cart) {
-      return cart.reduce((total, item) => total + getItemQuantity(item), 0);
-    }
-
-    function getSubtotal(cart) {
-      return cart.reduce((total, item) => {
-        return total + (getItemPrice(item) * getItemQuantity(item));
-      }, 0);
-    }
-
-    function getDiscountValue(subtotal, coupon) {
-      if (!coupon) return 0;
-
-      if (coupon.type === 'percent') {
-        return subtotal * (coupon.value / 100);
-      }
-
-      if (coupon.type === 'fixed') {
-        return coupon.value;
-      }
-
-      return 0;
-    }
-
-    function getCurrentShipping(subtotal) {
-      if (subtotal >= 500) return 0;
-
-      const saved = getShippingValue();
-      return saved > 0 ? saved : 15;
-    }
-
-    function normalizeCep(value) {
-      return String(value || '').replace(/\D/g, '').slice(0, 8);
-    }
-
-    function formatCepInput(value) {
-      const cep = normalizeCep(value);
-
-      if (cep.length <= 5) return cep;
-      return cep.slice(0, 5) + '-' + cep.slice(5);
-    }
-
-    function goToCheckout() {
-      const cart = getCart();
-
-      if (!cart.length) {
-        alert('Seu carrinho está vazio.');
-        return;
-      }
-
-      window.location.href = '/checkout';
-    }
-
-    /* =========================================================
-       RENDER
-    ========================================================= */
-    const cartItems = document.getElementById('cartItems');
-    const cartEmpty = document.getElementById('cartEmpty');
-    const cartCount = document.getElementById('cartCount');
-    const cartTitleCount = document.getElementById('cartTitleCount');
-
-    const summarySubtotal = document.getElementById('summarySubtotal');
-    const summaryDiscount = document.getElementById('summaryDiscount');
-    const summaryShipping = document.getElementById('summaryShipping');
-    const summaryTotal = document.getElementById('summaryTotal');
-
-    const discountRow = document.getElementById('discountRow');
-    const discountLabel = document.getElementById('discountLabel');
-
-    const shippingMethodPrice = document.getElementById('shippingMethodPrice');
-    const shippingHelpText = document.getElementById('shippingHelpText');
-
-    const couponFeedback = document.getElementById('couponFeedback');
-    const appliedCouponBox = document.getElementById('appliedCouponBox');
-    const appliedCouponName = document.getElementById('appliedCouponName');
-
-    function renderCart() {
-      const cart = getCart();
-      const coupon = getAppliedCoupon();
-      const count = getCartCount(cart);
-
-      cartCount.textContent = count;
-      cartTitleCount.textContent = `[${count}]`;
-
-      if (!cart.length) {
-        cartItems.innerHTML = '';
-        cartEmpty.hidden = false;
-
-        summarySubtotal.textContent = formatPrice(0);
-        summaryDiscount.textContent = '- ' + formatPrice(0);
-        summaryShipping.textContent = '—';
-        summaryTotal.textContent = formatPrice(0);
-        shippingMethodPrice.textContent = '—';
-        discountRow.hidden = true;
-
-        appliedCouponBox.hidden = true;
-        return;
-      }
-
-      cartEmpty.hidden = true;
-
-      cartItems.innerHTML = cart.map((item, index) => {
-        const category = slugText(getItemCategory(item)).toUpperCase();
-        const name = slugText(getItemName(item)).toUpperCase();
-        const size = slugText(getItemSize(item)).toUpperCase();
-        const quantity = getItemQuantity(item);
-        const unitPrice = getItemPrice(item);
-        const totalPrice = unitPrice * quantity;
-        const image = getItemImage(item);
-
-        return `
-          <article class="cart-item">
-            <div class="cart-item-image-box">
-              ${image ? `<img src="${image}" alt="${name}">` : ''}
-            </div>
-
-            <div class="cart-item-info">
-              <p class="cart-item-category">${category}</p>
-              <h2 class="cart-item-name">${name}</h2>
-              <p class="cart-item-size">${size}</p>
-
-              <div class="cart-item-controls">
-
-                <div class="cart-qty">
-                  <button type="button" onclick="changeQuantity(${index}, -1)">−</button>
-                  <span>${quantity}</span>
-                  <button type="button" onclick="changeQuantity(${index}, 1)">+</button>
-                </div>
-
-                <button
-                  class="cart-remove"
-                  type="button"
-                  onclick="removeCartItem(${index})"
-                >
-                  REMOVER
-                </button>
-
-              </div>
-            </div>
-
-            <div class="cart-item-price">
-              ${formatPrice(totalPrice)}
-            </div>
-          </article>
-        `;
-      }).join('');
-
-      const subtotal = getSubtotal(cart);
-      const discountValue = getDiscountValue(subtotal, coupon);
-      const shippingValue = getCurrentShipping(subtotal);
-      const total = Math.max(subtotal - discountValue + shippingValue, 0);
-
-      summarySubtotal.textContent = formatPrice(subtotal);
-      summaryShipping.textContent = shippingValue === 0 ? 'GRÁTIS' : formatPrice(shippingValue);
-      shippingMethodPrice.textContent = shippingValue === 0 ? 'GRÁTIS' : formatPrice(shippingValue);
-      summaryTotal.textContent = formatPrice(total);
-
-      if (coupon && discountValue > 0) {
-        discountRow.hidden = false;
-        discountLabel.textContent = `DESCONTO (${coupon.code})`;
-        summaryDiscount.textContent = '- ' + formatPrice(discountValue);
-
-        appliedCouponBox.hidden = false;
-        appliedCouponName.textContent = coupon.label;
-      } else {
-        discountRow.hidden = true;
-        appliedCouponBox.hidden = true;
-      }
-    }
-
-    /* =========================================================
-       ACTIONS
-    ========================================================= */
-    function changeQuantity(index, delta) {
-      const cart = getCart();
-
-      if (!cart[index]) return;
-
-      const currentQuantity = getItemQuantity(cart[index]);
-      const nextQuantity = currentQuantity + delta;
-
-      if (nextQuantity <= 0) {
-        cart.splice(index, 1);
-      } else {
-        cart[index].quantity = nextQuantity;
-        cart[index].quantidade = nextQuantity;
-      }
-
-      saveCart(cart);
-      renderCart();
-    }
-
-    function removeCartItem(index) {
-      const cart = getCart();
-
-      if (!cart[index]) return;
-
-      cart.splice(index, 1);
-      saveCart(cart);
-      renderCart();
-    }
-
-    window.changeQuantity = changeQuantity;
-    window.removeCartItem = removeCartItem;
-
-    /* =========================================================
-       CUPOM
-    ========================================================= */
-    const couponInput = document.getElementById('couponInput');
-    const applyCouponButton = document.getElementById('applyCouponButton');
-    const removeCouponButton = document.getElementById('removeCouponButton');
-
-    function applyCoupon() {
-      const code = String(couponInput.value || '').trim().toUpperCase();
-
-      if (!code) {
-        couponFeedback.textContent = 'DIGITE UM CÓDIGO DE CUPOM.';
-        return;
-      }
-
-      const coupon = couponList[code];
-
-      if (!coupon) {
-        couponFeedback.textContent = 'CUPOM INVÁLIDO.';
-        return;
-      }
-
-      saveAppliedCoupon(coupon);
-      couponFeedback.textContent = `CUPOM ${coupon.code} APLICADO COM SUCESSO.`;
-      couponInput.value = '';
-      renderCart();
-    }
-
-    function removeCoupon() {
-      saveAppliedCoupon(null);
-      couponFeedback.textContent = 'CUPOM REMOVIDO.';
-      renderCart();
-    }
-
-    if (applyCouponButton) {
-      applyCouponButton.addEventListener('click', applyCoupon);
-    }
-
-    if (couponInput) {
-      couponInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          applyCoupon();
-        }
-      });
-    }
-
-    if (removeCouponButton) {
-      removeCouponButton.addEventListener('click', removeCoupon);
-    }
-
-    /* =========================================================
-       FRETE
-    ========================================================= */
-    const shippingCep = document.getElementById('shippingCep');
-    const calculateShippingButton = document.getElementById('calculateShippingButton');
-
-    if (shippingCep) {
-      shippingCep.addEventListener('input', () => {
-        shippingCep.value = formatCepInput(shippingCep.value);
-      });
-    }
-
-    function calculateShipping() {
-      const cep = normalizeCep(shippingCep.value);
-      const subtotal = getSubtotal(getCart());
-
-      if (!cep || cep.length !== 8) {
-        shippingHelpText.textContent = 'DIGITE UM CEP VÁLIDO.';
-        return;
-      }
-
-      let shippingValue = 15;
-
-      if (subtotal >= 500) {
-        shippingValue = 0;
-      }
-
-      saveShippingValue(shippingValue);
-
-      shippingHelpText.textContent = shippingValue === 0
-        ? 'FRETE GRÁTIS APLICADO.'
-        : 'FRETE CALCULADO COM SUCESSO.';
-
-      renderCart();
-    }
-
-    if (calculateShippingButton) {
-      calculateShippingButton.addEventListener('click', calculateShipping);
-    }
-
-    /* =========================================================
-       CHECKOUT
-    ========================================================= */
-    const checkoutButtonTop = document.getElementById('checkoutButtonTop');
-    const checkoutButtonBottom = document.getElementById('checkoutButtonBottom');
-    const cartButton = document.getElementById('cartButton');
-
-    if (checkoutButtonTop) {
-      checkoutButtonTop.addEventListener('click', goToCheckout);
-    }
-
-    if (checkoutButtonBottom) {
-      checkoutButtonBottom.addEventListener('click', goToCheckout);
-    }
-
-    if (cartButton) {
-      cartButton.addEventListener('click', () => {
-        window.location.href = '/carrinho';
-      });
-    }
-
-    /* =========================================================
-       INIT
-    ========================================================= */
-    renderCart();
-  </script>
 
 </body>
 
