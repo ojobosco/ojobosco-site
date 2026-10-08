@@ -25,9 +25,8 @@
   <style>
 
     /* =========================================================
-       CARRINHO
-       Somente visual.
-       Toda a lógica permanece no script.js.
+       AJUSTES EXCLUSIVOS DO CARRINHO
+       A lógica continua 100% no script.js
     ========================================================= */
 
     html,
@@ -37,161 +36,64 @@
 
 
     .cart-page {
-      min-height: 100vh;
-
-      padding-top: 106px;
-
       background: #ffffff;
-
       color: #111111;
-
-      font-family: var(--fonte);
     }
 
 
     .cart-page-grid {
-      width: 100%;
+      background: #ffffff;
+    }
 
-      display: grid;
 
-      grid-template-columns:
-        minmax(0, 1fr)
-        385px;
-
-      align-items: stretch;
-
+    .cart-main,
+    .cart-summary {
       background: #ffffff;
     }
 
 
     /* =========================================================
-       GARANTIA DO MENU
-    ========================================================= */
-
-    .side-menu {
-      z-index: 9999;
-    }
-
-
-    .side-menu.open,
-    .side-menu.active {
-      transform: translateY(0);
-    }
-
-
-    body.menu-open {
-      overflow: hidden;
-    }
-
-
-    /* =========================================================
-       COLUNA ESQUERDA
-    ========================================================= */
-
-    .cart-main {
-      min-width: 0;
-
-      padding:
-        52px
-        54px
-        80px;
-
-      background: #ffffff;
-
-      border-right:
-        1px solid
-        #dfdfdf;
-    }
-
-
-    .cart-page-title {
-      margin:
-        0
-        0
-        42px;
-
-      color: #111111;
-
-      text-align: center;
-
-      font-family: var(--fonte);
-
-      font-size:
-        clamp(
-          27px,
-          2.6vw,
-          42px
-        );
-
-      line-height: 1.15;
-
-      font-weight: 400;
-
-      letter-spacing:
-        0.08em;
-
-      text-transform:
-        uppercase;
-    }
-
-
-    .cart-page-title span {
-      white-space: nowrap;
-    }
-
-
-    .cart-page-items {
-      width: 100%;
-
-      border-top:
-        1px solid
-        #dfdfdf;
-    }
-
-
-    .cart-page-items[hidden] {
-      display: none;
-    }
-
-
-    /* =========================================================
-       ITEM DO CARRINHO
-       Gerado pelo script.js
+       PRODUTO
     ========================================================= */
 
     .cart-item {
       width: 100%;
 
-      min-height: 220px;
+      min-height: 210px;
 
       padding:
-        36px
-        0;
+        32px
+        38px;
 
       display: grid;
 
       grid-template-columns:
-        145px
+        130px
         minmax(0, 1fr)
-        125px;
+        115px;
 
-      gap: 42px;
+      gap: 38px;
 
       align-items: center;
 
-      border-bottom:
-        1px solid
-        #dfdfdf;
-
       background: #ffffff;
+
+      border:
+        1px solid
+        #dddddd;
+
+      border-radius: 0;
     }
 
 
-    /* IMAGEM */
+    .cart-item + .cart-item {
+      border-top: 0;
+    }
+
 
     .cart-item-image-wrap {
-      width: 145px;
-      height: 175px;
+      width: 130px;
+      height: 155px;
 
       display: flex;
 
@@ -200,21 +102,19 @@
 
       overflow: hidden;
 
-      border:
-        1px solid
-        #eeeeee;
+      background: #ffffff;
+
+      border: 0;
 
       border-radius: 0;
-
-      background: #ffffff;
     }
 
 
     .cart-item-image {
-      display: block;
-
       width: 100%;
       height: 100%;
+
+      display: block;
 
       object-fit: contain;
       object-position: center;
@@ -227,26 +127,22 @@
       width: 100%;
       height: 100%;
 
-      background: #f5f5f5;
+      background: #ffffff;
 
       border-radius: 0;
     }
 
 
-    /* INFORMAÇÕES */
-
     .cart-item-info {
       min-width: 0;
-
-      padding:
-        8px
-        0;
 
       display: flex;
 
       flex-direction: column;
 
       align-items: flex-start;
+
+      justify-content: center;
     }
 
 
@@ -254,7 +150,7 @@
       margin:
         0
         0
-        20px;
+        16px;
 
       color: #111111;
 
@@ -262,15 +158,13 @@
 
       font-size: 15px;
 
-      line-height: 1.45;
+      line-height: 1.4;
 
       font-weight: 400;
 
-      letter-spacing:
-        0.12em;
+      letter-spacing: 0.08em;
 
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
     }
 
 
@@ -278,7 +172,7 @@
       margin:
         0
         0
-        10px;
+        8px;
 
       color: #333333;
 
@@ -286,21 +180,19 @@
 
       font-size: 11px;
 
-      line-height: 1.55;
+      line-height: 1.5;
 
-      letter-spacing:
-        0.11em;
+      letter-spacing: 0.09em;
 
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
     }
 
 
     .cart-item-unit-price {
       margin:
-        12px
+        10px
         0
-        24px;
+        22px;
 
       color: #111111;
 
@@ -308,37 +200,28 @@
 
       font-size: 11px;
 
-      line-height: 1.5;
-
-      letter-spacing:
-        0.09em;
+      letter-spacing: 0.06em;
     }
 
-
-    /* QUANTIDADE */
 
     .cart-item-actions {
       display: flex;
 
       align-items: center;
 
-      gap: 26px;
-
-      flex-wrap: wrap;
+      gap: 22px;
     }
 
 
     .cart-quantity {
-      height: 38px;
+      height: 36px;
 
       display: grid;
 
       grid-template-columns:
-        38px
-        44px
-        38px;
-
-      align-items: center;
+        36px
+        40px
+        36px;
 
       border:
         1px solid
@@ -346,16 +229,16 @@
 
       border-radius: 0;
 
-      overflow: hidden;
-
       background: #ffffff;
+
+      overflow: hidden;
     }
 
 
     .cart-quantity button,
     .cart-quantity span {
       width: 100%;
-      height: 36px;
+      height: 34px;
 
       margin: 0;
       padding: 0;
@@ -376,8 +259,6 @@
       font-family: var(--fonte);
 
       font-size: 11px;
-
-      line-height: 1;
     }
 
 
@@ -389,14 +270,14 @@
     .cart-quantity-minus {
       border-right:
         1px solid
-        #ececec !important;
+        #e5e5e5 !important;
     }
 
 
     .cart-quantity-plus {
       border-left:
         1px solid
-        #ececec !important;
+        #e5e5e5 !important;
     }
 
 
@@ -422,35 +303,24 @@
 
       font-size: 9px;
 
-      line-height: 1.5;
+      line-height: 1.4;
 
-      letter-spacing:
-        0.16em;
+      letter-spacing: 0.14em;
 
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
     }
 
 
-    /* PREÇO DO ITEM */
-
     .cart-item-total {
-      min-width: 115px;
-
       justify-self: end;
-
-      align-self: center;
 
       color: #111111;
 
       font-family: var(--fonte);
 
-      font-size: 14px;
+      font-size: 13px;
 
-      line-height: 1.4;
-
-      letter-spacing:
-        0.05em;
+      letter-spacing: 0.05em;
 
       text-align: right;
 
@@ -463,27 +333,28 @@
     ========================================================= */
 
     .cart-page-empty {
-      min-height: 300px;
+      min-height: 290px;
 
       padding:
-        65px
-        20px;
+        60px
+        30px;
 
       display: flex;
 
       flex-direction: column;
 
       align-items: center;
-
       justify-content: center;
 
       text-align: center;
 
-      border-bottom:
-        1px solid
-        #dfdfdf;
-
       background: #ffffff;
+
+      border:
+        1px solid
+        #dddddd;
+
+      border-radius: 0;
     }
 
 
@@ -492,57 +363,31 @@
     }
 
 
-    .cart-page-empty p {
-      margin:
-        0
-        0
-        28px;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 10px;
-
-      line-height: 1.8;
-
-      letter-spacing:
-        0.17em;
-
-      text-transform:
-        uppercase;
-    }
-
-
     .cart-page-shop-button {
       min-width: 220px;
 
       min-height: 50px;
-
-      padding:
-        0
-        24px;
 
       display: inline-flex;
 
       align-items: center;
       justify-content: center;
 
-      border-radius: 0;
+      padding:
+        0
+        22px;
 
       background: #000000;
 
       color: #ffffff;
 
-      font-family: var(--fonte);
+      border-radius: 0;
 
       font-size: 10px;
 
-      letter-spacing:
-        0.15em;
+      letter-spacing: 0.14em;
 
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
     }
 
 
@@ -551,317 +396,37 @@
     ========================================================= */
 
     .cart-guarantee {
-      padding:
-        42px
-        0
-        0;
-    }
-
-
-    .cart-guarantee h2 {
-      margin:
-        0
-        0
-        18px;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 9px;
-
-      font-weight: 400;
-
-      letter-spacing:
-        0.22em;
-
-      text-transform:
-        uppercase;
-    }
-
-
-    .cart-guarantee p {
-      max-width: 680px;
-
-      margin: 0;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 10px;
-
-      line-height: 1.9;
-
-      letter-spacing:
-        0.10em;
-
-      text-transform:
-        uppercase;
+      padding-top: 40px;
     }
 
 
     /* =========================================================
-       COLUNA DIREITA
+       LATERAL / RESUMO
     ========================================================= */
 
     .cart-summary {
-      min-width: 0;
-
-      padding:
-        42px
-        24px
-        55px;
-
-      background: #ffffff;
-
-      font-family: var(--fonte);
+      padding-top: 38px;
     }
 
 
-    .cart-summary-block {
-      padding:
-        0
-        0
-        30px;
-
-      margin:
-        0
-        0
-        30px;
-
-      border-bottom:
-        1px solid
-        #dfdfdf;
-    }
-
-
-    .cart-summary-heading {
-      margin:
-        0
-        0
-        27px;
-    }
-
-
-    .cart-summary-heading h2 {
-      margin: 0;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 10px;
-
-      font-weight: 400;
-
-      letter-spacing:
-        0.18em;
-
-      text-transform:
-        uppercase;
+    .cart-summary-block,
+    .cart-shipping {
+      border-radius: 0;
     }
 
 
     .cart-summary-row {
-      display: flex;
-
-      align-items: center;
-
-      justify-content:
-        space-between;
-
       gap: 18px;
-
-      margin:
-        0
-        0
-        23px;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 10px;
-
-      line-height: 1.5;
-
-      letter-spacing:
-        0.12em;
-
-      text-transform:
-        uppercase;
-    }
-
-
-    .cart-summary-row strong {
-      font-weight: 400;
-
-      white-space: nowrap;
-    }
-
-
-    .cart-summary-total {
-      margin:
-        34px
-        0
-        0;
-
-      font-size: 12px;
     }
 
 
     /* =========================================================
-       CEP / FRETE
+       CEP
     ========================================================= */
 
-    .cart-shipping {
-      padding:
-        0
-        0
-        30px;
-
-      margin:
-        0
-        0
-        30px;
-
-      border-bottom:
-        1px solid
-        #dfdfdf;
-    }
-
-
-    .cart-shipping-title {
-      display: grid;
-
-      grid-template-columns:
-        minmax(0, 1fr)
-        120px;
-
-      gap: 12px;
-    }
-
-
-    .cart-shipping-title input {
-      width: 100%;
-
-      height: 48px;
-
-      padding:
-        0
-        15px;
-
-      box-sizing:
-        border-box;
-
-      border:
-        1px solid
-        #d2d2d2;
-
-      border-radius: 0;
-
-      outline: none;
-
-      background: #ffffff;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 10px;
-
-      letter-spacing:
-        0.10em;
-
-      text-transform:
-        uppercase;
-    }
-
-
+    .cart-shipping-title input,
     .cart-shipping-title button {
-      width: 100%;
-
-      height: 48px;
-
-      padding: 0;
-
-      border:
-        1px solid
-        #d2d2d2;
-
-      border-radius: 0;
-
-      background: #ffffff;
-
-      color: #111111;
-
-      cursor: pointer;
-
-      font-family: var(--fonte);
-
-      font-size: 9px;
-
-      letter-spacing:
-        0.13em;
-
-      text-transform:
-        uppercase;
-    }
-
-
-    .cart-shipping-message,
-    .cart-free-shipping-message {
-      margin:
-        15px
-        0
-        0;
-
-      color: #666666;
-
-      font-family: var(--fonte);
-
-      font-size: 8px;
-
-      line-height: 1.8;
-
-      letter-spacing:
-        0.10em;
-
-      text-transform:
-        uppercase;
-    }
-
-
-    .cart-shipping-method {
-      margin-top: 20px;
-
-      padding-top: 18px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content:
-        space-between;
-
-      gap: 15px;
-
-      border-top:
-        1px solid
-        #ededed;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 9px;
-
-      letter-spacing:
-        0.11em;
-
-      text-transform:
-        uppercase;
+      border-radius: 0 !important;
     }
 
 
@@ -869,140 +434,36 @@
        CUPOM
     ========================================================= */
 
-    .cart-coupon-description {
-      margin:
-        0
-        0
-        19px;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 9px;
-
-      line-height: 1.8;
-
-      letter-spacing:
-        0.11em;
-
-      text-transform:
-        uppercase;
-    }
-
-
-    .cart-coupon-form {
-      display: grid;
-
-      grid-template-columns:
-        minmax(0, 1fr)
-        96px;
-
-      gap: 12px;
-    }
-
-
-    .cart-coupon-form input {
-      width: 100%;
-
-      height: 48px;
-
-      padding:
-        0
-        15px;
-
-      box-sizing:
-        border-box;
-
-      border:
-        1px solid
-        #d2d2d2;
-
-      border-radius: 0;
-
-      outline: none;
-
-      background: #ffffff;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 10px;
-
-      letter-spacing:
-        0.10em;
-
-      text-transform:
-        uppercase;
-    }
-
-
+    .cart-coupon-form input,
     .cart-coupon-form button {
-      width: 100%;
-
-      height: 48px;
-
-      padding: 0;
-
-      border: 0;
-
-      border-radius: 0;
-
-      background: #000000;
-
-      color: #ffffff;
-
-      cursor: pointer;
-
-      font-family: var(--fonte);
-
-      font-size: 9px;
-
-      letter-spacing:
-        0.12em;
-
-      text-transform:
-        uppercase;
+      border-radius: 0 !important;
     }
 
 
     .cart-coupon-message {
-      margin:
-        16px
-        0
-        0;
-
-      color: #111111;
-
-      font-family: var(--fonte);
+      margin-top: 14px;
 
       font-size: 9px;
 
-      line-height: 1.8;
+      line-height: 1.7;
 
-      letter-spacing:
-        0.10em;
+      letter-spacing: 0.09em;
 
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
     }
 
 
     /* =========================================================
        FINALIZAR PEDIDO
-       APENAS EMBAIXO
+       SOMENTE ABAIXO DO CUPOM
     ========================================================= */
 
     .cart-page-checkout {
       width: 100%;
 
-      min-height: 56px;
+      min-height: 54px;
 
-      margin:
-        4px
-        0
-        0;
+      margin-top: 4px;
 
       padding:
         0
@@ -1022,132 +483,36 @@
 
       font-size: 10px;
 
-      font-weight: 400;
+      letter-spacing: 0.14em;
 
-      letter-spacing:
-        0.15em;
-
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
     }
 
 
     /* =========================================================
-       RESPONSIVO
+       MOBILE
     ========================================================= */
 
-    @media (max-width: 1050px) {
-
-      .cart-page-grid {
-        grid-template-columns:
-          1fr;
-      }
-
-
-      .cart-main {
-        border-right: 0;
-      }
-
-
-      .cart-summary {
-        padding:
-          10px
-          54px
-          60px;
-
-        border-top:
-          1px solid
-          #dfdfdf;
-      }
-
-    }
-
-
-    @media (max-width: 650px) {
-
-      .cart-page {
-        padding-top: 92px;
-      }
-
-
-      .cart-main {
-        padding:
-          32px
-          16px
-          42px;
-      }
-
-
-      .cart-page-title {
-        margin-bottom: 28px;
-
-        text-align: left;
-
-        font-size: 25px;
-      }
-
+    @media (max-width: 700px) {
 
       .cart-item {
+        grid-template-columns:
+          90px
+          minmax(0, 1fr);
+
+        gap: 18px;
+
         min-height: 0;
 
         padding:
-          25px
+          24px
           0;
-
-        grid-template-columns:
-          92px
-          minmax(0, 1fr);
-
-        gap:
-          18px;
-
-        align-items: start;
       }
 
 
       .cart-item-image-wrap {
-        width: 92px;
-        height: 115px;
-      }
-
-
-      .cart-item-name {
-        margin-bottom: 14px;
-
-        font-size: 12px;
-      }
-
-
-      .cart-item-variant {
-        font-size: 10px;
-      }
-
-
-      .cart-item-unit-price {
-        margin-bottom: 17px;
-
-        font-size: 10px;
-      }
-
-
-      .cart-item-actions {
-        gap: 15px;
-      }
-
-
-      .cart-quantity {
-        grid-template-columns:
-          32px
-          36px
-          32px;
-
-        height: 34px;
-      }
-
-
-      .cart-quantity button,
-      .cart-quantity span {
-        height: 32px;
+        width: 90px;
+        height: 110px;
       }
 
 
@@ -1156,35 +521,16 @@
 
         justify-self: start;
 
-        min-width: 0;
-
         margin-top: 8px;
 
         text-align: left;
-
-        font-size: 12px;
       }
 
 
-      .cart-summary {
-        padding:
-          32px
-          16px
-          50px;
-      }
+      .cart-item-actions {
+        gap: 15px;
 
-
-      .cart-shipping-title {
-        grid-template-columns:
-          1fr
-          108px;
-      }
-
-
-      .cart-coupon-form {
-        grid-template-columns:
-          1fr
-          88px;
+        flex-wrap: wrap;
       }
 
     }
@@ -1197,18 +543,18 @@
 <body>
 
 
-  <!-- ======================================================
+  <!-- =========================================================
        FAIXA SUPERIOR
-  ======================================================= -->
+  ========================================================== -->
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
 
-  <!-- ======================================================
+  <!-- =========================================================
        HEADER
-  ======================================================= -->
+  ========================================================== -->
 
   <header class="topbar">
 
@@ -1271,18 +617,19 @@
 
     </div>
 
+
   </header>
 
 
-  <!-- ======================================================
+  <!-- =========================================================
        MENU
-  ======================================================= -->
+  ========================================================== -->
 
   <nav
     class="side-menu"
     id="sideMenu"
-    aria-label="Menu principal"
   >
+
 
     <div class="side-menu-inner">
 
@@ -1324,12 +671,13 @@
 
     </div>
 
+
   </nav>
 
 
-  <!-- ======================================================
+  <!-- =========================================================
        CARRINHO
-  ======================================================= -->
+  ========================================================== -->
 
   <main class="cart-page">
 
@@ -1337,9 +685,9 @@
     <div class="cart-page-grid">
 
 
-      <!-- ==================================================
+      <!-- =====================================================
            PRODUTOS
-      =================================================== -->
+      ====================================================== -->
 
       <section class="cart-main">
 
@@ -1367,6 +715,7 @@
           hidden
         >
 
+
           <p>
             SEU CARRINHO ESTÁ VAZIO.
           </p>
@@ -1378,6 +727,7 @@
           >
             IR PARA A LOJA
           </a>
+
 
         </div>
 
@@ -1402,9 +752,9 @@
       </section>
 
 
-      <!-- ==================================================
+      <!-- =====================================================
            RESUMO
-      =================================================== -->
+      ====================================================== -->
 
       <aside class="cart-summary">
 
@@ -1416,22 +766,27 @@
 
           <div class="cart-summary-heading">
 
+
             <h2>
               RESUMO
             </h2>
+
 
           </div>
 
 
           <div class="cart-summary-row">
 
+
             <span>
               SUBTOTAL
             </span>
 
+
             <strong id="cartSubtotal">
               R$0,00
             </strong>
+
 
           </div>
 
@@ -1442,26 +797,32 @@
             hidden
           >
 
+
             <span id="cartDiscountLabel">
               DESCONTO
             </span>
 
+
             <strong id="cartDiscount">
               R$0,00
             </strong>
+
 
           </div>
 
 
           <div class="cart-summary-row">
 
+
             <span>
               FRETE
             </span>
 
+
             <strong id="cartShipping">
               —
             </strong>
+
 
           </div>
 
@@ -1470,13 +831,16 @@
             class="cart-summary-row cart-summary-total"
           >
 
+
             <span>
               TOTAL
             </span>
 
+
             <strong id="cartTotal">
               R$0,00
             </strong>
+
 
           </div>
 
@@ -1484,9 +848,9 @@
         </div>
 
 
-        <!-- ==================================================
+        <!-- ===================================================
              FRETE
-        =================================================== -->
+        ==================================================== -->
 
         <div class="cart-shipping">
 
@@ -1554,18 +918,20 @@
         </div>
 
 
-        <!-- ==================================================
+        <!-- ===================================================
              CUPOM
-        =================================================== -->
+        ==================================================== -->
 
-        <div class="cart-summary-block">
+        <div class="cart-summary-block cart-coupon-block">
 
 
           <div class="cart-summary-heading">
 
+
             <h2>
               CUPOM
             </h2>
+
 
           </div>
 
@@ -1608,10 +974,10 @@
         </div>
 
 
-        <!-- ==================================================
+        <!-- ===================================================
              FINALIZAR
-             ÚNICO BOTÃO DE CHECKOUT
-        =================================================== -->
+             APENAS ESTE BOTÃO
+        ==================================================== -->
 
         <button
           class="cart-page-checkout"
@@ -1631,9 +997,9 @@
   </main>
 
 
-  <!-- ======================================================
+  <!-- =========================================================
        FOOTER
-  ======================================================= -->
+  ========================================================== -->
 
   <footer class="footer">
 
@@ -1755,9 +1121,10 @@
   </footer>
 
 
-  <!-- ======================================================
-       SCRIPT OFICIAL DO SITE
-  ======================================================= -->
+  <!-- =========================================================
+       SCRIPT ORIGINAL
+       NÃO SUBSTITUI A LÓGICA DO CARRINHO
+  ========================================================== -->
 
   <script src="script.js"></script>
 
