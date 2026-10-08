@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -17,131 +18,116 @@
   >
 
   <style>
-    :root {
-      --fonte:
-        "Copperplate",
-        "Copperplate Gothic Light",
-        "Copperplate Gothic",
-        serif;
-    }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
+    .institucional-page {
+      min-height: 100vh;
+      padding: 170px 7vw 100px;
       background: #fff;
       color: #111;
-      font-family: var(--fonte);
     }
 
-    .institutional-header {
-      min-height: 72px;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 0 4vw;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .institutional-header-left,
-    .institutional-header-right {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .institutional-header-right {
-      justify-content: flex-end;
-    }
-
-    .institutional-header a {
-      color: #111;
-      font-size: 9px;
-      letter-spacing: .08em;
-      text-decoration: none;
-    }
-
-    .institutional-logo {
-      font-size: 12px !important;
-    }
-
-    .institutional-page {
-      min-height: 75vh;
-      padding: 120px 6vw 130px;
-    }
-
-    .institutional-inner {
-      max-width: 900px;
+    .institucional-inner {
+      width: min(820px, 100%);
       margin: 0 auto;
     }
 
-    .institutional-title {
-      margin: 0 0 70px;
-      font-size: 26px;
+    .institucional-inner h1 {
+      margin-bottom: 55px;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1;
       font-weight: 400;
-      letter-spacing: .06em;
     }
 
-    .institutional-block {
-      padding: 34px 0;
-      border-top: 1px solid #d6d6d6;
-    }
-
-    .institutional-block:last-child {
-      border-bottom: 1px solid #d6d6d6;
-    }
-
-    .institutional-block h2 {
-      margin: 0 0 20px;
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: .09em;
-    }
-
-    .institutional-block p,
-    .institutional-block a {
-      margin: 0 0 8px;
+    .institucional-inner p,
+    .institucional-inner a {
       color: #111;
-      font-size: 11px;
-      line-height: 1.9;
-      letter-spacing: .03em;
+      font-size: 13px;
+      line-height: 2;
+      letter-spacing: 0.06em;
     }
 
-    .institutional-block a {
-      text-decoration: none;
-      border-bottom: 1px solid #111;
+    .institucional-bloco {
+      margin-bottom: 38px;
     }
 
-    @media (max-width: 700px) {
-      .institutional-header {
-        min-height: 58px;
-        grid-template-columns: 1fr auto;
-        padding: 0 20px;
-      }
-
-      .institutional-header-left {
-        display: none;
-      }
-
-      .institutional-page {
-        padding: 85px 22px 90px;
-      }
-
-      .institutional-title {
-        margin-bottom: 48px;
-        font-size: 20px;
-      }
-    }
   </style>
+
 </head>
 
 <body>
 
-  <header class="institutional-header">
+  <div class="announcement-bar">
+    GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
+  </div>
 
-    <nav class="institutional-header-left">
+  <header class="topbar">
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+    >
+      MENU
+    </button>
+
+    <a
+      href="index.html"
+      class="brand-top"
+    >
+      OJOBOSCO
+    </a>
+
+    <div class="top-actions">
+
+      <a
+        href="index.html"
+        class="nav-link"
+      >
+        UNIVERSO
+      </a>
+
+      <a
+        href="loja.html"
+        class="nav-link"
+      >
+        LOJA
+      </a>
+
+      <a
+        href="universo.html"
+        class="nav-link"
+      >
+        SOBRE
+      </a>
+
+      <button
+        class="cart-link"
+        id="cartButton"
+        type="button"
+      >
+        CARRINHO
+        <span id="cartCount">0</span>
+      </button>
+
+    </div>
+
+  </header>
+
+  <nav
+    class="side-menu"
+    id="sideMenu"
+  >
+
+    <div class="side-menu-inner">
+
+      <button
+        class="close-menu"
+        id="closeMenu"
+        type="button"
+      >
+        FECHAR
+      </button>
+
       <a href="index.html">
         UNIVERSO
       </a>
@@ -153,53 +139,48 @@
       <a href="universo.html">
         SOBRE
       </a>
-    </nav>
 
-    <a
-      href="index.html"
-      class="institutional-logo"
-    >
-      OJOBOSCO
-    </a>
-
-    <div class="institutional-header-right">
-      <a href="carrinho.html">
-        CARRINHO
+      <a href="index.html#newsletter">
+        NEWSLETTER
       </a>
+
+      <a href="contato.html">
+        CONTATO
+      </a>
+
     </div>
 
-  </header>
+  </nav>
 
+  <main class="institucional-page">
 
-  <main class="institutional-page">
+    <div class="institucional-inner">
 
-    <div class="institutional-inner">
-
-      <h1 class="institutional-title">
+      <h1>
         ATENDIMENTO
       </h1>
 
-      <section class="institutional-block">
-
-        <h2>
-          HORÁRIO
-        </h2>
+      <div class="institucional-bloco">
 
         <p>
-          SEGUNDA A SEXTA-FEIRA — 9H ÀS 17H
+          SEGUNDA A SEXTA-FEIRA
+          <br>
+          9H ÀS 17H
         </p>
 
         <p>
-          SÁBADO — 9H ÀS 12H
+          SÁBADO
+          <br>
+          9H ÀS 12H
         </p>
 
-      </section>
+      </div>
 
-      <section class="institutional-block">
+      <div class="institucional-bloco">
 
-        <h2>
+        <p>
           WHATSAPP
-        </h2>
+        </p>
 
         <a
           href="https://wa.me/5581989436655"
@@ -209,23 +190,115 @@
           +55 (81) 98943-6655
         </a>
 
-      </section>
+      </div>
 
-      <section class="institutional-block">
+      <div class="institucional-bloco">
 
-        <h2>
+        <p>
           E-MAIL
-        </h2>
+        </p>
 
         <a href="mailto:contato@ojobosco.com">
           contato@ojobosco.com
         </a>
 
-      </section>
+      </div>
 
     </div>
 
   </main>
+
+  <footer class="footer">
+
+    <div class="footer-columns">
+
+      <div>
+
+        <p class="footer-title">
+          UNIVERSO
+        </p>
+
+        <a href="index.html">
+          INÍCIO
+        </a>
+
+        <a href="universo.html">
+          NOSSA HISTÓRIA
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          LOJA
+        </p>
+
+        <a href="loja.html#aromatizadores">
+          AROMATIZADOR
+        </a>
+
+        <a href="loja.html#difusores">
+          DIFUSOR
+        </a>
+
+        <a href="loja.html#biblioteca">
+          BIBLIOTECA OLFATIVA
+        </a>
+
+        <a href="loja.html#velas">
+          VELA
+        </a>
+
+        <a href="loja.html#perfume">
+          PERFUME
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          SOBRE
+        </p>
+
+        <a href="contato.html">
+          CONTATO
+        </a>
+
+        <a
+          href="https://www.instagram.com/ojobosco/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          INSTAGRAM
+        </a>
+
+        <a href="trocas.html">
+          TROCAS E DEVOLUÇÕES
+        </a>
+
+        <a href="privacidade.html">
+          PRIVACIDADE
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 OJOBOSCO
+      </span>
+
+      <span>
+        BRASIL
+      </span>
+
+    </div>
+
+  </footer>
 
   <script src="script.js"></script>
 
