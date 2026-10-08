@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -17,145 +18,118 @@
   >
 
   <style>
-    :root {
-      --fonte:
-        "Copperplate",
-        "Copperplate Gothic Light",
-        "Copperplate Gothic",
-        serif;
-    }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
+    .institucional-page {
+      min-height: 100vh;
+      padding: 170px 7vw 100px;
       background: #fff;
       color: #111;
-      font-family: var(--fonte);
     }
 
-    .institutional-header {
-      min-height: 72px;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 0 4vw;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .institutional-header-left,
-    .institutional-header-right {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .institutional-header-right {
-      justify-content: flex-end;
-    }
-
-    .institutional-header a {
-      color: #111;
-      font-size: 9px;
-      letter-spacing: .08em;
-      text-decoration: none;
-    }
-
-    .institutional-logo {
-      font-size: 12px !important;
-    }
-
-    .institutional-page {
-      padding: 120px 6vw 130px;
-    }
-
-    .institutional-inner {
-      max-width: 980px;
+    .institucional-inner {
+      width: min(900px, 100%);
       margin: 0 auto;
     }
 
-    .institutional-title {
-      margin: 0 0 70px;
-      font-size: 26px;
+    .institucional-inner h1 {
+      margin-bottom: 55px;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1;
       font-weight: 400;
-      letter-spacing: .06em;
     }
 
-    .institutional-section {
-      padding: 36px 0;
-      border-top: 1px solid #d6d6d6;
-    }
-
-    .institutional-section:last-child {
-      border-bottom: 1px solid #d6d6d6;
-    }
-
-    .institutional-section h2 {
-      margin: 0 0 24px;
-      font-size: 11px;
+    .institucional-inner h2 {
+      margin: 45px 0 18px;
+      font-size: 14px;
       font-weight: 400;
-      letter-spacing: .08em;
+      letter-spacing: 0.12em;
     }
 
-    .institutional-section p,
-    .institutional-section li {
-      font-size: 11px;
-      line-height: 1.95;
-      letter-spacing: .025em;
-    }
-
-    .institutional-section p {
-      margin: 0 0 20px;
-    }
-
-    .institutional-section ol {
-      margin: 25px 0 0;
-      padding-left: 22px;
-    }
-
-    .institutional-section li {
-      margin-bottom: 14px;
-    }
-
-    .institutional-section a {
+    .institucional-inner p,
+    .institucional-inner a {
       color: #111;
+      font-size: 13px;
+      line-height: 2;
+      letter-spacing: 0.04em;
     }
 
-    @media (max-width: 700px) {
-      .institutional-header {
-        min-height: 58px;
-        grid-template-columns: 1fr auto;
-        padding: 0 20px;
-      }
-
-      .institutional-header-left {
-        display: none;
-      }
-
-      .institutional-page {
-        padding: 85px 22px 90px;
-      }
-
-      .institutional-title {
-        margin-bottom: 48px;
-        font-size: 20px;
-      }
-
-      .institutional-section p,
-      .institutional-section li {
-        font-size: 10px;
-      }
-    }
   </style>
+
 </head>
 
 <body>
 
-  <header class="institutional-header">
+  <div class="announcement-bar">
+    GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
+  </div>
 
-    <nav class="institutional-header-left">
+  <header class="topbar">
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+    >
+      MENU
+    </button>
+
+    <a
+      href="index.html"
+      class="brand-top"
+    >
+      OJOBOSCO
+    </a>
+
+    <div class="top-actions">
+
+      <a
+        href="index.html"
+        class="nav-link"
+      >
+        UNIVERSO
+      </a>
+
+      <a
+        href="loja.html"
+        class="nav-link"
+      >
+        LOJA
+      </a>
+
+      <a
+        href="universo.html"
+        class="nav-link"
+      >
+        SOBRE
+      </a>
+
+      <button
+        class="cart-link"
+        id="cartButton"
+        type="button"
+      >
+        CARRINHO
+        <span id="cartCount">0</span>
+      </button>
+
+    </div>
+
+  </header>
+
+  <nav
+    class="side-menu"
+    id="sideMenu"
+  >
+
+    <div class="side-menu-inner">
+
+      <button
+        class="close-menu"
+        id="closeMenu"
+        type="button"
+      >
+        FECHAR
+      </button>
 
       <a href="index.html">
         UNIVERSO
@@ -169,201 +143,192 @@
         SOBRE
       </a>
 
-    </nav>
+      <a href="index.html#newsletter">
+        NEWSLETTER
+      </a>
 
-    <a
-      href="index.html"
-      class="institutional-logo"
-    >
-      OJOBOSCO
-    </a>
-
-    <div class="institutional-header-right">
-
-      <a href="carrinho.html">
-        CARRINHO
+      <a href="contato.html">
+        CONTATO
       </a>
 
     </div>
 
-  </header>
+  </nav>
 
+  <main class="institucional-page">
 
-  <main class="institutional-page">
+    <div class="institucional-inner">
 
-    <div class="institutional-inner">
-
-      <h1 class="institutional-title">
-        POLÍTICA DE PRIVACIDADE
+      <h1>
+        PRIVACIDADE
       </h1>
 
+      <p>
+        A OJOBOSCO respeita a privacidade de seus clientes,
+        visitantes e demais pessoas que se relacionam
+        com a marca.
+      </p>
 
-      <section class="institutional-section">
+      <p>
+        As informações fornecidas por meio do site,
+        WhatsApp, Instagram ou outros canais de atendimento
+        podem ser utilizadas para processar pedidos,
+        realizar entregas, prestar atendimento e cumprir
+        obrigações legais e administrativas.
+      </p>
 
-        <h2>
-          PRIVACIDADE
-        </h2>
+      <h2>
+        DADOS QUE PODEMOS RECEBER
+      </h2>
 
-        <p>
-          A OJOBOSCO respeita a sua privacidade e valoriza
-          a relação que mantém com você.
-        </p>
+      <p>
+        Dependendo da interação realizada, poderemos receber
+        informações como nome, CPF ou CNPJ, telefone,
+        e-mail, endereço, data de nascimento ou idade
+        quando aplicável, além de informações fornecidas
+        voluntariamente pelo próprio usuário.
+      </p>
 
-        <p>
-          Esta Política de Privacidade tem por finalidade
-          prestar informações sobre a coleta, uso,
-          armazenamento e proteção de dados pessoais,
-          bem como sobre os direitos dos usuários em
-          relação às suas informações.
-        </p>
+      <h2>
+        PAGAMENTOS
+      </h2>
 
-        <p>
-          Esta política também descreve os tipos de
-          informações pessoais que poderão ser coletadas
-          pela OJOBOSCO e o tratamento de informações
-          eventualmente compartilhadas com terceiros
-          necessários à prestação dos serviços.
-        </p>
+      <p>
+        Os pagamentos realizados no site são processados
+        por empresas especializadas, como o Mercado Pago.
+        A OJOBOSCO não armazena os dados completos do cartão
+        de crédito utilizado nas transações.
+      </p>
 
-      </section>
+      <h2>
+        USO DAS INFORMAÇÕES
+      </h2>
 
+      <p>
+        Os dados poderão ser utilizados para identificação
+        do cliente, processamento e acompanhamento de pedidos,
+        comunicação relacionada à compra, suporte,
+        prevenção a fraudes e cumprimento de obrigações legais.
+      </p>
 
-      <section class="institutional-section">
+      <h2>
+        ARMAZENAMENTO
+      </h2>
 
-        <h2>
-          INFORMAÇÕES COLETADAS
-        </h2>
+      <p>
+        Alguns dados e registros poderão ser mantidos durante
+        o prazo necessário para atendimento de obrigações
+        legais, regulatórias, contratuais ou para o exercício
+        regular de direitos.
+      </p>
 
-        <p>
-          A OJOBOSCO poderá obter informações pessoais
-          sobre o usuário por meio deste site ou durante
-          atendimentos realizados através do WhatsApp
-          e Instagram.
-        </p>
+      <h2>
+        SOLICITAÇÕES
+      </h2>
 
-        <p>
-          Os produtos OJOBOSCO são desenvolvidos pelo
-          próprio atelier da marca e comercializados
-          através dos canais disponibilizados pela
-          OJOBOSCO.
-        </p>
-
-      </section>
-
-
-      <section class="institutional-section">
-
-        <h2>
-          INFORMAÇÕES FORNECIDAS PELO USUÁRIO
-        </h2>
-
-        <p>
-          O usuário poderá fornecer informações pessoais
-          à OJOBOSCO ao realizar uma compra ou entrar em
-          contato através do site, WhatsApp ou Instagram.
-        </p>
-
-        <p>
-          Entre as informações que poderão ser fornecidas
-          estão:
-        </p>
-
-        <ol>
-
-          <li>
-            Nome completo;
-          </li>
-
-          <li>
-            CPF ou CNPJ, quando necessário;
-          </li>
-
-          <li>
-            Endereço, e-mail, telefone celular ou outro
-            telefone de contato;
-          </li>
-
-          <li>
-            Idade e data de nascimento, quando aplicável;
-          </li>
-
-          <li>
-            Informações fornecidas voluntariamente pelo
-            usuário durante seu relacionamento com a
-            OJOBOSCO;
-          </li>
-
-          <li>
-            Informações relacionadas à conta do usuário,
-            caso exista recurso de cadastro no site;
-          </li>
-
-          <li>
-            Informações de pagamento, que poderão ser
-            fornecidas diretamente às empresas responsáveis
-            pelo processamento do pagamento e às
-            administradoras de cartão de crédito.
-          </li>
-
-        </ol>
-
-      </section>
-
-
-      <section class="institutional-section">
-
-        <h2>
-          PAGAMENTOS
-        </h2>
-
-        <p>
-          Os pagamentos realizados no site são processados
-          por prestadores especializados, como o Mercado
-          Pago.
-        </p>
-
-        <p>
-          Os dados completos do cartão utilizados durante
-          o pagamento não são armazenados pela OJOBOSCO.
-        </p>
-
-      </section>
-
-
-      <section class="institutional-section">
-
-        <h2>
-          EXCLUSÃO DE INFORMAÇÕES
-        </h2>
-
-        <p>
-          O usuário poderá solicitar à OJOBOSCO a exclusão
-          de suas informações pessoais, observadas as
-          hipóteses em que a manutenção dos dados seja
-          necessária para o cumprimento de obrigações
-          legais ou regulatórias.
-        </p>
-
-        <p>
-          Determinados registros relacionados ao acesso
-          à aplicação poderão ser mantidos pelo prazo
-          legal aplicável ou por período superior quando
-          houver determinação de autoridade competente.
-        </p>
-
-        <p>
-          Para solicitações relacionadas aos seus dados
-          pessoais, entre em contato através do e-mail
-          <a href="mailto:contato@ojobosco.com">
-            contato@ojobosco.com
-          </a>.
-        </p>
-
-      </section>
+      <p>
+        Para dúvidas ou solicitações relacionadas aos seus
+        dados pessoais, entre em contato pelo e-mail
+        <a href="mailto:contato@ojobosco.com">
+          contato@ojobosco.com
+        </a>.
+      </p>
 
     </div>
 
   </main>
+
+  <footer class="footer">
+
+    <div class="footer-columns">
+
+      <div>
+
+        <p class="footer-title">
+          UNIVERSO
+        </p>
+
+        <a href="index.html">
+          INÍCIO
+        </a>
+
+        <a href="universo.html">
+          NOSSA HISTÓRIA
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          LOJA
+        </p>
+
+        <a href="loja.html#aromatizadores">
+          AROMATIZADOR
+        </a>
+
+        <a href="loja.html#difusores">
+          DIFUSOR
+        </a>
+
+        <a href="loja.html#biblioteca">
+          BIBLIOTECA OLFATIVA
+        </a>
+
+        <a href="loja.html#velas">
+          VELA
+        </a>
+
+        <a href="loja.html#perfume">
+          PERFUME
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          SOBRE
+        </p>
+
+        <a href="contato.html">
+          CONTATO
+        </a>
+
+        <a
+          href="https://www.instagram.com/ojobosco/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          INSTAGRAM
+        </a>
+
+        <a href="trocas.html">
+          TROCAS E DEVOLUÇÕES
+        </a>
+
+        <a href="privacidade.html">
+          PRIVACIDADE
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 OJOBOSCO
+      </span>
+
+      <span>
+        BRASIL
+      </span>
+
+    </div>
+
+  </footer>
 
   <script src="script.js"></script>
 
