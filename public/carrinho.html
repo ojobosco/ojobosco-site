@@ -1,3025 +1,3660 @@
-<style>
-:root{--ojb-preto:#111;--ojb-branco:#fff;--ojb-cinza:#f5f5f2;--ojb-borda:rgba(17,17,17,.18)}
-#ojb-botao-carrinho,#ojb-adicionar-carrinho,#ojb-carrinho button,#ojb-carrinho input{font-family:inherit;box-sizing:border-box}
-#ojb-botao-carrinho{position:fixed;right:22px;bottom:22px;z-index:2147483000;display:flex;align-items:center;gap:9px;min-height:48px;padding:12px 18px;border:1px solid #111;border-radius:0;background:#111;color:#fff;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
-#ojb-contador-carrinho{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:50%;background:#fff;color:#111;font-size:11px;letter-spacing:0}
-#ojb-fundo-modal{position:fixed;inset:0;z-index:2147483001;display:none;background:rgba(0,0,0,.46)}
-#ojb-fundo-modal.ojb-aberto{display:block}
-#ojb-carrinho{position:fixed;top:0;right:0;z-index:2147483002;width:min(860px,100%);height:100%;overflow-y:auto;transform:translateX(105%);transition:transform .28s ease;background:#fff;color:#111;box-shadow:-10px 0 34px rgba(0,0,0,.14)}
-#ojb-carrinho.ojb-aberto{transform:translateX(0)}
-.ojb-cabecalho{position:sticky;top:0;z-index:3;display:flex;justify-content:space-between;align-items:center;min-height:104px;padding:28px 38px 24px;border-bottom:1px solid #111;background:#fff}
-.ojb-marca{display:block;margin-bottom:5px;font-size:10px;font-weight:500;letter-spacing:.24em;text-transform:uppercase}
-.ojb-cabecalho h2{margin:0;font-size:32px;font-weight:400;line-height:1.1}
-#ojb-fechar-carrinho{width:42px;height:42px;border:0;background:transparent;color:#111;font-size:31px;font-weight:300;cursor:pointer}
-#ojb-conteudo-carrinho{padding:0 38px 38px}
-.ojb-cabecalho-itens{display:grid;grid-template-columns:minmax(0,1fr) 120px 120px;gap:24px;padding:22px 0 12px;border-bottom:1px solid var(--ojb-borda);color:#555;font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase}
-.ojb-cabecalho-itens span:nth-child(n+2){text-align:right}
-.ojb-item{display:grid;grid-template-columns:112px minmax(0,1fr) 120px;gap:24px;align-items:start;padding:26px 0;border-bottom:1px solid var(--ojb-borda)}
-.ojb-item-imagem,.ojb-item-sem-imagem{width:112px;height:138px;background:var(--ojb-cinza);overflow:hidden}
-.ojb-item-imagem img{width:100%;height:100%;object-fit:cover}
-.ojb-item-sem-imagem{display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:.15em}
-.ojb-item-nome{margin:1px 0 7px;font-size:15px;font-weight:500;letter-spacing:.035em;text-transform:uppercase}
-.ojb-item-variante{margin:0 0 12px;color:#5f5f5f;font-size:12px}
-.ojb-item-preco{margin:0;font-size:13px}
-.ojb-item-acoes{display:flex;align-items:center;gap:14px;margin-top:18px}
-.ojb-quantidade{display:inline-flex;height:38px;border:1px solid rgba(17,17,17,.45)}
-.ojb-quantidade button{width:36px;height:36px;border:0;background:transparent;color:#111;font-size:16px;cursor:pointer}
-.ojb-quantidade span{display:flex;align-items:center;justify-content:center;min-width:32px;font-size:12px}
-.ojb-remover{padding:0 0 3px;border:0;border-bottom:1px solid currentColor;background:transparent;color:#333;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-.ojb-item-subtotal{text-align:right;font-size:14px;font-weight:500;white-space:nowrap}
-#ojb-carrinho-vazio{padding:76px 10px 64px;border-bottom:1px solid var(--ojb-borda);text-align:center;font-size:14px}
-.ojb-resumo{margin-top:26px;border-top:1px solid #111;border-bottom:1px solid #111}
-.ojb-resumo-linha{display:flex;justify-content:space-between;gap:18px;padding:16px 0;font-size:13px}
-.ojb-resumo-total{border-top:1px solid var(--ojb-borda);font-size:16px}
-.ojb-resumo strong{font-weight:500}
-.ojb-btn-principal,.ojb-btn-secundario,#ojb-buscar-cep,#ojb-aplicar-cupom,#ojb-calcular-frete-produto{border-radius:0;text-transform:uppercase;cursor:pointer}
-.ojb-btn-principal{width:100%;min-height:54px;margin-top:18px;border:1px solid #111;background:#111;color:#fff;font-size:11px;font-weight:500;letter-spacing:.14em}
-.ojb-btn-secundario{width:100%;min-height:46px;margin-top:8px;border:0;border-bottom:1px solid #111;background:transparent;color:#111;font-size:10px;font-weight:500;letter-spacing:.13em}
-#ojb-checkout{display:none;padding-top:28px}
-#ojb-checkout.ojb-visivel{display:block}
-#ojb-lista-carrinho.ojb-oculto,#ojb-acoes-carrinho.ojb-oculto,.ojb-cabecalho-itens.ojb-oculto{display:none}
-.ojb-titulo-checkout{margin:0 0 8px;font-size:28px;font-weight:400}
-.ojb-introducao{margin:0 0 30px;color:#555;font-size:13px;line-height:1.55}
-.ojb-secao{margin-top:30px}
-.ojb-secao h3{margin:0 0 15px;padding-bottom:10px;border-bottom:1px solid #111;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
-.ojb-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.ojb-campo{display:flex;flex-direction:column;gap:6px}
-.ojb-campo-largo{grid-column:1/-1}
-.ojb-campo label,#ojb-cupom-area label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
-.ojb-campo input,#ojb-cupom,#ojb-cep-produto{width:100%;min-height:45px;padding:10px 12px;border:1px solid rgba(17,17,17,.42);border-radius:0;background:#fff;color:#111;font-size:14px;outline:none}
-.ojb-campo input[readonly]{background:#f3f3f1}
-.ojb-linha-cep,.ojb-cupom-linha,.ojb-frete-linha{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
-#ojb-buscar-cep,#ojb-aplicar-cupom,#ojb-calcular-frete-produto{min-height:45px;padding:10px 14px;border:1px solid #111;background:transparent;color:#111;font-size:10px;font-weight:500;letter-spacing:.11em;white-space:nowrap}
-.ojb-msg{display:none;margin-top:14px;padding:11px 13px;font-size:13px;line-height:1.45}
-.ojb-msg.ojb-erro{display:block;border:1px solid #aa3434;background:#fff1f1;color:#8c2424}
-.ojb-msg.ojb-sucesso{display:block;border:1px solid #3f8048;background:#f1fff3;color:#2c6534}
-.ojb-inline-msg{min-height:18px;margin-top:8px;font-size:12px}
-.ojb-inline-msg.ojb-erro{color:#a12d2d}
-.ojb-inline-msg.ojb-sucesso{color:#31723b}
-.ojb-seguranca{margin:12px 0 0;color:#666;text-align:center;font-size:11px}
-#ojb-adicionar-carrinho{width:100%;min-height:52px;margin-top:14px;padding:13px 20px;border:1px solid #fff;border-radius:0;background:#111;color:#fff;font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-#ojb-calculadora-frete-produto{display:block;width:100%;margin-top:12px;clear:both}
-#ojb-calcular-frete-produto{min-width:180px}
-#ojb-resultado-frete-produto,#ojb-aviso-produto{min-height:18px;margin-top:8px;font-size:12px;line-height:1.5;white-space:pre-line}
-#ojb-resultado-frete-produto.ojb-sucesso,#ojb-aviso-produto.ojb-sucesso{color:inherit}
-#ojb-resultado-frete-produto.ojb-erro,#ojb-aviso-produto.ojb-erro{color:#a12d2d}
-@media(max-width:720px){
-  #ojb-botao-carrinho{right:14px;bottom:14px}
-  .ojb-cabecalho{min-height:86px;padding:22px 20px 18px}
-  #ojb-conteudo-carrinho{padding:0 20px 28px}
-  .ojb-cabecalho-itens{display:none}
-  .ojb-item{grid-template-columns:82px minmax(0,1fr);gap:16px;padding:22px 0}
-  .ojb-item-imagem,.ojb-item-sem-imagem{width:82px;height:104px}
-  .ojb-item-subtotal{grid-column:2;text-align:left}
-  .ojb-grid{grid-template-columns:1fr}
-  .ojb-campo-largo{grid-column:auto}
-  .ojb-linha-cep,.ojb-cupom-linha,.ojb-frete-linha{grid-template-columns:1fr}
-  #ojb-buscar-cep,#ojb-aplicar-cupom,#ojb-calcular-frete-produto{width:100%}
-}
-</style>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<script>
-(function(){
-"use strict";
+  <title>Carrinho | OJOBOSCO</title>
 
-if(
-  location.pathname.startsWith("/config") ||
-  location.hostname.includes("account.squarespace.com")
-){
-  return;
-}
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
-const C={
-  backend:"https://squarespace-mercadopago.onrender.com",
-  cart:"ojobosco-carrinho-v2",
-  ship:"ojobosco-frete-v1",
-  ga:"ojobosco-pedido-pendente-ga4",
-  coupon:"BEMVINDO",
-  discount:10,
-  freeCoupon:"CAMILAGUS",
-  products:{}
-};
+  <style>
+    :root {
+      --cart-bg: #ffffff;
+      --cart-text: #111111;
+      --cart-soft: #686868;
+      --cart-line: rgba(17, 17, 17, 0.18);
+      --cart-black: #000000;
+      --cart-white: #ffffff;
+      --fonte: inherit;
+    }
 
-let freteAtual=null;
-let regiaoAtual="";
-let produtoConfigurado=false;
-let viewRegistrada=false;
-let checkoutRegistrado=false;
-let cupomAplicado=false;
-let cupomFreteGratis=false;
+    * {
+      box-sizing: border-box;
+    }
 
-const $=id=>document.getElementById(id);
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--cart-bg);
+      color: var(--cart-text);
+    }
 
-const num=v=>
-  String(v||"").replace(/\D/g,"");
+    body {
+      min-height: 100vh;
+      font-family: var(--fonte);
+    }
 
-const norm=v=>
-  String(v||"")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .trim()
-    .replace(/\s+/g," ")
-    .toUpperCase();
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-function moeda(v){
-  v=Number(v);
+    button,
+    input {
+      font: inherit;
+    }
 
-  return Number.isFinite(v)
-    ? v.toLocaleString("pt-BR",{
-        style:"currency",
-        currency:"BRL"
-      })
-    : "R$ 0,00";
-}
+    /* =========================================
+       TOPO
+    ========================================= */
 
-function cepFmt(v){
-  v=num(v).slice(0,8);
+    .cart-announcement {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
 
-  return v.length>5
-    ? v.slice(0,5)+"-"+v.slice(5)
-    : v;
-}
+      min-height: 34px;
 
-function telFmt(v){
-  v=num(v);
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  if(
-    v.startsWith("55") &&
-    v.length>11
-  ){
-    v=v.slice(2);
-  }
+      padding: 8px 20px;
 
-  v=v.slice(0,11);
+      background: #111111;
+      color: #ffffff;
 
-  if(v.length<=2){
-    return v;
-  }
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
 
-  if(v.length<=6){
-    return `(${v.slice(0,2)}) ${v.slice(2)}`;
-  }
+    .cart-header {
+      position: fixed;
+      top: 34px;
+      left: 0;
+      right: 0;
+      z-index: 999;
 
-  if(v.length<=10){
-    return `(${v.slice(0,2)}) ${v.slice(2,6)}-${v.slice(6)}`;
-  }
+      height: 72px;
 
-  return `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
-}
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
 
-function ga(nome,p={}){
-  if(typeof window.gtag==="function"){
-    window.gtag("event",nome,p);
-  }else{
-    window.dataLayer=
-      window.dataLayer||[];
+      padding: 0 28px;
 
-    window.dataLayer.push({
-      event:nome,
-      ...p
-    });
-  }
-}
+      background: #ffffff;
 
-function itemGA(i){
-  return{
-    item_id:String(
-      i.produtoId||
-      i.chave||
-      ""
-    ),
-    item_name:String(
-      i.nome||
-      "Produto OJOBOSCO"
-    ),
-    item_variant:String(
-      i.tamanho||
-      ""
-    ),
-    price:Number(
-      i.preco||
-      0
-    ),
-    quantity:Number(
-      i.quantidade||
-      1
-    )
-  };
-}
+      border-bottom:
+        1px solid rgba(17,17,17,.12);
+    }
 
-function lerCarrinho(){
-  try{
-    const d=
-      JSON.parse(
-        localStorage.getItem(C.cart)||
-        "[]"
-      );
+    .cart-header-left {
+      justify-self: start;
+    }
 
-    return Array.isArray(d)
-      ? d
-      : [];
-  }catch{
-    return [];
-  }
-}
+    .cart-header-center {
+      justify-self: center;
+    }
 
-function salvarCarrinho(c){
-  localStorage.setItem(
-    C.cart,
-    JSON.stringify(c)
-  );
+    .cart-header-right {
+      justify-self: end;
+    }
 
-  atualizarCarrinho();
-}
+    .cart-menu-link,
+    .cart-header-cart {
+      border: 0;
+      padding: 0;
 
-function qtdTotal(){
-  return lerCarrinho()
-    .reduce(
-      (t,i)=>
-        t+
-        Number(i.quantidade||0),
-      0
-    );
-}
+      background: transparent;
+      color: #111111;
 
-function subtotal(){
-  return lerCarrinho()
-    .reduce(
-      (t,i)=>
-        t+
-        Number(i.preco||0)*
-        Number(i.quantidade||0),
-      0
-    );
-}
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
 
-function desconto(){
-  return cupomAplicado
-    ? Number(
-        (
-          subtotal()*
-          C.discount/
-          100
-        ).toFixed(2)
-      )
-    : 0;
-}
+      cursor: pointer;
+    }
 
-function produtosComDesconto(){
-  return Math.max(
-    0,
-    subtotal()-desconto()
-  );
-}
+    .cart-brand {
+      color: #111111;
 
-function freteEfetivo(){
-  if(freteAtual===null){
-    return null;
-  }
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
 
-  if(
-    cupomFreteGratis ||
-    produtosComDesconto()>=500
-  ){
-    return 0;
-  }
+      text-transform: uppercase;
+    }
 
-  return Number(freteAtual);
-}
+    /* =========================================
+       PÁGINA
+    ========================================= */
 
-function prazo(reg){
-  const t=norm(reg);
+    .cart-page {
+      min-height: 100vh;
 
-  return(
-    t.includes("RECIFE") ||
-    t.includes("REGIAO METROPOLITANA") ||
-    t.includes("METROPOLITANA")
-  )
-    ? 2
-    : 10;
-}
+      padding-top: 106px;
 
-function textoFrete(f,r){
-  return(
-    `Frete: ${moeda(f)}`+
-    `${r?" — "+r:""}`+
-    `\nPrazo de entrega: até ${prazo(r)} dias úteis.`
-  );
-}
+      background: var(--cart-bg);
+      color: var(--cart-text);
+    }
 
-function guardarFrete(d){
-  try{
-    localStorage.setItem(
-      C.ship,
-      JSON.stringify(d)
-    );
-  }catch{}
-}
+    .cart-page-grid {
+      width: 100%;
 
-function lerFrete(){
-  try{
-    return JSON.parse(
-      localStorage.getItem(C.ship)||
-      "null"
-    );
-  }catch{
-    return null;
-  }
-}
+      display: grid;
 
-function valor(id){
-  return String(
-    $(id)?.value||
-    ""
-  ).trim();
-}
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(330px, 30vw);
 
-function setValor(id,v){
-  if($(id)){
-    $(id).value=v||"";
-  }
-}
+      align-items: stretch;
+    }
 
-function msg(texto,tipo){
-  const e=$("ojb-mensagem");
+    /* =========================================
+       ESQUERDA
+    ========================================= */
 
-  if(!e){
-    return;
-  }
+    .cart-main {
+      min-width: 0;
 
-  e.textContent=texto;
+      padding:
+        42px
+        38px
+        80px
+        42px;
 
-  e.className=
-    `ojb-msg ${
-      tipo==="sucesso"
-        ?"ojb-sucesso"
-        :"ojb-erro"
-    }`;
-}
+      border-right:
+        1px solid var(--cart-line);
+    }
 
-function limparMsg(){
-  const e=$("ojb-mensagem");
+    .cart-page-title {
+      margin:
+        0
+        0
+        32px;
 
-  if(e){
-    e.textContent="";
-    e.className="ojb-msg";
-  }
-}
+      color: var(--cart-text);
 
-function restaurarFrete(){
-  const d=lerFrete();
-
-  if(
-    !d ||
-    !d.cep ||
-    !Number.isFinite(
-      Number(d.frete)
-    )
-  ){
-    return;
-  }
-
-  setValor(
-    "ojb-cep",
-    cepFmt(d.cep)
-  );
-
-  setValor(
-    "ojb-rua",
-    d.rua
-  );
-
-  setValor(
-    "ojb-bairro",
-    d.bairro
-  );
-
-  setValor(
-    "ojb-cidade",
-    d.cidade
-  );
-
-  setValor(
-    "ojb-estado",
-    d.estado
-  );
-
-  freteAtual=
-    Number(d.frete);
-
-  regiaoAtual=
-    d.regiao||"";
-
-  atualizarResumo();
-}
-
-function precoVisivel(){
-  for(
-    const s of [
-      ".ProductItem-details-price",
-      ".product-price",
-      ".sqs-money-native",
-      "[data-test='product-price']",
-      ".product-price-value",
-      ".price"
-    ]
-  ){
-    for(
-      const e of
-      document.querySelectorAll(s)
-    ){
-      const st=
-        getComputedStyle(e);
-
-      if(
-        st.display==="none" ||
-        st.visibility==="hidden"
-      ){
-        continue;
-      }
-
-      const m=
-        String(
-          e.textContent||
-          ""
-        ).match(
-          /R\$\s*([\d.]+(?:,\d{2})?)/
+      font-size:
+        clamp(
+          27px,
+          2.5vw,
+          38px
         );
 
-      if(m){
-        const n=
-          Number(
-            m[1]
-              .replace(/\./g,"")
-              .replace(",",".")
-          );
+      line-height: 1.15;
 
-        if(
-          Number.isFinite(n) &&
-          n>0
-        ){
-          return n;
-        }
+      font-weight: 400;
+
+      letter-spacing: 0;
+    }
+
+    .cart-page-title span {
+      white-space: nowrap;
+    }
+
+    .cart-page-items {
+      width: 100%;
+    }
+
+    /* =========================================
+       ITEM
+    ========================================= */
+
+    .cart-item {
+      width: 100%;
+
+      min-height: 220px;
+
+      display: grid;
+
+      grid-template-columns:
+        125px
+        minmax(0, 1fr)
+        120px;
+
+      gap: 28px;
+
+      align-items: start;
+
+      padding:
+        26px
+        0;
+
+      border-top:
+        1px solid var(--cart-line);
+    }
+
+    .cart-item:last-child {
+      border-bottom:
+        1px solid var(--cart-line);
+    }
+
+    .cart-item-image-wrap {
+      width: 125px;
+      height: 155px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      background: #f5f5f2;
+    }
+
+    .cart-item-image {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .cart-item-image-empty {
+      width: 100%;
+      height: 100%;
+
+      background: #f5f5f2;
+    }
+
+    .cart-item-info {
+      min-width: 0;
+    }
+
+    .cart-item-name {
+      margin:
+        2px
+        0
+        10px;
+
+      color: var(--cart-text);
+
+      font-size: 14px;
+      line-height: 1.5;
+
+      font-weight: 400;
+
+      letter-spacing: .06em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-item-variant {
+      margin:
+        0
+        0
+        5px;
+
+      color: var(--cart-soft);
+
+      font-size: 11px;
+      line-height: 1.55;
+
+      letter-spacing: .08em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-item-unit-price {
+      margin:
+        15px
+        0
+        0;
+
+      color: var(--cart-text);
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      gap: 18px;
+
+      margin-top: 22px;
+    }
+
+    .cart-quantity {
+      height: 38px;
+
+      display: grid;
+
+      grid-template-columns:
+        38px
+        38px
+        38px;
+
+      border:
+        1px solid rgba(17,17,17,.28);
+    }
+
+    .cart-quantity button {
+      width: 38px;
+      height: 36px;
+
+      border: 0;
+
+      background: transparent;
+      color: #111111;
+
+      cursor: pointer;
+
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    .cart-quantity span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 12px;
+    }
+
+    .cart-remove {
+      border: 0;
+      border-bottom:
+        1px solid #111111;
+
+      padding:
+        0
+        0
+        3px;
+
+      background: transparent;
+      color: #111111;
+
+      cursor: pointer;
+
+      font-size: 9px;
+      letter-spacing: .12em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-item-total {
+      padding-top: 3px;
+
+      color: var(--cart-text);
+
+      text-align: right;
+
+      font-size: 13px;
+      line-height: 1.5;
+
+      white-space: nowrap;
+    }
+
+    /* =========================================
+       CARRINHO VAZIO
+    ========================================= */
+
+    .cart-page-empty {
+      min-height: 340px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      padding: 60px 30px;
+
+      border-top:
+        1px solid var(--cart-line);
+
+      border-bottom:
+        1px solid var(--cart-line);
+
+      text-align: center;
+    }
+
+    .cart-page-empty[hidden] {
+      display: none !important;
+    }
+
+    .cart-page-empty p {
+      margin:
+        0
+        0
+        28px;
+
+      font-size: 11px;
+      letter-spacing: .12em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-page-shop-button {
+      min-width: 220px;
+
+      padding:
+        16px
+        24px;
+
+      background: #000000;
+      color: #ffffff;
+
+      font-size: 10px;
+      letter-spacing: .12em;
+
+      text-align: center;
+
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       GARANTIA
+    ========================================= */
+
+    .cart-guarantee {
+      padding:
+        42px
+        0
+        0;
+    }
+
+    .cart-guarantee h2 {
+      margin:
+        0
+        0
+        16px;
+
+      font-size: 10px;
+      line-height: 1.4;
+
+      font-weight: 400;
+
+      letter-spacing: .20em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-guarantee p {
+      max-width: 820px;
+
+      margin: 0;
+
+      font-size: 12px;
+      line-height: 1.9;
+
+      letter-spacing: .04em;
+    }
+
+    /* =========================================
+       RESUMO
+    ========================================= */
+
+    .cart-summary {
+      min-width: 0;
+
+      padding:
+        42px
+        32px
+        60px;
+    }
+
+    .cart-page-checkout {
+      width: 100%;
+
+      min-height: 52px;
+
+      padding:
+        0
+        18px;
+
+      border: 1px solid #000000;
+
+      background: #000000;
+      color: #ffffff;
+
+      cursor: pointer;
+
+      font-size: 11px;
+      font-weight: 400;
+
+      letter-spacing: .10em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-page-checkout:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .cart-page-checkout-desktop {
+      margin-bottom: 26px;
+    }
+
+    .cart-page-checkout-mobile {
+      display: none;
+
+      margin-top: 26px;
+    }
+
+    .cart-summary-block {
+      padding:
+        22px
+        0
+        26px;
+
+      border-top:
+        1px solid var(--cart-line);
+    }
+
+    .cart-summary-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+
+      margin-bottom: 26px;
+    }
+
+    .cart-summary-heading h2 {
+      margin: 0;
+
+      color: var(--cart-text);
+
+      font-size: 11px;
+      font-weight: 400;
+
+      letter-spacing: .12em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-summary-heading span {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .cart-summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+
+      margin-bottom: 22px;
+
+      color: var(--cart-text);
+
+      font-size: 11px;
+    }
+
+    .cart-summary-row > span:first-child {
+      color: var(--cart-soft);
+
+      letter-spacing: .12em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-summary-row strong {
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .cart-summary-total {
+      margin:
+        0;
+
+      padding-top: 7px;
+
+      border-top:
+        1px solid var(--cart-line);
+    }
+
+    .cart-summary-total > span:first-child {
+      color: var(--cart-text);
+
+      font-weight: 400;
+    }
+
+    #cartTotal {
+      font-size: 15px;
+    }
+
+    .cart-discount-row[hidden],
+    #cartShippingRow[hidden] {
+      display: none !important;
+    }
+
+    /* =========================================
+       FRETE
+    ========================================= */
+
+    .cart-shipping {
+      margin:
+        4px
+        0
+        0;
+    }
+
+    .cart-shipping-form {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0,1fr)
+        120px;
+
+      gap: 10px;
+    }
+
+    .cart-shipping-form input {
+      width: 100%;
+      height: 46px;
+
+      padding:
+        0
+        14px;
+
+      border:
+        1px solid rgba(17,17,17,.22);
+
+      border-radius: 0;
+
+      outline: none;
+
+      background: #ffffff;
+      color: #111111;
+
+      font-size: 11px;
+
+      letter-spacing: .06em;
+    }
+
+    .cart-shipping-form input::placeholder {
+      color:
+        rgba(17,17,17,.42);
+    }
+
+    .cart-shipping-form button {
+      height: 46px;
+
+      border:
+        1px solid #111111;
+
+      border-radius: 0;
+
+      background: transparent;
+      color: #111111;
+
+      cursor: pointer;
+
+      font-size: 9px;
+      letter-spacing: .10em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-shipping-message {
+      min-height: 18px;
+
+      margin-top: 12px;
+
+      color: var(--cart-soft);
+
+      font-size: 10px;
+      line-height: 1.6;
+
+      letter-spacing: .05em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-free-shipping {
+      margin:
+        18px
+        0
+        0;
+
+      color: var(--cart-soft);
+
+      font-size: 9px;
+      line-height: 1.6;
+
+      letter-spacing: .08em;
+
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       CUPOM
+    ========================================= */
+
+    .cart-coupon-description {
+      margin:
+        0
+        0
+        18px;
+
+      color: var(--cart-text);
+
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .cart-coupon-form {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0,1fr)
+        95px;
+
+      gap: 10px;
+    }
+
+    .cart-coupon-form input {
+      width: 100%;
+      height: 46px;
+
+      padding:
+        0
+        14px;
+
+      border:
+        1px solid rgba(17,17,17,.22);
+
+      border-radius: 0;
+
+      outline: none;
+
+      background: #ffffff;
+      color: #111111;
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+    }
+
+    .cart-coupon-form button {
+      height: 46px;
+
+      border: 0;
+
+      background: #000000;
+      color: #ffffff;
+
+      cursor: pointer;
+
+      font-size: 9px;
+      letter-spacing: .10em;
+
+      text-transform: uppercase;
+    }
+
+    .cart-coupon-message {
+      min-height: 18px;
+
+      margin-top: 12px;
+
+      color: var(--cart-text);
+
+      font-size: 10px;
+      line-height: 1.6;
+
+      letter-spacing: .05em;
+
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       RESPONSIVO
+    ========================================= */
+
+    @media (max-width: 900px) {
+
+      .cart-page-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-main {
+        padding:
+          35px
+          22px
+          50px;
+
+        border-right: 0;
+      }
+
+      .cart-summary {
+        padding:
+          35px
+          22px
+          55px;
+
+        border-top:
+          1px solid var(--cart-line);
+      }
+
+      .cart-page-checkout-desktop {
+        display: none;
+      }
+
+      .cart-page-checkout-mobile {
+        display: block;
       }
     }
-  }
 
-  return 0;
-}
+    @media (max-width: 600px) {
 
-function nomeProduto(){
-  for(
-    const s of [
-      ".ProductItem-details-title",
-      ".product-title",
-      "[data-test='product-title']",
-      "main h1",
-      "h1"
-    ]
-  ){
-    const e=
-      document.querySelector(s);
+      .cart-announcement {
+        min-height: 30px;
 
-    const t=
-      String(
-        e?.textContent||
-        ""
-      ).trim();
-
-    if(t){
-      return t;
-    }
-  }
-
-  return(
-    document.title
-      .split("|")[0]
-      .trim() ||
-    "Produto OJOBOSCO"
-  );
-}
-
-function imagemProduto(){
-  for(
-    const s of [
-      ".ProductItem-gallery img",
-      ".product-gallery img",
-      "[data-test='product-image'] img",
-      ".ProductItem img",
-      "main img"
-    ]
-  ){
-    const e=
-      document.querySelector(s);
-
-    const u=
-      e?.currentSrc||
-      e?.src||
-      e?.getAttribute(
-        "data-src"
-      );
-
-    if(u){
-      return u;
-    }
-  }
-
-  return "";
-}
-
-function quantidadeProduto(){
-  for(
-    const s of [
-      "input[name='quantity']",
-      ".product-quantity-input input",
-      ".ProductItem-details input[type='number']",
-      "input[type='number']"
-    ]
-  ){
-    const e=
-      document.querySelector(s);
-
-    if(
-      e &&
-      !e.closest(
-        "#ojb-carrinho"
-      )
-    ){
-      const q=
-        Number(e.value);
-
-      if(
-        Number.isInteger(q) &&
-        q>0
-      ){
-        return q;
-      }
-    }
-  }
-
-  return 1;
-}
-
-function opcaoProduto(){
-  for(
-    const s of
-    document.querySelectorAll(
-      "select"
-    )
-  ){
-    if(
-      s.closest(
-        "#ojb-carrinho"
-      )
-    ){
-      continue;
-    }
-
-    const nome=
-      norm(
-        s.name||
-        s.id||
-        s.getAttribute(
-          "aria-label"
-        )||
-        ""
-      );
-
-    const o=
-      s.options[
-        s.selectedIndex
-      ];
-
-    const t=
-      String(
-        o?.textContent||
-        o?.value||
-        ""
-      ).trim();
-
-    const eh=
-      nome.includes("TAMANHO") ||
-      nome.includes("SIZE") ||
-      nome.includes("FRAGRANCIA") ||
-      nome.includes("AROMA") ||
-      nome.includes("COR") ||
-      /\b\d+\s*(ML|G|KG|L)\b/i.test(t);
-
-    if(eh){
-      if(
-        !t ||
-        norm(t).includes(
-          "SELECIONE"
-        )
-      ){
-        return "";
+        font-size: 8px;
       }
 
-      return t;
-    }
-  }
+      .cart-header {
+        top: 30px;
 
-  for(
-    const r of
-    document.querySelectorAll(
-      "input[type='radio']:checked"
-    )
-  ){
-    if(
-      r.closest(
-        "#ojb-carrinho"
-      )
-    ){
-      continue;
-    }
+        height: 62px;
 
-    const l=
-      r.id
-        ? document.querySelector(
-            `label[for="${CSS.escape(r.id)}"]`
-          )
-        : null;
-
-    const t=
-      String(
-        l?.textContent||
-        r.value||
-        ""
-      ).trim();
-
-    if(t){
-      return t;
-    }
-  }
-
-  return "";
-}
-
-function varianteId(){
-  for(
-    const e of
-    document.querySelectorAll(
-      "[data-variant-id],[data-selected-variant-id],option:checked"
-    )
-  ){
-    if(
-      e.closest(
-        "#ojb-carrinho"
-      )
-    ){
-      continue;
-    }
-
-    const v=
-      e.getAttribute(
-        "data-variant-id"
-      )||
-      e.getAttribute(
-        "data-selected-variant-id"
-      )||
-      e.value;
-
-    if(
-      v &&
-      /^[a-f0-9]{20,40}$/i.test(
-        String(v)
-      )
-    ){
-      return String(v);
-    }
-  }
-
-  return "";
-}
-
-function produtoId(){
-  const path=
-    location.pathname
-      .replace(/\/+$/,"");
-
-  if(C.products[path]){
-    return C.products[path];
-  }
-
-  for(
-    const a of [
-      "data-item-id",
-      "data-product-id",
-      "data-itemid",
-      "data-productid"
-    ]
-  ){
-    for(
-      const e of
-      document.querySelectorAll(
-        `[${a}]`
-      )
-    ){
-      const v=
-        e.getAttribute(a);
-
-      if(
-        v &&
-        /^[a-f0-9]{20,40}$/i.test(v)
-      ){
-        return v;
-      }
-    }
-  }
-
-  for(
-    const s of [
-      "meta[itemprop='productID']",
-      "meta[property='product:retailer_item_id']",
-      "meta[name='product-id']"
-    ]
-  ){
-    const v=
-      document
-        .querySelector(s)
-        ?.getAttribute(
-          "content"
-        );
-
-    if(
-      v &&
-      /^[a-f0-9]{20,40}$/i.test(v)
-    ){
-      return v;
-    }
-  }
-
-  for(
-    const sc of
-    document.querySelectorAll(
-      "script:not([src])"
-    )
-  ){
-    const t=
-      String(
-        sc.textContent||
-        ""
-      );
-
-    for(
-      const p of [
-        /"productId"\s*:\s*"([a-f0-9]{20,40})"/i,
-        /"product_id"\s*:\s*"([a-f0-9]{20,40})"/i,
-        /"itemId"\s*:\s*"([a-f0-9]{20,40})"/i
-      ]
-    ){
-      const m=
-        t.match(p);
-
-      if(m?.[1]){
-        return m[1];
-      }
-    }
-  }
-
-  return "";
-}
-
-function botaoNativo(){
-  for(
-    const s of [
-      ".sqs-add-to-cart-button",
-      "[data-test='add-to-cart-button']",
-      ".ProductItem-details .sqs-block-button-element",
-      "button[type='submit']"
-    ]
-  ){
-    for(
-      const e of
-      document.querySelectorAll(s)
-    ){
-      if(
-        e.closest(
-          "#ojb-carrinho"
-        )
-      ){
-        continue;
+        padding:
+          0
+          14px;
       }
 
-      const t=
-        norm(
-          e.textContent||
-          e.value||
-          e.getAttribute(
-            "aria-label"
-          )
-        );
+      .cart-menu-link,
+      .cart-header-cart {
+        font-size: 8px;
+      }
 
-      if(
-        t.includes(
-          "ADICIONAR"
-        )||
-        t.includes(
-          "CARRINHO"
-        )||
-        t.includes(
-          "ADD TO CART"
-        )
-      ){
-        return e;
+      .cart-brand {
+        font-size: 10px;
+      }
+
+      .cart-page {
+        padding-top: 92px;
+      }
+
+      .cart-main {
+        padding:
+          32px
+          14px
+          45px;
+      }
+
+      .cart-page-title {
+        margin:
+          0
+          0
+          25px;
+
+        font-size: 24px;
+      }
+
+      .cart-item {
+        min-height: 0;
+
+        grid-template-columns:
+          86px
+          minmax(0,1fr);
+
+        gap: 16px;
+
+        padding:
+          20px
+          0;
+      }
+
+      .cart-item-image-wrap {
+        width: 86px;
+        height: 108px;
+      }
+
+      .cart-item-total {
+        grid-column: 2;
+
+        text-align: left;
+
+        padding-top: 0;
+      }
+
+      .cart-item-name {
+        font-size: 11px;
+      }
+
+      .cart-item-variant {
+        font-size: 9px;
+      }
+
+      .cart-item-actions {
+        margin-top: 16px;
+
+        gap: 12px;
+      }
+
+      .cart-quantity {
+        grid-template-columns:
+          32px
+          32px
+          32px;
+
+        height: 34px;
+      }
+
+      .cart-quantity button {
+        width: 32px;
+        height: 32px;
+      }
+
+      .cart-summary {
+        padding:
+          32px
+          16px
+          50px;
+      }
+
+      .cart-shipping-form {
+        grid-template-columns:
+          1fr
+          105px;
+      }
+
+      .cart-coupon-form {
+        grid-template-columns:
+          minmax(0,1fr)
+          88px;
       }
     }
-  }
+  </style>
+</head>
 
-  return null;
-}
+<body>
 
-function avisoProduto(t,tipo){
-  const e=
-    $("ojb-aviso-produto");
+  <div class="cart-announcement">
+    GANHE FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500
+  </div>
 
-  if(e){
-    e.textContent=t;
+  <header class="cart-header">
 
-    e.className=
-      tipo==="sucesso"
-        ?"ojb-sucesso"
-        :"ojb-erro";
-  }
-}
-
-function adicionarProduto(){
-  const b=
-    $("ojb-adicionar-carrinho");
-
-  try{
-    b.disabled=true;
-    b.textContent=
-      "Adicionando...";
-
-    const p=
-      produtoId();
-
-    const tam=
-      opcaoProduto();
-
-    const vid=
-      varianteId();
-
-    const q=
-      quantidadeProduto();
-
-    const nome=
-      nomeProduto();
-
-    const preco=
-      precoVisivel();
-
-    const img=
-      imagemProduto();
-
-    if(!p){
-      throw new Error(
-        "Não foi possível identificar este produto."
-      );
-    }
-
-    if(!tam){
-      throw new Error(
-        "Selecione uma opção do produto."
-      );
-    }
-
-    const c=
-      lerCarrinho();
-
-    const ch=
-      p+
-      "::"+
-      (
-        vid||
-        norm(tam)
-      );
-
-    const ex=
-      c.find(
-        i=>
-          i.chave===ch
-      );
-
-    if(ex){
-      ex.quantidade+=q;
-      ex.nome=nome;
-      ex.preco=preco;
-      ex.imagem=img;
-    }else{
-      c.push({
-        chave:ch,
-        produtoId:p,
-        varianteId:vid,
-        tamanho:tam,
-        quantidade:q,
-        nome,
-        preco,
-        imagem:img
-      });
-    }
-
-    salvarCarrinho(c);
-
-    ga(
-      "add_to_cart",
-      {
-        currency:"BRL",
-        value:
-          Number(preco||0)*
-          q,
-        items:[
-          itemGA({
-            produtoId:p,
-            nome,
-            tamanho:tam,
-            preco,
-            quantidade:q
-          })
-        ]
-      }
-    );
-
-    avisoProduto(
-      "Produto adicionado ao carrinho.",
-      "sucesso"
-    );
-
-    abrirCarrinho();
-
-  }catch(e){
-
-    avisoProduto(
-      e.message||
-      "Não foi possível adicionar o produto.",
-      "erro"
-    );
-
-  }finally{
-
-    if(b){
-      b.disabled=false;
-      b.textContent=
-        "Adicionar ao carrinho";
-    }
-  }
-}
-
-async function calcularFreteProduto(){
-  const c=
-    $("ojb-cep-produto");
-
-  const b=
-    $("ojb-calcular-frete-produto");
-
-  const r=
-    $("ojb-resultado-frete-produto");
-
-  const cep=
-    num(
-      c?.value
-    );
-
-  if(
-    !c ||
-    !b ||
-    !r
-  ){
-    return;
-  }
-
-  if(cep.length!==8){
-    r.textContent=
-      "Informe um CEP válido com 8 números.";
-
-    r.className=
-      "ojb-erro";
-
-    return;
-  }
-
-  b.disabled=true;
-  b.textContent=
-    "Calculando...";
-
-  try{
-    const res=
-      await fetch(
-        `${C.backend}/calcular-frete?cep=${encodeURIComponent(cep)}`,
-        {
-          headers:{
-            Accept:
-              "application/json"
-          }
-        }
-      );
-
-    const d=
-      await res.json();
-
-    if(!res.ok){
-      throw new Error(
-        d.erro||
-        "Não foi possível consultar esse CEP."
-      );
-    }
-
-    const f=
-      Number(
-        d.frete
-      );
-
-    if(
-      !Number.isFinite(f)
-    ){
-      throw new Error(
-        "O valor do frete não foi retornado."
-      );
-    }
-
-    freteAtual=f;
-    regiaoAtual=
-      d.regiao||"";
-
-    c.value=
-      cepFmt(
-        d.cep||cep
-      );
-
-    guardarFrete({
-      cep:
-        d.cep||cep,
-      rua:
-        d.rua||"",
-      bairro:
-        d.bairro||"",
-      cidade:
-        d.cidade||"",
-      estado:
-        d.estado||"",
-      frete:f,
-      regiao:
-        regiaoAtual
-    });
-
-    r.textContent=
-      textoFrete(
-        f,
-        regiaoAtual
-      );
-
-    r.className=
-      "ojb-sucesso";
-
-    restaurarFrete();
-
-  }catch(e){
-
-    r.textContent=
-      e.message||
-      "Não foi possível calcular o frete.";
-
-    r.className=
-      "ojb-erro";
-
-  }finally{
-
-    b.disabled=false;
-    b.textContent=
-      "Calcular frete";
-  }
-}
-
-function configurarProduto(){
-  if(produtoConfigurado){
-    return true;
-  }
-
-  const n=
-    botaoNativo();
-
-  if(!n){
-    return false;
-  }
-
-  document
-    .querySelectorAll(
-      "#ojb-adicionar-carrinho,#ojb-aviso-produto,#ojb-calculadora-frete-produto"
-    )
-    .forEach(
-      e=>e.remove()
-    );
-
-  const wrap=
-    n.closest(
-      ".sqs-add-to-cart-button-wrapper"
-    )||
-    n.parentElement;
-
-  if(!wrap){
-    return false;
-  }
-
-  const b=
-    document.createElement(
-      "button"
-    );
-
-  b.id=
-    "ojb-adicionar-carrinho";
-
-  b.type=
-    "button";
-
-  b.textContent=
-    "Adicionar ao carrinho";
-
-  const a=
-    document.createElement(
-      "div"
-    );
-
-  a.id=
-    "ojb-aviso-produto";
-
-  a.setAttribute(
-    "aria-live",
-    "polite"
-  );
-
-  const f=
-    document.createElement(
-      "div"
-    );
-
-  f.id=
-    "ojb-calculadora-frete-produto";
-
-  f.innerHTML=`
-    <div class="ojb-frete-linha">
-      <input
-        id="ojb-cep-produto"
-        type="text"
-        inputmode="numeric"
-        autocomplete="postal-code"
-        maxlength="9"
-        placeholder="Digite seu CEP"
+    <div class="cart-header-left">
+      <a
+        href="/"
+        class="cart-menu-link"
       >
-      <button
-        id="ojb-calcular-frete-produto"
-        type="button"
-      >
-        Calcular frete
-      </button>
+        INÍCIO
+      </a>
     </div>
 
-    <div
-      id="ojb-resultado-frete-produto"
-      aria-live="polite"
-    ></div>
-  `;
-
-  wrap.insertAdjacentElement(
-    "beforebegin",
-    b
-  );
-
-  b.insertAdjacentElement(
-    "afterend",
-    a
-  );
-
-  a.insertAdjacentElement(
-    "afterend",
-    f
-  );
-
-  wrap.style.display=
-    "none";
-
-  b.addEventListener(
-    "click",
-    adicionarProduto
-  );
-
-  $("ojb-calcular-frete-produto")
-    .addEventListener(
-      "click",
-      calcularFreteProduto
-    );
-
-  $("ojb-cep-produto")
-    .addEventListener(
-      "input",
-      function(){
-        this.value=
-          cepFmt(
-            this.value
-          );
-      }
-    );
-
-  $("ojb-cep-produto")
-    .addEventListener(
-      "keydown",
-      e=>{
-        if(
-          e.key===
-          "Enter"
-        ){
-          e.preventDefault();
-          calcularFreteProduto();
-        }
-      }
-    );
-
-  const d=
-    lerFrete();
-
-  if(d?.cep){
-    $("ojb-cep-produto").value=
-      cepFmt(
-        d.cep
-      );
-
-    $("ojb-resultado-frete-produto").textContent=
-      textoFrete(
-        d.frete,
-        d.regiao||""
-      );
-
-    $("ojb-resultado-frete-produto").className=
-      "ojb-sucesso";
-  }
-
-  if(!viewRegistrada){
-    ga(
-      "view_item",
-      {
-        currency:"BRL",
-        value:
-          precoVisivel(),
-        items:[
-          itemGA({
-            produtoId:
-              produtoId(),
-            nome:
-              nomeProduto(),
-            tamanho:
-              opcaoProduto(),
-            preco:
-              precoVisivel(),
-            quantidade:
-              1
-          })
-        ]
-      }
-    );
-
-    viewRegistrada=
-      true;
-  }
-
-  produtoConfigurado=
-    true;
-
-  return true;
-}
-
-function criarInterface(){
-
-  [
-    "ojb-botao-carrinho",
-    "ojb-fundo-modal",
-    "ojb-carrinho"
-  ].forEach(
-    id=>
-      $(id)?.remove()
-  );
-
-  const b=
-    document.createElement(
-      "button"
-    );
-
-  b.id=
-    "ojb-botao-carrinho";
-
-  b.type=
-    "button";
-
-  b.innerHTML=`
-    Carrinho
-    <span id="ojb-contador-carrinho">0</span>
-  `;
-
-  const fundo=
-    document.createElement(
-      "div"
-    );
-
-  fundo.id=
-    "ojb-fundo-modal";
-
-  const c=
-    document.createElement(
-      "aside"
-    );
-
-  c.id=
-    "ojb-carrinho";
-
-  c.innerHTML=`
-    <div class="ojb-cabecalho">
-
-      <div>
-        <span class="ojb-marca">
-          OJOBOSCO
-        </span>
-
-        <h2>
-          Carrinho
-        </h2>
-      </div>
-
-      <button
-        id="ojb-fechar-carrinho"
-        type="button"
-        aria-label="Fechar"
+    <div class="cart-header-center">
+      <a
+        href="/"
+        class="cart-brand"
       >
-        ×
-      </button>
-
+        OJOBOSCO
+      </a>
     </div>
 
-    <div id="ojb-conteudo-carrinho">
-
-      <div
-        id="ojb-cabecalho-itens"
-        class="ojb-cabecalho-itens"
+    <div class="cart-header-right">
+      <a
+        href="/carrinho"
+        class="cart-header-cart cart-link"
       >
-        <span>Produtos</span>
-        <span>Quantidade</span>
-        <span>Total</span>
-      </div>
+        CARRINHO
+        <span
+          id="cartCount"
+          class="cart-count"
+        ></span>
+      </a>
+    </div>
 
-      <div id="ojb-lista-carrinho"></div>
+  </header>
 
-      <div id="ojb-acoes-carrinho">
 
-        <div class="ojb-resumo">
+  <main class="cart-page">
 
-          <div class="ojb-resumo-linha">
+    <div class="cart-page-grid">
 
-            <span>
-              Subtotal
-            </span>
+      <!-- =====================================
+           PRODUTOS
+      ====================================== -->
 
-            <strong id="ojb-subtotal-carrinho">
-              R$ 0,00
-            </strong>
+      <section class="cart-main">
 
-          </div>
+        <h1 class="cart-page-title">
+          Seu carrinho
+          <span id="cartTitleCount">
+            [0]
+          </span>
+        </h1>
 
-        </div>
-
-        <button
-          id="ojb-ir-checkout"
-          class="ojb-btn-principal"
-          type="button"
-        >
-          Finalizar pedido
-        </button>
-
-        <button
-          id="ojb-continuar-comprando"
-          class="ojb-btn-secundario"
-          type="button"
-        >
-          Continuar comprando
-        </button>
-
-      </div>
-
-      <div id="ojb-checkout">
-
-        <h2 class="ojb-titulo-checkout">
-          Finalizar pedido
-        </h2>
-
-        <p class="ojb-introducao">
-          Preencha os dados para entrega e siga para o pagamento seguro pelo Mercado Pago.
-        </p>
-
-        <div class="ojb-secao">
-
-          <h3>
-            Dados pessoais
-          </h3>
-
-          <div class="ojb-grid">
-
-            <div class="ojb-campo ojb-campo-largo">
-
-              <label for="ojb-nome">
-                Nome completo
-              </label>
-
-              <input
-                id="ojb-nome"
-                autocomplete="name"
-                maxlength="120"
-              >
-
-            </div>
-
-            <div class="ojb-campo">
-
-              <label for="ojb-email">
-                E-mail
-              </label>
-
-              <input
-                id="ojb-email"
-                type="email"
-                autocomplete="email"
-                maxlength="120"
-              >
-
-            </div>
-
-            <div class="ojb-campo">
-
-              <label for="ojb-telefone">
-                Telefone ou WhatsApp
-              </label>
-
-              <input
-                id="ojb-telefone"
-                type="tel"
-                autocomplete="tel"
-                maxlength="16"
-              >
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="ojb-secao">
-
-          <h3>
-            Endereço de entrega
-          </h3>
-
-          <div class="ojb-grid">
-
-            <div class="ojb-campo ojb-campo-largo">
-
-              <label for="ojb-cep">
-                CEP
-              </label>
-
-              <div class="ojb-linha-cep">
-
-                <input
-                  id="ojb-cep"
-                  inputmode="numeric"
-                  maxlength="9"
-                  placeholder="00000-000"
-                >
-
-                <button
-                  id="ojb-buscar-cep"
-                  type="button"
-                >
-                  Buscar endereço
-                </button>
-
-              </div>
-
-            </div>
-
-            <div class="ojb-campo ojb-campo-largo">
-
-              <label for="ojb-rua">
-                Rua ou avenida
-              </label>
-
-              <input
-                id="ojb-rua"
-                maxlength="120"
-              >
-
-            </div>
-
-            <div class="ojb-campo">
-
-              <label for="ojb-numero">
-                Número
-              </label>
-
-              <input
-                id="ojb-numero"
-                maxlength="20"
-              >
-
-            </div>
-
-            <div class="ojb-campo">
-
-              <label for="ojb-complemento">
-                Complemento
-              </label>
-
-              <input
-                id="ojb-complemento"
-                maxlength="80"
-              >
-
-            </div>
-
-            <div class="ojb-campo ojb-campo-largo">
-
-              <label for="ojb-bairro">
-                Bairro
-              </label>
-
-              <input
-                id="ojb-bairro"
-                maxlength="100"
-              >
-
-            </div>
-
-            <div class="ojb-campo">
-
-              <label for="ojb-cidade">
-                Cidade
-              </label>
-
-              <input
-                id="ojb-cidade"
-                readonly
-              >
-
-            </div>
-
-            <div class="ojb-campo">
-
-              <label for="ojb-estado">
-                Estado
-              </label>
-
-              <input
-                id="ojb-estado"
-                readonly
-              >
-
-            </div>
-
-          </div>
-
-        </div>
 
         <div
-          id="ojb-cupom-area"
-          class="ojb-secao"
+          id="cartPageItems"
+          class="cart-page-items"
+        ></div>
+
+
+        <div
+          id="cartEmpty"
+          class="cart-page-empty"
+          hidden
         >
 
-          <label for="ojb-cupom">
-            Código de desconto
-          </label>
+          <p>
+            Seu carrinho está vazio.
+          </p>
 
-          <div class="ojb-cupom-linha">
-
-            <input
-              id="ojb-cupom"
-              maxlength="30"
-              autocomplete="off"
-            >
-
-            <button
-              id="ojb-aplicar-cupom"
-              type="button"
-            >
-              Aplicar
-            </button>
-
-          </div>
-
-          <div
-            id="ojb-cupom-mensagem"
-            class="ojb-inline-msg"
-          ></div>
+          <a
+            href="/loja"
+            class="cart-page-shop-button"
+          >
+            CONTINUAR COMPRANDO
+          </a>
 
         </div>
 
-        <div class="ojb-resumo">
 
-          <div class="ojb-resumo-linha">
+        <div class="cart-guarantee">
+
+          <h2>
+            O UNIVERSO OJOBOSCO
+          </h2>
+
+          <p>
+            Objetos olfativos criados para permanecer na memória
+            dos espaços e transformar a atmosfera da casa através
+            da fragrância.
+          </p>
+
+        </div>
+
+
+        <button
+          id="checkoutButtonMobile"
+          class="
+            cart-page-checkout
+            cart-page-checkout-mobile
+          "
+          type="button"
+        >
+          FINALIZAR COMPRA
+        </button>
+
+      </section>
+
+
+      <!-- =====================================
+           RESUMO
+      ====================================== -->
+
+      <aside class="cart-summary">
+
+        <button
+          id="checkoutButton"
+          class="
+            cart-page-checkout
+            cart-page-checkout-desktop
+          "
+          type="button"
+        >
+          FINALIZAR COMPRA
+        </button>
+
+
+        <div class="cart-summary-block">
+
+          <div class="cart-summary-heading">
+
+            <h2>
+              RESUMO DO PEDIDO
+            </h2>
 
             <span>
-              Subtotal
+              +
             </span>
 
-            <strong id="ojb-checkout-subtotal">
+          </div>
+
+
+          <div class="cart-summary-row">
+
+            <span>
+              SUBTOTAL
+            </span>
+
+            <strong id="cartSubtotal">
               R$ 0,00
             </strong>
 
           </div>
 
+
           <div
-            id="ojb-linha-desconto"
-            class="ojb-resumo-linha"
-            style="display:none"
+            id="cartDiscountRow"
+            class="
+              cart-summary-row
+              cart-discount-row
+            "
+            hidden
+          >
+
+            <span id="cartDiscountLabel">
+              DESCONTO
+            </span>
+
+            <strong id="cartDiscount">
+              - R$ 0,00
+            </strong>
+
+          </div>
+
+
+          <div
+            id="cartShippingRow"
+            class="cart-summary-row"
+            hidden
           >
 
             <span>
-              Desconto
+              FRETE
             </span>
 
-            <strong id="ojb-checkout-desconto">
-              -R$ 0,00
-            </strong>
-
-          </div>
-
-          <div class="ojb-resumo-linha">
-
-            <span>
-              Frete
-            </span>
-
-            <strong id="ojb-checkout-frete">
-              Informe o CEP
-            </strong>
-
-          </div>
-
-          <div class="ojb-resumo-linha ojb-resumo-total">
-
-            <span>
-              Total
-            </span>
-
-            <strong id="ojb-checkout-total">
+            <strong id="cartShipping">
               —
             </strong>
 
           </div>
 
+
           <div
-            id="ojb-regiao"
-            style="padding:0 0 14px;font-size:12px"
-          ></div>
+            class="
+              cart-summary-row
+              cart-summary-total
+            "
+          >
+
+            <span>
+              TOTAL
+            </span>
+
+            <strong id="cartTotal">
+              R$ 0,00
+            </strong>
+
+          </div>
 
         </div>
 
-        <div
-          id="ojb-mensagem"
-          class="ojb-msg"
-          role="alert"
-        ></div>
 
-        <button
-          id="ojb-pagar"
-          class="ojb-btn-principal"
-          type="button"
-        >
-          Pagar com Mercado Pago
-        </button>
+        <!-- =================================
+             FRETE
+        ================================== -->
 
-        <button
-          id="ojb-voltar-carrinho"
-          class="ojb-btn-secundario"
-          type="button"
-        >
-          Voltar ao carrinho
-        </button>
+        <div class="cart-summary-block">
 
-        <p class="ojb-seguranca">
-          Pagamento processado com segurança pelo Mercado Pago.
-        </p>
+          <div class="cart-summary-heading">
 
-      </div>
+            <h2>
+              ENTREGA
+            </h2>
 
-    </div>
-  `;
+            <span>
+              +
+            </span>
 
-  document.body.append(
-    b,
-    fundo,
-    c
-  );
+          </div>
 
-  b.addEventListener(
-    "click",
-    abrirCarrinho
-  );
 
-  fundo.addEventListener(
-    "click",
-    fecharCarrinho
-  );
+          <div class="cart-shipping">
 
-  $("ojb-fechar-carrinho")
-    .addEventListener(
-      "click",
-      fecharCarrinho
-    );
+            <div class="cart-shipping-form">
 
-  $("ojb-continuar-comprando")
-    .addEventListener(
-      "click",
-      fecharCarrinho
-    );
-
-  $("ojb-ir-checkout")
-    .addEventListener(
-      "click",
-      mostrarCheckout
-    );
-
-  $("ojb-voltar-carrinho")
-    .addEventListener(
-      "click",
-      mostrarLista
-    );
-
-  $("ojb-buscar-cep")
-    .addEventListener(
-      "click",
-      buscarCep
-    );
-
-  $("ojb-aplicar-cupom")
-    .addEventListener(
-      "click",
-      aplicarCupom
-    );
-
-  $("ojb-pagar")
-    .addEventListener(
-      "click",
-      criarCheckout
-    );
-
-  $("ojb-cep")
-    .addEventListener(
-      "input",
-      function(){
-        this.value=
-          cepFmt(
-            this.value
-          );
-
-        freteAtual=null;
-        regiaoAtual="";
-
-        atualizarResumo();
-      }
-    );
-
-  $("ojb-cep")
-    .addEventListener(
-      "keydown",
-      e=>{
-        if(
-          e.key===
-          "Enter"
-        ){
-          e.preventDefault();
-          buscarCep();
-        }
-      }
-    );
-
-  $("ojb-cupom")
-    .addEventListener(
-      "keydown",
-      e=>{
-        if(
-          e.key===
-          "Enter"
-        ){
-          e.preventDefault();
-          aplicarCupom();
-        }
-      }
-    );
-
-  $("ojb-telefone")
-    .addEventListener(
-      "input",
-      function(){
-        this.value=
-          telFmt(
-            this.value
-          );
-      }
-    );
-
-  restaurarFrete();
-  atualizarCarrinho();
-}
-
-function abrirCarrinho(){
-  atualizarCarrinho();
-
-  $("ojb-fundo-modal")
-    ?.classList.add(
-      "ojb-aberto"
-    );
-
-  $("ojb-carrinho")
-    ?.classList.add(
-      "ojb-aberto"
-    );
-
-  document.body.style.overflow=
-    "hidden";
-}
-
-function fecharCarrinho(){
-  $("ojb-fundo-modal")
-    ?.classList.remove(
-      "ojb-aberto"
-    );
-
-  $("ojb-carrinho")
-    ?.classList.remove(
-      "ojb-aberto"
-    );
-
-  document.body.style.overflow=
-    "";
-}
-
-function mostrarCheckout(){
-  if(
-    !lerCarrinho().length
-  ){
-    return;
-  }
-
-  if(!checkoutRegistrado){
-    ga(
-      "begin_checkout",
-      {
-        currency:"BRL",
-        value:
-          subtotal(),
-        items:
-          lerCarrinho()
-            .map(itemGA)
-      }
-    );
-
-    checkoutRegistrado=
-      true;
-  }
-
-  $("ojb-lista-carrinho")
-    ?.classList.add(
-      "ojb-oculto"
-    );
-
-  $("ojb-acoes-carrinho")
-    ?.classList.add(
-      "ojb-oculto"
-    );
-
-  $("ojb-cabecalho-itens")
-    ?.classList.add(
-      "ojb-oculto"
-    );
-
-  $("ojb-checkout")
-    ?.classList.add(
-      "ojb-visivel"
-    );
-
-  atualizarResumo();
-}
-
-function mostrarLista(){
-  $("ojb-lista-carrinho")
-    ?.classList.remove(
-      "ojb-oculto"
-    );
-
-  $("ojb-acoes-carrinho")
-    ?.classList.remove(
-      "ojb-oculto"
-    );
-
-  $("ojb-cabecalho-itens")
-    ?.classList.remove(
-      "ojb-oculto"
-    );
-
-  $("ojb-checkout")
-    ?.classList.remove(
-      "ojb-visivel"
-    );
-}
-
-function alterarQtd(i,d){
-  const c=
-    lerCarrinho();
-
-  if(!c[i]){
-    return;
-  }
-
-  c[i].quantidade+=d;
-
-  if(
-    c[i].quantidade<=0
-  ){
-    c.splice(
-      i,
-      1
-    );
-  }
-
-  freteAtual=null;
-  regiaoAtual="";
-
-  salvarCarrinho(c);
-}
-
-function remover(i){
-  const c=
-    lerCarrinho();
-
-  c.splice(
-    i,
-    1
-  );
-
-  freteAtual=null;
-  regiaoAtual="";
-
-  salvarCarrinho(c);
-}
-
-function atualizarCarrinho(){
-  const c=
-    lerCarrinho();
-
-  if(
-    $("ojb-contador-carrinho")
-  ){
-    $("ojb-contador-carrinho").textContent=
-      String(
-        qtdTotal()
-      );
-  }
-
-  const l=
-    $("ojb-lista-carrinho");
-
-  if(!l){
-    return;
-  }
-
-  if(!c.length){
-    l.innerHTML=`
-      <div id="ojb-carrinho-vazio">
-        Seu carrinho está vazio.
-      </div>
-    `;
-
-    if(
-      $("ojb-acoes-carrinho")
-    ){
-      $("ojb-acoes-carrinho").style.display=
-        "none";
-    }
-
-    return;
-  }
-
-  $("ojb-acoes-carrinho").style.display=
-    "";
-
-  l.innerHTML=
-    c.map(
-      (i,x)=>`
-        <article class="ojb-item">
-
-          ${
-            i.imagem
-              ? `
-                <div class="ojb-item-imagem">
-                  <img
-                    src="${i.imagem}"
-                    alt=""
-                  >
-                </div>
-              `
-              : `
-                <div class="ojb-item-sem-imagem">
-                  OJOBOSCO
-                </div>
-              `
-          }
-
-          <div>
-
-            <p class="ojb-item-nome">
-              ${
-                i.nome||
-                "Produto OJOBOSCO"
-              }
-            </p>
-
-            <p class="ojb-item-variante">
-              ${
-                i.tamanho||
-                ""
-              }
-            </p>
-
-            <p class="ojb-item-preco">
-              ${
-                i.preco
-                  ? moeda(i.preco)
-                  : "Preço confirmado no pagamento"
-              }
-            </p>
-
-            <div class="ojb-item-acoes">
-
-              <div class="ojb-quantidade">
-
-                <button
-                  type="button"
-                  data-menos="${x}"
-                >
-                  −
-                </button>
-
-                <span>
-                  ${i.quantidade}
-                </span>
-
-                <button
-                  type="button"
-                  data-mais="${x}"
-                >
-                  +
-                </button>
-
-              </div>
+              <input
+                id="cartShippingCep"
+                type="text"
+                inputmode="numeric"
+                maxlength="9"
+                autocomplete="postal-code"
+                placeholder="DIGITE SEU CEP"
+              >
 
               <button
+                id="cartShippingButton"
                 type="button"
-                class="ojb-remover"
-                data-remover="${x}"
               >
-                Remover
+                CALCULAR
               </button>
 
             </div>
 
+
+            <div
+              id="cartShippingMessage"
+              class="cart-shipping-message"
+            >
+              DIGITE SEU CEP PARA CALCULAR O FRETE.
+            </div>
+
+
+            <div
+              id="cartShippingMethod"
+              style="display:none"
+            >
+              PADRÃO
+            </div>
+
+            <div
+              id="cartShippingMethodPrice"
+              style="display:none"
+            >
+              —
+            </div>
+
+
+            <p
+              id="cartFreeShippingMessage"
+              class="cart-free-shipping"
+            >
+              FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500.
+            </p>
+
           </div>
 
-          <div class="ojb-item-subtotal">
-            ${
-              i.preco
-                ? moeda(
-                    i.preco*
-                    i.quantidade
-                  )
-                : ""
-            }
+        </div>
+
+
+        <!-- =================================
+             CUPOM
+        ================================== -->
+
+        <div class="cart-summary-block">
+
+          <div class="cart-summary-heading">
+
+            <h2>
+              CÓDIGO DE DESCONTO
+            </h2>
+
+            <span>
+              +
+            </span>
+
           </div>
 
-        </article>
-      `
-    )
-    .join("");
 
-  l.querySelectorAll(
-    "[data-menos]"
-  ).forEach(
-    b=>
-      b.onclick=()=>
-        alterarQtd(
-          Number(
-            b.dataset.menos
-          ),
-          -1
-        )
-  );
+          <p class="cart-coupon-description">
+            Digite seu código de desconto antes de finalizar
+            a compra.
+          </p>
 
-  l.querySelectorAll(
-    "[data-mais]"
-  ).forEach(
-    b=>
-      b.onclick=()=>
-        alterarQtd(
-          Number(
-            b.dataset.mais
-          ),
-          1
-        )
-  );
 
-  l.querySelectorAll(
-    "[data-remover]"
-  ).forEach(
-    b=>
-      b.onclick=()=>
-        remover(
-          Number(
-            b.dataset.remover
-          )
-        )
-  );
+          <form
+            id="couponForm"
+            class="cart-coupon-form"
+          >
 
-  $("ojb-subtotal-carrinho").textContent=
-    subtotal()>0
-      ? moeda(
-          subtotal()
-        )
-      : "Confirmado no pagamento";
+            <input
+              id="couponInput"
+              type="text"
+              maxlength="30"
+              autocomplete="off"
+              placeholder="CÓDIGO"
+            >
 
-  atualizarResumo();
-}
+            <button
+              type="submit"
+            >
+              APLICAR
+            </button>
 
-function aplicarCupom(){
-  const campo=
-    $("ojb-cupom");
+          </form>
 
-  const m=
-    $("ojb-cupom-mensagem");
 
-  const cod=
-    norm(
-      campo?.value
-    );
+          <div
+            id="couponMessage"
+            class="cart-coupon-message"
+          ></div>
 
-  if(
-    !campo ||
-    !m
-  ){
-    return;
-  }
+        </div>
 
-  if(
-    cod===C.coupon
-  ){
-    cupomAplicado=true;
-    cupomFreteGratis=false;
+      </aside>
 
-    campo.value=
-      C.coupon;
+    </div>
 
-    m.textContent=
-      `Desconto de ${C.discount}% aplicado.`;
+  </main>
 
-    m.className=
-      "ojb-inline-msg ojb-sucesso";
 
-  }else if(
-    cod===C.freeCoupon
-  ){
-    cupomAplicado=false;
-    cupomFreteGratis=true;
+  <script>
+  (() => {
+    "use strict";
 
-    campo.value=
-      C.freeCoupon;
 
-    m.textContent=
-      "Frete grátis aplicado.";
+    /* =========================================================
+       CONFIGURAÇÃO
+    ========================================================= */
 
-    m.className=
-      "ojb-inline-msg ojb-sucesso";
+    const CART_STORAGE_KEY =
+      "ojobosco-cart";
 
-  }else{
-    cupomAplicado=false;
-    cupomFreteGratis=false;
+    const COUPON_STORAGE_KEY =
+      "ojobosco-coupon";
 
-    m.textContent=
-      cod
-        ? "Código de desconto inválido."
-        : "Digite o código de desconto.";
+    const SHIPPING_STORAGE_KEY =
+      "ojobosco-shipping";
 
-    m.className=
-      "ojb-inline-msg ojb-erro";
-  }
 
-  atualizarResumo();
-}
+    const FREE_SHIPPING_THRESHOLD =
+      500;
 
-function atualizarResumo(){
-  const sub=
-    subtotal();
 
-  const desc=
-    desconto();
+    /*
+      BEMVINDO:
+      10% de desconto.
 
-  const fre=
-    freteEfetivo();
+      CAMILAGUS:
+      frete grátis.
+    */
 
-  if(
-    $("ojb-checkout-subtotal")
-  ){
-    $("ojb-checkout-subtotal").textContent=
-      sub>0
-        ? moeda(sub)
-        : "Confirmado no pagamento";
-  }
+    const DISCOUNT_COUPONS = {
+      BEMVINDO: 0.10
+    };
 
-  if(
-    $("ojb-linha-desconto")
-  ){
-    $("ojb-linha-desconto").style.display=
-      cupomAplicado
-        ? "flex"
-        : "none";
-  }
 
-  if(
-    $("ojb-checkout-desconto")
-  ){
-    $("ojb-checkout-desconto").textContent=
-      "-"+
-      moeda(desc);
-  }
+    const FREE_SHIPPING_COUPONS = [
+      "CAMILAGUS"
+    ];
 
-  if(
-    $("ojb-checkout-frete")
-  ){
-    $("ojb-checkout-frete").textContent=
-      fre===null
-        ? "Informe o CEP"
-        : fre===0
-          ? "Frete grátis"
-          : moeda(fre);
-  }
 
-  if(
-    $("ojb-checkout-total")
-  ){
-    $("ojb-checkout-total").textContent=
-      sub>0 &&
-      fre!==null
-        ? moeda(
-            sub-
-            desc+
-            Number(fre)
-          )
-        : "—";
-  }
+    const SHIPPING_PRICES = {
+      RMR: 15,
+      NORDESTE: 35,
+      CENTRO_OESTE: 45,
+      SUDESTE: 55,
+      NORTE_SUL: 65
+    };
 
-  if(
-    $("ojb-regiao")
-  ){
-    $("ojb-regiao").textContent=
-      regiaoAtual
-        ? `Entrega: ${regiaoAtual}${fre===0?" • Frete grátis":""} • Prazo: até ${prazo(regiaoAtual)} dias úteis`
-        : "";
-  }
-}
 
-async function buscarCep(){
-  limparMsg();
+    const RMR_CITIES = [
+      "ABREU E LIMA",
+      "ARACOIABA",
+      "CABO DE SANTO AGOSTINHO",
+      "CAMARAGIBE",
+      "IGARASSU",
+      "ILHA DE ITAMARACA",
+      "IPOJUCA",
+      "ITAPISSUMA",
+      "JABOATAO DOS GUARARAPES",
+      "MORENO",
+      "OLINDA",
+      "PAULISTA",
+      "RECIFE",
+      "SAO LOURENCO DA MATA"
+    ];
 
-  const cep=
-    num(
-      valor(
-        "ojb-cep"
+
+    const NORTHEAST_STATES = [
+      "AL",
+      "BA",
+      "CE",
+      "MA",
+      "PB",
+      "PE",
+      "PI",
+      "RN",
+      "SE"
+    ];
+
+
+    const CENTER_WEST_STATES = [
+      "DF",
+      "GO",
+      "MT",
+      "MS"
+    ];
+
+
+    const SOUTHEAST_STATES = [
+      "ES",
+      "MG",
+      "RJ",
+      "SP"
+    ];
+
+
+    const NORTH_SOUTH_STATES = [
+      "AC",
+      "AP",
+      "AM",
+      "PA",
+      "RO",
+      "RR",
+      "TO",
+      "PR",
+      "RS",
+      "SC"
+    ];
+
+
+    /* =========================================================
+       UTILITÁRIOS
+    ========================================================= */
+
+    function normalizeText(value) {
+      return String(
+        value || ""
       )
-    );
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        )
+        .trim()
+        .replace(
+          /\s+/g,
+          " "
+        )
+        .toUpperCase();
+    }
 
-  if(
-    cep.length!==8
-  ){
-    msg(
-      "Informe um CEP válido com 8 números.",
-      "erro"
-    );
 
-    return;
-  }
+    function slugify(value) {
+      return String(
+        value || ""
+      )
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        )
+        .toLowerCase()
+        .trim()
+        .replace(
+          /[^a-z0-9]+/g,
+          "-"
+        )
+        .replace(
+          /^-+|-+$/g,
+          ""
+        );
+    }
 
-  const b=
-    $("ojb-buscar-cep");
 
-  b.disabled=true;
-  b.textContent=
-    "Buscando...";
+    function onlyNumbers(value) {
+      return String(
+        value || ""
+      ).replace(
+        /\D/g,
+        ""
+      );
+    }
 
-  try{
-    const res=
-      await fetch(
-        `${C.backend}/calcular-frete?cep=${encodeURIComponent(cep)}`,
+
+    function formatCEP(value) {
+      const numbers =
+        onlyNumbers(value)
+          .slice(
+            0,
+            8
+          );
+
+
+      if (
+        numbers.length <= 5
+      ) {
+        return numbers;
+      }
+
+
+      return (
+        numbers.slice(
+          0,
+          5
+        ) +
+        "-" +
+        numbers.slice(5)
+      );
+    }
+
+
+    function formatBRL(value) {
+      const number =
+        Number(
+          value || 0
+        );
+
+
+      return number.toLocaleString(
+        "pt-BR",
         {
-          headers:{
-            Accept:
-              "application/json"
-          }
+          style: "currency",
+          currency: "BRL"
         }
       );
-
-    const d=
-      await res.json();
-
-    if(!res.ok){
-      throw new Error(
-        d.erro||
-        "Não foi possível consultar esse CEP."
-      );
     }
 
-    freteAtual=
-      Number(
-        d.frete
-      );
 
-    regiaoAtual=
-      d.regiao||"";
-
-    setValor(
-      "ojb-cep",
-      cepFmt(
-        d.cep||cep
-      )
-    );
-
-    setValor(
-      "ojb-rua",
-      d.rua
-    );
-
-    setValor(
-      "ojb-bairro",
-      d.bairro
-    );
-
-    setValor(
-      "ojb-cidade",
-      d.cidade
-    );
-
-    setValor(
-      "ojb-estado",
-      d.estado
-    );
-
-    guardarFrete({
-      cep:
-        d.cep||cep,
-      rua:
-        d.rua||"",
-      bairro:
-        d.bairro||"",
-      cidade:
-        d.cidade||"",
-      estado:
-        d.estado||"",
-      frete:
-        freteAtual,
-      regiao:
-        regiaoAtual
-    });
-
-    atualizarResumo();
-
-    ga(
-      "add_shipping_info",
-      {
-        currency:"BRL",
-        value:
-          produtosComDesconto()+
-          Number(
-            freteEfetivo()||
-            0
-          ),
-        shipping_tier:
-          freteEfetivo()===0
-            ? `Frete grátis | ${regiaoAtual||"Frete por CEP"}`
-            : `${regiaoAtual||"Frete por CEP"} | até ${prazo(regiaoAtual)} dias úteis`,
-        items:
-          lerCarrinho()
-            .map(itemGA)
+    function parseMoney(value) {
+      if (
+        typeof value === "number" &&
+        Number.isFinite(value)
+      ) {
+        return value;
       }
-    );
 
-    msg(
-      freteEfetivo()===0
-        ? "Endereço encontrado. Seu pedido ganhou frete grátis."
-        : "Endereço encontrado e frete calculado.",
-      "sucesso"
-    );
 
-    $("ojb-numero")
-      ?.focus();
-
-  }catch(e){
-
-    freteAtual=null;
-    regiaoAtual="";
-
-    setValor(
-      "ojb-rua",
-      ""
-    );
-
-    setValor(
-      "ojb-bairro",
-      ""
-    );
-
-    setValor(
-      "ojb-cidade",
-      ""
-    );
-
-    setValor(
-      "ojb-estado",
-      ""
-    );
-
-    atualizarResumo();
-
-    msg(
-      e.message||
-      "Não foi possível consultar o CEP.",
-      "erro"
-    );
-
-  }finally{
-
-    b.disabled=false;
-    b.textContent=
-      "Buscar endereço";
-  }
-}
-
-function validar(){
-  const d={
-    nomeCompleto:
-      valor(
-        "ojb-nome"
-      ),
-    email:
-      valor(
-        "ojb-email"
-      ),
-    telefone:
-      valor(
-        "ojb-telefone"
-      ),
-    cep:
-      num(
-        valor(
-          "ojb-cep"
-        )
-      ),
-    rua:
-      valor(
-        "ojb-rua"
-      ),
-    numero:
-      valor(
-        "ojb-numero"
-      ),
-    complemento:
-      valor(
-        "ojb-complemento"
-      ),
-    bairro:
-      valor(
-        "ojb-bairro"
-      ),
-    cidade:
-      valor(
-        "ojb-cidade"
-      ),
-    estado:
-      valor(
-        "ojb-estado"
-      )
-  };
-
-  if(
-    d.nomeCompleto
-      .split(/\s+/)
-      .filter(Boolean)
-      .length<2
-  ){
-    throw new Error(
-      "Informe seu nome completo."
-    );
-  }
-
-  if(
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-      d.email
-    )
-  ){
-    throw new Error(
-      "Informe um e-mail válido."
-    );
-  }
-
-  let t=
-    num(
-      d.telefone
-    );
-
-  if(
-    t.startsWith("55") &&
-    t.length>11
-  ){
-    t=
-      t.slice(2);
-  }
-
-  if(
-    t.length!==10 &&
-    t.length!==11
-  ){
-    throw new Error(
-      "Informe um telefone válido com DDD."
-    );
-  }
-
-  if(
-    d.cep.length!==8
-  ){
-    throw new Error(
-      "Informe um CEP válido."
-    );
-  }
-
-  if(
-    freteAtual===null
-  ){
-    throw new Error(
-      "Clique em “Buscar endereço” para calcular o frete."
-    );
-  }
-
-  if(!d.rua){
-    throw new Error(
-      "Informe a rua ou avenida."
-    );
-  }
-
-  if(!d.numero){
-    throw new Error(
-      "Informe o número do endereço."
-    );
-  }
-
-  if(!d.bairro){
-    throw new Error(
-      "Informe o bairro."
-    );
-  }
-
-  if(
-    !d.cidade ||
-    !d.estado
-  ){
-    throw new Error(
-      "Consulte novamente o CEP."
-    );
-  }
-
-  return d;
-}
-
-async function criarCheckout(){
-  limparMsg();
-
-  const b=
-    $("ojb-pagar");
-
-  try{
-    const carrinho=
-      lerCarrinho();
-
-    if(
-      !carrinho.length
-    ){
-      throw new Error(
-        "O carrinho está vazio."
-      );
-    }
-
-    const cli=
-      validar();
-
-    const itens=
-      carrinho.map(
-        i=>({
-          produtoId:
-            i.produtoId,
-          varianteId:
-            i.varianteId||"",
-          tamanho:
-            i.tamanho,
-          quantidade:
-            i.quantidade
-        })
-      );
-
-    const fre=
-      freteEfetivo();
-
-    const total=
-      subtotal()-
-      desconto()+
-      Number(
-        fre||
-        0
-      );
-
-    const gaItens=
-      carrinho.map(
-        itemGA
-      );
-
-    b.disabled=true;
-
-    b.textContent=
-      "Preparando pagamento...";
-
-    ga(
-      "add_payment_info",
-      {
-        currency:
-          "BRL",
-        value:
-          total,
-        payment_type:
-          "Mercado Pago",
-        items:
-          gaItens
+      if (!value) {
+        return 0;
       }
-    );
 
-    try{
-      localStorage.setItem(
-        C.ga,
-        JSON.stringify({
-          valor:
-            total,
-          frete:
-            Number(
-              fre||
-              0
-            ),
-          itens:
-            gaItens,
-          criadoEm:
-            new Date()
-              .toISOString()
-        })
-      );
-    }catch{}
 
-    const res=
-      await fetch(
-        C.backend+
-        "/criar-checkout",
-        {
-          method:
-            "POST",
-
-          headers:{
-            "Content-Type":
-              "application/json",
-            Accept:
-              "application/json"
-          },
-
-          body:
-            JSON.stringify({
-              itens,
-
-              codigoDesconto:
-                cupomAplicado
-                  ? C.coupon
-                  : "",
-
-              nomeCompleto:
-                cli.nomeCompleto,
-
-              email:
-                cli.email,
-
-              telefone:
-                cli.telefone,
-
-              cep:
-                cli.cep,
-
-              rua:
-                cli.rua,
-
-              numero:
-                cli.numero,
-
-              complemento:
-                cli.complemento,
-
-              bairro:
-                cli.bairro,
-
-              cidade:
-                cli.cidade,
-
-              estado:
-                cli.estado
-            })
-        }
-      );
-
-    let d;
-
-    try{
-      d=
-        await res.json();
-    }catch{
-      throw new Error(
-        "O servidor retornou uma resposta inválida."
-      );
-    }
-
-    if(!res.ok){
-      throw new Error(
-        d.erro||
-        d.detalhes||
-        "Não foi possível criar o pagamento."
-      );
-    }
-
-    if(
-      !d.checkout_url
-    ){
-      throw new Error(
-        "O endereço do pagamento não foi retornado."
-      );
-    }
-
-    localStorage.removeItem(
-      C.cart
-    );
-
-    location.href=
-      d.checkout_url;
-
-  }catch(e){
-
-    localStorage.removeItem(
-      C.ga
-    );
-
-    ga(
-      "checkout_error",
-      {
-        error_message:
-          String(
-            e.message||
+      let text =
+        String(value)
+          .replace(
+            /[^\d,.-]/g,
             ""
           )
+          .trim();
+
+
+      if (
+        text.includes(",") &&
+        text.includes(".")
+      ) {
+        text =
+          text
+            .replace(
+              /\./g,
+              ""
+            )
+            .replace(
+              ",",
+              "."
+            );
+
+      } else if (
+        text.includes(",")
+      ) {
+
+        text =
+          text.replace(
+            ",",
+            "."
+          );
       }
-    );
 
-    msg(
-      e.message||
-      "Não foi possível continuar para o pagamento.",
-      "erro"
-    );
 
-    b.disabled=false;
+      const number =
+        Number(text);
 
-    b.textContent=
-      "Pagar com Mercado Pago";
-  }
-}
 
-function retornoPagamento(){
-  const p=
-    new URLSearchParams(
-      location.search
-    );
-
-  const status=
-    String(
-      p.get("status")||
-      ""
-    ).toLowerCase();
-
-  const id=
-    p.get("payment_id")||
-    p.get("collection_id")||
-    p.get("merchant_order_id")||
-    "";
-
-  if(!status){
-    return;
-  }
-
-  let ped=null;
-
-  try{
-    ped=
-      JSON.parse(
-        localStorage.getItem(C.ga)||
-        "null"
-      );
-  }catch{}
-
-  if(
-    status==="approved" &&
-    ped &&
-    id
-  ){
-    const k=
-      "ojobosco-compra-ga4-"+
-      id;
-
-    if(
-      !localStorage.getItem(k)
-    ){
-      ga(
-        "purchase",
-        {
-          transaction_id:
-            String(id),
-          affiliation:
-            "OJOBOSCO - Mercado Pago",
-          currency:
-            "BRL",
-          value:
-            Number(
-              ped.valor||
-              0
-            ),
-          shipping:
-            Number(
-              ped.frete||
-              0
-            ),
-          items:
-            ped.itens||
-            []
-        }
-      );
-
-      localStorage.setItem(
-        k,
-        "1"
-      );
+      return Number.isFinite(
+        number
+      )
+        ? number
+        : 0;
     }
 
-    localStorage.removeItem(k);
-    localStorage.removeItem(C.ga);
-    localStorage.removeItem(C.ship);
 
-  }else if(
-    status==="pending" ||
-    status==="in_process"
-  ){
-
-    ga(
-      "payment_pending",
-      {
-        payment_id:
-          String(id),
-        currency:
-          "BRL",
-        value:
-          Number(
-            ped?.valor||
-            0
-          )
-      }
-    );
-
-  }else if(
-    [
-      "failure",
-      "rejected",
-      "cancelled"
-    ].includes(status)
-  ){
-
-    ga(
-      "payment_failure",
-      {
-        payment_id:
-          String(id),
-        payment_status:
-          status,
-        currency:
-          "BRL",
-        value:
-          Number(
-            ped?.valor||
-            0
-          )
-      }
-    );
-  }
-}
-
-function esconderNativo(){
-  [
-    "a[href='/cart']",
-    "a[href^='/checkout']",
-    ".header-actions-action--cart",
-    ".sqs-cart-dropzone",
-    ".cart-container"
-  ].forEach(
-    s=>
-      document
-        .querySelectorAll(s)
-        .forEach(
-          e=>{
-            if(
-              !e.closest(
-                "#ojb-carrinho"
-              )
-            ){
-              e.style.display=
-                "none";
-            }
-          }
+    function escapeHTML(value) {
+      return String(
+        value || ""
+      )
+        .replace(
+          /&/g,
+          "&amp;"
         )
-  );
-}
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+    }
 
-function iniciar(){
-  retornoPagamento();
 
-  criarInterface();
+    /* =========================================================
+       CARRINHO
+    ========================================================= */
 
-  esconderNativo();
+    function getCart() {
+      try {
 
-  configurarProduto();
+        const data =
+          JSON.parse(
+            localStorage.getItem(
+              CART_STORAGE_KEY
+            ) || "[]"
+          );
 
-  let n=0;
 
-  const it=
-    setInterval(
-      ()=>{
-        n++;
+        return Array.isArray(
+          data
+        )
+          ? data
+          : [];
 
-        esconderNativo();
+      } catch {
 
-        if(
-          configurarProduto() ||
-          n>=20
-        ){
-          clearInterval(it);
-        }
-      },
-      500
-    );
-
-  new MutationObserver(
-    ()=>{
-      esconderNativo();
-
-      if(
-        !produtoConfigurado
-      ){
-        configurarProduto();
+        return [];
       }
     }
-  ).observe(
-    document.documentElement,
-    {
-      childList:true,
-      subtree:true
+
+
+    function saveCart(cart) {
+      try {
+
+        localStorage.setItem(
+          CART_STORAGE_KEY,
+          JSON.stringify(
+            cart
+          )
+        );
+
+      } catch {}
+
+
+      normalizeSavedShipping();
+
+      updateCartCount();
+
+      renderCartPage();
     }
-  );
-}
 
-if(
-  document.readyState===
-  "loading"
-){
-  document.addEventListener(
-    "DOMContentLoaded",
-    iniciar
-  );
-}else{
-  iniciar();
-}
 
-})();
-</script>
+    function getItemQuantity(item) {
+      const quantity =
+        Number(
+          item.quantity ??
+          item.qty ??
+          item.quantidade ??
+          1
+        );
+
+
+      return (
+        Number.isFinite(
+          quantity
+        ) &&
+        quantity > 0
+      )
+        ? quantity
+        : 1;
+    }
+
+
+    function getItemPrice(item) {
+      return parseMoney(
+        item.price ??
+        item.currentPrice ??
+        item.preco ??
+        item.valor ??
+        0
+      );
+    }
+
+
+    function getItemName(item) {
+      return (
+        item.name ||
+        item.product ||
+        item.productName ||
+        item.nome ||
+        "Produto OJOBOSCO"
+      );
+    }
+
+
+    function getItemFragrance(item) {
+      return (
+        item.fragrance ||
+        item.fragrancia ||
+        ""
+      );
+    }
+
+
+    function getItemSize(item) {
+      return (
+        item.size ||
+        item.currentSize ||
+        item.tamanho ||
+        ""
+      );
+    }
+
+
+    function getFallbackImage(item) {
+      const product =
+        normalizeText(
+          getItemName(
+            item
+          )
+        );
+
+
+      const fragrance =
+        slugify(
+          getItemFragrance(
+            item
+          )
+        );
+
+
+      const size =
+        onlyNumbers(
+          getItemSize(
+            item
+          )
+        );
+
+
+      if (
+        product.includes(
+          "AROMATIZADOR"
+        ) &&
+        fragrance &&
+        size
+      ) {
+
+        return (
+          "aromatizador-" +
+          fragrance +
+          "-" +
+          size +
+          ".jpg"
+        );
+      }
+
+
+      if (
+        product.includes(
+          "DIFUSOR"
+        ) &&
+        fragrance &&
+        size
+      ) {
+
+        return (
+          "difusor-" +
+          fragrance +
+          "-" +
+          size +
+          ".jpg"
+        );
+      }
+
+
+      if (
+        product.includes(
+          "BIBLIOTECA"
+        )
+      ) {
+
+        return "biblioteca-still.jpg";
+      }
+
+
+      if (
+        product.includes(
+          "VELA"
+        )
+      ) {
+
+        return "vela-produto.jpg";
+      }
+
+
+      if (
+        product.includes(
+          "PERFUME"
+        ) ||
+        product.includes(
+          "CEDRO SOLAR"
+        )
+      ) {
+
+        return "perfume-cedro-solar.jpg";
+      }
+
+
+      return "";
+    }
+
+
+    function getItemImage(item) {
+      return (
+        item.image ||
+        item.imageUrl ||
+        item.imagem ||
+        item.currentImage ||
+        getFallbackImage(
+          item
+        ) ||
+        ""
+      );
+    }
+
+
+    function cartQuantity() {
+      return getCart().reduce(
+        (
+          total,
+          item
+        ) => {
+
+          return (
+            total +
+            getItemQuantity(
+              item
+            )
+          );
+
+        },
+        0
+      );
+    }
+
+
+    function cartSubtotal() {
+      return getCart().reduce(
+        (
+          total,
+          item
+        ) => {
+
+          return (
+            total +
+            (
+              getItemPrice(
+                item
+              ) *
+              getItemQuantity(
+                item
+              )
+            )
+          );
+
+        },
+        0
+      );
+    }
+
+
+    function updateItemQuantity(
+      index,
+      quantity
+    ) {
+
+      const cart =
+        getCart();
+
+
+      if (!cart[index]) {
+        return;
+      }
+
+
+      if (
+        quantity <= 0
+      ) {
+
+        cart.splice(
+          index,
+          1
+        );
+
+      } else {
+
+        cart[
+          index
+        ].quantity =
+          quantity;
+      }
+
+
+      saveCart(
+        cart
+      );
+    }
+
+
+    function removeItem(index) {
+      const cart =
+        getCart();
+
+
+      if (!cart[index]) {
+        return;
+      }
+
+
+      cart.splice(
+        index,
+        1
+      );
+
+
+      saveCart(
+        cart
+      );
+    }
+
+
+    function updateCartCount() {
+      const count =
+        cartQuantity();
+
+
+      document
+        .querySelectorAll(
+          "#cartCount, .cart-count"
+        )
+        .forEach(
+          element => {
+
+            element.textContent =
+              count > 0
+                ? `[${count}]`
+                : "[0]";
+          }
+        );
+    }
+
+
+    /* =========================================================
+       CUPOM
+    ========================================================= */
+
+    function getCoupon() {
+      try {
+
+        const raw =
+          localStorage.getItem(
+            COUPON_STORAGE_KEY
+          );
+
+
+        if (!raw) {
+          return null;
+        }
+
+
+        let value;
+
+
+        try {
+
+          value =
+            JSON.parse(
+              raw
+            );
+
+        } catch {
+
+          value =
+            raw;
+        }
+
+
+        let code = "";
+
+
+        if (
+          typeof value ===
+          "string"
+        ) {
+
+          code =
+            value;
+
+        } else if (
+          value &&
+          typeof value ===
+          "object"
+        ) {
+
+          code =
+            value.code ||
+            value.coupon ||
+            value.codigo ||
+            "";
+        }
+
+
+        code =
+          normalizeText(
+            code
+          );
+
+
+        if (
+          DISCOUNT_COUPONS[
+            code
+          ]
+        ) {
+
+          return {
+            code,
+            type:
+              "discount",
+            percentage:
+              DISCOUNT_COUPONS[
+                code
+              ]
+          };
+        }
+
+
+        if (
+          FREE_SHIPPING_COUPONS.includes(
+            code
+          )
+        ) {
+
+          return {
+            code,
+            type:
+              "free-shipping",
+            percentage:
+              0
+          };
+        }
+
+
+        return null;
+
+      } catch {
+
+        return null;
+      }
+    }
+
+
+    function saveCoupon(code) {
+      const normalized =
+        normalizeText(
+          code
+        );
+
+
+      const valid =
+        Boolean(
+          DISCOUNT_COUPONS[
+            normalized
+          ]
+        ) ||
+        FREE_SHIPPING_COUPONS.includes(
+          normalized
+        );
+
+
+      if (!valid) {
+        return false;
+      }
+
+
+      try {
+
+        localStorage.setItem(
+          COUPON_STORAGE_KEY,
+          JSON.stringify({
+            code:
+              normalized
+          })
+        );
+
+      } catch {}
+
+
+      normalizeSavedShipping();
+
+
+      return true;
+    }
+
+
+    function removeCoupon() {
+      try {
+
+        localStorage.removeItem(
+          COUPON_STORAGE_KEY
+        );
+
+      } catch {}
+
+
+      normalizeSavedShipping();
+    }
+
+
+    function calculateDiscount(
+      subtotal
+    ) {
+
+      const coupon =
+        getCoupon();
+
+
+      if (
+        !coupon ||
+        coupon.type !==
+        "discount"
+      ) {
+
+        return 0;
+      }
+
+
+      return (
+        subtotal *
+        coupon.percentage
+      );
+    }
+
+
+    /* =========================================================
+       FRETE
+    ========================================================= */
+
+    function getSavedShipping() {
+      try {
+
+        const data =
+          JSON.parse(
+            localStorage.getItem(
+              SHIPPING_STORAGE_KEY
+            ) || "null"
+          );
+
+
+        if (
+          !data ||
+          !data.cep
+        ) {
+
+          return null;
+        }
+
+
+        return data;
+
+      } catch {
+
+        return null;
+      }
+    }
+
+
+    function saveShipping(data) {
+      try {
+
+        localStorage.setItem(
+          SHIPPING_STORAGE_KEY,
+          JSON.stringify(
+            data
+          )
+        );
+
+      } catch {}
+    }
+
+
+    function clearShipping() {
+      try {
+
+        localStorage.removeItem(
+          SHIPPING_STORAGE_KEY
+        );
+
+      } catch {}
+    }
+
+
+    function shippingRegion(
+      city,
+      state
+    ) {
+
+      const normalizedCity =
+        normalizeText(
+          city
+        );
+
+
+      const uf =
+        normalizeText(
+          state
+        );
+
+
+      if (
+        uf === "PE" &&
+        RMR_CITIES.includes(
+          normalizedCity
+        )
+      ) {
+
+        return {
+          code:
+            "RMR",
+
+          name:
+            "RECIFE / RMR",
+
+          price:
+            SHIPPING_PRICES
+              .RMR
+        };
+      }
+
+
+      if (
+        NORTHEAST_STATES.includes(
+          uf
+        )
+      ) {
+
+        return {
+          code:
+            "NORDESTE",
+
+          name:
+            "NORDESTE",
+
+          price:
+            SHIPPING_PRICES
+              .NORDESTE
+        };
+      }
+
+
+      if (
+        CENTER_WEST_STATES.includes(
+          uf
+        )
+      ) {
+
+        return {
+          code:
+            "CENTRO_OESTE",
+
+          name:
+            "CENTRO-OESTE",
+
+          price:
+            SHIPPING_PRICES
+              .CENTRO_OESTE
+        };
+      }
+
+
+      if (
+        SOUTHEAST_STATES.includes(
+          uf
+        )
+      ) {
+
+        return {
+          code:
+            "SUDESTE",
+
+          name:
+            "SUDESTE",
+
+          price:
+            SHIPPING_PRICES
+              .SUDESTE
+        };
+      }
+
+
+      if (
+        NORTH_SOUTH_STATES.includes(
+          uf
+        )
+      ) {
+
+        return {
+          code:
+            "NORTE_SUL",
+
+          name:
+            "NORTE / SUL",
+
+          price:
+            SHIPPING_PRICES
+              .NORTE_SUL
+        };
+      }
+
+
+      return null;
+    }
+
+
+    function getEffectiveShippingPrice(
+      normalShippingPrice
+    ) {
+
+      const coupon =
+        getCoupon();
+
+
+      /*
+        CAMILAGUS:
+        frete grátis.
+      */
+
+      if (
+        coupon &&
+        coupon.type ===
+        "free-shipping"
+      ) {
+
+        return 0;
+      }
+
+
+      /*
+        BEMVINDO:
+        desconto de 10%.
+        O frete continua normal.
+      */
+
+      if (
+        coupon &&
+        coupon.type ===
+        "discount"
+      ) {
+
+        return Number(
+          normalShippingPrice ||
+          0
+        );
+      }
+
+
+      /*
+        Sem cupom:
+        pedidos a partir de R$500
+        recebem frete grátis.
+      */
+
+      if (
+        cartSubtotal() >=
+        FREE_SHIPPING_THRESHOLD
+      ) {
+
+        return 0;
+      }
+
+
+      return Number(
+        normalShippingPrice ||
+        0
+      );
+    }
+
+
+    function normalizeSavedShipping() {
+      const shipping =
+        getSavedShipping();
+
+
+      if (!shipping) {
+        return;
+      }
+
+
+      const originalPrice =
+        Number(
+          shipping.originalPrice ??
+          shipping.price ??
+          0
+        );
+
+
+      shipping.originalPrice =
+        originalPrice;
+
+
+      shipping.price =
+        getEffectiveShippingPrice(
+          originalPrice
+        );
+
+
+      shipping.freeShipping =
+        shipping.price === 0;
+
+
+      saveShipping(
+        shipping
+      );
+    }
+
+
+    async function fetchCEP(
+      cep
+    ) {
+
+      const cleanCEP =
+        onlyNumbers(
+          cep
+        );
+
+
+      if (
+        cleanCEP.length !== 8
+      ) {
+
+        throw new Error(
+          "DIGITE UM CEP VÁLIDO."
+        );
+      }
+
+
+      const response =
+        await fetch(
+          `https://viacep.com.br/ws/${cleanCEP}/json/`
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "NÃO FOI POSSÍVEL CONSULTAR O CEP."
+        );
+      }
+
+
+      const data =
+        await response.json();
+
+
+      if (
+        !data ||
+        data.erro
+      ) {
+
+        throw new Error(
+          "CEP NÃO ENCONTRADO."
+        );
+      }
+
+
+      return data;
+    }
+
+
+    async function calculateShippingFromCEP(
+      cep
+    ) {
+
+      const address =
+        await fetchCEP(
+          cep
+        );
+
+
+      const region =
+        shippingRegion(
+          address.localidade,
+          address.uf
+        );
+
+
+      if (!region) {
+
+        throw new Error(
+          "NÃO FOI POSSÍVEL CALCULAR O FRETE PARA ESTE CEP."
+        );
+      }
+
+
+      const price =
+        getEffectiveShippingPrice(
+          region.price
+        );
+
+
+      const shipping = {
+
+        cep:
+          onlyNumbers(
+            cep
+          ),
+
+        street:
+          address.logradouro ||
+          "",
+
+        district:
+          address.bairro ||
+          "",
+
+        city:
+          address.localidade ||
+          "",
+
+        state:
+          address.uf ||
+          "",
+
+        region:
+          region.code,
+
+        regionName:
+          region.name,
+
+        originalPrice:
+          region.price,
+
+        price,
+
+        freeShipping:
+          price === 0
+      };
+
+
+      saveShipping(
+        shipping
+      );
+
+
+      return shipping;
+    }
+
+
+    /* =========================================================
+       RENDER DO CARRINHO
+    ========================================================= */
+
+    function renderCartPage() {
+
+      const container =
+        document.getElementById(
+          "cartPageItems"
+        );
+
+
+      const empty =
+        document.getElementById(
+          "cartEmpty"
+        );
+
+
+      const titleCount =
+        document.getElementById(
+          "cartTitleCount"
+        );
+
+
+      if (
+        !container ||
+        !empty
+      ) {
+
+        return;
+      }
+
+
+      const cart =
+        getCart();
+
+
+      if (titleCount) {
+
+        titleCount.textContent =
+          `[${cartQuantity()}]`;
+      }
+
+
+      container.innerHTML =
+        "";
+
+
+      if (
+        cart.length === 0
+      ) {
+
+        container.hidden =
+          true;
+
+
+        empty.hidden =
+          false;
+
+
+        updateCartSummary();
+
+        return;
+      }
+
+
+      container.hidden =
+        false;
+
+
+      empty.hidden =
+        true;
+
+
+      cart.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const row =
+            document.createElement(
+              "article"
+            );
+
+
+          row.className =
+            "cart-item";
+
+
+          const name =
+            getItemName(
+              item
+            );
+
+
+          const fragrance =
+            getItemFragrance(
+              item
+            );
+
+
+          const size =
+            getItemSize(
+              item
+            );
+
+
+          const price =
+            getItemPrice(
+              item
+            );
+
+
+          const quantity =
+            getItemQuantity(
+              item
+            );
+
+
+          const image =
+            getItemImage(
+              item
+            );
+
+
+          row.innerHTML = `
+
+            <div class="cart-item-image-wrap">
+
+              ${
+                image
+                  ? `
+                    <img
+                      src="${escapeHTML(image)}"
+                      alt="${escapeHTML(name)}"
+                      class="cart-item-image"
+                      onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='block';
+                      "
+                    >
+
+                    <div
+                      class="cart-item-image-empty"
+                      style="display:none;"
+                    ></div>
+                  `
+                  : `
+                    <div
+                      class="cart-item-image-empty"
+                    ></div>
+                  `
+              }
+
+            </div>
+
+
+            <div class="cart-item-info">
+
+              <h2 class="cart-item-name">
+                ${escapeHTML(name)}
+              </h2>
+
+
+              ${
+                fragrance
+                  ? `
+                    <p class="cart-item-variant">
+                      ${escapeHTML(fragrance)}
+                    </p>
+                  `
+                  : ""
+              }
+
+
+              ${
+                size
+                  ? `
+                    <p class="cart-item-variant">
+                      ${escapeHTML(size)}
+                    </p>
+                  `
+                  : ""
+              }
+
+
+              <p class="cart-item-unit-price">
+                ${formatBRL(price)}
+              </p>
+
+
+              <div class="cart-item-actions">
+
+                <div class="cart-quantity">
+
+                  <button
+                    type="button"
+                    class="cart-quantity-minus"
+                    data-cart-index="${index}"
+                    aria-label="Diminuir quantidade"
+                  >
+                    −
+                  </button>
+
+
+                  <span>
+                    ${quantity}
+                  </span>
+
+
+                  <button
+                    type="button"
+                    class="cart-quantity-plus"
+                    data-cart-index="${index}"
+                    aria-label="Aumentar quantidade"
+                  >
+                    +
+                  </button>
+
+                </div>
+
+
+                <button
+                  type="button"
+                  class="cart-remove"
+                  data-cart-index="${index}"
+                >
+                  REMOVER
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div class="cart-item-total">
+              ${
+                formatBRL(
+                  price *
+                  quantity
+                )
+              }
+            </div>
+
+          `;
+
+
+          container.appendChild(
+            row
+          );
+        }
+      );
+
+
+      bindCartItemEvents();
+
+      updateCartSummary();
+    }
+
+
+    function bindCartItemEvents() {
+
+      document
+        .querySelectorAll(
+          ".cart-quantity-minus"
+        )
+        .forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                const index =
+                  Number(
+                    button.dataset
+                      .cartIndex
+                  );
+
+
+                const cart =
+                  getCart();
+
+
+                if (!cart[index]) {
+                  return;
+                }
+
+
+                updateItemQuantity(
+                  index,
+                  getItemQuantity(
+                    cart[index]
+                  ) - 1
+                );
+              }
+            );
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          ".cart-quantity-plus"
+        )
+        .forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                const index =
+                  Number(
+                    button.dataset
+                      .cartIndex
+                  );
+
+
+                const cart =
+                  getCart();
+
+
+                if (!cart[index]) {
+                  return;
+                }
+
+
+                updateItemQuantity(
+                  index,
+                  getItemQuantity(
+                    cart[index]
+                  ) + 1
+                );
+              }
+            );
+          }
+        );
+
+
+      document
+        .querySelectorAll(
+          ".cart-remove"
+        )
+        .forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                const index =
+                  Number(
+                    button.dataset
+                      .cartIndex
+                  );
+
+
+                removeItem(
+                  index
+                );
+              }
+            );
+          }
+        );
+    }
+
+
+    /* =========================================================
+       RESUMO
+    ========================================================= */
+
+    function updateCartSummary() {
+
+      normalizeSavedShipping();
+
+
+      const subtotal =
+        cartSubtotal();
+
+
+      const discount =
+        calculateDiscount(
+          subtotal
+        );
+
+
+      const coupon =
+        getCoupon();
+
+
+      const shipping =
+        getSavedShipping();
+
+
+      const shippingPrice =
+        shipping
+          ? Number(
+              shipping.price ||
+              0
+            )
+          : 0;
+
+
+      const total =
+        Math.max(
+          0,
+          subtotal -
+          discount +
+          shippingPrice
+        );
+
+
+      const subtotalElement =
+        document.getElementById(
+          "cartSubtotal"
+        );
+
+
+      const discountRow =
+        document.getElementById(
+          "cartDiscountRow"
+        );
+
+
+      const discountLabel =
+        document.getElementById(
+          "cartDiscountLabel"
+        );
+
+
+      const discountElement =
+        document.getElementById(
+          "cartDiscount"
+        );
+
+
+      const shippingRow =
+        document.getElementById(
+          "cartShippingRow"
+        );
+
+
+      const shippingElement =
+        document.getElementById(
+          "cartShipping"
+        );
+
+
+      const shippingMethod =
+        document.getElementById(
+          "cartShippingMethod"
+        );
+
+
+      const shippingMethodPrice =
+        document.getElementById(
+          "cartShippingMethodPrice"
+        );
+
+
+      const shippingMessage =
+        document.getElementById(
+          "cartShippingMessage"
+        );
+
+
+      const freeShippingMessage =
+        document.getElementById(
+          "cartFreeShippingMessage"
+        );
+
+
+      const totalElement =
+        document.getElementById(
+          "cartTotal"
+        );
+
+
+      const cepInput =
+        document.getElementById(
+          "cartShippingCep"
+        );
+
+
+      if (subtotalElement) {
+
+        subtotalElement.textContent =
+          formatBRL(
+            subtotal
+          );
+      }
+
+
+      if (
+        coupon &&
+        coupon.type ===
+        "discount" &&
+        discount > 0
+      ) {
+
+        discountRow.hidden =
+          false;
+
+
+        discountLabel.textContent =
+          `DESCONTO ${coupon.code}`;
+
+
+        discountElement.textContent =
+          "- " +
+          formatBRL(
+            discount
+          );
+
+      } else {
+
+        discountRow.hidden =
+          true;
+      }
+
+
+      if (
+        freeShippingMessage
+      ) {
+
+        if (
+          coupon &&
+          coupon.type ===
+          "discount"
+        ) {
+
+          freeShippingMessage.textContent =
+            "CUPOM DE DESCONTO NÃO É CUMULATIVO COM FRETE GRÁTIS.";
+
+        } else if (
+          coupon &&
+          coupon.type ===
+          "free-shipping"
+        ) {
+
+          freeShippingMessage.textContent =
+            `${coupon.code} APLICADO — FRETE GRÁTIS.`;
+
+        } else {
+
+          freeShippingMessage.textContent =
+            "FRETE GRÁTIS EM COMPRAS A PARTIR DE R$500.";
+        }
+      }
+
+
+      if (
+        shipping &&
+        shipping.cep
+      ) {
+
+        shippingRow.hidden =
+          false;
+
+
+        shippingMethod.textContent =
+          "PADRÃO";
+
+
+        if (
+          shippingPrice === 0
+        ) {
+
+          shippingMethodPrice.textContent =
+            "GRÁTIS";
+
+
+          shippingElement.textContent =
+            "GRÁTIS";
+
+        } else {
+
+          shippingMethodPrice.textContent =
+            formatBRL(
+              shippingPrice
+            );
+
+
+          shippingElement.textContent =
+            formatBRL(
+              shippingPrice
+            );
+        }
+
+
+        if (
+          shippingPrice === 0
+        ) {
+
+          shippingMessage.textContent =
+            `${shipping.city} / ${shipping.state} — FRETE GRÁTIS`;
+
+        } else {
+
+          shippingMessage.textContent =
+            `${shipping.city} / ${shipping.state} — ${shipping.regionName}`;
+        }
+
+
+        if (
+          cepInput &&
+          !cepInput.value
+        ) {
+
+          cepInput.value =
+            formatCEP(
+              shipping.cep
+            );
+        }
+
+      } else {
+
+        shippingRow.hidden =
+          true;
+
+
+        shippingMethod.textContent =
+          "PADRÃO";
+
+
+        shippingMethodPrice.textContent =
+          "—";
+
+
+        shippingMessage.textContent =
+          "DIGITE SEU CEP PARA CALCULAR O FRETE.";
+      }
+
+
+      if (totalElement) {
+
+        totalElement.textContent =
+          formatBRL(
+            total
+          );
+      }
+    }
+
+
+    /* =========================================================
+       CEP
+    ========================================================= */
+
+    function initCartShipping() {
+
+      const input =
+        document.getElementById(
+          "cartShippingCep"
+        );
+
+
+      const button =
+        document.getElementById(
+          "cartShippingButton"
+        );
+
+
+      const message =
+        document.getElementById(
+          "cartShippingMessage"
+        );
+
+
+      if (
+        !input ||
+        !button ||
+        !message
+      ) {
+
+        return;
+      }
+
+
+      const saved =
+        getSavedShipping();
+
+
+      if (
+        saved &&
+        saved.cep
+      ) {
+
+        input.value =
+          formatCEP(
+            saved.cep
+          );
+      }
+
+
+      input.addEventListener(
+        "input",
+        () => {
+
+          input.value =
+            formatCEP(
+              input.value
+            );
+        }
+      );
+
+
+      input.addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key ===
+            "Enter"
+          ) {
+
+            event.preventDefault();
+
+            button.click();
+          }
+        }
+      );
+
+
+      button.addEventListener(
+        "click",
+        async () => {
+
+          const cep =
+            onlyNumbers(
+              input.value
+            );
+
+
+          if (
+            cep.length !== 8
+          ) {
+
+            message.textContent =
+              "DIGITE UM CEP VÁLIDO.";
+
+            return;
+          }
+
+
+          const originalText =
+            button.textContent;
+
+
+          button.disabled =
+            true;
+
+
+          button.textContent =
+            "...";
+
+
+          message.textContent =
+            "CALCULANDO FRETE...";
+
+
+          try {
+
+            const shipping =
+              await calculateShippingFromCEP(
+                cep
+              );
+
+
+            input.value =
+              formatCEP(
+                shipping.cep
+              );
+
+
+            updateCartSummary();
+
+          } catch (error) {
+
+            clearShipping();
+
+            updateCartSummary();
+
+
+            message.textContent =
+              error.message ||
+              "NÃO FOI POSSÍVEL CALCULAR O FRETE.";
+
+          } finally {
+
+            button.disabled =
+              false;
+
+
+            button.textContent =
+              originalText;
+          }
+        }
+      );
+    }
+
+
+    /* =========================================================
+       CUPOM
+    ========================================================= */
+
+    function initCouponForm() {
+
+      const form =
+        document.getElementById(
+          "couponForm"
+        );
+
+
+      const input =
+        document.getElementById(
+          "couponInput"
+        );
+
+
+      const message =
+        document.getElementById(
+          "couponMessage"
+        );
+
+
+      if (
+        !form ||
+        !input ||
+        !message
+      ) {
+
+        return;
+      }
+
+
+      const existing =
+        getCoupon();
+
+
+      if (existing) {
+
+        input.value =
+          existing.code;
+
+
+        message.textContent =
+          existing.type ===
+          "free-shipping"
+            ? `${existing.code} APLICADO — FRETE GRÁTIS`
+            : `${existing.code} APLICADO — 10% DE DESCONTO`;
+      }
+
+
+      form.addEventListener(
+        "submit",
+        event => {
+
+          event.preventDefault();
+
+
+          const code =
+            normalizeText(
+              input.value
+            );
+
+
+          if (!code) {
+
+            removeCoupon();
+
+
+            message.textContent =
+              "";
+
+
+            renderCartPage();
+
+            return;
+          }
+
+
+          const valid =
+            Boolean(
+              DISCOUNT_COUPONS[
+                code
+              ]
+            ) ||
+            FREE_SHIPPING_COUPONS.includes(
+              code
+            );
+
+
+          if (!valid) {
+
+            message.textContent =
+              "CUPOM INVÁLIDO.";
+
+            return;
+          }
+
+
+          saveCoupon(
+            code
+          );
+
+
+          input.value =
+            code;
+
+
+          const coupon =
+            getCoupon();
+
+
+          message.textContent =
+            coupon.type ===
+            "free-shipping"
+              ? `${code} APLICADO — FRETE GRÁTIS`
+              : `${code} APLICADO — 10% DE DESCONTO`;
+
+
+          renderCartPage();
+        }
+      );
+    }
+
+
+    /* =========================================================
+       CHECKOUT
+    ========================================================= */
+
+    function goToCheckout() {
+
+      const cart =
+        getCart();
+
+
+      if (!cart.length) {
+        return;
+      }
+
+
+      const shipping =
+        getSavedShipping();
+
+
+      if (
+        !shipping ||
+        !shipping.cep
+      ) {
+
+        const input =
+          document.getElementById(
+            "cartShippingCep"
+          );
+
+
+        const message =
+          document.getElementById(
+            "cartShippingMessage"
+          );
+
+
+        if (message) {
+
+          message.textContent =
+            "CALCULE O FRETE INFORMANDO SEU CEP ANTES DE CONTINUAR.";
+        }
+
+
+        if (input) {
+
+          input.focus();
+
+
+          input.scrollIntoView({
+            behavior:
+              "smooth",
+
+            block:
+              "center"
+          });
+        }
+
+
+        return;
+      }
+
+
+      normalizeSavedShipping();
+
+
+      window.location.href =
+        "/checkout";
+    }
+
+
+    function initCheckoutButtons() {
+
+      const buttons = [
+        document.getElementById(
+          "checkoutButton"
+        ),
+
+        document.getElementById(
+          "checkoutButtonMobile"
+        )
+      ];
+
+
+      buttons.forEach(
+        button => {
+
+          if (!button) {
+            return;
+          }
+
+
+          button.addEventListener(
+            "click",
+            goToCheckout
+          );
+        }
+      );
+    }
+
+
+    /* =========================================================
+       INICIAR
+    ========================================================= */
+
+    function init() {
+
+      updateCartCount();
+
+      normalizeSavedShipping();
+
+      renderCartPage();
+
+      initCartShipping();
+
+      initCouponForm();
+
+      initCheckoutButtons();
+    }
+
+
+    if (
+      document.readyState ===
+      "loading"
+    ) {
+
+      document.addEventListener(
+        "DOMContentLoaded",
+        init
+      );
+
+    } else {
+
+      init();
+    }
+
+  })();
+  </script>
+
+</body>
+</html>
