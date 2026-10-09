@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -24,543 +23,117 @@
 
   <style>
 
-    /* =========================================================
-       AJUSTES EXCLUSIVOS DO CARRINHO
-       A lógica continua 100% no script.js
-    ========================================================= */
+    /* =========================================
+       SOMENTE AJUSTES PEDIDOS DEPOIS
+       NÃO ALTERA A LÓGICA DO CARRINHO
+    ========================================= */
 
     html,
-    body {
-      background: #ffffff;
-    }
-
-
-    .cart-page {
-      background: #ffffff;
-      color: #111111;
-    }
-
-
-    .cart-page-grid {
-      background: #ffffff;
-    }
-
-
+    body,
+    .cart-page,
+    .cart-page-grid,
     .cart-main,
     .cart-summary {
       background: #ffffff;
     }
 
 
-    /* =========================================================
-       PRODUTO
-    ========================================================= */
+    /* =========================================
+       MENU
+       Compatível com a estrutura já usada
+    ========================================= */
 
-    .cart-item {
-      width: 100%;
-
-      min-height: 210px;
-
-      padding:
-        32px
-        38px;
-
-      display: grid;
-
-      grid-template-columns:
-        130px
-        minmax(0, 1fr)
-        115px;
-
-      gap: 38px;
-
-      align-items: center;
-
-      background: #ffffff;
-
-      border:
-        1px solid
-        #dddddd;
-
-      border-radius: 0;
+    .side-menu.open,
+    .side-menu.active {
+      transform: translateY(0);
     }
 
 
-    .cart-item + .cart-item {
-      border-top: 0;
+    body.menu-open {
+      overflow: hidden;
     }
 
 
+    /* =========================================
+       CAIXAS SEM ARREDONDAMENTO
+    ========================================= */
+
+    .cart-page button,
+    .cart-page input,
+    .cart-page a,
+    .cart-quantity,
     .cart-item-image-wrap {
-      width: 130px;
-      height: 155px;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      overflow: hidden;
-
-      background: #ffffff;
-
-      border: 0;
-
-      border-radius: 0;
-    }
-
-
-    .cart-item-image {
-      width: 100%;
-      height: 100%;
-
-      display: block;
-
-      object-fit: contain;
-      object-position: center;
-
-      border-radius: 0;
-    }
-
-
-    .cart-item-image-empty {
-      width: 100%;
-      height: 100%;
-
-      background: #ffffff;
-
-      border-radius: 0;
-    }
-
-
-    .cart-item-info {
-      min-width: 0;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: flex-start;
-
-      justify-content: center;
-    }
-
-
-    .cart-item-name {
-      margin:
-        0
-        0
-        16px;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 15px;
-
-      line-height: 1.4;
-
-      font-weight: 400;
-
-      letter-spacing: 0.08em;
-
-      text-transform: uppercase;
-    }
-
-
-    .cart-item-variant {
-      margin:
-        0
-        0
-        8px;
-
-      color: #333333;
-
-      font-family: var(--fonte);
-
-      font-size: 11px;
-
-      line-height: 1.5;
-
-      letter-spacing: 0.09em;
-
-      text-transform: uppercase;
-    }
-
-
-    .cart-item-unit-price {
-      margin:
-        10px
-        0
-        22px;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 11px;
-
-      letter-spacing: 0.06em;
-    }
-
-
-    .cart-item-actions {
-      display: flex;
-
-      align-items: center;
-
-      gap: 22px;
-    }
-
-
-    .cart-quantity {
-      height: 36px;
-
-      display: grid;
-
-      grid-template-columns:
-        36px
-        40px
-        36px;
-
-      border:
-        1px solid
-        #cfcfcf;
-
-      border-radius: 0;
-
-      background: #ffffff;
-
-      overflow: hidden;
-    }
-
-
-    .cart-quantity button,
-    .cart-quantity span {
-      width: 100%;
-      height: 34px;
-
-      margin: 0;
-      padding: 0;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      border: 0;
-
-      border-radius: 0;
-
-      background: #ffffff;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 11px;
-    }
-
-
-    .cart-quantity button {
-      cursor: pointer;
-    }
-
-
-    .cart-quantity-minus {
-      border-right:
-        1px solid
-        #e5e5e5 !important;
-    }
-
-
-    .cart-quantity-plus {
-      border-left:
-        1px solid
-        #e5e5e5 !important;
-    }
-
-
-    .cart-remove {
-      margin: 0;
-      padding: 0;
-
-      border: 0;
-
-      border-bottom:
-        1px solid
-        #111111;
-
-      border-radius: 0;
-
-      background: transparent;
-
-      color: #111111;
-
-      cursor: pointer;
-
-      font-family: var(--fonte);
-
-      font-size: 9px;
-
-      line-height: 1.4;
-
-      letter-spacing: 0.14em;
-
-      text-transform: uppercase;
-    }
-
-
-    .cart-item-total {
-      justify-self: end;
-
-      color: #111111;
-
-      font-family: var(--fonte);
-
-      font-size: 13px;
-
-      letter-spacing: 0.05em;
-
-      text-align: right;
-
-      white-space: nowrap;
-    }
-
-
-    /* =========================================================
-       CARRINHO VAZIO
-    ========================================================= */
-
-    .cart-page-empty {
-      min-height: 290px;
-
-      padding:
-        60px
-        30px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-
-      background: #ffffff;
-
-      border:
-        1px solid
-        #dddddd;
-
-      border-radius: 0;
-    }
-
-
-    .cart-page-empty[hidden] {
-      display: none;
-    }
-
-
-    .cart-page-shop-button {
-      min-width: 220px;
-
-      min-height: 50px;
-
-      display: inline-flex;
-
-      align-items: center;
-      justify-content: center;
-
-      padding:
-        0
-        22px;
-
-      background: #000000;
-
-      color: #ffffff;
-
-      border-radius: 0;
-
-      font-size: 10px;
-
-      letter-spacing: 0.14em;
-
-      text-transform: uppercase;
-    }
-
-
-    /* =========================================================
-       COMPRA SEGURA
-    ========================================================= */
-
-    .cart-guarantee {
-      padding-top: 40px;
-    }
-
-
-    /* =========================================================
-       LATERAL / RESUMO
-    ========================================================= */
-
-    .cart-summary {
-      padding-top: 38px;
-    }
-
-
-    .cart-summary-block,
-    .cart-shipping {
-      border-radius: 0;
-    }
-
-
-    .cart-summary-row {
-      gap: 18px;
-    }
-
-
-    /* =========================================================
-       CEP
-    ========================================================= */
-
-    .cart-shipping-title input,
-    .cart-shipping-title button {
       border-radius: 0 !important;
     }
 
 
-    /* =========================================================
-       CUPOM
-    ========================================================= */
-
-    .cart-coupon-form input,
-    .cart-coupon-form button {
-      border-radius: 0 !important;
-    }
-
-
-    .cart-coupon-message {
-      margin-top: 14px;
-
-      font-size: 9px;
-
-      line-height: 1.7;
-
-      letter-spacing: 0.09em;
-
-      text-transform: uppercase;
-    }
-
-
-    /* =========================================================
+    /* =========================================
        FINALIZAR PEDIDO
-       SOMENTE ABAIXO DO CUPOM
-    ========================================================= */
+       SOMENTE NA PARTE INFERIOR
+    ========================================= */
 
-    .cart-page-checkout {
-      width: 100%;
-
-      min-height: 54px;
-
-      margin-top: 4px;
-
-      padding:
-        0
-        20px;
-
-      border: 0;
-
-      border-radius: 0;
-
-      background: #000000;
-
-      color: #ffffff;
-
-      cursor: pointer;
-
-      font-family: var(--fonte);
-
-      font-size: 10px;
-
-      letter-spacing: 0.14em;
-
-      text-transform: uppercase;
+    .cart-finalizar-area {
+      padding-top: 24px;
     }
 
 
-    /* =========================================================
-       MOBILE
-    ========================================================= */
-
-    @media (max-width: 700px) {
-
-      .cart-item {
-        grid-template-columns:
-          90px
-          minmax(0, 1fr);
-
-        gap: 18px;
-
-        min-height: 0;
-
-        padding:
-          24px
-          0;
-      }
+    .cart-finalizar-area .cart-page-checkout {
+      width: 100%;
+      margin: 0;
+    }
 
 
-      .cart-item-image-wrap {
-        width: 90px;
-        height: 110px;
-      }
+    /* =========================================
+       RODAPÉ PRETO
+    ========================================= */
+
+    .footer {
+      background: #000000 !important;
+      color: #ffffff !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+    }
 
 
-      .cart-item-total {
-        grid-column: 2;
-
-        justify-self: start;
-
-        margin-top: 8px;
-
-        text-align: left;
-      }
+    .footer-title {
+      color: rgba(255, 255, 255, 0.58) !important;
+    }
 
 
-      .cart-item-actions {
-        gap: 15px;
+    .footer-columns a {
+      color: #ffffff !important;
+    }
 
-        flex-wrap: wrap;
-      }
 
+    .footer-bottom {
+      color: rgba(255, 255, 255, 0.58) !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
     }
 
   </style>
-
 </head>
 
 
 <body>
 
 
-  <!-- =========================================================
+  <!-- =========================================
        FAIXA SUPERIOR
-  ========================================================== -->
+  ========================================== -->
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
 
-  <!-- =========================================================
+  <!-- =========================================
        HEADER
-  ========================================================== -->
+  ========================================== -->
 
   <header class="topbar">
 
 
     <button
-      class="menu-toggle"
+      class="menu-toggle menu-button"
       id="menuToggle"
       type="button"
       aria-label="Abrir menu"
@@ -605,14 +178,14 @@
       </a>
 
 
-      <button
+      <a
+        href="carrinho.html"
         class="cart-link"
         id="cartButton"
-        type="button"
       >
         CARRINHO
         <span id="cartCount">0</span>
-      </button>
+      </a>
 
 
     </div>
@@ -621,27 +194,26 @@
   </header>
 
 
-  <!-- =========================================================
+  <!-- =========================================
        MENU
-  ========================================================== -->
+  ========================================== -->
 
   <nav
-    class="side-menu"
+    class="side-menu menu-overlay"
     id="sideMenu"
   >
-
 
     <div class="side-menu-inner">
 
 
-      <button
+      <a
+        href="#"
         class="close-menu"
         id="closeMenu"
-        type="button"
         aria-label="Fechar menu"
       >
         FECHAR
-      </button>
+      </a>
 
 
       <a href="index.html">
@@ -671,13 +243,12 @@
 
     </div>
 
-
   </nav>
 
 
-  <!-- =========================================================
+  <!-- =========================================
        CARRINHO
-  ========================================================== -->
+  ========================================== -->
 
   <main class="cart-page">
 
@@ -685,9 +256,9 @@
     <div class="cart-page-grid">
 
 
-      <!-- =====================================================
+      <!-- =====================================
            PRODUTOS
-      ====================================================== -->
+      ====================================== -->
 
       <section class="cart-main">
 
@@ -715,7 +286,6 @@
           hidden
         >
 
-
           <p>
             SEU CARRINHO ESTÁ VAZIO.
           </p>
@@ -727,7 +297,6 @@
           >
             IR PARA A LOJA
           </a>
-
 
         </div>
 
@@ -752,9 +321,9 @@
       </section>
 
 
-      <!-- =====================================================
+      <!-- =====================================
            RESUMO
-      ====================================================== -->
+      ====================================== -->
 
       <aside class="cart-summary">
 
@@ -766,30 +335,32 @@
 
           <div class="cart-summary-heading">
 
-
             <h2>
               RESUMO
             </h2>
-
 
           </div>
 
 
           <div class="cart-summary-row">
 
-
             <span>
               SUBTOTAL
             </span>
-
 
             <strong id="cartSubtotal">
               R$0,00
             </strong>
 
-
           </div>
 
+
+          <!--
+            FICA ESCONDIDO ENQUANTO NÃO EXISTIR
+            CUPOM APLICADO.
+            O SCRIPT.JS MOSTRA AUTOMATICAMENTE
+            QUANDO O CLIENTE APLICA UM CUPOM.
+          -->
 
           <div
             class="cart-summary-row"
@@ -797,32 +368,26 @@
             hidden
           >
 
-
             <span id="cartDiscountLabel">
               DESCONTO
             </span>
 
-
             <strong id="cartDiscount">
               R$0,00
             </strong>
-
 
           </div>
 
 
           <div class="cart-summary-row">
 
-
             <span>
               FRETE
             </span>
 
-
             <strong id="cartShipping">
               —
             </strong>
-
 
           </div>
 
@@ -831,16 +396,13 @@
             class="cart-summary-row cart-summary-total"
           >
 
-
             <span>
               TOTAL
             </span>
 
-
             <strong id="cartTotal">
               R$0,00
             </strong>
-
 
           </div>
 
@@ -848,9 +410,9 @@
         </div>
 
 
-        <!-- ===================================================
+        <!-- ===================================
              FRETE
-        ==================================================== -->
+        ==================================== -->
 
         <div class="cart-shipping">
 
@@ -893,16 +455,13 @@
             hidden
           >
 
-
             <span id="cartShippingMethod">
               PADRÃO
             </span>
 
-
             <strong id="cartShippingMethodPrice">
               —
             </strong>
-
 
           </div>
 
@@ -918,20 +477,18 @@
         </div>
 
 
-        <!-- ===================================================
+        <!-- ===================================
              CUPOM
-        ==================================================== -->
+        ==================================== -->
 
         <div class="cart-summary-block cart-coupon-block">
 
 
           <div class="cart-summary-heading">
 
-
             <h2>
               CUPOM
             </h2>
-
 
           </div>
 
@@ -955,9 +512,7 @@
             >
 
 
-            <button
-              type="submit"
-            >
+            <button type="submit">
               APLICAR
             </button>
 
@@ -974,18 +529,24 @@
         </div>
 
 
-        <!-- ===================================================
-             FINALIZAR
-             APENAS ESTE BOTÃO
-        ==================================================== -->
+        <!-- ===================================
+             FINALIZAR PEDIDO
+             ÚNICO BOTÃO
+        ==================================== -->
 
-        <button
-          class="cart-page-checkout"
-          id="checkoutButton"
-          type="button"
-        >
-          FINALIZAR PEDIDO
-        </button>
+        <div class="cart-finalizar-area">
+
+
+          <button
+            class="cart-page-checkout"
+            id="checkoutButton"
+            type="button"
+          >
+            FINALIZAR PEDIDO
+          </button>
+
+
+        </div>
 
 
       </aside>
@@ -997,15 +558,17 @@
   </main>
 
 
-  <!-- =========================================================
-       FOOTER
-  ========================================================== -->
+  <!-- =========================================
+       RODAPÉ
+  ========================================== -->
 
   <footer class="footer">
 
 
     <div class="footer-columns">
 
+
+      <!-- UNIVERSO -->
 
       <div>
 
@@ -1027,6 +590,8 @@
 
       </div>
 
+
+      <!-- LOJA -->
 
       <div>
 
@@ -1063,6 +628,8 @@
 
       </div>
 
+
+      <!-- SOBRE -->
 
       <div>
 
@@ -1121,10 +688,9 @@
   </footer>
 
 
-  <!-- =========================================================
+  <!-- =========================================
        SCRIPT ORIGINAL
-       NÃO SUBSTITUI A LÓGICA DO CARRINHO
-  ========================================================== -->
+  ========================================== -->
 
   <script src="script.js"></script>
 
