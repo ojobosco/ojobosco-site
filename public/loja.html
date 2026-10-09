@@ -11,146 +11,208 @@
 
   <title>Loja — OJOBOSCO</title>
 
-  <meta
-    name="description"
-    content="Objetos olfativos OJOBOSCO."
-  >
-
   <link
     rel="stylesheet"
     href="style.css"
   >
 </head>
 
+
 <body>
+
+  <!-- ======================================================
+       FAIXA SUPERIOR
+  ======================================================= -->
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
+
   <header class="topbar">
 
     <button
-      class="menu-toggle"
-      id="menuToggle"
       type="button"
-      aria-label="Abrir menu"
-      aria-expanded="false"
+      class="menu-toggle"
+      id="menuButton"
     >
       MENU
     </button>
 
+
     <a
-      href="index.html"
+      href="/"
       class="brand-top"
     >
       OJOBOSCO
     </a>
 
+
     <div class="top-actions">
 
       <a
-        href="index.html"
+        href="/universo"
         class="nav-link"
       >
         UNIVERSO
       </a>
 
+
       <a
-        href="loja.html"
+        href="/loja"
         class="nav-link"
       >
         LOJA
       </a>
 
+
       <a
-        href="universo.html"
+        href="/sobre"
         class="nav-link"
       >
         SOBRE
       </a>
 
-      <button
-        class="cart-link"
+
+      <a
+        href="/carrinho"
         id="cartButton"
-        type="button"
+        class="cart-link"
       >
         CARRINHO
-        <span id="cartCount">0</span>
-      </button>
+        <span
+          id="cartCount"
+          class="cart-count"
+        ></span>
+      </a>
 
     </div>
 
   </header>
 
-  <nav
+
+  <!-- ======================================================
+       MENU
+  ======================================================= -->
+
+  <div
     class="side-menu"
-    id="sideMenu"
+    id="menuOverlay"
   >
+
+    <button
+      type="button"
+      class="close-menu"
+      id="closeMenu"
+    >
+      FECHAR
+    </button>
+
 
     <div class="side-menu-inner">
 
-      <button
-        class="close-menu"
-        id="closeMenu"
-        type="button"
-        aria-label="Fechar menu"
-      >
-        FECHAR
-      </button>
+      <a href="/">
+        INÍCIO
+      </a>
 
-      <a href="index.html">
+      <a href="/universo">
         UNIVERSO
       </a>
 
-      <a href="loja.html">
+      <a href="/loja">
         LOJA
       </a>
 
-      <a href="universo.html">
+      <a href="/sobre">
         SOBRE
       </a>
 
-      <a href="index.html#newsletter">
-        NEWSLETTER
-      </a>
-
-      <a href="contato.html">
-        CONTATO
+      <a href="/carrinho">
+        CARRINHO
       </a>
 
     </div>
 
-  </nav>
+  </div>
+
+
+  <!-- ======================================================
+       LOJA
+  ======================================================= -->
 
   <main class="loja-page">
+
+
+    <!-- ====================================================
+         ABERTURA
+    ===================================================== -->
+
+    <section class="objetos-abertura">
+
+      <h1>
+        OBJETOS OLFATIVOS
+      </h1>
+
+    </section>
+
+
+    <!-- ====================================================
+         AROMATIZADORES
+    ===================================================== -->
 
     <section
       class="categoria-loja"
       id="aromatizadores"
     >
 
+      <div class="categoria-cabecalho">
+
+        <div class="categoria-titulo">
+
+          <h2>
+            AROMATIZADORES
+          </h2>
+
+        </div>
+
+
+        <div class="categoria-descricao">
+
+          <p>
+            Fragrâncias para transformar a atmosfera dos espaços
+            e criar uma presença olfativa contínua.
+          </p>
+
+        </div>
+
+      </div>
+
+
       <div class="produtos-rail">
+
 
         <!-- CHÁ FLORAL -->
 
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
-          data-name="Chá Floral"
           data-fragrance="CHÁ FLORAL"
           data-current-size="100"
           data-current-price="179"
           data-current-image="aromatizador-cha-floral-100.jpg"
           data-price-100="179"
-          data-price-250="209"
+          data-price-250="299"
           data-image-100="aromatizador-cha-floral-100.jpg"
           data-image-250="aromatizador-cha-floral-250.jpg"
         >
 
           <a
+            href="/produto-aromatizador?fragrancia=cha-floral"
             class="produto-link"
-            href="produto-aromatizador.html?fragrancia=cha-floral"
           >
 
             <div class="produto-loja-image">
@@ -162,33 +224,38 @@
 
             </div>
 
-            <h3>
-              CHÁ FLORAL
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$179
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            CHÁ FLORAL
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$179
+          </p>
+
+
+          <p class="produto-medida">
+            AROMATIZADOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
-              class="variacao-btn active"
               type="button"
+              class="variacao-btn active"
               data-size="100"
             >
               100 ML
             </button>
 
+
             <button
-              class="variacao-btn"
               type="button"
+              class="variacao-btn"
               data-size="250"
             >
               250 ML
@@ -196,34 +263,35 @@
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- FIGO TÍRIO -->
 
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
-          data-name="Figo Tírio"
           data-fragrance="FIGO TÍRIO"
           data-current-size="100"
           data-current-price="179"
           data-current-image="aromatizador-figo-tirio-100.jpg"
           data-price-100="179"
-          data-price-250="209"
+          data-price-250="299"
           data-image-100="aromatizador-figo-tirio-100.jpg"
           data-image-250="aromatizador-figo-tirio-250.jpg"
         >
 
           <a
+            href="/produto-aromatizador?fragrancia=figo-tirio"
             class="produto-link"
-            href="produto-aromatizador.html?fragrancia=figo-tirio"
           >
 
             <div class="produto-loja-image">
@@ -235,33 +303,38 @@
 
             </div>
 
-            <h3>
-              FIGO TÍRIO
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$179
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            FIGO TÍRIO
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$179
+          </p>
+
+
+          <p class="produto-medida">
+            AROMATIZADOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
-              class="variacao-btn active"
               type="button"
+              class="variacao-btn active"
               data-size="100"
             >
               100 ML
             </button>
 
+
             <button
-              class="variacao-btn"
               type="button"
+              class="variacao-btn"
               data-size="250"
             >
               250 ML
@@ -269,34 +342,35 @@
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- LAVANDA ROSADA -->
 
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
-          data-name="Lavanda Rosada"
           data-fragrance="LAVANDA ROSADA"
           data-current-size="100"
           data-current-price="179"
           data-current-image="aromatizador-lavanda-rosada-100.jpg"
           data-price-100="179"
-          data-price-250="209"
+          data-price-250="299"
           data-image-100="aromatizador-lavanda-rosada-100.jpg"
           data-image-250="aromatizador-lavanda-rosada-250.jpg"
         >
 
           <a
+            href="/produto-aromatizador?fragrancia=lavanda-rosada"
             class="produto-link"
-            href="produto-aromatizador.html?fragrancia=lavanda-rosada"
           >
 
             <div class="produto-loja-image">
@@ -308,33 +382,38 @@
 
             </div>
 
-            <h3>
-              LAVANDA ROSADA
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$179
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            LAVANDA ROSADA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$179
+          </p>
+
+
+          <p class="produto-medida">
+            AROMATIZADOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
-              class="variacao-btn active"
               type="button"
+              class="variacao-btn active"
               data-size="100"
             >
               100 ML
             </button>
 
+
             <button
-              class="variacao-btn"
               type="button"
+              class="variacao-btn"
               data-size="250"
             >
               250 ML
@@ -342,34 +421,35 @@
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- LIMOEIRA -->
 
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
-          data-name="Limoeira"
           data-fragrance="LIMOEIRA"
           data-current-size="100"
           data-current-price="179"
           data-current-image="aromatizador-limoeira-100.jpg"
           data-price-100="179"
-          data-price-250="209"
+          data-price-250="299"
           data-image-100="aromatizador-limoeira-100.jpg"
           data-image-250="aromatizador-limoeira-250.jpg"
         >
 
           <a
+            href="/produto-aromatizador?fragrancia=limoeira"
             class="produto-link"
-            href="produto-aromatizador.html?fragrancia=limoeira"
           >
 
             <div class="produto-loja-image">
@@ -381,33 +461,38 @@
 
             </div>
 
-            <h3>
-              LIMOEIRA
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$179
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            LIMOEIRA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$179
+          </p>
+
+
+          <p class="produto-medida">
+            AROMATIZADOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
-              class="variacao-btn active"
               type="button"
+              class="variacao-btn active"
               data-size="100"
             >
               100 ML
             </button>
 
+
             <button
-              class="variacao-btn"
               type="button"
+              class="variacao-btn"
               data-size="250"
             >
               250 ML
@@ -415,34 +500,35 @@
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- VERDE QUENTE -->
 
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
-          data-name="Verde Quente"
           data-fragrance="VERDE QUENTE"
           data-current-size="100"
           data-current-price="179"
           data-current-image="aromatizador-verde-quente-100.jpg"
           data-price-100="179"
-          data-price-250="209"
+          data-price-250="299"
           data-image-100="aromatizador-verde-quente-100.jpg"
           data-image-250="aromatizador-verde-quente-250.jpg"
         >
 
           <a
+            href="/produto-aromatizador?fragrancia=verde-quente"
             class="produto-link"
-            href="produto-aromatizador.html?fragrancia=verde-quente"
           >
 
             <div class="produto-loja-image">
@@ -454,33 +540,38 @@
 
             </div>
 
-            <h3>
-              VERDE QUENTE
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$179
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            VERDE QUENTE
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$179
+          </p>
+
+
+          <p class="produto-medida">
+            AROMATIZADOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
-              class="variacao-btn active"
               type="button"
+              class="variacao-btn active"
               data-size="100"
             >
               100 ML
             </button>
 
+
             <button
-              class="variacao-btn"
               type="button"
+              class="variacao-btn"
               data-size="250"
             >
               250 ML
@@ -488,34 +579,35 @@
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- ORBE AMAZÔNICO -->
 
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
-          data-name="Orbe Amazônico"
           data-fragrance="ORBE AMAZÔNICO"
           data-current-size="100"
           data-current-price="179"
           data-current-image="aromatizador-orbe-amazonico-100.jpg"
           data-price-100="179"
-          data-price-250="209"
+          data-price-250="299"
           data-image-100="aromatizador-orbe-amazonico-100.jpg"
           data-image-250="aromatizador-orbe-amazonico-250.jpg"
         >
 
           <a
+            href="/produto-aromatizador?fragrancia=orbe-amazonico"
             class="produto-link"
-            href="produto-aromatizador.html?fragrancia=orbe-amazonico"
           >
 
             <div class="produto-loja-image">
@@ -527,33 +619,38 @@
 
             </div>
 
-            <h3>
-              ORBE AMAZÔNICO
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$179
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            ORBE AMAZÔNICO
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$179
+          </p>
+
+
+          <p class="produto-medida">
+            AROMATIZADOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
-              class="variacao-btn active"
               type="button"
+              class="variacao-btn active"
               data-size="100"
             >
               100 ML
             </button>
 
+
             <button
-              class="variacao-btn"
               type="button"
+              class="variacao-btn"
               data-size="250"
             >
               250 ML
@@ -561,9 +658,10 @@
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
@@ -574,34 +672,60 @@
 
     </section>
 
-    <!-- DIFUSORES -->
+
+    <!-- ====================================================
+         DIFUSORES
+    ===================================================== -->
 
     <section
       class="categoria-loja"
       id="difusores"
     >
 
+      <div class="categoria-cabecalho">
+
+        <div class="categoria-titulo">
+
+          <h2>
+            DIFUSORES
+          </h2>
+
+        </div>
+
+
+        <div class="categoria-descricao">
+
+          <p>
+            Uma presença contínua da fragrância,
+            difundida lentamente através das varetas.
+          </p>
+
+        </div>
+
+      </div>
+
+
       <div class="produtos-rail">
+
 
         <!-- CHÁ FLORAL -->
 
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
-          data-name="Chá Floral"
           data-fragrance="CHÁ FLORAL"
           data-current-size="100"
           data-current-price="189"
           data-current-image="difusor-cha-floral-100.jpg"
           data-price-100="189"
-          data-price-250="219"
+          data-price-250="309"
           data-image-100="difusor-cha-floral-100.jpg"
           data-image-250="difusor-cha-floral-250.jpg"
         >
 
           <a
+            href="/produto-difusor?fragrancia=cha-floral"
             class="produto-link"
-            href="produto-difusor.html?fragrancia=cha-floral"
           >
 
             <div class="produto-loja-image">
@@ -613,68 +737,74 @@
 
             </div>
 
-            <h3>
-              CHÁ FLORAL
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$189
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            CHÁ FLORAL
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$189
+          </p>
+
+
+          <p class="produto-medida">
+            DIFUSOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
+              type="button"
               class="variacao-btn active"
               data-size="100"
-              type="button"
             >
               100 ML
             </button>
 
+
             <button
+              type="button"
               class="variacao-btn"
               data-size="250"
-              type="button"
             >
               250 ML
             </button>
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- FIGO TÍRIO -->
 
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
-          data-name="Figo Tírio"
           data-fragrance="FIGO TÍRIO"
           data-current-size="100"
           data-current-price="189"
           data-current-image="difusor-figo-tirio-100.jpg"
           data-price-100="189"
-          data-price-250="219"
+          data-price-250="309"
           data-image-100="difusor-figo-tirio-100.jpg"
           data-image-250="difusor-figo-tirio-250.jpg"
         >
 
           <a
+            href="/produto-difusor?fragrancia=figo-tirio"
             class="produto-link"
-            href="produto-difusor.html?fragrancia=figo-tirio"
           >
 
             <div class="produto-loja-image">
@@ -686,68 +816,74 @@
 
             </div>
 
-            <h3>
-              FIGO TÍRIO
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$189
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            FIGO TÍRIO
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$189
+          </p>
+
+
+          <p class="produto-medida">
+            DIFUSOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
+              type="button"
               class="variacao-btn active"
               data-size="100"
-              type="button"
             >
               100 ML
             </button>
 
+
             <button
+              type="button"
               class="variacao-btn"
               data-size="250"
-              type="button"
             >
               250 ML
             </button>
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
-        <!-- LAVANDA ROSADA -->
+
+        <!-- LAVANDA -->
 
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
-          data-name="Lavanda Rosada"
           data-fragrance="LAVANDA ROSADA"
           data-current-size="100"
           data-current-price="189"
           data-current-image="difusor-lavanda-rosada-100.jpg"
           data-price-100="189"
-          data-price-250="219"
+          data-price-250="309"
           data-image-100="difusor-lavanda-rosada-100.jpg"
           data-image-250="difusor-lavanda-rosada-250.jpg"
         >
 
           <a
+            href="/produto-difusor?fragrancia=lavanda-rosada"
             class="produto-link"
-            href="produto-difusor.html?fragrancia=lavanda-rosada"
           >
 
             <div class="produto-loja-image">
@@ -759,68 +895,74 @@
 
             </div>
 
-            <h3>
-              LAVANDA ROSADA
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$189
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            LAVANDA ROSADA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$189
+          </p>
+
+
+          <p class="produto-medida">
+            DIFUSOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
+              type="button"
               class="variacao-btn active"
               data-size="100"
-              type="button"
             >
               100 ML
             </button>
 
+
             <button
+              type="button"
               class="variacao-btn"
               data-size="250"
-              type="button"
             >
               250 ML
             </button>
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- LIMOEIRA -->
 
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
-          data-name="Limoeira"
           data-fragrance="LIMOEIRA"
           data-current-size="100"
           data-current-price="189"
           data-current-image="difusor-limoeira-100.jpg"
           data-price-100="189"
-          data-price-250="219"
+          data-price-250="309"
           data-image-100="difusor-limoeira-100.jpg"
           data-image-250="difusor-limoeira-250.jpg"
         >
 
           <a
+            href="/produto-difusor?fragrancia=limoeira"
             class="produto-link"
-            href="produto-difusor.html?fragrancia=limoeira"
           >
 
             <div class="produto-loja-image">
@@ -832,68 +974,74 @@
 
             </div>
 
-            <h3>
-              LIMOEIRA
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$189
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            LIMOEIRA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$189
+          </p>
+
+
+          <p class="produto-medida">
+            DIFUSOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
+              type="button"
               class="variacao-btn active"
               data-size="100"
-              type="button"
             >
               100 ML
             </button>
 
+
             <button
+              type="button"
               class="variacao-btn"
               data-size="250"
-              type="button"
             >
               250 ML
             </button>
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- VERDE QUENTE -->
 
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
-          data-name="Verde Quente"
           data-fragrance="VERDE QUENTE"
           data-current-size="100"
           data-current-price="189"
           data-current-image="difusor-verde-quente-100.jpg"
           data-price-100="189"
-          data-price-250="219"
+          data-price-250="309"
           data-image-100="difusor-verde-quente-100.jpg"
           data-image-250="difusor-verde-quente-250.jpg"
         >
 
           <a
+            href="/produto-difusor?fragrancia=verde-quente"
             class="produto-link"
-            href="produto-difusor.html?fragrancia=verde-quente"
           >
 
             <div class="produto-loja-image">
@@ -905,68 +1053,74 @@
 
             </div>
 
-            <h3>
-              VERDE QUENTE
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$189
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            VERDE QUENTE
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$189
+          </p>
+
+
+          <p class="produto-medida">
+            DIFUSOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
+              type="button"
               class="variacao-btn active"
               data-size="100"
-              type="button"
             >
               100 ML
             </button>
 
+
             <button
+              type="button"
               class="variacao-btn"
               data-size="250"
-              type="button"
             >
               250 ML
             </button>
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
         <!-- ORBE AMAZÔNICO -->
 
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
-          data-name="Orbe Amazônico"
           data-fragrance="ORBE AMAZÔNICO"
           data-current-size="100"
           data-current-price="189"
           data-current-image="difusor-orbe-amazonico-100.jpg"
           data-price-100="189"
-          data-price-250="219"
+          data-price-250="309"
           data-image-100="difusor-orbe-amazonico-100.jpg"
           data-image-250="difusor-orbe-amazonico-250.jpg"
         >
 
           <a
+            href="/produto-difusor?fragrancia=orbe-amazonico"
             class="produto-link"
-            href="produto-difusor.html?fragrancia=orbe-amazonico"
           >
 
             <div class="produto-loja-image">
@@ -978,43 +1132,49 @@
 
             </div>
 
-            <h3>
-              ORBE AMAZÔNICO
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$189
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
+
+
+          <h3>
+            ORBE AMAZÔNICO
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$189
+          </p>
+
+
+          <p class="produto-medida">
+            DIFUSOR
+          </p>
+
 
           <div class="variacoes">
 
             <button
+              type="button"
               class="variacao-btn active"
               data-size="100"
-              type="button"
             >
               100 ML
             </button>
 
+
             <button
+              type="button"
               class="variacao-btn"
               data-size="250"
-              type="button"
             >
               250 ML
             </button>
 
           </div>
 
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
@@ -1025,347 +1185,583 @@
 
     </section>
 
-    <!-- BIBLIOTECA OLFATIVA -->
 
-    <section
-      class="categoria-loja"
-      id="biblioteca"
-    >
-
-      <div class="produtos-rail">
-
-        <article
-          class="produto-loja-card"
-          data-product-type="BIBLIOTECA OLFATIVA"
-          data-name="Biblioteca Olfativa"
-          data-current-price="239"
-          data-current-image="biblioteca-still.jpg"
-        >
-
-          <a
-            class="produto-link"
-            href="produto-biblioteca.html"
-          >
-
-            <div class="produto-loja-image">
-
-              <img
-                src="biblioteca-still.jpg"
-                alt="Biblioteca Olfativa OJOBOSCO"
-              >
-
-            </div>
-
-            <h3>
-              BIBLIOTECA OLFATIVA
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$239
-            </p>
-
-          </a>
-
-          <button
-            class="adicionar-card-btn"
-            type="button"
-          >
-            ADICIONAR AO CARRINHO
-          </button>
-
-        </article>
-
-      </div>
-
-    </section>
-
-    <!-- VELAS -->
+    <!-- ====================================================
+         VELA — PRODUTO ÚNICO
+    ===================================================== -->
 
     <section
       class="categoria-loja"
       id="velas"
     >
 
-      <div class="produtos-rail">
+      <div class="categoria-cabecalho">
+
+        <div class="categoria-titulo">
+
+          <h2>
+            VELA
+          </h2>
+
+        </div>
+
+
+        <div class="categoria-descricao">
+
+          <p>
+            Um único objeto para diferentes atmosferas.
+            Escolha a fragrância que deseja acender no ambiente.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="produtos-rail vela-rail">
+
 
         <article
-          class="produto-loja-card"
+          id="velaProduto"
+          class="produto-loja-card vela-card"
           data-product-type="VELA"
-          data-name="Chá Floral"
+          data-product="VELA"
           data-fragrance="CHÁ FLORAL"
+          data-size="200 G"
+          data-current-size="200 G"
+          data-price="289"
           data-current-price="289"
           data-current-image="vela-cha-floral.jpg"
         >
 
           <a
+            id="velaProdutoLink"
+            href="/produto-vela?fragrancia=cha-floral"
             class="produto-link"
-            href="produto-vela.html?fragrancia=cha-floral"
           >
 
             <div class="produto-loja-image">
 
               <img
+                id="velaProdutoImagem"
                 src="vela-cha-floral.jpg"
-                alt="Vela Chá Floral"
+                alt="Vela Chá Floral OJOBOSCO"
               >
 
             </div>
 
-            <h3>
+          </a>
+
+
+          <h3>
+            VELA PERFUMADA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$289
+          </p>
+
+
+          <p class="produto-medida">
+            200 G
+          </p>
+
+
+          <div class="fragrancias-loja">
+
+
+            <button
+              type="button"
+              class="fragrancia-loja-btn active"
+              data-vela-fragrancia="CHÁ FLORAL"
+              data-vela-slug="cha-floral"
+              data-vela-image="vela-cha-floral.jpg"
+            >
               CHÁ FLORAL
-            </h3>
+            </button>
 
-            <p class="produto-loja-preco">
-              R$289
-            </p>
 
-          </a>
-
-          <button
-            class="adicionar-card-btn"
-            type="button"
-          >
-            ADICIONAR AO CARRINHO
-          </button>
-
-        </article>
-
-        <article
-          class="produto-loja-card"
-          data-product-type="VELA"
-          data-name="Figo Tírio"
-          data-fragrance="FIGO TÍRIO"
-          data-current-price="289"
-          data-current-image="vela-figo-tirio.jpg"
-        >
-
-          <a
-            class="produto-link"
-            href="produto-vela.html?fragrancia=figo-tirio"
-          >
-
-            <div class="produto-loja-image">
-
-              <img
-                src="vela-figo-tirio.jpg"
-                alt="Vela Figo Tírio"
-              >
-
-            </div>
-
-            <h3>
+            <button
+              type="button"
+              class="fragrancia-loja-btn"
+              data-vela-fragrancia="FIGO TÍRIO"
+              data-vela-slug="figo-tirio"
+              data-vela-image="vela-figo-tirio.jpg"
+            >
               FIGO TÍRIO
-            </h3>
+            </button>
 
-            <p class="produto-loja-preco">
-              R$289
-            </p>
 
-          </a>
-
-          <button
-            class="adicionar-card-btn"
-            type="button"
-          >
-            ADICIONAR AO CARRINHO
-          </button>
-
-        </article>
-
-        <article
-          class="produto-loja-card"
-          data-product-type="VELA"
-          data-name="Lavanda Rosada"
-          data-fragrance="LAVANDA ROSADA"
-          data-current-price="289"
-          data-current-image="vela-lavanda-rosada.jpg"
-        >
-
-          <a
-            class="produto-link"
-            href="produto-vela.html?fragrancia=lavanda-rosada"
-          >
-
-            <div class="produto-loja-image">
-
-              <img
-                src="vela-lavanda-rosada.jpg"
-                alt="Vela Lavanda Rosada"
-              >
-
-            </div>
-
-            <h3>
+            <button
+              type="button"
+              class="fragrancia-loja-btn"
+              data-vela-fragrancia="LAVANDA ROSADA"
+              data-vela-slug="lavanda-rosada"
+              data-vela-image="vela-lavanda-rosada.jpg"
+            >
               LAVANDA ROSADA
-            </h3>
+            </button>
 
-            <p class="produto-loja-preco">
-              R$289
-            </p>
 
-          </a>
-
-          <button
-            class="adicionar-card-btn"
-            type="button"
-          >
-            ADICIONAR AO CARRINHO
-          </button>
-
-        </article>
-
-        <article
-          class="produto-loja-card"
-          data-product-type="VELA"
-          data-name="Limoeira"
-          data-fragrance="LIMOEIRA"
-          data-current-price="289"
-          data-current-image="vela-limoeira.jpg"
-        >
-
-          <a
-            class="produto-link"
-            href="produto-vela.html?fragrancia=limoeira"
-          >
-
-            <div class="produto-loja-image">
-
-              <img
-                src="vela-limoeira.jpg"
-                alt="Vela Limoeira"
-              >
-
-            </div>
-
-            <h3>
+            <button
+              type="button"
+              class="fragrancia-loja-btn"
+              data-vela-fragrancia="LIMOEIRA"
+              data-vela-slug="limoeira"
+              data-vela-image="vela-limoeira.jpg"
+            >
               LIMOEIRA
-            </h3>
+            </button>
 
-            <p class="produto-loja-preco">
-              R$289
-            </p>
 
-          </a>
-
-          <button
-            class="adicionar-card-btn"
-            type="button"
-          >
-            ADICIONAR AO CARRINHO
-          </button>
-
-        </article>
-
-        <article
-          class="produto-loja-card"
-          data-product-type="VELA"
-          data-name="Verde Quente"
-          data-fragrance="VERDE QUENTE"
-          data-current-price="289"
-          data-current-image="vela-verde-quente.jpg"
-        >
-
-          <a
-            class="produto-link"
-            href="produto-vela.html?fragrancia=verde-quente"
-          >
-
-            <div class="produto-loja-image">
-
-              <img
-                src="vela-verde-quente.jpg"
-                alt="Vela Verde Quente"
-              >
-
-            </div>
-
-            <h3>
+            <button
+              type="button"
+              class="fragrancia-loja-btn"
+              data-vela-fragrancia="VERDE QUENTE"
+              data-vela-slug="verde-quente"
+              data-vela-image="vela-verde-quente.jpg"
+            >
               VERDE QUENTE
-            </h3>
+            </button>
 
-            <p class="produto-loja-preco">
-              R$289
-            </p>
 
-          </a>
-
-          <button
-            class="adicionar-card-btn"
-            type="button"
-          >
-            ADICIONAR AO CARRINHO
-          </button>
-
-        </article>
-
-        <article
-          class="produto-loja-card"
-          data-product-type="VELA"
-          data-name="Orbe Amazônico"
-          data-fragrance="ORBE AMAZÔNICO"
-          data-current-price="289"
-          data-current-image="vela-orbe-amazonico.jpg"
-        >
-
-          <a
-            class="produto-link"
-            href="produto-vela.html?fragrancia=orbe-amazonico"
-          >
-
-            <div class="produto-loja-image">
-
-              <img
-                src="vela-orbe-amazonico.jpg"
-                alt="Vela Orbe Amazônico"
-              >
-
-            </div>
-
-            <h3>
+            <button
+              type="button"
+              class="fragrancia-loja-btn"
+              data-vela-fragrancia="ORBE AMAZÔNICO"
+              data-vela-slug="orbe-amazonico"
+              data-vela-image="vela-orbe-amazonico.jpg"
+            >
               ORBE AMAZÔNICO
-            </h3>
+            </button>
 
-            <p class="produto-loja-preco">
-              R$289
-            </p>
 
-          </a>
+          </div>
+
 
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
+
 
       </div>
 
     </section>
 
-    <!-- PERFUME -->
+
+    <!-- ====================================================
+         REFIL
+    ===================================================== -->
+
+    <section
+      class="categoria-loja"
+      id="refis"
+    >
+
+      <div class="categoria-cabecalho">
+
+        <div class="categoria-titulo">
+
+          <h2>
+            REFIL
+          </h2>
+
+        </div>
+
+
+        <div class="categoria-descricao">
+
+          <p>
+            Para prolongar o ritual e renovar a fragrância
+            dos objetos OJOBOSCO.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="produtos-rail">
+
+
+        <article
+          class="produto-loja-card"
+          data-product-type="REFIL"
+          data-fragrance="CHÁ FLORAL"
+          data-size="500"
+          data-current-size="500"
+          data-current-price="389"
+          data-price="389"
+          data-current-image="refil-cha-floral.jpg"
+        >
+
+          <a
+            href="/produto-refil?fragrancia=cha-floral"
+            class="produto-link"
+          >
+
+            <div class="produto-loja-image">
+
+              <img
+                src="refil-cha-floral.jpg"
+                alt="Refil Chá Floral"
+              >
+
+            </div>
+
+          </a>
+
+
+          <h3>
+            CHÁ FLORAL
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$389
+          </p>
+
+
+          <p class="produto-medida">
+            500 ML
+          </p>
+
+
+          <button
+            type="button"
+            class="adicionar-card-btn"
+          >
+            ADICIONAR AO CARRINHO
+          </button>
+
+        </article>
+
+
+        <article
+          class="produto-loja-card"
+          data-product-type="REFIL"
+          data-fragrance="FIGO TÍRIO"
+          data-size="500"
+          data-current-size="500"
+          data-current-price="389"
+          data-price="389"
+          data-current-image="refil-figo-tirio.jpg"
+        >
+
+          <a
+            href="/produto-refil?fragrancia=figo-tirio"
+            class="produto-link"
+          >
+
+            <div class="produto-loja-image">
+
+              <img
+                src="refil-figo-tirio.jpg"
+                alt="Refil Figo Tírio"
+              >
+
+            </div>
+
+          </a>
+
+
+          <h3>
+            FIGO TÍRIO
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$389
+          </p>
+
+
+          <p class="produto-medida">
+            500 ML
+          </p>
+
+
+          <button
+            type="button"
+            class="adicionar-card-btn"
+          >
+            ADICIONAR AO CARRINHO
+          </button>
+
+        </article>
+
+
+        <article
+          class="produto-loja-card"
+          data-product-type="REFIL"
+          data-fragrance="LAVANDA ROSADA"
+          data-size="500"
+          data-current-size="500"
+          data-current-price="389"
+          data-price="389"
+          data-current-image="refil-lavanda-rosada.jpg"
+        >
+
+          <a
+            href="/produto-refil?fragrancia=lavanda-rosada"
+            class="produto-link"
+          >
+
+            <div class="produto-loja-image">
+
+              <img
+                src="refil-lavanda-rosada.jpg"
+                alt="Refil Lavanda Rosada"
+              >
+
+            </div>
+
+          </a>
+
+
+          <h3>
+            LAVANDA ROSADA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$389
+          </p>
+
+
+          <p class="produto-medida">
+            500 ML
+          </p>
+
+
+          <button
+            type="button"
+            class="adicionar-card-btn"
+          >
+            ADICIONAR AO CARRINHO
+          </button>
+
+        </article>
+
+
+        <article
+          class="produto-loja-card"
+          data-product-type="REFIL"
+          data-fragrance="LIMOEIRA"
+          data-size="500"
+          data-current-size="500"
+          data-current-price="389"
+          data-price="389"
+          data-current-image="refil-limoeira.jpg"
+        >
+
+          <a
+            href="/produto-refil?fragrancia=limoeira"
+            class="produto-link"
+          >
+
+            <div class="produto-loja-image">
+
+              <img
+                src="refil-limoeira.jpg"
+                alt="Refil Limoeira"
+              >
+
+            </div>
+
+          </a>
+
+
+          <h3>
+            LIMOEIRA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$389
+          </p>
+
+
+          <p class="produto-medida">
+            500 ML
+          </p>
+
+
+          <button
+            type="button"
+            class="adicionar-card-btn"
+          >
+            ADICIONAR AO CARRINHO
+          </button>
+
+        </article>
+
+
+        <article
+          class="produto-loja-card"
+          data-product-type="REFIL"
+          data-fragrance="VERDE QUENTE"
+          data-size="500"
+          data-current-size="500"
+          data-current-price="389"
+          data-price="389"
+          data-current-image="refil-verde-quente.jpg"
+        >
+
+          <a
+            href="/produto-refil?fragrancia=verde-quente"
+            class="produto-link"
+          >
+
+            <div class="produto-loja-image">
+
+              <img
+                src="refil-verde-quente.jpg"
+                alt="Refil Verde Quente"
+              >
+
+            </div>
+
+          </a>
+
+
+          <h3>
+            VERDE QUENTE
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$389
+          </p>
+
+
+          <p class="produto-medida">
+            500 ML
+          </p>
+
+
+          <button
+            type="button"
+            class="adicionar-card-btn"
+          >
+            ADICIONAR AO CARRINHO
+          </button>
+
+        </article>
+
+
+        <article
+          class="produto-loja-card"
+          data-product-type="REFIL"
+          data-fragrance="ORBE AMAZÔNICO"
+          data-size="500"
+          data-current-size="500"
+          data-current-price="389"
+          data-price="389"
+          data-current-image="refil-orbe-amazonico.jpg"
+        >
+
+          <a
+            href="/produto-refil?fragrancia=orbe-amazonico"
+            class="produto-link"
+          >
+
+            <div class="produto-loja-image">
+
+              <img
+                src="refil-orbe-amazonico.jpg"
+                alt="Refil Orbe Amazônico"
+              >
+
+            </div>
+
+          </a>
+
+
+          <h3>
+            ORBE AMAZÔNICO
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$389
+          </p>
+
+
+          <p class="produto-medida">
+            500 ML
+          </p>
+
+
+          <button
+            type="button"
+            class="adicionar-card-btn"
+          >
+            ADICIONAR AO CARRINHO
+          </button>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         PERFUME
+    ===================================================== -->
 
     <section
       class="categoria-loja"
       id="perfume"
     >
 
+      <div class="categoria-cabecalho">
+
+        <div class="categoria-titulo">
+
+          <h2>
+            PERFUME
+          </h2>
+
+        </div>
+
+
+        <div class="categoria-descricao">
+
+          <p>
+            A fragrância como presença íntima,
+            aplicada diretamente sobre a pele.
+          </p>
+
+        </div>
+
+      </div>
+
+
       <div class="produtos-rail">
+
 
         <article
           class="produto-loja-card"
           data-product-type="PERFUME"
-          data-name="Cedro Solar"
           data-fragrance="CEDRO SOLAR"
+          data-size="100"
           data-current-size="100"
           data-current-price="429"
+          data-price="429"
           data-current-image="perfume-cedro-solar.jpg"
         >
 
           <a
+            href="/produto-perfume"
             class="produto-link"
-            href="produto-perfume.html"
           >
 
             <div class="produto-loja-image">
@@ -1377,129 +1773,569 @@
 
             </div>
 
-            <h3>
-              CEDRO SOLAR
-            </h3>
-
-            <p class="produto-loja-preco">
-              R$429
-            </p>
-
-            <p class="produto-medida">
-              100 ML
-            </p>
-
           </a>
 
+
+          <h3>
+            CEDRO SOLAR
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$429
+          </p>
+
+
+          <p class="produto-medida">
+            100 ML
+          </p>
+
+
           <button
-            class="adicionar-card-btn"
             type="button"
+            class="adicionar-card-btn"
           >
             ADICIONAR AO CARRINHO
           </button>
 
         </article>
 
+
       </div>
 
     </section>
 
+
   </main>
 
-  <footer class="footer">
 
-    <div class="footer-columns">
-
-      <div>
-
-        <p class="footer-title">
-          UNIVERSO
-        </p>
-
-        <a href="index.html">
-          INÍCIO
-        </a>
-
-        <a href="universo.html">
-          NOSSA HISTÓRIA
-        </a>
-
-      </div>
-
-      <div>
-
-        <p class="footer-title">
-          LOJA
-        </p>
-
-        <a href="loja.html#aromatizadores">
-          AROMATIZADOR
-        </a>
-
-        <a href="loja.html#difusores">
-          DIFUSOR
-        </a>
-
-        <a href="loja.html#biblioteca">
-          BIBLIOTECA OLFATIVA
-        </a>
-
-        <a href="loja.html#velas">
-          VELA
-        </a>
-
-        <a href="loja.html#perfume">
-          PERFUME
-        </a>
-
-      </div>
-
-      <div>
-
-        <p class="footer-title">
-          SOBRE
-        </p>
-
-        <a href="contato.html">
-          CONTATO
-        </a>
-
-        <a
-          href="https://www.instagram.com/ojobosco/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          INSTAGRAM
-        </a>
-
-        <a href="trocas.html">
-          TROCAS E DEVOLUÇÕES
-        </a>
-
-        <a href="privacidade.html">
-          PRIVACIDADE
-        </a>
-
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 OJOBOSCO
-      </span>
-
-      <span>
-        BRASIL
-      </span>
-
-    </div>
-
-  </footer>
+  <!-- ======================================================
+       SCRIPT PRINCIPAL EXISTENTE
+  ======================================================= -->
 
   <script src="script.js"></script>
 
-</body>
 
+  <!-- ======================================================
+       VELA — ESCOLHA DE FRAGRÂNCIA
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+
+    function iniciarVelaUnica() {
+
+      const card =
+        document.getElementById(
+          "velaProduto"
+        );
+
+
+      const imagem =
+        document.getElementById(
+          "velaProdutoImagem"
+        );
+
+
+      const link =
+        document.getElementById(
+          "velaProdutoLink"
+        );
+
+
+      if (
+        !card ||
+        !imagem ||
+        !link
+      ) {
+        return;
+      }
+
+
+      const botoes =
+        card.querySelectorAll(
+          ".fragrancia-loja-btn"
+        );
+
+
+      botoes.forEach(
+        function (botao) {
+
+          botao.addEventListener(
+            "click",
+            function (evento) {
+
+              evento.preventDefault();
+
+              evento.stopPropagation();
+
+
+              const fragrancia =
+                botao.getAttribute(
+                  "data-vela-fragrancia"
+                ) || "";
+
+
+              const slug =
+                botao.getAttribute(
+                  "data-vela-slug"
+                ) || "";
+
+
+              const novaImagem =
+                botao.getAttribute(
+                  "data-vela-image"
+                ) || "";
+
+
+              botoes.forEach(
+                function (outroBotao) {
+
+                  outroBotao
+                    .classList
+                    .remove(
+                      "active"
+                    );
+
+                }
+              );
+
+
+              botao
+                .classList
+                .add(
+                  "active"
+                );
+
+
+              card.setAttribute(
+                "data-fragrance",
+                fragrancia
+              );
+
+
+              card.setAttribute(
+                "data-current-image",
+                novaImagem
+              );
+
+
+              card.setAttribute(
+                "data-current-price",
+                "289"
+              );
+
+
+              card.setAttribute(
+                "data-current-size",
+                "200 G"
+              );
+
+
+              imagem.src =
+                novaImagem;
+
+
+              imagem.alt =
+                "Vela " +
+                fragrancia +
+                " OJOBOSCO";
+
+
+              link.href =
+                "/produto-vela?fragrancia=" +
+                encodeURIComponent(
+                  slug
+                );
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    if (
+      document.readyState ===
+      "loading"
+    ) {
+
+      document.addEventListener(
+        "DOMContentLoaded",
+        iniciarVelaUnica
+      );
+
+    } else {
+
+      iniciarVelaUnica();
+
+    }
+
+  })();
+  </script>
+
+
+  <!-- ======================================================
+       GARANTIA DE QUE A VELA ENTRE NO CARRINHO
+       COM A FRAGRÂNCIA ESCOLHIDA
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+
+    const CART_STORAGE_KEY =
+      "ojobosco-cart";
+
+
+    function lerCarrinho() {
+
+      try {
+
+        const dados =
+          JSON.parse(
+            localStorage.getItem(
+              CART_STORAGE_KEY
+            ) || "[]"
+          );
+
+
+        return Array.isArray(
+          dados
+        )
+          ? dados
+          : [];
+
+      } catch {
+
+        return [];
+
+      }
+
+    }
+
+
+    function salvarCarrinho(
+      carrinho
+    ) {
+
+      localStorage.setItem(
+        CART_STORAGE_KEY,
+        JSON.stringify(
+          carrinho
+        )
+      );
+
+
+      atualizarContador();
+
+    }
+
+
+    function atualizarContador() {
+
+      const carrinho =
+        lerCarrinho();
+
+
+      const quantidade =
+        carrinho.reduce(
+          function (
+            total,
+            item
+          ) {
+
+            return (
+              total +
+              Number(
+                item.quantity ||
+                item.quantidade ||
+                1
+              )
+            );
+
+          },
+          0
+        );
+
+
+      document
+        .querySelectorAll(
+          "#cartCount, .cart-count"
+        )
+        .forEach(
+          function (elemento) {
+
+            elemento.textContent =
+              quantidade > 0
+                ? "[" +
+                  quantidade +
+                  "]"
+                : "";
+
+          }
+        );
+
+    }
+
+
+    function adicionarVela() {
+
+      const card =
+        document.getElementById(
+          "velaProduto"
+        );
+
+
+      if (!card) {
+        return;
+      }
+
+
+      const botao =
+        card.querySelector(
+          ".adicionar-card-btn"
+        );
+
+
+      if (!botao) {
+        return;
+      }
+
+
+      /*
+        Captura o clique antes do script global
+        somente para a vela.
+      */
+
+      botao.addEventListener(
+        "click",
+        function (evento) {
+
+          evento.preventDefault();
+
+          evento.stopImmediatePropagation();
+
+
+          const fragrancia =
+            card.getAttribute(
+              "data-fragrance"
+            ) ||
+            "CHÁ FLORAL";
+
+
+          const imagem =
+            card.getAttribute(
+              "data-current-image"
+            ) ||
+            "vela-cha-floral.jpg";
+
+
+          const carrinho =
+            lerCarrinho();
+
+
+          const chave =
+            "VELA|" +
+            fragrancia +
+            "|200 G";
+
+
+          const existente =
+            carrinho.find(
+              function (item) {
+
+                const nome =
+                  String(
+                    item.name ||
+                    item.product ||
+                    item.nome ||
+                    ""
+                  ).toUpperCase();
+
+
+                const fragranciaItem =
+                  String(
+                    item.fragrance ||
+                    item.fragrancia ||
+                    ""
+                  ).toUpperCase();
+
+
+                const tamanho =
+                  String(
+                    item.size ||
+                    item.tamanho ||
+                    ""
+                  ).toUpperCase();
+
+
+                return (
+                  nome ===
+                  "VELA" &&
+                  fragranciaItem ===
+                  fragrancia.toUpperCase() &&
+                  tamanho ===
+                  "200 G"
+                );
+
+              }
+            );
+
+
+          if (existente) {
+
+            existente.quantity =
+              Number(
+                existente.quantity ||
+                existente.quantidade ||
+                1
+              ) + 1;
+
+
+            existente.quantidade =
+              existente.quantity;
+
+
+            existente.image =
+              imagem;
+
+
+            existente.currentImage =
+              imagem;
+
+          } else {
+
+            carrinho.push({
+
+              key:
+                chave,
+
+              name:
+                "VELA",
+
+              product:
+                "VELA",
+
+              productName:
+                "VELA",
+
+              nome:
+                "VELA",
+
+              fragrance:
+                fragrancia,
+
+              fragrancia:
+                fragrancia,
+
+              size:
+                "200 G",
+
+              tamanho:
+                "200 G",
+
+              price:
+                289,
+
+              preco:
+                289,
+
+              currentPrice:
+                289,
+
+              image:
+                imagem,
+
+              imagem:
+                imagem,
+
+              currentImage:
+                imagem,
+
+              quantity:
+                1,
+
+              quantidade:
+                1
+
+            });
+
+          }
+
+
+          salvarCarrinho(
+            carrinho
+          );
+
+
+          const textoOriginal =
+            botao.textContent;
+
+
+          botao.textContent =
+            "ADICIONADO";
+
+
+          botao.classList.add(
+            "adicionado"
+          );
+
+
+          window.setTimeout(
+            function () {
+
+              botao.textContent =
+                textoOriginal;
+
+
+              botao.classList.remove(
+                "adicionado"
+              );
+
+            },
+            1000
+          );
+
+        },
+        true
+      );
+
+    }
+
+
+    if (
+      document.readyState ===
+      "loading"
+    ) {
+
+      document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+          adicionarVela();
+
+          atualizarContador();
+
+        }
+      );
+
+    } else {
+
+      adicionarVela();
+
+      atualizarContador();
+
+    }
+
+  })();
+  </script>
+
+
+</body>
 </html>
