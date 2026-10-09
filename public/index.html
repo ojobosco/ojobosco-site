@@ -3,129 +3,165 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>OJOBOSCO</title>
 
-  <meta
-    name="description"
-    content="OJOBOSCO — entre perfumaria e materialidade."
+  <link
+    rel="stylesheet"
+    href="style.css"
   >
-
-  <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
+
+
+  <!-- ======================================================
+       FAIXA SUPERIOR
+  ======================================================= -->
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
 
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
+
   <header class="topbar">
 
     <button
-      class="menu-toggle"
-      id="menuToggle"
       type="button"
-      aria-label="Abrir menu"
-      aria-expanded="false"
+      class="menu-toggle"
+      id="menuButton"
     >
       MENU
     </button>
 
-    <a href="index.html" class="brand-top">
+
+    <a
+      href="/"
+      class="brand-top"
+    >
       OJOBOSCO
     </a>
 
+
     <div class="top-actions">
 
-      <a href="index.html" class="nav-link">
+      <a
+        href="/universo"
+        class="nav-link"
+      >
         UNIVERSO
       </a>
 
-      <a href="loja.html" class="nav-link">
+
+      <a
+        href="/loja"
+        class="nav-link"
+      >
         LOJA
       </a>
 
-      <a href="universo.html" class="nav-link">
+
+      <a
+        href="/sobre"
+        class="nav-link"
+      >
         SOBRE
       </a>
 
-      <button
-        class="cart-link"
+
+      <a
+        href="/carrinho"
         id="cartButton"
-        type="button"
+        class="cart-link"
       >
         CARRINHO
-        <span id="cartCount">0</span>
-      </button>
+        <span
+          id="cartCount"
+          class="cart-count"
+        ></span>
+      </a>
 
     </div>
 
   </header>
 
-  <nav class="side-menu" id="sideMenu">
+
+  <!-- ======================================================
+       MENU
+  ======================================================= -->
+
+  <div
+    class="side-menu"
+    id="menuOverlay"
+  >
+
+    <button
+      type="button"
+      class="close-menu"
+      id="closeMenu"
+    >
+      FECHAR
+    </button>
+
 
     <div class="side-menu-inner">
 
-      <button
-        class="close-menu"
-        id="closeMenu"
-        type="button"
-        aria-label="Fechar menu"
-      >
-        FECHAR
-      </button>
-
-      <a href="index.html">
+      <a href="/universo">
         UNIVERSO
       </a>
 
-      <a href="loja.html">
+      <a href="/loja">
         LOJA
       </a>
 
-      <a href="universo.html">
+      <a href="/sobre">
         SOBRE
       </a>
 
-      <a href="#newsletter">
-        NEWSLETTER
-      </a>
-
-      <a href="contato.html">
+      <a href="/contato">
         CONTATO
       </a>
 
     </div>
 
-  </nav>
+  </div>
+
+
+  <!-- ======================================================
+       HOME
+  ======================================================= -->
 
   <main>
 
-    <section class="hero" id="inicio">
 
-      <a href="universo.html" class="hero-link">
+    <!-- ====================================================
+         HERO
+    ===================================================== -->
+
+    <section class="hero">
+
+      <a
+        href="/loja"
+        class="hero-link"
+      >
 
         <div class="hero-image-wrap">
 
           <img
-            src="hero.jpg"
+            src="/home-capa.jpg"
             alt="OJOBOSCO"
             class="hero-image"
           >
-
-          <div class="hero-overlay">
-
-            <h1>
-              ENTRE
-              <br>
-              PERFUMARIA
-              <br>
-              E MATERIALIDADE.
-            </h1>
-
-          </div>
 
         </div>
 
@@ -133,28 +169,41 @@
 
     </section>
 
+
+    <!-- ====================================================
+         PRODUTOS EM DESTAQUE
+         REFIL E PERFUME NÃO APARECEM
+    ===================================================== -->
+
     <section class="collection">
 
       <div class="products-grid">
 
+
+        <!-- AROMATIZADOR -->
+
         <article class="product-card">
 
-          <a href="loja.html#aromatizadores">
+          <a
+            href="/loja#aromatizadores"
+          >
 
             <div class="product-image">
 
               <img
-                src="homespray.jpg"
+                src="/aromatizador-cha-floral-100.jpg"
                 alt="Aromatizador OJOBOSCO"
               >
 
             </div>
+
 
             <div class="product-info">
 
               <h2>
                 AROMATIZADOR
               </h2>
+
 
               <p class="product-price">
                 A PARTIR DE R$179
@@ -166,24 +215,31 @@
 
         </article>
 
+
+        <!-- DIFUSOR -->
+
         <article class="product-card">
 
-          <a href="loja.html#difusores">
+          <a
+            href="/loja#difusores"
+          >
 
             <div class="product-image">
 
               <img
-                src="difusor.jpg"
+                src="/difusor-cha-floral-100.jpg"
                 alt="Difusor OJOBOSCO"
               >
 
             </div>
+
 
             <div class="product-info">
 
               <h2>
                 DIFUSOR
               </h2>
+
 
               <p class="product-price">
                 A PARTIR DE R$189
@@ -195,53 +251,31 @@
 
         </article>
 
+
+        <!-- VELA -->
+
         <article class="product-card">
 
-          <a href="loja.html#biblioteca">
+          <a
+            href="/loja#velas"
+          >
 
             <div class="product-image">
 
               <img
-                src="biblioteca.jpg"
-                alt="Biblioteca Olfativa OJOBOSCO"
-              >
-
-            </div>
-
-            <div class="product-info">
-
-              <h2>
-                BIBLIOTECA OLFATIVA
-              </h2>
-
-              <p class="product-price">
-                R$239
-              </p>
-
-            </div>
-
-          </a>
-
-        </article>
-
-        <article class="product-card">
-
-          <a href="loja.html#velas">
-
-            <div class="product-image">
-
-              <img
-                src="vela.jpg"
+                src="/vela-produto.jpg"
                 alt="Vela OJOBOSCO"
               >
 
             </div>
+
 
             <div class="product-info">
 
               <h2>
                 VELA
               </h2>
+
 
               <p class="product-price">
                 R$289
@@ -253,242 +287,165 @@
 
         </article>
 
-        <article class="product-card">
-
-          <a href="loja.html#perfume">
-
-            <div class="product-image">
-
-              <img
-                src="perfume.jpg"
-                alt="Perfume OJOBOSCO"
-              >
-
-            </div>
-
-            <div class="product-info">
-
-              <h2>
-                PERFUME
-              </h2>
-
-              <p class="product-price">
-                R$429
-              </p>
-
-            </div>
-
-          </a>
-
-        </article>
 
       </div>
 
     </section>
+
+
+    <!-- ====================================================
+         MANIFESTO
+    ===================================================== -->
 
     <section class="manifesto">
 
-      <div class="manifesto-image-wrap">
+      <a
+        href="/universo"
+        class="hero-link"
+      >
 
-        <img
-          src="manifesto.jpg"
-          alt="Universo OJOBOSCO"
-          class="manifesto-image"
-        >
+        <div class="manifesto-image-wrap">
 
-        <div class="manifesto-overlay">
-
-          <h2>
-            OBJETOS
-            <br>
-            QUE HABITAM
-            <br>
-            O AR.
-          </h2>
+          <img
+            src="/universo-ojobosco.jpg"
+            alt="Universo OJOBOSCO"
+            class="manifesto-image"
+          >
 
         </div>
 
-      </div>
+      </a>
 
     </section>
 
-    <section
-      class="newsletter"
-      id="newsletter"
-    >
-
-      <div class="newsletter-inner">
-
-        <div class="newsletter-heading">
-
-          <h2>
-            ENTRE NO
-            <br>
-            UNIVERSO
-            <br>
-            OJOBOSCO.
-          </h2>
-
-        </div>
-
-        <div class="newsletter-form-area">
-
-          <p class="newsletter-description">
-
-            CADASTRE-SE E RECEBA
-
-            <strong>
-              10% NA PRIMEIRA COMPRA.
-            </strong>
-
-          </p>
-
-          <form
-            class="newsletter-form"
-            id="newsletterForm"
-          >
-
-            <label
-              for="newsletterEmail"
-              class="sr-only"
-            >
-              Seu e-mail
-            </label>
-
-            <div class="newsletter-field">
-
-              <input
-                type="email"
-                id="newsletterEmail"
-                placeholder="SEU E-MAIL"
-                required
-              >
-
-              <button type="submit">
-                CADASTRAR
-              </button>
-
-            </div>
-
-          </form>
-
-          <div
-            class="newsletter-success"
-            id="newsletterSuccess"
-          >
-
-            <p>
-              BEM-VINDA AO UNIVERSO OJOBOSCO
-            </p>
-
-            <span>
-              SEU CÓDIGO:
-              <strong>BEMVINDO</strong>
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
 
   </main>
 
-  <footer class="footer">
 
-    <div class="footer-columns">
-
-      <div>
-
-        <p class="footer-title">
-          UNIVERSO
-        </p>
-
-        <a href="index.html">
-          INÍCIO
-        </a>
-
-        <a href="universo.html">
-          NOSSA HISTÓRIA
-        </a>
-
-      </div>
-
-      <div>
-
-        <p class="footer-title">
-          LOJA
-        </p>
-
-        <a href="loja.html#aromatizadores">
-          AROMATIZADOR
-        </a>
-
-        <a href="loja.html#difusores">
-          DIFUSOR
-        </a>
-
-        <a href="loja.html#biblioteca">
-          BIBLIOTECA OLFATIVA
-        </a>
-
-        <a href="loja.html#velas">
-          VELA
-        </a>
-
-        <a href="loja.html#perfume">
-          PERFUME
-        </a>
-
-      </div>
-
-      <div>
-
-        <p class="footer-title">
-          SOBRE
-        </p>
-
-        <a href="contato.html">
-          CONTATO
-        </a>
-
-        <a
-          href="https://www.instagram.com/ojobosco/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          INSTAGRAM
-        </a>
-
-        <a href="trocas.html">
-          TROCAS E DEVOLUÇÕES
-        </a>
-
-        <a href="privacidade.html">
-          PRIVACIDADE
-        </a>
-
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 OJOBOSCO
-      </span>
-
-      <span>
-        BRASIL
-      </span>
-
-    </div>
-
-  </footer>
+  <!-- ======================================================
+       SCRIPT PRINCIPAL
+  ======================================================= -->
 
   <script src="script.js"></script>
+
+
+  <!-- ======================================================
+       CONTROLE DO MENU
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+
+    const menuButton =
+      document.getElementById(
+        "menuButton"
+      );
+
+
+    const menu =
+      document.getElementById(
+        "menuOverlay"
+      );
+
+
+    const closeMenu =
+      document.getElementById(
+        "closeMenu"
+      );
+
+
+    function abrirMenu() {
+
+      if (!menu) {
+        return;
+      }
+
+
+      menu.classList.add(
+        "active"
+      );
+
+
+      menu.classList.add(
+        "open"
+      );
+
+
+      document.body.classList.add(
+        "menu-open"
+      );
+
+    }
+
+
+    function fecharMenu() {
+
+      if (!menu) {
+        return;
+      }
+
+
+      menu.classList.remove(
+        "active"
+      );
+
+
+      menu.classList.remove(
+        "open"
+      );
+
+
+      document.body.classList.remove(
+        "menu-open"
+      );
+
+    }
+
+
+    if (menuButton) {
+
+      menuButton.addEventListener(
+        "click",
+        abrirMenu
+      );
+
+    }
+
+
+    if (closeMenu) {
+
+      closeMenu.addEventListener(
+        "click",
+        fecharMenu
+      );
+
+    }
+
+
+    if (menu) {
+
+      menu
+        .querySelectorAll(
+          "a"
+        )
+        .forEach(
+          function (link) {
+
+            link.addEventListener(
+              "click",
+              fecharMenu
+            );
+
+          }
+        );
+
+    }
+
+  })();
+  </script>
+
 
 </body>
 
