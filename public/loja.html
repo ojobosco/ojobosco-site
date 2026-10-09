@@ -15,6 +15,37 @@
     rel="stylesheet"
     href="style.css"
   >
+
+  <style>
+    /* GARANTIA DE ABERTURA DO MENU */
+
+    #sideMenu {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+
+      transform: translateX(-100%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition:
+        transform 0.35s ease,
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+    }
+
+    #sideMenu.is-open {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+  </style>
 </head>
 
 
@@ -38,14 +69,16 @@
     <button
       type="button"
       class="menu-toggle"
-      id="menuButton"
+      id="menuToggle"
+      aria-label="Abrir menu"
+      aria-expanded="false"
     >
       MENU
     </button>
 
 
     <a
-      href="/"
+      href="index.html"
       class="brand-top"
     >
       OJOBOSCO
@@ -55,7 +88,7 @@
     <div class="top-actions">
 
       <a
-        href="/universo"
+        href="index.html"
         class="nav-link"
       >
         UNIVERSO
@@ -63,7 +96,7 @@
 
 
       <a
-        href="/loja"
+        href="loja.html"
         class="nav-link"
       >
         LOJA
@@ -71,24 +104,21 @@
 
 
       <a
-        href="/sobre"
+        href="universo.html"
         class="nav-link"
       >
         SOBRE
       </a>
 
 
-      <a
-        href="/carrinho"
-        id="cartButton"
+      <button
+        type="button"
         class="cart-link"
+        id="cartButton"
       >
         CARRINHO
-        <span
-          id="cartCount"
-          class="cart-count"
-        ></span>
-      </a>
+        <span id="cartCount">0</span>
+      </button>
 
     </div>
 
@@ -99,45 +129,46 @@
        MENU
   ======================================================= -->
 
-  <div
+  <nav
     class="side-menu"
-    id="menuOverlay"
+    id="sideMenu"
+    aria-hidden="true"
   >
-
-    <button
-      type="button"
-      class="close-menu"
-      id="closeMenu"
-    >
-      FECHAR
-    </button>
-
 
     <div class="side-menu-inner">
 
-      <a href="/">
-        INÍCIO
-      </a>
+      <button
+        type="button"
+        class="close-menu"
+        id="closeMenu"
+        aria-label="Fechar menu"
+      >
+        FECHAR
+      </button>
 
-      <a href="/universo">
+
+      <a href="index.html">
         UNIVERSO
       </a>
 
-      <a href="/loja">
+
+      <a href="loja.html">
         LOJA
       </a>
 
-      <a href="/sobre">
+
+      <a href="universo.html">
         SOBRE
       </a>
 
-      <a href="/carrinho">
-        CARRINHO
+
+      <a href="contato.html">
+        CONTATO
       </a>
 
     </div>
 
-  </div>
+  </nav>
 
 
   <!-- ======================================================
@@ -145,19 +176,6 @@
   ======================================================= -->
 
   <main class="loja-page">
-
-
-    <!-- ====================================================
-         ABERTURA
-    ===================================================== -->
-
-    <section class="objetos-abertura">
-
-      <h1>
-        OBJETOS OLFATIVOS
-      </h1>
-
-    </section>
 
 
     <!-- ====================================================
@@ -172,21 +190,17 @@
       <div class="categoria-cabecalho">
 
         <div class="categoria-titulo">
-
           <h2>
             AROMATIZADORES
           </h2>
-
         </div>
 
 
         <div class="categoria-descricao">
-
           <p>
             Fragrâncias para transformar a atmosfera dos espaços
             e criar uma presença olfativa contínua.
           </p>
-
         </div>
 
       </div>
@@ -194,6 +208,8 @@
 
       <div class="produtos-rail">
 
+
+        <!-- CHÁ FLORAL -->
 
         <article
           class="produto-loja-card"
@@ -209,7 +225,7 @@
         >
 
           <a
-            href="/produto-aromatizador?fragrancia=cha-floral"
+            href="produto-aromatizador.html?fragrancia=cha-floral"
             class="produto-link"
           >
 
@@ -250,6 +266,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -271,6 +288,8 @@
         </article>
 
 
+        <!-- FIGO TÍRIO -->
+
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
@@ -285,7 +304,7 @@
         >
 
           <a
-            href="/produto-aromatizador?fragrancia=figo-tirio"
+            href="produto-aromatizador.html?fragrancia=figo-tirio"
             class="produto-link"
           >
 
@@ -326,6 +345,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -347,6 +367,8 @@
         </article>
 
 
+        <!-- LAVANDA ROSADA -->
+
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
@@ -361,7 +383,7 @@
         >
 
           <a
-            href="/produto-aromatizador?fragrancia=lavanda-rosada"
+            href="produto-aromatizador.html?fragrancia=lavanda-rosada"
             class="produto-link"
           >
 
@@ -402,6 +424,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -423,6 +446,8 @@
         </article>
 
 
+        <!-- LIMOEIRA -->
+
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
@@ -437,7 +462,7 @@
         >
 
           <a
-            href="/produto-aromatizador?fragrancia=limoeira"
+            href="produto-aromatizador.html?fragrancia=limoeira"
             class="produto-link"
           >
 
@@ -478,6 +503,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -499,6 +525,8 @@
         </article>
 
 
+        <!-- VERDE QUENTE -->
+
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
@@ -513,7 +541,7 @@
         >
 
           <a
-            href="/produto-aromatizador?fragrancia=verde-quente"
+            href="produto-aromatizador.html?fragrancia=verde-quente"
             class="produto-link"
           >
 
@@ -554,6 +582,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -575,6 +604,8 @@
         </article>
 
 
+        <!-- ORBE AMAZÔNICO -->
+
         <article
           class="produto-loja-card"
           data-product-type="AROMATIZADOR"
@@ -589,7 +620,7 @@
         >
 
           <a
-            href="/produto-aromatizador?fragrancia=orbe-amazonico"
+            href="produto-aromatizador.html?fragrancia=orbe-amazonico"
             class="produto-link"
           >
 
@@ -630,6 +661,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -667,21 +699,17 @@
       <div class="categoria-cabecalho">
 
         <div class="categoria-titulo">
-
           <h2>
             DIFUSORES
           </h2>
-
         </div>
 
 
         <div class="categoria-descricao">
-
           <p>
             Uma presença contínua da fragrância,
             difundida lentamente através das varetas.
           </p>
-
         </div>
 
       </div>
@@ -689,6 +717,8 @@
 
       <div class="produtos-rail">
 
+
+        <!-- CHÁ FLORAL -->
 
         <article
           class="produto-loja-card"
@@ -704,7 +734,7 @@
         >
 
           <a
-            href="/produto-difusor?fragrancia=cha-floral"
+            href="produto-difusor.html?fragrancia=cha-floral"
             class="produto-link"
           >
 
@@ -745,6 +775,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -766,6 +797,8 @@
         </article>
 
 
+        <!-- FIGO TÍRIO -->
+
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
@@ -780,7 +813,7 @@
         >
 
           <a
-            href="/produto-difusor?fragrancia=figo-tirio"
+            href="produto-difusor.html?fragrancia=figo-tirio"
             class="produto-link"
           >
 
@@ -821,6 +854,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -842,6 +876,8 @@
         </article>
 
 
+        <!-- LAVANDA ROSADA -->
+
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
@@ -856,7 +892,7 @@
         >
 
           <a
-            href="/produto-difusor?fragrancia=lavanda-rosada"
+            href="produto-difusor.html?fragrancia=lavanda-rosada"
             class="produto-link"
           >
 
@@ -897,6 +933,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -918,6 +955,8 @@
         </article>
 
 
+        <!-- LIMOEIRA -->
+
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
@@ -932,7 +971,7 @@
         >
 
           <a
-            href="/produto-difusor?fragrancia=limoeira"
+            href="produto-difusor.html?fragrancia=limoeira"
             class="produto-link"
           >
 
@@ -973,6 +1012,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -994,6 +1034,8 @@
         </article>
 
 
+        <!-- VERDE QUENTE -->
+
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
@@ -1008,7 +1050,7 @@
         >
 
           <a
-            href="/produto-difusor?fragrancia=verde-quente"
+            href="produto-difusor.html?fragrancia=verde-quente"
             class="produto-link"
           >
 
@@ -1049,6 +1091,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -1070,6 +1113,8 @@
         </article>
 
 
+        <!-- ORBE AMAZÔNICO -->
+
         <article
           class="produto-loja-card"
           data-product-type="DIFUSOR"
@@ -1084,7 +1129,7 @@
         >
 
           <a
-            href="/produto-difusor?fragrancia=orbe-amazonico"
+            href="produto-difusor.html?fragrancia=orbe-amazonico"
             class="produto-link"
           >
 
@@ -1125,6 +1170,7 @@
               100 ML
             </button>
 
+
             <button
               type="button"
               class="variacao-btn"
@@ -1151,8 +1197,97 @@
 
 
     <!-- ====================================================
+         BIBLIOTECA OLFATIVA
+    ===================================================== -->
+
+    <section
+      class="categoria-loja"
+      id="biblioteca"
+    >
+
+      <div class="categoria-cabecalho">
+
+        <div class="categoria-titulo">
+          <h2>
+            BIBLIOTECA OLFATIVA
+          </h2>
+        </div>
+
+
+        <div class="categoria-descricao">
+          <p>
+            Uma introdução ao universo olfativo OJOBOSCO
+            através de seis fragrâncias em miniatura.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="produtos-rail">
+
+
+        <article
+          class="produto-loja-card"
+          data-product-type="BIBLIOTECA OLFATIVA"
+          data-product="BIBLIOTECA OLFATIVA"
+          data-fragrance=""
+          data-size="6 × 5 ML"
+          data-current-size="6 × 5 ML"
+          data-price="239"
+          data-current-price="239"
+          data-current-image="biblioteca-still.jpg"
+        >
+
+          <a
+            href="produto-biblioteca.html"
+            class="produto-link"
+          >
+
+            <div class="produto-loja-image">
+
+              <img
+                src="biblioteca-still.jpg"
+                alt="Biblioteca Olfativa OJOBOSCO"
+              >
+
+            </div>
+
+          </a>
+
+
+          <h3>
+            BIBLIOTECA OLFATIVA
+          </h3>
+
+
+          <p class="produto-loja-preco">
+            R$239
+          </p>
+
+
+          <p class="produto-medida">
+            6 × 5 ML
+          </p>
+
+
+          <button
+            type="button"
+            class="adicionar-card-btn"
+          >
+            ADICIONAR AO CARRINHO
+          </button>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
          VELA — PRODUTO ÚNICO
-         IMAGEM ÚNICA: /vela-produto.jpg
     ===================================================== -->
 
     <section
@@ -1163,21 +1298,17 @@
       <div class="categoria-cabecalho">
 
         <div class="categoria-titulo">
-
           <h2>
             VELA
           </h2>
-
         </div>
 
 
         <div class="categoria-descricao">
-
           <p>
             Um único objeto para diferentes atmosferas.
             Escolha a fragrância que deseja acender no ambiente.
           </p>
-
         </div>
 
       </div>
@@ -1196,12 +1327,12 @@
           data-current-size="200 G"
           data-price="289"
           data-current-price="289"
-          data-current-image="/vela-produto.jpg"
+          data-current-image="vela-produto.jpg"
         >
 
           <a
             id="velaProdutoLink"
-            href="/produto-vela?fragrancia=cha-floral"
+            href="produto-vela.html?fragrancia=cha-floral"
             class="produto-link"
           >
 
@@ -1209,7 +1340,7 @@
 
               <img
                 id="velaProdutoImagem"
-                src="/vela-produto.jpg"
+                src="vela-produto.jpg"
                 alt="Vela OJOBOSCO"
               >
 
@@ -1234,7 +1365,6 @@
 
 
           <div class="fragrancias-loja">
-
 
             <button
               type="button"
@@ -1295,7 +1425,6 @@
               ORBE AMAZÔNICO
             </button>
 
-
           </div>
 
 
@@ -1307,7 +1436,6 @@
           </button>
 
         </article>
-
 
       </div>
 
@@ -1325,8 +1453,180 @@
 
 
   <!-- ======================================================
+       MENU — CORRIGIDO
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+    function iniciarMenu() {
+
+      const botaoMenu =
+        document.getElementById(
+          "menuToggle"
+        );
+
+      const menu =
+        document.getElementById(
+          "sideMenu"
+        );
+
+      const fechar =
+        document.getElementById(
+          "closeMenu"
+        );
+
+      if (
+        !botaoMenu ||
+        !menu ||
+        !fechar
+      ) {
+        return;
+      }
+
+
+      function abrirMenu() {
+
+        menu.classList.add(
+          "is-open"
+        );
+
+        menu.classList.add(
+          "open"
+        );
+
+        menu.classList.add(
+          "active"
+        );
+
+        menu.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+        botaoMenu.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
+        document.body.classList.add(
+          "menu-open"
+        );
+
+      }
+
+
+      function fecharMenu() {
+
+        menu.classList.remove(
+          "is-open"
+        );
+
+        menu.classList.remove(
+          "open"
+        );
+
+        menu.classList.remove(
+          "active"
+        );
+
+        menu.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        botaoMenu.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+        document.body.classList.remove(
+          "menu-open"
+        );
+
+      }
+
+
+      botaoMenu.onclick =
+        function (evento) {
+
+          evento.preventDefault();
+          evento.stopPropagation();
+
+          abrirMenu();
+
+        };
+
+
+      fechar.onclick =
+        function (evento) {
+
+          evento.preventDefault();
+          evento.stopPropagation();
+
+          fecharMenu();
+
+        };
+
+
+      menu
+        .querySelectorAll(
+          "a"
+        )
+        .forEach(
+          function (link) {
+
+            link.addEventListener(
+              "click",
+              fecharMenu
+            );
+
+          }
+        );
+
+
+      document.addEventListener(
+        "keydown",
+        function (evento) {
+
+          if (
+            evento.key ===
+            "Escape"
+          ) {
+
+            fecharMenu();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    if (
+      document.readyState ===
+      "loading"
+    ) {
+
+      document.addEventListener(
+        "DOMContentLoaded",
+        iniciarMenu
+      );
+
+    } else {
+
+      iniciarMenu();
+
+    }
+
+  })();
+  </script>
+
+
+  <!-- ======================================================
        VELA — ESCOLHA DA FRAGRÂNCIA
-       A IMAGEM NÃO MUDA
   ======================================================= -->
 
   <script>
@@ -1334,17 +1634,11 @@
     "use strict";
 
 
-    function iniciarVelaUnica() {
+    function iniciarVela() {
 
       const card =
         document.getElementById(
           "velaProduto"
-        );
-
-
-      const imagem =
-        document.getElementById(
-          "velaProdutoImagem"
         );
 
 
@@ -1354,10 +1648,16 @@
         );
 
 
+      const imagem =
+        document.getElementById(
+          "velaProdutoImagem"
+        );
+
+
       if (
         !card ||
-        !imagem ||
-        !link
+        !link ||
+        !imagem
       ) {
         return;
       }
@@ -1377,40 +1677,35 @@
             function (evento) {
 
               evento.preventDefault();
-
               evento.stopPropagation();
 
 
               const fragrancia =
                 botao.getAttribute(
                   "data-vela-fragrancia"
-                ) || "";
+                );
 
 
               const slug =
                 botao.getAttribute(
                   "data-vela-slug"
-                ) || "";
+                );
 
 
               botoes.forEach(
-                function (outroBotao) {
+                function (item) {
 
-                  outroBotao
-                    .classList
-                    .remove(
-                      "active"
-                    );
+                  item.classList.remove(
+                    "active"
+                  );
 
                 }
               );
 
 
-              botao
-                .classList
-                .add(
-                  "active"
-                );
+              botao.classList.add(
+                "active"
+              );
 
 
               card.setAttribute(
@@ -1421,13 +1716,7 @@
 
               card.setAttribute(
                 "data-current-image",
-                "/vela-produto.jpg"
-              );
-
-
-              card.setAttribute(
-                "data-current-price",
-                "289"
+                "vela-produto.jpg"
               );
 
 
@@ -1437,8 +1726,14 @@
               );
 
 
+              card.setAttribute(
+                "data-current-price",
+                "289"
+              );
+
+
               imagem.src =
-                "/vela-produto.jpg";
+                "vela-produto.jpg";
 
 
               imagem.alt =
@@ -1447,7 +1742,7 @@
 
 
               link.href =
-                "/produto-vela?fragrancia=" +
+                "produto-vela.html?fragrancia=" +
                 encodeURIComponent(
                   slug
                 );
@@ -1468,12 +1763,12 @@
 
       document.addEventListener(
         "DOMContentLoaded",
-        iniciarVelaUnica
+        iniciarVela
       );
 
     } else {
 
-      iniciarVelaUnica();
+      iniciarVela();
 
     }
 
@@ -1482,7 +1777,7 @@
 
 
   <!-- ======================================================
-       VELA — ADICIONAR AO CARRINHO
+       VELA — CARRINHO
   ======================================================= -->
 
   <script>
@@ -1521,23 +1816,6 @@
     }
 
 
-    function salvarCarrinho(
-      carrinho
-    ) {
-
-      localStorage.setItem(
-        CART_STORAGE_KEY,
-        JSON.stringify(
-          carrinho
-        )
-      );
-
-
-      atualizarContador();
-
-    }
-
-
     function atualizarContador() {
 
       const carrinho =
@@ -1565,22 +1843,18 @@
         );
 
 
-      document
-        .querySelectorAll(
-          "#cartCount, .cart-count"
-        )
-        .forEach(
-          function (elemento) {
-
-            elemento.textContent =
-              quantidade > 0
-                ? "[" +
-                  quantidade +
-                  "]"
-                : "";
-
-          }
+      const contador =
+        document.getElementById(
+          "cartCount"
         );
+
+
+      if (contador) {
+
+        contador.textContent =
+          quantidade;
+
+      }
 
     }
 
@@ -1614,7 +1888,6 @@
         function (evento) {
 
           evento.preventDefault();
-
           evento.stopImmediatePropagation();
 
 
@@ -1623,10 +1896,6 @@
               "data-fragrance"
             ) ||
             "CHÁ FLORAL";
-
-
-          const imagem =
-            "/vela-produto.jpg";
 
 
           const carrinho =
@@ -1646,7 +1915,7 @@
                   ).toUpperCase();
 
 
-                const fragranciaItem =
+                const aroma =
                   String(
                     item.fragrance ||
                     item.fragrancia ||
@@ -1663,10 +1932,12 @@
 
 
                 return (
-                  nome === "VELA" &&
-                  fragranciaItem ===
+                  nome ===
+                  "VELA" &&
+                  aroma ===
                   fragrancia.toUpperCase() &&
-                  tamanho === "200 G"
+                  tamanho ===
+                  "200 G"
                 );
 
               }
@@ -1688,15 +1959,15 @@
 
 
             existente.image =
-              imagem;
+              "vela-produto.jpg";
 
 
             existente.imagem =
-              imagem;
+              "vela-produto.jpg";
 
 
             existente.currentImage =
-              imagem;
+              "vela-produto.jpg";
 
           } else {
 
@@ -1736,13 +2007,13 @@
                 289,
 
               image:
-                imagem,
+                "vela-produto.jpg",
 
               imagem:
-                imagem,
+                "vela-produto.jpg",
 
               currentImage:
-                imagem,
+                "vela-produto.jpg",
 
               quantity:
                 1,
@@ -1755,9 +2026,15 @@
           }
 
 
-          salvarCarrinho(
-            carrinho
+          localStorage.setItem(
+            CART_STORAGE_KEY,
+            JSON.stringify(
+              carrinho
+            )
           );
+
+
+          atualizarContador();
 
 
           const textoOriginal =
@@ -1768,21 +2045,11 @@
             "ADICIONADO";
 
 
-          botao.classList.add(
-            "adicionado"
-          );
-
-
           window.setTimeout(
             function () {
 
               botao.textContent =
                 textoOriginal;
-
-
-              botao.classList.remove(
-                "adicionado"
-              );
 
             },
             1000
@@ -1805,7 +2072,6 @@
         function () {
 
           adicionarVela();
-
           atualizarContador();
 
         }
@@ -1814,7 +2080,6 @@
     } else {
 
       adicionarVela();
-
       atualizarContador();
 
     }
