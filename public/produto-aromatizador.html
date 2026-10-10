@@ -11,18 +11,25 @@
 
   <title>Aromatizador — OJOBOSCO</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
   <style>
 
     /* ======================================================
-       DESCRIÇÃO DA FRAGRÂNCIA
+       DESCRIÇÃO DAS FRAGRÂNCIAS
     ======================================================= */
+
+    .fragrancia-detalhe.active {
+      display: block !important;
+    }
 
     .fragrancia-detalhe {
       padding: 95px 7vw 110px;
       border-top: 1px solid rgba(238, 232, 223, 0.18);
-      background: #000;
+      background: #000000;
       color: #eee8df;
     }
 
@@ -34,6 +41,7 @@
 
     .fragrancia-detalhe h2 {
       margin: 0 0 34px;
+      color: #eee8df;
       font-size: clamp(30px, 4vw, 54px);
       line-height: 1.05;
       font-weight: 400;
@@ -50,12 +58,14 @@
     }
 
     .piramide {
+      max-width: 860px;
       padding-top: 34px;
       border-top: 1px solid rgba(238, 232, 223, 0.18);
     }
 
     .piramide h3 {
       margin: 0 0 28px;
+      color: #eee8df;
       font-size: 10px;
       line-height: 1.4;
       font-weight: 400;
@@ -186,6 +196,7 @@
   <nav
     class="side-menu"
     id="sideMenu"
+    aria-hidden="true"
   >
 
     <div class="side-menu-inner">
@@ -401,10 +412,13 @@
 
 
     <!-- ======================================================
-         TEXTO E PIRÂMIDE OLFATIVA
+         DESCRIÇÃO E PIRÂMIDE OLFATIVA
     ======================================================= -->
 
-    <section class="fragrancia-detalhe">
+    <section
+      class="fragrancia-detalhe active"
+      id="fragranciaDetalhe"
+    >
 
       <div class="fragrancia-detalhe-inner">
 
@@ -417,10 +431,13 @@
         <p
           class="fragrancia-descricao"
           id="fragranciaDescricao"
-        ></p>
+        >
+          Delicada, elegante e acolhedora, Chá Floral é uma fragrância que transforma o ambiente em um refúgio de serenidade. A abertura fresca e luminosa combina notas cítricas de limão haiti com a suavidade aromática do chá branco, criando uma sensação imediata de leveza e bem-estar. No coração, um bouquet floral sofisticado de lírio-do-vale, gerânio, jasmim e íris revela feminilidade e refinamento. Ao fundo, notas cremosas e envolventes de sândalo, cedro, âmbar e vanilla proporcionam conforto, equilíbrio e uma permanência marcante.
+        </p>
 
 
         <div class="piramide">
+
 
           <h3>
             PIRÂMIDE OLFATIVA
@@ -433,7 +450,9 @@
               NOTAS DE SAÍDA:
             </strong>
 
-            <span id="notasSaida"></span>
+            <span id="notasSaida">
+              Coentro, Limão Haiti, Chá Branco
+            </span>
 
           </p>
 
@@ -444,7 +463,9 @@
               NOTAS DE CORPO:
             </strong>
 
-            <span id="notasCorpo"></span>
+            <span id="notasCorpo">
+              Lírio-do-Vale, Gerânio, Jasmim, Íris
+            </span>
 
           </p>
 
@@ -455,9 +476,12 @@
               NOTAS DE FUNDO:
             </strong>
 
-            <span id="notasFundo"></span>
+            <span id="notasFundo">
+              Sândalo, Cedro, Âmbar, Vanilla
+            </span>
 
           </p>
+
 
         </div>
 
@@ -587,7 +611,177 @@
 
 
   <!-- ======================================================
-       DESCRIÇÕES DAS FRAGRÂNCIAS
+       MENU
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+
+    const botaoMenu =
+      document.getElementById(
+        "menuToggle"
+      );
+
+
+    const menu =
+      document.getElementById(
+        "sideMenu"
+      );
+
+
+    const fechar =
+      document.getElementById(
+        "closeMenu"
+      );
+
+
+    function abrirMenu() {
+
+      if (!menu) {
+        return;
+      }
+
+
+      menu.classList.add(
+        "active"
+      );
+
+
+      menu.classList.add(
+        "open"
+      );
+
+
+      menu.classList.add(
+        "is-open"
+      );
+
+
+      menu.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+
+      if (botaoMenu) {
+
+        botaoMenu.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
+      }
+
+
+      document.body.classList.add(
+        "menu-open"
+      );
+
+    }
+
+
+    function fecharMenu() {
+
+      if (!menu) {
+        return;
+      }
+
+
+      menu.classList.remove(
+        "active"
+      );
+
+
+      menu.classList.remove(
+        "open"
+      );
+
+
+      menu.classList.remove(
+        "is-open"
+      );
+
+
+      menu.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      if (botaoMenu) {
+
+        botaoMenu.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
+
+
+      document.body.classList.remove(
+        "menu-open"
+      );
+
+    }
+
+
+    if (botaoMenu) {
+
+      botaoMenu.addEventListener(
+        "click",
+        function (evento) {
+
+          evento.preventDefault();
+
+          abrirMenu();
+
+        }
+      );
+
+    }
+
+
+    if (fechar) {
+
+      fechar.addEventListener(
+        "click",
+        function (evento) {
+
+          evento.preventDefault();
+
+          fecharMenu();
+
+        }
+      );
+
+    }
+
+
+    document.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key ===
+          "Escape"
+        ) {
+
+          fecharMenu();
+
+        }
+
+      }
+    );
+
+
+  })();
+  </script>
+
+
+  <!-- ======================================================
+       TODAS AS FRAGRÂNCIAS
   ======================================================= -->
 
   <script>
@@ -644,7 +838,7 @@
           "LAVANDA ROSADA",
 
         descricao:
-          "Uma fragrância contemporânea que combina o frescor aromático da lavanda com especiarias delicadas e madeiras nobres. Sua abertura revela notas vibrantes de lavanda, pimenta-rosa e pau-rosa, criando uma sensação fresca e sofisticada. No coração, a madeira da cabreúva encontra a intensidade do cravo e a suavidade herbal da sálvia, trazendo profundidade e personalidade à composição. Ao fundo, almíscar, cedro e patchouli envolvem o ambiente com uma assinatura acolhedora.",
+          "Uma fragrância contemporânea que combina o frescor aromático da lavanda com especiarias delicadas e madeiras nobres. Sua abertura revela notas vibrantes de lavanda, pimenta-rosa e pau-rosa, criando uma sensação fresca e sofisticada. No coração, a amadeira da cabreúva encontra a intensidade do cravo e a suavidade herbal da sálvia, trazendo profundidade e personalidade à composição. Ao fundo, almíscar, cedro e patchouli envolvem o ambiente com uma assinatura acolhedora.",
 
         saida:
           "Lavanda, Pimenta-Rosa, Pau-Rosa",
@@ -704,13 +898,13 @@
           "ORBE AMAZÔNICO",
 
         descricao:
-          "A efervescência do guaraná, com sua casca avermelhada e seu fruto em forma de orbe, abre a fragrância Orbe Amazônico com uma vibração fresca, luminosa e genuinamente brasileira. Sua energia pulsante encontra a suavidade da flor de algodão, revelando nuances polvorosas, macias e delicadamente adocicadas. Ao fundo, a cremosidade do sândalo se une ao cedro branco e ao dulçor da fava tonka, criando um rastro sofisticado. Uma fragrância de contrastes sutis, onde o vibrante encontra a maciez.",
+          "A efervescência do guaraná, com sua casca avermelhada e seu fruto em forma de orbe abre a fragrância Orbe Amazônico com uma vibração fresca, luminosa e genuinamente brasileira. Sua energia pulsante encontra a suavidade da flor de algodão, revelando nuances polvorosas, macias e delicadamente adocicadas. Ao fundo, a cremosidade do sândalo se une ao cedro branco e ao dulçor da fava tonka, criando um rastro sofisticado. Uma fragrância de contrastes sutis, onde o vibrante encontra com a maciez.",
 
         saida:
-          "Guaraná, Acorde Frutado",
+          "Guaraná, Acorde frutado",
 
         corpo:
-          "Algodão, Almíscar Branco, Lírio-do-Vale",
+          "Algodão, Almíscar branco, Lírio do Vale",
 
         fundo:
           "Sândalo, Cedro, Fava Tonka"
@@ -721,52 +915,49 @@
     };
 
 
-    function obterSlugAtual() {
-
-      const ativo =
-        document.querySelector(
-          ".produto-fragrancia-btn.active"
-        );
+    const detalhe =
+      document.getElementById(
+        "fragranciaDetalhe"
+      );
 
 
-      if (
-        ativo &&
-        ativo.dataset.fragrance
-      ) {
-
-        return ativo.dataset.fragrance;
-
-      }
+    const titulo =
+      document.getElementById(
+        "fragranciaTitulo"
+      );
 
 
-      const parametros =
-        new URLSearchParams(
-          window.location.search
-        );
+    const descricao =
+      document.getElementById(
+        "fragranciaDescricao"
+      );
 
 
-      const url =
-        parametros.get(
-          "fragrancia"
-        );
+    const saida =
+      document.getElementById(
+        "notasSaida"
+      );
 
 
-      if (
-        url &&
-        FRAGRANCIAS[url]
-      ) {
-
-        return url;
-
-      }
+    const corpo =
+      document.getElementById(
+        "notasCorpo"
+      );
 
 
-      return "cha-floral";
+    const fundo =
+      document.getElementById(
+        "notasFundo"
+      );
 
-    }
+
+    const nomeTopo =
+      document.getElementById(
+        "productFragranceName"
+      );
 
 
-    function atualizarDescricao(
+    function atualizarTexto(
       slug
     ) {
 
@@ -781,34 +972,13 @@
       }
 
 
-      const titulo =
-        document.getElementById(
-          "fragranciaTitulo"
+      if (detalhe) {
+
+        detalhe.classList.add(
+          "active"
         );
 
-
-      const descricao =
-        document.getElementById(
-          "fragranciaDescricao"
-        );
-
-
-      const saida =
-        document.getElementById(
-          "notasSaida"
-        );
-
-
-      const corpo =
-        document.getElementById(
-          "notasCorpo"
-        );
-
-
-      const fundo =
-        document.getElementById(
-          "notasFundo"
-        );
+      }
 
 
       if (titulo) {
@@ -850,23 +1020,20 @@
 
       }
 
+
+      if (nomeTopo) {
+
+        nomeTopo.textContent =
+          dados.nome;
+
+      }
+
     }
 
 
-    function selecionarInicial() {
-
-      const parametros =
-        new URLSearchParams(
-          window.location.search
-        );
-
-
-      let slug =
-        parametros.get(
-          "fragrancia"
-        ) ||
-        "cha-floral";
-
+    function selecionarFragrancia(
+      slug
+    ) {
 
       if (
         !FRAGRANCIAS[
@@ -897,8 +1064,23 @@
         );
 
 
-      atualizarDescricao(
+      atualizarTexto(
         slug
+      );
+
+
+      const novaUrl =
+        window.location.pathname +
+        "?fragrancia=" +
+        encodeURIComponent(
+          slug
+        );
+
+
+      window.history.replaceState(
+        {},
+        "",
+        novaUrl
       );
 
     }
@@ -915,27 +1097,8 @@
             "click",
             function () {
 
-              const slug =
-                botao.dataset.fragrance;
-
-
-              atualizarDescricao(
-                slug
-              );
-
-
-              const novaUrl =
-                window.location.pathname +
-                "?fragrancia=" +
-                encodeURIComponent(
-                  slug
-                );
-
-
-              window.history.replaceState(
-                {},
-                "",
-                novaUrl
+              selecionarFragrancia(
+                botao.dataset.fragrance
               );
 
             }
@@ -945,7 +1108,22 @@
       );
 
 
-    selecionarInicial();
+    const parametros =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const inicial =
+      parametros.get(
+        "fragrancia"
+      ) ||
+      "cha-floral";
+
+
+    selecionarFragrancia(
+      inicial
+    );
 
 
   })();
