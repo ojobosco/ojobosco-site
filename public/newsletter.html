@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Newsletter — OJOBOSCO</title>
+
+  <meta
+    name="description"
+    content="Entre no universo OJOBOSCO e receba novidades, lançamentos e 10% na primeira compra."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <style>
+
+    /* ======================================================
+       NEWSLETTER — PÁGINA
+    ======================================================= */
+
+    .newsletter-page {
+      min-height: 68vh;
+      background: #000;
+      color: #eee8df;
+      padding: 110px 7vw 120px;
+    }
+
+    .newsletter-page-inner {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 90px;
+      align-items: start;
+    }
+
+    .newsletter-page-title {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: 0.98;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    .newsletter-page-content {
+      max-width: 520px;
+    }
+
+    .newsletter-page-description {
+      margin: 0 0 46px;
+      color: rgba(238, 232, 223, 0.72);
+      font-size: 11px;
+      line-height: 2;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .newsletter-page-description strong {
+      color: #eee8df;
+      font-weight: 400;
+    }
+
+    .newsletter-page-form {
+      width: 100%;
+    }
+
+    .newsletter-page-field {
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid rgba(238, 232, 223, 0.65);
+    }
+
+    .newsletter-page-field input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #eee8df;
+      padding: 16px 0;
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .newsletter-page-field input::placeholder {
+      color: rgba(238, 232, 223, 0.45);
+      opacity: 1;
+    }
+
+    .newsletter-page-field button {
+      border: 0;
+      background: transparent;
+      color: #eee8df;
+      padding: 16px 0 16px 24px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .newsletter-page-field button:hover {
+      opacity: 0.55;
+    }
+
+    .newsletter-page-success {
+      display: none;
+      margin-top: 36px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(238, 232, 223, 0.18);
+    }
+
+    .newsletter-page-success.visible {
+      display: block;
+    }
+
+    .newsletter-page-success p {
+      margin: 0 0 12px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      line-height: 1.8;
+    }
+
+    .newsletter-page-success span {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      line-height: 1.8;
+      color: rgba(238, 232, 223, 0.7);
+    }
+
+    .newsletter-page-success strong {
+      color: #eee8df;
+      font-weight: 400;
+    }
+
+    .newsletter-page-note {
+      margin: 26px 0 0;
+      color: rgba(238, 232, 223, 0.4);
+      font-size: 8px;
+      line-height: 1.8;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 800px) {
+
+      .newsletter-page {
+        padding: 80px 22px 90px;
+      }
+
+      .newsletter-page-inner {
+        grid-template-columns: 1fr;
+        gap: 55px;
+      }
+
+      .newsletter-page-title {
+        font-size: 42px;
+      }
+
+      .newsletter-page-content {
+        max-width: none;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="announcement-bar">
+    GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
+  </div>
+
+  <header class="topbar">
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+    >
+      MENU
+    </button>
+
+    <a
+      href="index.html"
+      class="brand-top"
+    >
+      OJOBOSCO
+    </a>
+
+    <div class="top-actions">
+
+      <a
+        href="index.html"
+        class="nav-link"
+      >
+        UNIVERSO
+      </a>
+
+      <a
+        href="loja.html"
+        class="nav-link"
+      >
+        LOJA
+      </a>
+
+      <a
+        href="universo.html"
+        class="nav-link"
+      >
+        SOBRE
+      </a>
+
+      <button
+        class="cart-link"
+        id="cartButton"
+        type="button"
+      >
+        CARRINHO
+        <span id="cartCount">0</span>
+      </button>
+
+    </div>
+
+  </header>
+
+  <nav
+    class="side-menu"
+    id="sideMenu"
+  >
+
+    <div class="side-menu-inner">
+
+      <button
+        class="close-menu"
+        id="closeMenu"
+        type="button"
+        aria-label="Fechar menu"
+      >
+        FECHAR
+      </button>
+
+      <a href="index.html">
+        UNIVERSO
+      </a>
+
+      <a href="loja.html">
+        LOJA
+      </a>
+
+      <a href="universo.html">
+        SOBRE
+      </a>
+
+      <a href="newsletter.html">
+        NEWSLETTER
+      </a>
+
+      <a href="contato.html">
+        CONTATO
+      </a>
+
+    </div>
+
+  </nav>
+
+  <main>
+
+    <section class="newsletter-page">
+
+      <div class="newsletter-page-inner">
+
+        <div>
+
+          <h1 class="newsletter-page-title">
+            ENTRE NO
+            <br>
+            UNIVERSO
+            <br>
+            OJOBOSCO.
+          </h1>
+
+        </div>
+
+        <div class="newsletter-page-content">
+
+          <p class="newsletter-page-description">
+            CADASTRE-SE PARA RECEBER NOVIDADES,
+            LANÇAMENTOS E HISTÓRIAS DO UNIVERSO
+            OJOBOSCO.
+            <br><br>
+            <strong>
+              RECEBA 10% NA PRIMEIRA COMPRA.
+            </strong>
+          </p>
+
+          <form
+            class="newsletter-page-form"
+            id="newsletterForm"
+          >
+
+            <div class="newsletter-page-field">
+
+              <input
+                type="email"
+                id="newsletterEmail"
+                name="email"
+                placeholder="SEU E-MAIL"
+                autocomplete="email"
+                required
+              >
+
+              <button
+                type="submit"
+              >
+                CADASTRAR
+              </button>
+
+            </div>
+
+          </form>
+
+          <div
+            class="newsletter-page-success"
+            id="newsletterSuccess"
+          >
+
+            <p>
+              BEM-VINDA AO UNIVERSO OJOBOSCO.
+            </p>
+
+            <span>
+              SEU CÓDIGO DE PRIMEIRA COMPRA:
+              <strong>
+                BEMVINDO
+              </strong>
+            </span>
+
+          </div>
+
+          <p class="newsletter-page-note">
+            AO SE CADASTRAR, VOCÊ CONCORDA EM RECEBER
+            COMUNICAÇÕES DA OJOBOSCO.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+
+    <div class="footer-columns">
+
+      <div>
+
+        <p class="footer-title">
+          UNIVERSO
+        </p>
+
+        <a href="index.html">
+          INÍCIO
+        </a>
+
+        <a href="universo.html">
+          NOSSA HISTÓRIA
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          LOJA
+        </p>
+
+        <a href="loja.html#aromatizadores">
+          AROMATIZADOR
+        </a>
+
+        <a href="loja.html#difusores">
+          DIFUSOR
+        </a>
+
+        <a href="loja.html#biblioteca">
+          BIBLIOTECA OLFATIVA
+        </a>
+
+        <a href="loja.html#velas">
+          VELA
+        </a>
+
+      </div>
+
+      <div>
+
+        <p class="footer-title">
+          SOBRE
+        </p>
+
+        <a href="contato.html">
+          CONTATO
+        </a>
+
+        <a
+          href="https://www.instagram.com/ojobosco/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          INSTAGRAM
+        </a>
+
+        <a href="trocas.html">
+          TROCAS E DEVOLUÇÕES
+        </a>
+
+        <a href="privacidade.html">
+          PRIVACIDADE
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 OJOBOSCO
+      </span>
+
+      <span>
+        BRASIL
+      </span>
+
+    </div>
+
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
