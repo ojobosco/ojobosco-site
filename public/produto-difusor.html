@@ -15,13 +15,118 @@
     rel="stylesheet"
     href="style.css"
   >
+
+  <style>
+
+    /* ======================================================
+       DESCRIÇÃO DAS FRAGRÂNCIAS
+    ======================================================= */
+
+    .fragrancia-detalhe.active {
+      display: block !important;
+    }
+
+    .fragrancia-detalhe {
+      padding: 95px 7vw 110px;
+      border-top: 1px solid rgba(238, 232, 223, 0.18);
+      background: #000000;
+      color: #eee8df;
+    }
+
+    .fragrancia-detalhe-inner {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .fragrancia-detalhe h2 {
+      margin: 0 0 34px;
+      color: #eee8df;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.05;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    .fragrancia-descricao {
+      max-width: 860px;
+      margin: 0 0 55px;
+      color: rgba(238, 232, 223, 0.82);
+      font-size: 13px;
+      line-height: 2;
+      letter-spacing: 0.04em;
+    }
+
+    .piramide {
+      max-width: 860px;
+      padding-top: 34px;
+      border-top: 1px solid rgba(238, 232, 223, 0.18);
+    }
+
+    .piramide h3 {
+      margin: 0 0 28px;
+      color: #eee8df;
+      font-size: 10px;
+      line-height: 1.4;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .piramide p {
+      margin: 0 0 14px;
+      color: rgba(238, 232, 223, 0.76);
+      font-size: 11px;
+      line-height: 1.9;
+      letter-spacing: 0.07em;
+    }
+
+    .piramide strong {
+      color: #eee8df;
+      font-weight: 400;
+    }
+
+    @media (max-width: 700px) {
+
+      .fragrancia-detalhe {
+        padding: 70px 20px 85px;
+      }
+
+      .fragrancia-detalhe h2 {
+        font-size: 32px;
+      }
+
+      .fragrancia-descricao {
+        font-size: 13px;
+        line-height: 1.9;
+      }
+
+      .piramide p {
+        font-size: 11px;
+      }
+
+    }
+
+  </style>
+
 </head>
 
+
 <body data-detail-product="difusor">
+
+
+  <!-- ======================================================
+       FAIXA SUPERIOR
+  ======================================================= -->
 
   <div class="announcement-bar">
     GANHE FRETE GRÁTIS EM COMPRAS ACIMA DE R$500
   </div>
+
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
 
   <header class="topbar">
 
@@ -35,12 +140,14 @@
       MENU
     </button>
 
+
     <a
       href="index.html"
       class="brand-top"
     >
       OJOBOSCO
     </a>
+
 
     <div class="top-actions">
 
@@ -51,6 +158,7 @@
         UNIVERSO
       </a>
 
+
       <a
         href="loja.html"
         class="nav-link"
@@ -58,12 +166,14 @@
         LOJA
       </a>
 
+
       <a
         href="universo.html"
         class="nav-link"
       >
         SOBRE
       </a>
+
 
       <button
         class="cart-link"
@@ -78,9 +188,15 @@
 
   </header>
 
+
+  <!-- ======================================================
+       MENU
+  ======================================================= -->
+
   <nav
     class="side-menu"
     id="sideMenu"
+    aria-hidden="true"
   >
 
     <div class="side-menu-inner">
@@ -94,21 +210,21 @@
         FECHAR
       </button>
 
+
       <a href="index.html">
         UNIVERSO
       </a>
+
 
       <a href="loja.html">
         LOJA
       </a>
 
+
       <a href="universo.html">
         SOBRE
       </a>
 
-      <a href="index.html#newsletter">
-        NEWSLETTER
-      </a>
 
       <a href="contato.html">
         CONTATO
@@ -118,9 +234,18 @@
 
   </nav>
 
+
+  <!-- ======================================================
+       PRODUTO
+  ======================================================= -->
+
   <main class="produto-detalhe-page">
 
+
     <section class="produto-detalhe-topo">
+
+
+      <!-- FOTO -->
 
       <div class="produto-detalhe-foto">
 
@@ -132,15 +257,21 @@
 
       </div>
 
+
+      <!-- INFORMAÇÕES -->
+
       <div class="produto-detalhe-info">
+
 
         <p class="produto-detalhe-tipo">
           DIFUSOR
         </p>
 
+
         <h1>
           DIFUSOR
         </h1>
+
 
         <p
           class="produto-fragrancia-nome"
@@ -149,6 +280,7 @@
           CHÁ FLORAL
         </p>
 
+
         <p
           class="produto-detalhe-preco"
           id="productDetailPrice"
@@ -156,27 +288,38 @@
           R$189
         </p>
 
-        <p class="produto-detalhe-medida">
+
+        <p
+          class="produto-detalhe-medida"
+          id="productDetailSize"
+        >
           100 ML
         </p>
+
+
+        <!-- TAMANHO -->
 
         <p class="produto-detalhe-label">
           TAMANHO
         </p>
+
 
         <div class="produto-tamanhos">
 
           <button
             class="produto-tamanho-btn active"
             data-size="100"
+            data-price="189"
             type="button"
           >
             100 ML
           </button>
 
+
           <button
             class="produto-tamanho-btn"
             data-size="250"
+            data-price="309"
             type="button"
           >
             250 ML
@@ -184,11 +327,16 @@
 
         </div>
 
+
+        <!-- FRAGRÂNCIA -->
+
         <p class="produto-detalhe-label produto-label-fragrancia">
           FRAGRÂNCIA
         </p>
 
+
         <div class="produto-fragrancias">
+
 
           <button
             class="produto-fragrancia-btn active"
@@ -198,6 +346,7 @@
             CHÁ FLORAL
           </button>
 
+
           <button
             class="produto-fragrancia-btn"
             data-fragrance="figo-tirio"
@@ -205,6 +354,7 @@
           >
             FIGO TÍRIO
           </button>
+
 
           <button
             class="produto-fragrancia-btn"
@@ -214,6 +364,7 @@
             LAVANDA ROSADA
           </button>
 
+
           <button
             class="produto-fragrancia-btn"
             data-fragrance="limoeira"
@@ -221,6 +372,7 @@
           >
             LIMOEIRA
           </button>
+
 
           <button
             class="produto-fragrancia-btn"
@@ -230,6 +382,7 @@
             VERDE QUENTE
           </button>
 
+
           <button
             class="produto-fragrancia-btn"
             data-fragrance="orbe-amazonico"
@@ -238,24 +391,116 @@
             ORBE AMAZÔNICO
           </button>
 
+
         </div>
+
+
+        <!-- CARRINHO -->
 
         <button
           class="produto-adicionar"
+          id="adicionarCarrinho"
           type="button"
         >
           ADICIONAR AO CARRINHO
         </button>
 
+
       </div>
 
     </section>
 
+
+    <!-- ======================================================
+         DESCRIÇÃO E PIRÂMIDE OLFATIVA
+    ======================================================= -->
+
+    <section
+      class="fragrancia-detalhe active"
+      id="fragranciaDetalhe"
+    >
+
+      <div class="fragrancia-detalhe-inner">
+
+
+        <h2 id="fragranciaTitulo">
+          CHÁ FLORAL
+        </h2>
+
+
+        <p
+          class="fragrancia-descricao"
+          id="fragranciaDescricao"
+        >
+          Delicada, elegante e acolhedora, Chá Floral é uma fragrância que transforma o ambiente em um refúgio de serenidade. A abertura fresca e luminosa combina notas cítricas de limão haiti com a suavidade aromática do chá branco, criando uma sensação imediata de leveza e bem-estar. No coração, um bouquet floral sofisticado de lírio-do-vale, gerânio, jasmim e íris revela feminilidade e refinamento. Ao fundo, notas cremosas e envolventes de sândalo, cedro, âmbar e vanilla proporcionam conforto, equilíbrio e uma permanência marcante.
+        </p>
+
+
+        <div class="piramide">
+
+          <h3>
+            PIRÂMIDE OLFATIVA
+          </h3>
+
+
+          <p>
+
+            <strong>
+              NOTAS DE SAÍDA:
+            </strong>
+
+            <span id="notasSaida">
+              Coentro, Limão Haiti, Chá Branco
+            </span>
+
+          </p>
+
+
+          <p>
+
+            <strong>
+              NOTAS DE CORPO:
+            </strong>
+
+            <span id="notasCorpo">
+              Lírio-do-Vale, Gerânio, Jasmim, Íris
+            </span>
+
+          </p>
+
+
+          <p>
+
+            <strong>
+              NOTAS DE FUNDO:
+            </strong>
+
+            <span id="notasFundo">
+              Sândalo, Cedro, Âmbar, Vanilla
+            </span>
+
+          </p>
+
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
   </main>
+
+
+  <!-- ======================================================
+       RODAPÉ
+  ======================================================= -->
 
   <footer class="footer">
 
     <div class="footer-columns">
+
 
       <div>
 
@@ -263,9 +508,11 @@
           UNIVERSO
         </p>
 
+
         <a href="index.html">
           INÍCIO
         </a>
+
 
         <a href="universo.html">
           NOSSA HISTÓRIA
@@ -273,33 +520,35 @@
 
       </div>
 
+
       <div>
 
         <p class="footer-title">
           LOJA
         </p>
 
+
         <a href="loja.html#aromatizadores">
           AROMATIZADOR
         </a>
+
 
         <a href="loja.html#difusores">
           DIFUSOR
         </a>
 
+
         <a href="loja.html#biblioteca">
           BIBLIOTECA OLFATIVA
         </a>
+
 
         <a href="loja.html#velas">
           VELA
         </a>
 
-        <a href="loja.html#perfume">
-          PERFUME
-        </a>
-
       </div>
+
 
       <div>
 
@@ -307,9 +556,11 @@
           SOBRE
         </p>
 
+
         <a href="contato.html">
           CONTATO
         </a>
+
 
         <a
           href="https://www.instagram.com/ojobosco/"
@@ -319,9 +570,11 @@
           INSTAGRAM
         </a>
 
+
         <a href="trocas.html">
           TROCAS E DEVOLUÇÕES
         </a>
+
 
         <a href="privacidade.html">
           PRIVACIDADE
@@ -329,13 +582,16 @@
 
       </div>
 
+
     </div>
+
 
     <div class="footer-bottom">
 
       <span>
         © 2026 OJOBOSCO
       </span>
+
 
       <span>
         BRASIL
@@ -345,7 +601,700 @@
 
   </footer>
 
+
+  <!-- ======================================================
+       SCRIPT PRINCIPAL
+  ======================================================= -->
+
   <script src="script.js"></script>
+
+
+  <!-- ======================================================
+       MENU
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+
+    const botaoMenu =
+      document.getElementById(
+        "menuToggle"
+      );
+
+
+    const menu =
+      document.getElementById(
+        "sideMenu"
+      );
+
+
+    const fechar =
+      document.getElementById(
+        "closeMenu"
+      );
+
+
+    function abrirMenu() {
+
+      if (!menu) {
+        return;
+      }
+
+
+      menu.classList.add(
+        "active"
+      );
+
+
+      menu.classList.add(
+        "open"
+      );
+
+
+      menu.classList.add(
+        "is-open"
+      );
+
+
+      menu.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+
+      if (botaoMenu) {
+
+        botaoMenu.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
+      }
+
+
+      document.body.classList.add(
+        "menu-open"
+      );
+
+    }
+
+
+    function fecharMenu() {
+
+      if (!menu) {
+        return;
+      }
+
+
+      menu.classList.remove(
+        "active"
+      );
+
+
+      menu.classList.remove(
+        "open"
+      );
+
+
+      menu.classList.remove(
+        "is-open"
+      );
+
+
+      menu.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      if (botaoMenu) {
+
+        botaoMenu.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
+
+
+      document.body.classList.remove(
+        "menu-open"
+      );
+
+    }
+
+
+    if (botaoMenu) {
+
+      botaoMenu.addEventListener(
+        "click",
+        function (evento) {
+
+          evento.preventDefault();
+
+          abrirMenu();
+
+        }
+      );
+
+    }
+
+
+    if (fechar) {
+
+      fechar.addEventListener(
+        "click",
+        function (evento) {
+
+          evento.preventDefault();
+
+          fecharMenu();
+
+        }
+      );
+
+    }
+
+
+    document.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key ===
+          "Escape"
+        ) {
+
+          fecharMenu();
+
+        }
+
+      }
+    );
+
+
+  })();
+  </script>
+
+
+  <!-- ======================================================
+       TAMANHOS DO DIFUSOR
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+
+    const botoesTamanho =
+      document.querySelectorAll(
+        ".produto-tamanho-btn"
+      );
+
+
+    const preco =
+      document.getElementById(
+        "productDetailPrice"
+      );
+
+
+    const medida =
+      document.getElementById(
+        "productDetailSize"
+      );
+
+
+    function selecionarTamanho(
+      botao
+    ) {
+
+      botoesTamanho.forEach(
+        function (item) {
+
+          item.classList.remove(
+            "active"
+          );
+
+        }
+      );
+
+
+      botao.classList.add(
+        "active"
+      );
+
+
+      const tamanho =
+        botao.dataset.size;
+
+
+      const valor =
+        botao.dataset.price;
+
+
+      if (preco) {
+
+        preco.textContent =
+          "R$" +
+          valor;
+
+      }
+
+
+      if (medida) {
+
+        medida.textContent =
+          tamanho +
+          " ML";
+
+      }
+
+    }
+
+
+    botoesTamanho.forEach(
+      function (botao) {
+
+        botao.addEventListener(
+          "click",
+          function () {
+
+            selecionarTamanho(
+              botao
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  })();
+  </script>
+
+
+  <!-- ======================================================
+       TODAS AS FRAGRÂNCIAS
+  ======================================================= -->
+
+  <script>
+  (function () {
+    "use strict";
+
+
+    const FRAGRANCIAS = {
+
+
+      "cha-floral": {
+
+        nome:
+          "CHÁ FLORAL",
+
+        descricao:
+          "Delicada, elegante e acolhedora, Chá Floral é uma fragrância que transforma o ambiente em um refúgio de serenidade. A abertura fresca e luminosa combina notas cítricas de limão haiti com a suavidade aromática do chá branco, criando uma sensação imediata de leveza e bem-estar. No coração, um bouquet floral sofisticado de lírio-do-vale, gerânio, jasmim e íris revela feminilidade e refinamento. Ao fundo, notas cremosas e envolventes de sândalo, cedro, âmbar e vanilla proporcionam conforto, equilíbrio e uma permanência marcante.",
+
+        saida:
+          "Coentro, Limão Haiti, Chá Branco",
+
+        corpo:
+          "Lírio-do-Vale, Gerânio, Jasmim, Íris",
+
+        fundo:
+          "Sândalo, Cedro, Âmbar, Vanilla"
+
+      },
+
+
+      "figo-tirio": {
+
+        nome:
+          "FIGO TÍRIO",
+
+        descricao:
+          "Uma fragrância sofisticada e envolvente que traduz a elegância natural da figueira. O frescor verde das folhas e da flor de figo abre o caminho para um coração cremoso e delicado, onde notas de coco, violeta e sálvia revelam profundidade e personalidade. Ao fundo, acordes quentes de âmbar, cumaru e caramelo proporcionam conforto e uma sensação de bem-estar duradoura.",
+
+        saida:
+          "Flor de Figo, Acorde Verde",
+
+        corpo:
+          "Figo, Coco, Pau-Rosa, Violeta, Sálvia",
+
+        fundo:
+          "Âmbar, Cumaru, Caramelo"
+
+      },
+
+
+      "lavanda-rosada": {
+
+        nome:
+          "LAVANDA ROSADA",
+
+        descricao:
+          "Uma fragrância contemporânea que combina o frescor aromático da lavanda com especiarias delicadas e madeiras nobres. Sua abertura revela notas vibrantes de lavanda, pimenta-rosa e pau-rosa, criando uma sensação fresca e sofisticada. No coração, a amadeira da cabreúva encontra a intensidade do cravo e a suavidade herbal da sálvia, trazendo profundidade e personalidade à composição. Ao fundo, almíscar, cedro e patchouli envolvem o ambiente com uma assinatura acolhedora.",
+
+        saida:
+          "Lavanda, Pimenta-Rosa, Pau-Rosa",
+
+        corpo:
+          "Cabreúva, Cravo, Sálvia",
+
+        fundo:
+          "Almíscar, Cedro, Patchouli"
+
+      },
+
+
+      "limoeira": {
+
+        nome:
+          "LIMOEIRA",
+
+        descricao:
+          "Vibrante e sofisticada, Limoeira é uma fragrância que combina a luminosidade dos cítricos com a profundidade das especiarias. A abertura refrescante do limão siciliano ganha personalidade com o toque marcante e energizante da pimenta-preta. No corpo, cardamomo, noz-moscada e gerânio revelam uma composição aromática envolvente, equilibrando frescor e calor. Na base, notas de âmbar gris, patchouli e sândalo conferem conforto e uma permanência refinada no ambiente.",
+
+        saida:
+          "Limão Siciliano, Pimenta-Preta",
+
+        corpo:
+          "Cardamomo, Noz-Moscada, Gerânio",
+
+        fundo:
+          "Âmbar Gris, Patchouli, Sândalo"
+
+      },
+
+
+      "verde-quente": {
+
+        nome:
+          "VERDE QUENTE",
+
+        descricao:
+          "Inspirada na energia da natureza, Verde Quente é uma fragrância vibrante que equilibra frescor, intensidade e vitalidade. As notas cítricas e herbais de lima, alecrim e verbena despertam os sentidos logo na primeira impressão. No coração, o toque aromático do anis, da sálvia e da litsea cubeba cria uma composição singular e marcante. A base amadeirada de vetiver, patchouli e cedro adiciona profundidade e elegância, deixando uma atmosfera acolhedora e contemporânea.",
+
+        saida:
+          "Lima, Alecrim, Verbena",
+
+        corpo:
+          "Anis, Sálvia, Litsea Cubeba",
+
+        fundo:
+          "Vetiver, Patchouli, Cedro"
+
+      },
+
+
+      "orbe-amazonico": {
+
+        nome:
+          "ORBE AMAZÔNICO",
+
+        descricao:
+          "A efervescência do guaraná, com sua casca avermelhada e seu fruto em forma de orbe abre a fragrância Orbe Amazônico com uma vibração fresca, luminosa e genuinamente brasileira. Sua energia pulsante encontra a suavidade da flor de algodão, revelando nuances polvorosas, macias e delicadamente adocicadas. Ao fundo, a cremosidade do sândalo se une ao cedro branco e ao dulçor da fava tonka, criando um rastro sofisticado. Uma fragrância de contrastes sutis, onde o vibrante encontra com a maciez.",
+
+        saida:
+          "Guaraná, Acorde frutado",
+
+        corpo:
+          "Algodão, Almíscar branco, Lírio do Vale",
+
+        fundo:
+          "Sândalo, Cedro, Fava Tonka"
+
+      }
+
+
+    };
+
+
+    const detalhe =
+      document.getElementById(
+        "fragranciaDetalhe"
+      );
+
+
+    const titulo =
+      document.getElementById(
+        "fragranciaTitulo"
+      );
+
+
+    const descricao =
+      document.getElementById(
+        "fragranciaDescricao"
+      );
+
+
+    const saida =
+      document.getElementById(
+        "notasSaida"
+      );
+
+
+    const corpo =
+      document.getElementById(
+        "notasCorpo"
+      );
+
+
+    const fundo =
+      document.getElementById(
+        "notasFundo"
+      );
+
+
+    const nomeTopo =
+      document.getElementById(
+        "productFragranceName"
+      );
+
+
+    const imagem =
+      document.getElementById(
+        "productDetailImage"
+      );
+
+
+    function atualizarTexto(
+      slug
+    ) {
+
+      const dados =
+        FRAGRANCIAS[
+          slug
+        ];
+
+
+      if (!dados) {
+        return;
+      }
+
+
+      if (detalhe) {
+
+        detalhe.classList.add(
+          "active"
+        );
+
+      }
+
+
+      if (titulo) {
+
+        titulo.textContent =
+          dados.nome;
+
+      }
+
+
+      if (descricao) {
+
+        descricao.textContent =
+          dados.descricao;
+
+      }
+
+
+      if (saida) {
+
+        saida.textContent =
+          dados.saida;
+
+      }
+
+
+      if (corpo) {
+
+        corpo.textContent =
+          dados.corpo;
+
+      }
+
+
+      if (fundo) {
+
+        fundo.textContent =
+          dados.fundo;
+
+      }
+
+
+      if (nomeTopo) {
+
+        nomeTopo.textContent =
+          dados.nome;
+
+      }
+
+
+      if (imagem) {
+
+        const tamanhoAtivo =
+          document.querySelector(
+            ".produto-tamanho-btn.active"
+          );
+
+
+        const tamanho =
+          tamanhoAtivo
+            ? tamanhoAtivo.dataset.size
+            : "100";
+
+
+        imagem.src =
+          "difusor-" +
+          slug +
+          "-" +
+          tamanho +
+          ".jpg";
+
+
+        imagem.alt =
+          "Difusor " +
+          dados.nome +
+          " OJOBOSCO";
+
+      }
+
+    }
+
+
+    function selecionarFragrancia(
+      slug
+    ) {
+
+      if (
+        !FRAGRANCIAS[
+          slug
+        ]
+      ) {
+
+        slug =
+          "cha-floral";
+
+      }
+
+
+      document
+        .querySelectorAll(
+          ".produto-fragrancia-btn"
+        )
+        .forEach(
+          function (botao) {
+
+            botao.classList.toggle(
+              "active",
+              botao.dataset.fragrance ===
+              slug
+            );
+
+          }
+        );
+
+
+      atualizarTexto(
+        slug
+      );
+
+
+      const novaUrl =
+        window.location.pathname +
+        "?fragrancia=" +
+        encodeURIComponent(
+          slug
+        );
+
+
+      window.history.replaceState(
+        {},
+        "",
+        novaUrl
+      );
+
+    }
+
+
+    document
+      .querySelectorAll(
+        ".produto-fragrancia-btn"
+      )
+      .forEach(
+        function (botao) {
+
+          botao.addEventListener(
+            "click",
+            function () {
+
+              selecionarFragrancia(
+                botao.dataset.fragrance
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    document
+      .querySelectorAll(
+        ".produto-tamanho-btn"
+      )
+      .forEach(
+        function (botao) {
+
+          botao.addEventListener(
+            "click",
+            function () {
+
+              const ativo =
+                document.querySelector(
+                  ".produto-fragrancia-btn.active"
+                );
+
+
+              const slug =
+                ativo
+                  ? ativo.dataset.fragrance
+                  : "cha-floral";
+
+
+              atualizarTexto(
+                slug
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    const parametros =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const inicial =
+      parametros.get(
+        "fragrancia"
+      ) ||
+      "cha-floral";
+
+
+    selecionarFragrancia(
+      inicial
+    );
+
+
+  })();
+  </script>
+
 
 </body>
 
