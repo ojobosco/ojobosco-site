@@ -64,6 +64,780 @@
 
 
   /* =========================================================
+     INVENTÁRIO — CLOUDFLARE D1
+  ========================================================= */
+
+  const INVENTORY_API_URL =
+    "/api/inventory";
+
+  const inventoryBySku =
+    new Map();
+
+  let inventoryLoaded =
+    false;
+
+
+  function getInventorySku(
+    product,
+    fragrance,
+    size
+  ) {
+    const normalizedProduct =
+      normalizeText(
+        product
+      );
+
+    const fragranceSlug =
+      normalizeSlug(
+        fragrance
+      );
+
+    const numericSize =
+      onlyNumbers(
+        size
+      );
+
+    const fragranceCodes = {
+      "cha-floral": "CHA",
+      "figo-tirio": "FIGO",
+      "lavanda-rosada": "LAV",
+      "limoeira": "LIM",
+      "verde-quente": "VERDE",
+      "orbe-amazonico": "ORBE"
+    };
+
+    const fragranceCode =
+      fragranceCodes[
+        fragranceSlug
+      ] || "";
+
+
+    if (
+      normalizedProduct.includes(
+        "BIBLIOTECA"
+      )
+    ) {
+      return "BIBLIOTECA-6X5";
+    }
+
+
+    if (
+      normalizedProduct.includes(
+        "AROMATIZADOR"
+      ) &&
+      fragranceCode &&
+      (
+        numericSize === "100" ||
+        numericSize === "250"
+      )
+    ) {
+      return (
+        "AROM-" +
+        fragranceCode +
+        "-" +
+        numericSize
+      );
+    }
+
+
+    if (
+      normalizedProduct.includes(
+        "DIFUSOR"
+      ) &&
+      fragranceCode &&
+      (
+        numericSize === "100" ||
+        numericSize === "250"
+      )
+    ) {
+      return (
+        "DIF-" +
+        fragranceCode +
+        "-" +
+        numericSize
+      );
+    }
+
+
+    if (
+      normalizedProduct.includes(
+        "VELA"
+      ) &&
+      fragranceCode
+    ) {
+      return (
+        "VELA-" +
+        fragranceCode +
+        "-200"
+      );
+    }
+
+
+    return "";
+  }
+
+
+  function getInventoryRecord(
+    product,
+    fragrance,
+    size
+  ) {
+    const sku =
+      getInventorySku(
+        product,
+        fragrance,
+        size
+      );
+
+    if (!sku) {
+      return null;
+    }
+
+    return (
+      inventoryBySku.get(
+        sku
+      ) ||
+      null
+    );
+  }
+
+
+  function getCartQuantityForSku(
+    sku
+  ) {
+    if (!sku) {
+      return 0;
+    }
+
+    return getCart().reduce(
+      (
+        total,
+        item
+      ) => {
+        const itemSku =
+          getInventorySku(
+            getItemName(item),
+            getItemFragrance(item),
+            getItemSize(item)
+          );
+
+        if (
+          itemSku !==
+          sku
+        ) {
+          return total;
+        }
+
+        return (
+          total +
+          getItemQuantity(
+            item
+          )
+        );
+      },
+      0
+    );
+  }
+
+
+  function validateCartAgainstInventory(
+    cart
+  ) {
+    if (!inventoryLoaded) {
+      return {
+        ok: true
+      };
+    }
+
+    const quantities =
+      new Map();
+
+    for (const item of cart) {
+      const sku =
+        getInventorySku(
+          getItemName(item),
+          getItemFragrance(item),
+          getItemSize(item)
+        );
+
+      if (!sku) {
+        continue;
+      }
+
+      quantities.set(
+        sku,
+        (
+          quantities.get(
+            sku
+          ) ||
+          0
+        ) +
+        getItemQuantity(
+          item
+        )
+      );
+    }
+
+    for (
+      const [
+        sku,
+        quantity
+      ]
+      of quantities.entries()
+    ) {
+      const record =
+        inventoryBySku.get(
+          sku
+        );
+
+      if (!record) {
+        continue;
+      }
+
+      const stock =
+        Number(
+          record.stock ||
+          0
+        );
+
+      const active =
+        Number(
+          record.active ||
+          0
+        ) === 1;
+
+      if (
+        !active ||
+        stock <= 0
+      ) {
+        return {
+          ok: false,
+          message:
+            "UM DOS ITENS DO CARRINHO ESTÁ ESGOTADO."
+        };
+      }
+
+      if (
+        quantity >
+        stock
+      ) {
+        return {
+          ok: false,
+          message:
+            `ESTOQUE DISPONÍVEL: ${stock} UNIDADE${stock === 1 ? "" : "S"}.`
+        };
+      }
+    }
+
+    return {
+      ok: true
+    };
+  }
+
+
+  async function loadInventory() {
+    try {
+      const response =
+        await fetch(
+          INVENTORY_API_URL,
+          {
+            method: "GET",
+            cache: "no-store"
+          }
+        );
+
+      if (!response.ok) {
+        throw new Error(
+          "Não foi possível consultar o inventário."
+        );
+      }
+
+      const data =
+        await response.json();
+
+      const items =
+        Array.isArray(
+          data?.items
+        )
+          ? data.items
+          : [];
+
+      inventoryBySku.clear();
+
+      items.forEach(
+        (item) => {
+          if (!item?.sku) {
+            return;
+          }
+
+          inventoryBySku.set(
+            String(
+              item.sku
+            ),
+            {
+              ...item,
+
+              stock:
+                Number(
+                  item.stock ||
+                  0
+                ),
+
+              active:
+                Number(
+                  item.active ||
+                  0
+                )
+            }
+          );
+        }
+      );
+
+      inventoryLoaded =
+        true;
+
+    } catch (error) {
+      console.error(
+        "Inventory load error:",
+        error
+      );
+
+      inventoryLoaded =
+        false;
+    }
+  }
+
+
+  function getInventoryStatusText(
+    record
+  ) {
+    if (!record) {
+      return "";
+    }
+
+    const stock =
+      Number(
+        record.stock ||
+        0
+      );
+
+    const active =
+      Number(
+        record.active ||
+        0
+      ) === 1;
+
+    if (
+      !active ||
+      stock <= 0
+    ) {
+      return "ESGOTADO";
+    }
+
+    if (stock === 1) {
+      return "ÚLTIMA UNIDADE";
+    }
+
+    return "DISPONÍVEL";
+  }
+
+
+  function ensureInventoryStatusElement(
+    scope,
+    addButton
+  ) {
+    if (!scope) {
+      return null;
+    }
+
+    let status =
+      scope.querySelector(
+        ".inventory-status"
+      );
+
+    if (!status) {
+      status =
+        document.createElement(
+          "p"
+        );
+
+      status.className =
+        "inventory-status";
+
+      status.style.margin =
+        "14px 0";
+
+      status.style.fontSize =
+        "9px";
+
+      status.style.lineHeight =
+        "1.5";
+
+      status.style.letterSpacing =
+        "0.18em";
+
+      status.style.textTransform =
+        "uppercase";
+
+      status.style.opacity =
+        "0.72";
+
+      if (
+        addButton &&
+        addButton.parentNode
+      ) {
+        addButton.parentNode.insertBefore(
+          status,
+          addButton
+        );
+      } else {
+        scope.appendChild(
+          status
+        );
+      }
+    }
+
+    return status;
+  }
+
+
+  function applyInventoryStatusToButton(
+    addButton,
+    record
+  ) {
+    if (!addButton) {
+      return;
+    }
+
+    if (
+      !addButton.dataset
+        .inventoryDefaultLabel
+    ) {
+      addButton.dataset
+        .inventoryDefaultLabel =
+        addButton.textContent
+          .trim();
+    }
+
+    if (!record) {
+      addButton.disabled =
+        false;
+
+      addButton.textContent =
+        addButton.dataset
+          .inventoryDefaultLabel;
+
+      return;
+    }
+
+    const stock =
+      Number(
+        record.stock ||
+        0
+      );
+
+    const active =
+      Number(
+        record.active ||
+        0
+      ) === 1;
+
+    const soldOut =
+      !active ||
+      stock <= 0;
+
+    addButton.disabled =
+      soldOut;
+
+    addButton.setAttribute(
+      "aria-disabled",
+      soldOut
+        ? "true"
+        : "false"
+    );
+
+    addButton.textContent =
+      soldOut
+        ? "ESGOTADO"
+        : addButton.dataset
+            .inventoryDefaultLabel;
+  }
+
+
+  function updateProductDetailInventoryStatus(
+    productType,
+    fragrance,
+    size
+  ) {
+    const scope =
+      document.querySelector(
+        ".produto-detalhe-info"
+      ) ||
+      document.querySelector(
+        "[data-detail-product]"
+      ) ||
+      document.body;
+
+    const addButton =
+      document.querySelector(
+        ".produto-adicionar, #adicionarCarrinho, #addToCart, [data-product-add]"
+      );
+
+    if (
+      !scope ||
+      !addButton
+    ) {
+      return;
+    }
+
+    let productName =
+      productType;
+
+    if (
+      productType ===
+      "aromatizador"
+    ) {
+      productName =
+        "AROMATIZADOR";
+    }
+
+    if (
+      productType ===
+      "difusor"
+    ) {
+      productName =
+        "DIFUSOR";
+    }
+
+    if (
+      productType ===
+      "vela"
+    ) {
+      productName =
+        "VELA";
+    }
+
+    if (
+      productType ===
+      "biblioteca"
+    ) {
+      productName =
+        "BIBLIOTECA OLFATIVA";
+    }
+
+    const fragranceName =
+      FRAGRANCES[
+        normalizeSlug(
+          fragrance
+        )
+      ] ||
+      fragrance ||
+      "";
+
+    let displaySize =
+      size;
+
+    if (
+      productType ===
+      "vela"
+    ) {
+      displaySize =
+        "200 G";
+    } else if (
+      productType ===
+      "biblioteca"
+    ) {
+      displaySize =
+        "6 × 5 ML";
+    } else if (size) {
+      displaySize =
+        size +
+        " ML";
+    }
+
+    const record =
+      getInventoryRecord(
+        productName,
+        fragranceName,
+        displaySize
+      );
+
+    const status =
+      ensureInventoryStatusElement(
+        scope,
+        addButton
+      );
+
+    if (status) {
+      status.textContent =
+        getInventoryStatusText(
+          record
+        );
+
+      status.style.display =
+        record
+          ? "block"
+          : "none";
+    }
+
+    applyInventoryStatusToButton(
+      addButton,
+      record
+    );
+  }
+
+
+  function updateStoreCardInventoryStatus(
+    card
+  ) {
+    if (!card) {
+      return;
+    }
+
+    const addButton =
+      card.querySelector(
+        ".adicionar-card-btn, [data-add-cart]"
+      );
+
+    if (!addButton) {
+      return;
+    }
+
+    const product =
+      card.getAttribute(
+        "data-product-type"
+      ) ||
+      card.getAttribute(
+        "data-product"
+      ) ||
+      card.querySelector(
+        "h3"
+      )?.textContent ||
+      "";
+
+    const fragrance =
+      card.getAttribute(
+        "data-fragrance"
+      ) ||
+      "";
+
+    const size =
+      card.getAttribute(
+        "data-current-size"
+      ) ||
+      card.getAttribute(
+        "data-size"
+      ) ||
+      "";
+
+    const record =
+      getInventoryRecord(
+        product,
+        fragrance,
+        size
+      );
+
+    const status =
+      ensureInventoryStatusElement(
+        card,
+        addButton
+      );
+
+    if (status) {
+      status.textContent =
+        getInventoryStatusText(
+          record
+        );
+
+      status.style.display =
+        record
+          ? "block"
+          : "none";
+    }
+
+    applyInventoryStatusToButton(
+      addButton,
+      record
+    );
+  }
+
+
+  function updateAllInventoryUI() {
+    const productType =
+      getCurrentDetailProductType();
+
+    if (productType) {
+      const detailContainer =
+        document.querySelector(
+          "[data-detail-product]"
+        ) ||
+        document.body;
+
+      const fragrance =
+        detailContainer.getAttribute(
+          "data-current-fragrance"
+        ) ||
+        document
+          .querySelector(
+            ".produto-fragrancia-btn.active[data-fragrance]"
+          )
+          ?.getAttribute(
+            "data-fragrance"
+          ) ||
+        "";
+
+      const size =
+        detailContainer.getAttribute(
+          "data-current-size"
+        ) ||
+        document
+          .querySelector(
+            ".produto-tamanho-btn.active[data-size]"
+          )
+          ?.getAttribute(
+            "data-size"
+          ) ||
+        "";
+
+      updateProductDetailInventoryStatus(
+        productType,
+        fragrance,
+        size
+      );
+    }
+
+    document
+      .querySelectorAll(
+        ".produto-loja-card, .produto-card, .loja-card, [data-product-type]"
+      )
+      .forEach(
+        updateStoreCardInventoryStatus
+      );
+  }
+
+
+  function initInventoryDynamicControls() {
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (
+          !event.target.closest(
+            ".produto-fragrancia-btn, .produto-tamanho-btn, .variacao-btn, .size-btn, .fragrancia-loja-btn"
+          )
+        ) {
+          return;
+        }
+
+        setTimeout(
+          updateAllInventoryUI,
+          0
+        );
+      }
+    );
+  }
+
+
+  /* =========================================================
      HELPERS
   ========================================================= */
 
@@ -385,6 +1159,7 @@
       return Array.isArray(data)
         ? data
         : [];
+
     } catch {
       return [];
     }
@@ -398,6 +1173,8 @@
     );
 
     updateCartCount();
+
+    updateAllInventoryUI();
   }
 
 
@@ -608,14 +1385,79 @@
           ) === key
       );
 
+    const sku =
+      getInventorySku(
+        getItemName(item),
+        getItemFragrance(item),
+        getItemSize(item)
+      );
+
+    const inventoryRecord =
+      sku
+        ? inventoryBySku.get(
+            sku
+          )
+        : null;
+
+    const requestedQuantity =
+      getItemQuantity(
+        item
+      );
+
+    const existingQuantity =
+      existing
+        ? getItemQuantity(
+            existing
+          )
+        : 0;
+
+
+    if (inventoryRecord) {
+      const stock =
+        Number(
+          inventoryRecord.stock ||
+          0
+        );
+
+      const active =
+        Number(
+          inventoryRecord.active ||
+          0
+        ) === 1;
+
+      if (
+        !active ||
+        stock <= 0
+      ) {
+        return {
+          ok: false,
+          reason:
+            "sold_out",
+          available:
+            0
+        };
+      }
+
+      if (
+        existingQuantity +
+        requestedQuantity >
+        stock
+      ) {
+        return {
+          ok: false,
+          reason:
+            "stock_limit",
+          available:
+            stock
+        };
+      }
+    }
+
+
     if (existing) {
       existing.quantity =
-        getItemQuantity(
-          existing
-        ) +
-        getItemQuantity(
-          item
-        );
+        existingQuantity +
+        requestedQuantity;
 
     } else {
       cart.push({
@@ -638,11 +1480,15 @@
           getItemImage(item),
 
         quantity:
-          getItemQuantity(item)
+          requestedQuantity
       });
     }
 
     saveCart(cart);
+
+    return {
+      ok: true
+    };
   }
 
 
@@ -930,10 +1776,6 @@
     let currentSize = "";
 
 
-    /* ---------------------------------------------------------
-       TAMANHO INICIAL
-    --------------------------------------------------------- */
-
     const activeSizeButton =
       document.querySelector(
         ".produto-tamanho-btn.active[data-size]"
@@ -961,11 +1803,13 @@
         "perfume"
       ) {
         currentSize = "100";
+
       } else if (
         productType ===
         "vela"
       ) {
         currentSize = "200";
+
       } else if (
         productType ===
         "biblioteca"
@@ -975,14 +1819,11 @@
     }
 
 
-    /* ---------------------------------------------------------
-       FRAGRÂNCIA DA URL
-    --------------------------------------------------------- */
-
     const params =
       new URLSearchParams(
         window.location.search
       );
+
 
     const queryFragrance =
       normalizeSlug(
@@ -1002,10 +1843,6 @@
         queryFragrance;
     }
 
-
-    /* ---------------------------------------------------------
-       FRAGRÂNCIA ATIVA DO HTML
-    --------------------------------------------------------- */
 
     if (!currentFragrance) {
       const activeFragranceButton =
@@ -1027,10 +1864,6 @@
     }
 
 
-    /* ---------------------------------------------------------
-       PRIMEIRA FRAGRÂNCIA
-    --------------------------------------------------------- */
-
     if (
       !currentFragrance &&
       (
@@ -1047,10 +1880,6 @@
     }
 
 
-    /* ---------------------------------------------------------
-       PERFUME
-    --------------------------------------------------------- */
-
     if (
       productType ===
       "perfume"
@@ -1060,15 +1889,9 @@
     }
 
 
-    /* ---------------------------------------------------------
-       ATUALIZAR TUDO
-    --------------------------------------------------------- */
-
     function updateDetailPage({
       updateUrl = true
     } = {}) {
-
-      /* NOME DA FRAGRÂNCIA */
 
       if (
         fragranceName &&
@@ -1082,8 +1905,6 @@
           ];
       }
 
-
-      /* BOTÕES DE FRAGRÂNCIA */
 
       fragranceButtons.forEach(
         (button) => {
@@ -1102,8 +1923,6 @@
         }
       );
 
-
-      /* BOTÕES DE TAMANHO */
 
       sizeButtons.forEach(
         (button) => {
@@ -1126,8 +1945,6 @@
       );
 
 
-      /* PAINEL DA FRAGRÂNCIA */
-
       panels.forEach(
         (panel) => {
           const slug =
@@ -1146,8 +1963,6 @@
       );
 
 
-      /* PREÇO */
-
       const currentPrice =
         getDetailProductPrice(
           productType,
@@ -1164,8 +1979,6 @@
           );
       }
 
-
-      /* IMAGEM */
 
       if (image) {
         let imageFile = "";
@@ -1204,8 +2017,6 @@
       }
 
 
-      /* DATA ATTRIBUTES DO PRODUTO */
-
       const detailContainer =
         document.querySelector(
           "[data-detail-product]"
@@ -1243,7 +2054,12 @@
       }
 
 
-      /* URL */
+      updateProductDetailInventoryStatus(
+        productType,
+        currentFragrance,
+        currentSize
+      );
+
 
       if (
         updateUrl &&
@@ -1274,10 +2090,6 @@
     }
 
 
-    /* ---------------------------------------------------------
-       CLIQUE NAS FRAGRÂNCIAS
-    --------------------------------------------------------- */
-
     fragranceButtons.forEach(
       (button) => {
         button.addEventListener(
@@ -1306,10 +2118,6 @@
       }
     );
 
-
-    /* ---------------------------------------------------------
-       CLIQUE NOS TAMANHOS
-    --------------------------------------------------------- */
 
     sizeButtons.forEach(
       (button) => {
@@ -1502,30 +2310,65 @@
         }
 
 
-        addItemToCart({
-          name:
-            productName,
+        const cartSize =
+          productType ===
+          "vela"
+            ? "200 G"
+            : (
+                productType ===
+                "biblioteca"
+                  ? "6 × 5 ML"
+                  : (
+                      size
+                        ? size + " ML"
+                        : ""
+                    )
+              );
 
-          product:
-            productName,
 
-          fragrance,
+        const addResult =
+          addItemToCart({
+            name:
+              productName,
 
-          size:
-            size
-              ? size + " ML"
-              : "",
+            product:
+              productName,
 
-          price,
+            fragrance,
 
-          image,
+            size:
+              cartSize,
 
-          quantity: 1
-        });
+            price,
+
+            image,
+
+            quantity: 1
+          });
 
 
         const original =
           addButton.textContent;
+
+
+        if (
+          !addResult?.ok
+        ) {
+          addButton.textContent =
+            addResult?.reason ===
+            "sold_out"
+              ? "ESGOTADO"
+              : "LIMITE DE ESTOQUE";
+
+          setTimeout(
+            () => {
+              updateAllInventoryUI();
+            },
+            1400
+          );
+
+          return;
+        }
 
 
         addButton.textContent =
@@ -1587,11 +2430,6 @@
                   return;
                 }
 
-
-                /*
-                 * NÃO USAR DATASET AQUI.
-                 * data-image-250 não funciona bem via dataset.
-                 */
 
                 const newImage =
                   card.getAttribute(
@@ -1678,6 +2516,10 @@
 
                 button.classList.add(
                   "active"
+                );
+
+                updateStoreCardInventoryStatus(
+                  card
                 );
               }
             );
@@ -1821,27 +2663,50 @@
               }
 
 
-              addItemToCart({
-                name: product,
-                product,
-                fragrance,
-                size,
-                price:
-                  parseMoney(
-                    price
-                  ),
-                image:
-                  image
-                    ? image.getAttribute(
-                        "src"
-                      )
-                    : "",
-                quantity: 1
-              });
+              const addResult =
+                addItemToCart({
+                  name: product,
+                  product,
+                  fragrance,
+                  size,
+                  price:
+                    parseMoney(
+                      price
+                    ),
+                  image:
+                    image
+                      ? image.getAttribute(
+                          "src"
+                        )
+                      : "",
+                  quantity: 1
+                });
 
 
               const originalText =
                 button.textContent;
+
+
+              if (
+                !addResult?.ok
+              ) {
+                button.textContent =
+                  addResult?.reason ===
+                  "sold_out"
+                    ? "ESGOTADO"
+                    : "LIMITE DE ESTOQUE";
+
+                setTimeout(
+                  () => {
+                    updateStoreCardInventoryStatus(
+                      card
+                    );
+                  },
+                  1200
+                );
+
+                return;
+              }
 
 
               button.textContent =
@@ -2306,6 +3171,29 @@
             );
 
 
+          const inventoryRecord =
+            getInventoryRecord(
+              name,
+              fragrance,
+              size
+            );
+
+
+          const inventoryStock =
+            inventoryRecord
+              ? Number(
+                  inventoryRecord.stock ||
+                  0
+                )
+              : null;
+
+
+          const plusDisabled =
+            inventoryRecord &&
+            quantity >=
+              inventoryStock;
+
+
           row.innerHTML = `
             <div class="cart-item-image-wrap">
               ${
@@ -2363,6 +3251,7 @@
                 <button
                   type="button"
                   data-cart-plus="${index}"
+                  ${plusDisabled ? "disabled" : ""}
                 >
                   +
                 </button>
@@ -2517,10 +3406,40 @@
               }
 
 
-              cart[index].quantity =
+              const inventoryRecord =
+                getInventoryRecord(
+                  getItemName(
+                    cart[index]
+                  ),
+                  getItemFragrance(
+                    cart[index]
+                  ),
+                  getItemSize(
+                    cart[index]
+                  )
+                );
+
+
+              const currentQuantity =
                 getItemQuantity(
                   cart[index]
-                ) + 1;
+                );
+
+
+              if (
+                inventoryRecord &&
+                currentQuantity >=
+                  Number(
+                    inventoryRecord.stock ||
+                    0
+                  )
+              ) {
+                return;
+              }
+
+
+              cart[index].quantity =
+                currentQuantity + 1;
 
 
               saveCart(cart);
@@ -2781,6 +3700,26 @@
               }
 
 
+              const inventoryValidation =
+                validateCartAgainstInventory(
+                  cart
+                );
+
+
+              if (
+                !inventoryValidation.ok
+              ) {
+                if (
+                  elements.shippingMessage
+                ) {
+                  elements.shippingMessage.textContent =
+                    inventoryValidation.message;
+                }
+
+                return;
+              }
+
+
               const shipping =
                 getShipping();
 
@@ -2916,7 +3855,7 @@
      INICIALIZAÇÃO
   ========================================================= */
 
-  function init() {
+  async function init() {
     normalizeNavigationLinks();
 
     initMenu();
@@ -2924,6 +3863,8 @@
     updateCartCount();
 
     initCartLinks();
+
+    await loadInventory();
 
     initProductDetailControls();
 
@@ -2934,6 +3875,10 @@
     initStoreProductLinks();
 
     initStoreAddButtons();
+
+    initInventoryDynamicControls();
+
+    updateAllInventoryUI();
 
     initNewsletter();
 
