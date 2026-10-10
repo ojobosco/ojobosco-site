@@ -63,6 +63,100 @@ export default {
     }
 
     /* =====================================================
+       INVENTÁRIO PÚBLICO
+    ===================================================== */
+
+    if (
+      url.pathname === "/api/inventory" &&
+      request.method === "GET"
+    ) {
+      if (!env.DB) {
+        return json(
+          {
+            error:
+              "Banco D1 não conectado."
+          },
+          500,
+          corsHeaders
+        );
+      }
+
+      try {
+        const result =
+          await env.DB
+            .prepare(
+              `
+              SELECT
+                sku,
+                product,
+                fragrance,
+                size,
+                stock,
+                active,
+                updated_at
+              FROM inventory
+              ORDER BY product, fragrance, size
+              `
+            )
+            .all();
+
+        const items =
+          (result.results || [])
+            .map(
+              item => ({
+                ...item,
+
+                stock:
+                  Number(
+                    item.stock ||
+                    0
+                  ),
+
+                active:
+                  Number(
+                    item.active ||
+                    0
+                  ),
+
+                available:
+                  Number(
+                    item.active ||
+                    0
+                  ) === 1 &&
+                  Number(
+                    item.stock ||
+                    0
+                  ) > 0
+              })
+            );
+
+        return json(
+          {
+            success: true,
+            items
+          },
+          200,
+          corsHeaders
+        );
+
+      } catch (error) {
+        console.error(
+          "Inventory GET error:",
+          error
+        );
+
+        return json(
+          {
+            error:
+              "Não foi possível consultar o estoque."
+          },
+          500,
+          corsHeaders
+        );
+      }
+    }
+
+    /* =====================================================
        PROCESSAR PAGAMENTO
     ===================================================== */
 
@@ -91,6 +185,12 @@ export default {
           corsHeaders
         );
       }
+
+      let inventoryReservation =
+        null;
+
+      let paymentCreated =
+        false;
 
       try {
         const body =
@@ -145,6 +245,31 @@ export default {
                 paymentValidation.message
             },
             400,
+            corsHeaders
+          );
+        }
+
+        /*
+         * Reserva o estoque antes de criar o pagamento.
+         */
+
+        inventoryReservation =
+          await reserveInventory(
+            env.DB,
+            calculatedOrder.items
+          );
+
+        if (!inventoryReservation.ok) {
+          return json(
+            {
+              error:
+                inventoryReservation.message,
+
+              sku:
+                inventoryReservation.sku ||
+                null
+            },
+            409,
             corsHeaders
           );
         }
@@ -205,6 +330,14 @@ export default {
             JSON.stringify(mpData)
           );
 
+          await releaseInventoryReservation(
+            env.DB,
+            inventoryReservation
+          );
+
+          inventoryReservation =
+            null;
+
           return json(
             {
               error:
@@ -221,8 +354,11 @@ export default {
           );
         }
 
+        paymentCreated =
+          true;
+
         /*
-         * Normaliza a resposta imediatamente recebida.
+         * Normaliza a resposta recebida.
          */
 
         let normalizedMP =
@@ -272,6 +408,25 @@ export default {
                 normalizedMP.ticketUrl
             };
           }
+        }
+
+        /*
+         * Se o Mercado Pago já devolver estado final
+         * de recusa/cancelamento, o estoque volta.
+         */
+
+        if (
+          shouldReleaseInventoryForStatus(
+            normalizedMP.status
+          )
+        ) {
+          await releaseInventoryReservation(
+            env.DB,
+            inventoryReservation
+          );
+
+          inventoryReservation =
+            null;
         }
 
         /*
@@ -346,6 +501,23 @@ export default {
           "Process payment error:",
           error
         );
+
+        if (
+          inventoryReservation &&
+          !paymentCreated
+        ) {
+          try {
+            await releaseInventoryReservation(
+              env.DB,
+              inventoryReservation
+            );
+          } catch (releaseError) {
+            console.error(
+              "Inventory release error:",
+              releaseError
+            );
+          }
+        }
 
         return json(
           {
@@ -438,16 +610,6 @@ function getMaximumInstallments(total) {
   ) {
     return 1;
   }
-
-  /*
-   * REGRA JÁ DEFINIDA:
-   *
-   * até 300 = 2x
-   * até 400 = 3x
-   * até 500 = 4x
-   * depois +1 parcela a cada R$100
-   * máximo 12x
-   */
 
   if (value <= 300) {
     return 2;
@@ -675,10 +837,6 @@ function calculateServerOrder(body) {
 
   let shipping;
 
-  /*
-   * Cupom e frete grátis não acumulam.
-   */
-
   if (couponRate > 0) {
     shipping =
       normalShipping;
@@ -898,10 +1056,6 @@ function buildMercadoPagoOrder({
       ).trim();
   }
 
-  /*
-   * PIX
-   */
-
   if (payment.isPix) {
     return {
       type:
@@ -940,10 +1094,6 @@ function buildMercadoPagoOrder({
       }
     };
   }
-
-  /*
-   * CARTÃO
-   */
 
   return {
     type:
@@ -999,11 +1149,6 @@ async function getMercadoPagoOrder(
   orderId
 ) {
   try {
-    /*
-     * Pequeno intervalo para permitir que os dados Pix
-     * sejam disponibilizados pela API.
-     */
-
     await sleep(350);
 
     const response =
@@ -1055,14 +1200,6 @@ function normalizeMercadoPagoResponse(
   const paymentMethod =
     payment?.payment_method ||
     {};
-
-  /*
-   * Orders API Pix:
-   *
-   * payment_method.ticket_url
-   * payment_method.qr_code
-   * payment_method.qr_code_base64
-   */
 
   const qrCode =
     paymentMethod?.qr_code ||
@@ -1336,6 +1473,370 @@ async function saveOrderToDatabase(
 
     orderCode
   };
+}
+
+
+/* =========================================================
+   INVENTÁRIO
+========================================================= */
+
+function normalizeInventoryFragrance(value) {
+  return normalizeText(
+    value
+  )
+    .replace(
+      /[^A-Z0-9]+/g,
+      " "
+    )
+    .trim()
+    .replace(
+      /\s+/g,
+      " "
+    );
+}
+
+
+function getInventoryFragranceCode(value) {
+  const fragrance =
+    normalizeInventoryFragrance(
+      value
+    );
+
+  const codes = {
+    "CHA FLORAL":
+      "CHA",
+
+    "FIGO TIRIO":
+      "FIGO",
+
+    "LAVANDA ROSADA":
+      "LAV",
+
+    "LIMOEIRA":
+      "LIM",
+
+    "VERDE QUENTE":
+      "VERDE",
+
+    "ORBE AMAZONICO":
+      "ORBE"
+  };
+
+  return codes[fragrance] ||
+    "";
+}
+
+
+function getInventorySku(item) {
+  const product =
+    normalizeText(
+      item?.product ||
+      item?.name ||
+      ""
+    );
+
+  const fragranceCode =
+    getInventoryFragranceCode(
+      item?.fragrance ||
+      ""
+    );
+
+  const size =
+    onlyNumbers(
+      item?.size ||
+      ""
+    );
+
+  if (
+    product.includes(
+      "BIBLIOTECA"
+    )
+  ) {
+    return "BIBLIOTECA-6X5";
+  }
+
+  if (
+    product.includes(
+      "AROMATIZADOR"
+    ) &&
+    fragranceCode &&
+    (
+      size === "100" ||
+      size === "250"
+    )
+  ) {
+    return (
+      "AROM-" +
+      fragranceCode +
+      "-" +
+      size
+    );
+  }
+
+  if (
+    product.includes(
+      "DIFUSOR"
+    ) &&
+    fragranceCode &&
+    (
+      size === "100" ||
+      size === "250"
+    )
+  ) {
+    return (
+      "DIF-" +
+      fragranceCode +
+      "-" +
+      size
+    );
+  }
+
+  if (
+    product.includes(
+      "VELA"
+    ) &&
+    fragranceCode
+  ) {
+    return (
+      "VELA-" +
+      fragranceCode +
+      "-200"
+    );
+  }
+
+  return "";
+}
+
+
+function aggregateInventoryItems(items) {
+  const aggregated =
+    new Map();
+
+  for (const item of items) {
+    const sku =
+      getInventorySku(
+        item
+      );
+
+    if (!sku) {
+      return {
+        ok: false,
+        message:
+          `Produto sem SKU de estoque: ${item?.product || "Produto"}.`
+      };
+    }
+
+    const quantity =
+      Number(
+        item?.quantity ||
+        0
+      );
+
+    if (
+      !Number.isInteger(quantity) ||
+      quantity < 1
+    ) {
+      return {
+        ok: false,
+        message:
+          "Quantidade inválida para reserva de estoque."
+      };
+    }
+
+    const current =
+      aggregated.get(sku) ||
+      0;
+
+    aggregated.set(
+      sku,
+      current +
+      quantity
+    );
+  }
+
+  return {
+    ok: true,
+
+    items:
+      Array.from(
+        aggregated.entries()
+      ).map(
+        ([sku, quantity]) => ({
+          sku,
+          quantity
+        })
+      )
+  };
+}
+
+
+async function reserveInventory(
+  DB,
+  items
+) {
+  const aggregated =
+    aggregateInventoryItems(
+      items
+    );
+
+  if (!aggregated.ok) {
+    return aggregated;
+  }
+
+  const reserved = [];
+
+  for (
+    const item
+    of aggregated.items
+  ) {
+    const result =
+      await DB
+        .prepare(
+          `
+          UPDATE inventory
+          SET
+            stock = stock - ?,
+            active = CASE
+              WHEN stock - ? <= 0 THEN 0
+              ELSE active
+            END,
+            updated_at = CURRENT_TIMESTAMP
+          WHERE
+            sku = ?
+            AND active = 1
+            AND stock >= ?
+          RETURNING
+            sku,
+            stock,
+            active
+          `
+        )
+        .bind(
+          item.quantity,
+          item.quantity,
+          item.sku,
+          item.quantity
+        )
+        .first();
+
+    if (!result) {
+      await releaseInventoryReservation(
+        DB,
+        {
+          ok: true,
+          items:
+            reserved
+        }
+      );
+
+      const current =
+        await DB
+          .prepare(
+            `
+            SELECT
+              stock,
+              active
+            FROM inventory
+            WHERE sku = ?
+            LIMIT 1
+            `
+          )
+          .bind(
+            item.sku
+          )
+          .first();
+
+      const available =
+        Number(
+          current?.stock ||
+          0
+        );
+
+      return {
+        ok: false,
+
+        sku:
+          item.sku,
+
+        message:
+          available > 0
+            ? `Estoque insuficiente para ${item.sku}. Disponível: ${available}.`
+            : `O item ${item.sku} está esgotado.`
+      };
+    }
+
+    reserved.push({
+      sku:
+        item.sku,
+
+      quantity:
+        item.quantity
+    });
+  }
+
+  return {
+    ok: true,
+    items:
+      reserved
+  };
+}
+
+
+async function releaseInventoryReservation(
+  DB,
+  reservation
+) {
+  const items =
+    reservation?.items ||
+    [];
+
+  if (items.length === 0) {
+    return;
+  }
+
+  const statements =
+    items.map(
+      item =>
+        DB
+          .prepare(
+            `
+            UPDATE inventory
+            SET
+              stock = stock + ?,
+              active = 1,
+              updated_at = CURRENT_TIMESTAMP
+            WHERE sku = ?
+            `
+          )
+          .bind(
+            item.quantity,
+            item.sku
+          )
+    );
+
+  await DB.batch(
+    statements
+  );
+}
+
+
+function shouldReleaseInventoryForStatus(
+  status
+) {
+  const normalized =
+    normalizeText(
+      status ||
+      ""
+    );
+
+  return [
+    "REJECTED",
+    "CANCELLED",
+    "CANCELED",
+    "FAILED"
+  ].includes(
+    normalized
+  );
 }
 
 
