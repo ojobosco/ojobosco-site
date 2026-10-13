@@ -157,6 +157,98 @@ export default {
     }
 
     /* =====================================================
+       CATÁLOGO META / INSTAGRAM
+    ===================================================== */
+
+    if (
+      url.pathname === "/api/meta-catalog.csv" &&
+      request.method === "GET"
+    ) {
+      if (!env.DB) {
+        return new Response(
+          "Banco D1 não conectado.",
+          {
+            status: 500,
+
+            headers: {
+              "Content-Type":
+                "text/plain; charset=utf-8",
+
+              ...corsHeaders
+            }
+          }
+        );
+      }
+
+      try {
+        const result =
+          await env.DB
+            .prepare(
+              `
+              SELECT
+                sku,
+                product,
+                fragrance,
+                size,
+                stock,
+                active
+              FROM inventory
+              ORDER BY product, fragrance, size
+              `
+            )
+            .all();
+
+        const csv =
+          buildMetaCatalogCsv(
+            result.results || []
+          );
+
+        return new Response(
+          "\uFEFF" + csv,
+          {
+            status: 200,
+
+            headers: {
+              "Content-Type":
+                "text/csv; charset=utf-8",
+
+              "Content-Disposition":
+                'inline; filename="ojobosco-meta-catalog.csv"',
+
+              "Cache-Control":
+                "no-store",
+
+              ...corsHeaders
+            }
+          }
+        );
+
+      } catch (error) {
+        console.error(
+          "Meta catalog error:",
+          error
+        );
+
+        return new Response(
+          "Não foi possível gerar o catálogo.",
+          {
+            status: 500,
+
+            headers: {
+              "Content-Type":
+                "text/plain; charset=utf-8",
+
+              "Cache-Control":
+                "no-store",
+
+              ...corsHeaders
+            }
+          }
+        );
+      }
+    }
+
+    /* =====================================================
        PROCESSAR PAGAMENTO
     ===================================================== */
 
@@ -210,11 +302,6 @@ export default {
           );
         }
 
-        /*
-         * Recalculamos tudo no servidor.
-         * Não confiamos nos preços enviados pelo navegador.
-         */
-
         const calculatedOrder =
           calculateServerOrder(body);
 
@@ -248,10 +335,6 @@ export default {
             corsHeaders
           );
         }
-
-        /*
-         * Reserva o estoque antes de criar o pagamento.
-         */
 
         inventoryReservation =
           await reserveInventory(
@@ -320,6 +403,7 @@ export default {
         try {
           mpData =
             await mpResponse.json();
+
         } catch {
           mpData = {};
         }
@@ -357,19 +441,10 @@ export default {
         paymentCreated =
           true;
 
-        /*
-         * Normaliza a resposta recebida.
-         */
-
         let normalizedMP =
           normalizeMercadoPagoResponse(
             mpData
           );
-
-        /*
-         * Em Pix, se o primeiro retorno não trouxer o QR,
-         * consultamos a order novamente.
-         */
 
         if (
           payment.isPix &&
@@ -410,11 +485,6 @@ export default {
           }
         }
 
-        /*
-         * Se o Mercado Pago já devolver estado final
-         * de recusa/cancelamento, o estoque volta.
-         */
-
         if (
           shouldReleaseInventoryForStatus(
             normalizedMP.status
@@ -428,10 +498,6 @@ export default {
           inventoryReservation =
             null;
         }
-
-        /*
-         * Salva pedido e itens no D1.
-         */
 
         const savedOrder =
           await saveOrderToDatabase(
@@ -511,6 +577,7 @@ export default {
               env.DB,
               inventoryReservation
             );
+
           } catch (releaseError) {
             console.error(
               "Inventory release error:",
@@ -538,6 +605,389 @@ export default {
     return env.ASSETS.fetch(request);
   }
 };
+
+
+/* =========================================================
+   CATÁLOGO META / INSTAGRAM
+========================================================= */
+
+const META_SITE_URL =
+  "https://www.ojobosco.com";
+
+
+function buildMetaCatalogCsv(
+  inventoryItems
+) {
+  const headers = [
+    "id",
+    "title",
+    "description",
+    "availability",
+    "condition",
+    "price",
+    "link",
+    "image_link",
+    "brand"
+  ];
+
+  const rows = [
+    headers
+  ];
+
+  for (
+    const inventoryItem
+    of inventoryItems
+  ) {
+    const item =
+      getMetaCatalogItem(
+        inventoryItem
+      );
+
+    if (!item) {
+      continue;
+    }
+
+    rows.push([
+      item.id,
+      item.title,
+      item.description,
+      item.availability,
+      item.condition,
+      item.price,
+      item.link,
+      item.image_link,
+      item.brand
+    ]);
+  }
+
+  return rows
+    .map(
+      row =>
+        row
+          .map(
+            csvCell
+          )
+          .join(",")
+    )
+    .join("\n");
+}
+
+
+function getMetaCatalogItem(
+  inventoryItem
+) {
+  const sku =
+    String(
+      inventoryItem?.sku ||
+      ""
+    ).trim();
+
+  const product =
+    normalizeText(
+      inventoryItem?.product ||
+      ""
+    );
+
+  const fragrance =
+    String(
+      inventoryItem?.fragrance ||
+      ""
+    ).trim();
+
+  const sizeText =
+    String(
+      inventoryItem?.size ||
+      ""
+    ).trim();
+
+  const size =
+    onlyNumbers(
+      sizeText
+    );
+
+  const stock =
+    Number(
+      inventoryItem?.stock ||
+      0
+    );
+
+  const active =
+    Number(
+      inventoryItem?.active ||
+      0
+    ) === 1;
+
+  const availability =
+    active &&
+    stock > 0
+      ? "in stock"
+      : "out of stock";
+
+  if (!sku) {
+    return null;
+  }
+
+  /* ---------------------------------------------------------
+     AROMATIZADOR
+  --------------------------------------------------------- */
+
+  if (
+    product.includes(
+      "AROMATIZADOR"
+    )
+  ) {
+    const fragranceSlug =
+      metaSlugify(
+        fragrance
+      );
+
+    const price =
+      PRODUCT_CATALOG[
+        `AROMATIZADOR|${size}`
+      ];
+
+    if (
+      !fragranceSlug ||
+      price === undefined
+    ) {
+      return null;
+    }
+
+    return {
+      id:
+        sku,
+
+      title:
+        `Aromatizador ${fragrance} ${size} ML`,
+
+      description:
+        `Aromatizador OJOBOSCO na fragrância ${fragrance}, ${size} ml.`,
+
+      availability,
+
+      condition:
+        "new",
+
+      price:
+        `${formatAmount(price)} BRL`,
+
+      link:
+        `${META_SITE_URL}/produto-aromatizador?fragrancia=${encodeURIComponent(fragranceSlug)}`,
+
+      image_link:
+        `${META_SITE_URL}/aromatizador-${fragranceSlug}-${size}.jpg`,
+
+      brand:
+        "OJOBOSCO"
+    };
+  }
+
+  /* ---------------------------------------------------------
+     DIFUSOR
+  --------------------------------------------------------- */
+
+  if (
+    product.includes(
+      "DIFUSOR"
+    )
+  ) {
+    const fragranceSlug =
+      metaSlugify(
+        fragrance
+      );
+
+    const price =
+      PRODUCT_CATALOG[
+        `DIFUSOR|${size}`
+      ];
+
+    if (
+      !fragranceSlug ||
+      price === undefined
+    ) {
+      return null;
+    }
+
+    return {
+      id:
+        sku,
+
+      title:
+        `Difusor ${fragrance} ${size} ML`,
+
+      description:
+        `Difusor OJOBOSCO na fragrância ${fragrance}, ${size} ml.`,
+
+      availability,
+
+      condition:
+        "new",
+
+      price:
+        `${formatAmount(price)} BRL`,
+
+      link:
+        `${META_SITE_URL}/produto-difusor?fragrancia=${encodeURIComponent(fragranceSlug)}`,
+
+      image_link:
+        `${META_SITE_URL}/difusor-${fragranceSlug}-${size}.jpg`,
+
+      brand:
+        "OJOBOSCO"
+    };
+  }
+
+  /* ---------------------------------------------------------
+     VELA
+  --------------------------------------------------------- */
+
+  if (
+    product.includes(
+      "VELA"
+    )
+  ) {
+    const fragranceSlug =
+      metaSlugify(
+        fragrance
+      );
+
+    const price =
+      PRODUCT_CATALOG[
+        "VELA|200"
+      ];
+
+    if (
+      !fragranceSlug ||
+      price === undefined
+    ) {
+      return null;
+    }
+
+    return {
+      id:
+        sku,
+
+      title:
+        `Vela ${fragrance} 200 G`,
+
+      description:
+        `Vela perfumada OJOBOSCO na fragrância ${fragrance}, 200 g.`,
+
+      availability,
+
+      condition:
+        "new",
+
+      price:
+        `${formatAmount(price)} BRL`,
+
+      link:
+        `${META_SITE_URL}/produto-vela?fragrancia=${encodeURIComponent(fragranceSlug)}`,
+
+      image_link:
+        `${META_SITE_URL}/vela-produto.jpg`,
+
+      brand:
+        "OJOBOSCO"
+    };
+  }
+
+  /* ---------------------------------------------------------
+     BIBLIOTECA OLFATIVA
+  --------------------------------------------------------- */
+
+  if (
+    product.includes(
+      "BIBLIOTECA"
+    )
+  ) {
+    const price =
+      PRODUCT_CATALOG[
+        "BIBLIOTECA OLFATIVA|5"
+      ];
+
+    if (
+      price === undefined
+    ) {
+      return null;
+    }
+
+    return {
+      id:
+        sku,
+
+      title:
+        "Biblioteca Olfativa OJOBOSCO",
+
+      description:
+        "Caixa exclusiva com as fragrâncias de ambiente OJOBOSCO em miniaturas de 5 ml.",
+
+      availability,
+
+      condition:
+        "new",
+
+      price:
+        `${formatAmount(price)} BRL`,
+
+      link:
+        `${META_SITE_URL}/produto-biblioteca`,
+
+      image_link:
+        `${META_SITE_URL}/biblioteca-still.jpg`,
+
+      brand:
+        "OJOBOSCO"
+    };
+  }
+
+  /*
+   * Perfume e refil ainda não entram no feed.
+   */
+
+  return null;
+}
+
+
+function metaSlugify(value) {
+  return String(
+    value ||
+    ""
+  )
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .trim()
+    .toLowerCase()
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+    .replace(
+      /^-+|-+$/g,
+      ""
+    );
+}
+
+
+function csvCell(value) {
+  const text =
+    String(
+      value ??
+      ""
+    );
+
+  return (
+    '"' +
+    text.replace(
+      /"/g,
+      '""'
+    ) +
+    '"'
+  );
+}
 
 
 /* =========================================================
@@ -840,11 +1290,13 @@ function calculateServerOrder(body) {
   if (couponRate > 0) {
     shipping =
       normalShipping;
+
   } else if (
     subtotal >=
     FREE_SHIPPING_THRESHOLD
   ) {
     shipping = 0;
+
   } else {
     shipping =
       normalShipping;
@@ -1776,6 +2228,7 @@ async function reserveInventory(
 
   return {
     ok: true,
+
     items:
       reserved
   };
